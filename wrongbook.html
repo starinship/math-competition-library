@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>錯題本｜雙孩分軌</title>
+  <link rel="stylesheet" href="css/print-a4.css" />
+  <link rel="stylesheet" href="css/screen.css" />
+</head>
+<body>
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="index.html">首頁</a>
+    <a href="review.html" id="nav-review">重溫</a>
+    <button type="button" class="btn btn-sm btn-secondary" id="btn-switch-track">切換孩子</button>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印本頁</button>
+  </nav>
+
+  <article class="sheet">
+    <header class="sheet-header">
+      <div class="titles">
+        <h1>錯題本 <span id="track-badge" class="badge badge-parent">—</span></h1>
+        <div class="meta" id="track-meta">依軌道分庫・間隔複習・離線 localStorage</div>
+      </div>
+    </header>
+
+    <div class="mode-banner screen-only">
+      <strong>分孩分庫：</strong>小二用 <code>mathWrongbook_p2</code>，K3 用 <code>mathWrongbook_k3</code>。兩個孩子的錯題<strong>不會混在一起</strong>。訂正請依<strong>技能標籤</strong>，不要整份隨機重做。
+    </div>
+
+    <div class="wb-stats screen-only" id="wb-stats" aria-live="polite"></div>
+
+    <div class="toolbar screen-only" role="group" aria-label="篩選與備份">
+      <label>篩選
+        <select id="filter-status" class="wb-select">
+          <option value="all">全部</option>
+          <option value="learning" selected>待覆習</option>
+          <option value="due">今日到期</option>
+          <option value="mastered">已掌握</option>
+        </select>
+      </label>
+      <label>單元
+        <select id="filter-unit" class="wb-select">
+          <option value="">全部單元</option>
+        </select>
+      </label>
+      <label>技能
+        <select id="filter-skill" class="wb-select">
+          <option value="">全部技能</option>
+        </select>
+      </label>
+      <a class="btn btn-success" href="review.html" id="btn-start-review-link">開始重溫</a>
+      <button type="button" class="btn btn-secondary" id="btn-export">匯出 JSON</button>
+      <label class="btn btn-secondary wb-import-label">
+        匯入 JSON
+        <input type="file" id="import-file" accept="application/json,.json" hidden />
+      </label>
+    </div>
+
+    <div id="wb-list" class="wb-list"></div>
+
+    <div class="tip">
+      <strong>精熟提醒：</strong>「今日到期」清完前，不建議進入該軌下一週。匯出檔名會帶軌道標記，換機時分別備份兩個孩子。
+    </div>
+
+    <footer class="sheet-footer">
+      <span>雙孩教學庫・錯題本</span>
+      <span>分軌離線</span>
+    </footer>
+  </article>
+
+  <script src="js/track.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/wrongbook.js"></script>
+  <script>
+(function () {
+  "use strict";
+  var MT = window.MathTrack;
+  var WB = window.WrongBook;
+  if (!MT || !WB) return;
+
+  var track = MT.initFromPage("p2") || MT.requireTrack("p2");
+
+  function applyTrackChrome() {
+    track = MT.current() || MT.requireTrack("p2");
+    var badge = document.getElementById("track-badge");
+    var meta = document.getElementById("track-meta");
+    if (badge) badge.textContent = track.fullLabel;
+    if (meta) {
+      meta.textContent =
+        "儲存 key：" + track.wrongbookKey + "・間隔 1→3→7 天・依技能標籤訂正";
+    }
+    document.getElementById("btn-start-review-link").href =
+      "review.html?track=" + track.id;
+    document.getElementById("nav-review").href =
+      "review.html?track=" + track.id;
+    document.body.setAttribute("data-track", track.id);
+    fillUnitOptions();
+  }
+
+  function fillUnitOptions() {
+    var sel = document.getElementById("filter-unit");
+    var cur = sel.value;
+    sel.innerHTML = '<option value="">全部單元</option>';
+    if (track.id === "p2") {
+      sel.innerHTML += '<option value="w01">第 1 週・找規律</option>';
+    } else {
+      sel.innerHTML += '<option value="k3-w01">第 1 週・數一數比多少</option>';
+    }
+    sel.value = cur;
+  }
+
+  var listEl = document.getElementById("wb-list");
+  var statsEl = document.getElementById("wb-stats");
+  var filterStatus = document.getElementById("filter-status");
+  var filterUnit = document.getElementById("filter-unit");
+  var filterSkill = document.getElementById("filter-skill");
+
+  function sourceLabel(s) {
+    return s === "quiz" ? "測驗" : s === "practice" ? "練習" : s === "review" ? "重溫" : s;
+  }
+
+  function statusLabel(it) {
+    if (it.status === "mastered") return '<span class="wb-tag wb-tag-mastered">已掌握</span>';
+    if (WB.isDue(it)) return '<span class="wb-tag wb-tag-due">待覆習・到期</span>';
+    return '<span class="wb-tag wb-tag-learning">學習中</span>';
+  }
+
+  function fillSkillOptions() {
+    var skills = {};
+    WB.loadAll().forEach(function (it) {
+      (it.skillTags || []).forEach(function (s) {
+        skills[s] = true;
+      });
+    });
+    var cur = filterSkill.value;
+    filterSkill.innerHTML = '<option value="">全部技能</option>';
+    Object.keys(skills)
+      .sort()
+      .forEach(function (s) {
+        var opt = document.createElement("option");
+        opt.value = s;
+        opt.textContent = s;
+        filterSkill.appendChild(opt);
+      });
+    filterSkill.value = cur;
+  }
+
+  function renderStats() {
+    var st = WB.stats();
+    statsEl.innerHTML =
+      '<div class="wb-stat"><strong>' + st.total + "</strong><span>總錯題</span></div>" +
+      '<div class="wb-stat"><strong>' + st.due + "</strong><span>今日到期</span></div>" +
+      '<div class="wb-stat"><strong>' + st.learning + "</strong><span>待覆習</span></div>" +
+      '<div class="wb-stat"><strong>' + st.mastered + "</strong><span>已掌握</span></div>';
+  }
+
+  function render() {
+    fillSkillOptions();
+    renderStats();
+    var status = filterStatus.value;
+    var unit = filterUnit.value;
+    var skill = filterSkill.value;
+    var filter = {};
+    if (status === "learning") filter.status = "learning";
+    else if (status === "mastered") filter.status = "mastered";
+    else if (status === "due") filter.status = "due";
+    if (unit) filter.unit = unit;
+    if (skill) filter.skill = skill;
+
+    var items = WB.list(filter).sort(function (a, b) {
+      return (b.lastWrongAt || 0) - (a.lastWrongAt || 0);
+    });
+
+    if (!items.length) {
+      listEl.innerHTML =
+        '<p class="wb-empty">目前沒有符合條件的錯題（軌道：' +
+        track.label +
+        "）。去做練習／測驗，答錯會自動出現。</p>";
+      return;
+    }
+
+    listEl.innerHTML = "";
+    items.forEach(function (it) {
+      var card = document.createElement("div");
+      card.className = "wb-card";
+      var tags = (it.skillTags || [])
+        .map(function (t) {
+          return '<span class="wb-skill">' + t + "</span>";
+        })
+        .join(" ");
+      card.innerHTML =
+        '<div class="wb-card-head">' +
+        "<div><strong>" +
+        (it.label || it.id) +
+        "</strong> " +
+        statusLabel(it) +
+        '</div><div class="small">第 ' +
+        (it.week || "?") +
+        " 週・" +
+        sourceLabel(it.source) +
+        "・錯 " +
+        (it.timesWrong || 0) +
+        " 次</div></div>" +
+        '<p class="wb-prompt">' +
+        (it.prompt || "（無題幹快照）") +
+        "</p>" +
+        '<div class="wb-answers">' +
+        '<div><span class="wb-ans-label">你的答案</span> <span class="wb-ans-user">' +
+        (it.userAnswer || "—") +
+        "</span></div>" +
+        '<div><span class="wb-ans-label">正確答案</span> <span class="wb-ans-ok">' +
+        (it.correctAnswer || "—") +
+        "</span></div></div>" +
+        '<div class="wb-meta-row small">上次錯：' +
+        WB.formatDate(it.lastWrongAt) +
+        "　下次覆習：" +
+        WB.formatDate(it.nextReviewAt) +
+        "　連續對：" +
+        (it.correctStreak || 0) +
+        "/" +
+        WB.MASTER_STREAK +
+        "</div>" +
+        '<div class="wb-skills">' +
+        tags +
+        "</div>" +
+        '<div class="wb-actions screen-only">' +
+        '<a class="btn btn-sm" href="review.html?track=' +
+        track.id +
+        "&id=" +
+        encodeURIComponent(it.id) +
+        '">再練一次</a>' +
+        (it.href
+          ? '<a class="btn btn-sm btn-secondary" href="' + it.href + '">回原頁</a>'
+          : "") +
+        "</div>";
+      listEl.appendChild(card);
+    });
+  }
+
+  filterStatus.addEventListener("change", render);
+  filterUnit.addEventListener("change", render);
+  filterSkill.addEventListener("change", render);
+
+  document.getElementById("btn-export").addEventListener("click", function () {
+    var blob = new Blob([WB.exportJSON()], { type: "application/json" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "math-wrongbook-" + track.id + "-backup.json";
+    a.click();
+    URL.revokeObjectURL(a.href);
+  });
+
+  document.getElementById("import-file").addEventListener("change", function (e) {
+    var file = e.target.files && e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var mode = confirm("確定匯入到「" + track.label + "」庫？確定=合併；取消後再問是否整份取代。")
+          ? "merge"
+          : confirm("要整份取代「" + track.label + "」錯題本嗎？（不可復原）")
+            ? "replace"
+            : null;
+        if (!mode) return;
+        var n = WB.importJSON(String(reader.result), mode);
+        alert("匯入完成（" + track.label + "），目前共 " + n + " 筆。");
+        render();
+      } catch (err) {
+        alert("匯入失敗：" + (err && err.message ? err.message : err));
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  });
+
+  document.getElementById("btn-switch-track").addEventListener("click", function () {
+    var next = track.id === "p2" ? "k3" : "p2";
+    MT.setTrack(next);
+    location.href = "wrongbook.html?track=" + next;
+  });
+
+  if (window.MathLib) window.MathLib.bindPrintButton("#btn-print");
+  applyTrackChrome();
+  render();
+})();
+  </script>
+</body>
+</html>

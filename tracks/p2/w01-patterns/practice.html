@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>第1週｜找規律・填數（練習）</title>
+  <link rel="stylesheet" href="../../../css/print-a4.css" />
+  <link rel="stylesheet" href="../../../css/screen.css" />
+</head>
+<body data-track="p2">
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="../../../index.html">首頁</a>
+    <a href="teach.html">教學</a>
+    <a href="quiz.html">測驗</a>
+    <a href="answers.html">答案</a>
+    <a href="../../../wrongbook.html?track=p2">錯題本</a>
+    <a href="../../../review.html?track=p2">重溫</a>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印 A4</button>
+  </nav>
+
+  <article class="sheet">
+    <header class="sheet-header">
+      <div class="titles">
+        <h1>第1週｜找規律・填數（練習）</h1>
+        <div class="meta">學界賽專軌・小二程度・學生用・共 10 題</div>
+      </div>
+      <span class="badge badge-student">學生用・練習</span>
+    </header>
+
+    <div class="mode-banner screen-only">
+      <strong>螢幕模式：</strong>在空格輸入或點選答案，按「檢查」立刻看回饋。也可按上方「全部檢查」看總分。列印時會變成空白作答卷。
+    </div>
+
+    <div class="toolbar screen-only" role="group" aria-label="練習進度">
+      <div class="progress-bar-wrap" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
+      <span class="progress-text" id="progress-text">已檢查 0 / 10　答對 0</span>
+      <button type="button" class="btn btn-success" id="btn-check-all">全部檢查</button>
+    </div>
+
+    <div class="meta-fields">
+      <span class="print-only">姓名：<span class="answer-line" style="min-width:6em"></span>
+         日期：<span class="answer-line" style="min-width:5em"></span></span>
+      <label class="screen-only">姓名 <input class="meta-input" type="text" autocomplete="name" /></label>
+      <label class="screen-only">日期 <input class="meta-input" type="text" /></label>
+    </div>
+    <p class="small">請先找規律，再填空。螢幕可即時核對；列印卷請在虛線框寫「每次多／少幾」。</p>
+
+    <h2>A. 數字規律（每次加或減固定數）</h2>
+    <ol class="questions">
+      <li class="problem-card" data-unit="q1">
+        <p class="seq">3、6、9、12、
+          <input type="text" class="ans-input screen-only" data-key="q1" inputmode="numeric" aria-label="第1題答案" />
+          <span class="gap print-only inline-block"></span>
+        </p>
+        <div class="blank-area print-only block">規律：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q1">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q2">
+        <p class="seq">20、18、16、14、
+          <input type="text" class="ans-input screen-only" data-key="q2" inputmode="numeric" aria-label="第2題答案" />
+          <span class="gap print-only inline-block"></span>
+        </p>
+        <div class="blank-area print-only block">規律：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q2">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q3">
+        <p class="seq">4、9、14、19、
+          <input type="text" class="ans-input screen-only" data-key="q3a" inputmode="numeric" aria-label="第3題第一空" />
+          <span class="gap print-only inline-block"></span>、
+          <input type="text" class="ans-input screen-only" data-key="q3b" inputmode="numeric" aria-label="第3題第二空" />
+          <span class="gap print-only inline-block"></span>
+        </p>
+        <div class="blank-area print-only block">規律：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q3">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q4">
+        <p class="seq">7、
+          <input type="text" class="ans-input screen-only" data-key="q4" inputmode="numeric" aria-label="第4題答案" />
+          <span class="gap print-only inline-block"></span>、17、22、27
+        </p>
+        <div class="blank-area print-only block">規律：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q4">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q5">
+        <p class="seq">50、45、
+          <input type="text" class="ans-input screen-only" data-key="q5" inputmode="numeric" aria-label="第5題答案" />
+          <span class="gap print-only inline-block"></span>、35、30
+        </p>
+        <div class="blank-area print-only block">規律：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q5">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+    </ol>
+
+    <h2>B. 奇偶與跳躍</h2>
+    <ol class="questions" start="6">
+      <li class="problem-card" data-unit="q6">
+        <p class="seq">2、4、6、8、
+          <input type="text" class="ans-input screen-only" data-key="q6a" inputmode="numeric" aria-label="第6題第一空" />
+          <span class="gap print-only inline-block"></span>、
+          <input type="text" class="ans-input screen-only" data-key="q6b" inputmode="numeric" aria-label="第6題第二空" />
+          <span class="gap print-only inline-block"></span>
+        </p>
+        <p>這些是奇數還是偶數？
+          <span class="screen-only">
+            <span class="choice-group" data-key="q6c" role="group" aria-label="奇偶">
+              <button type="button" class="choice-btn" data-value="奇數">奇數</button>
+              <button type="button" class="choice-btn" data-value="偶數">偶數</button>
+            </span>
+          </span>
+          <span class="print-only">答：<span class="answer-line" style="min-width:4em"></span></span>
+        </p>
+        <div class="blank-area print-only block"></div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q6">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q7">
+        <p class="seq">1、3、5、
+          <input type="text" class="ans-input screen-only" data-key="q7" inputmode="numeric" aria-label="第7題答案" />
+          <span class="gap print-only inline-block"></span>、9、11
+        </p>
+        <div class="blank-area print-only block">規律：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q7">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+    </ol>
+
+    <h2>C. 圖形與綜合</h2>
+    <ol class="questions" start="8">
+      <li class="problem-card" data-unit="q8">
+        <p class="seq">★ ☆ ★ ☆ ★
+          <span class="screen-only">
+            <span class="choice-group" data-key="q8" role="group" aria-label="第8題">
+              <button type="button" class="choice-btn" data-value="★">★</button>
+              <button type="button" class="choice-btn" data-value="☆">☆</button>
+              <button type="button" class="choice-btn" data-value="●">●</button>
+            </span>
+          </span>
+          <span class="gap print-only inline-block"></span>
+        </p>
+        <div class="blank-area print-only block">下一組圖形是：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q8">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q9">
+        <p class="seq">▲ ▲ ■ ▲ ▲ ■ ▲ ▲
+          <span class="screen-only">
+            <span class="choice-group" data-key="q9" role="group" aria-label="第9題">
+              <button type="button" class="choice-btn" data-value="▲">▲</button>
+              <button type="button" class="choice-btn" data-value="■">■</button>
+              <button type="button" class="choice-btn" data-value="●">●</button>
+            </span>
+          </span>
+          <span class="gap print-only inline-block"></span>
+        </p>
+        <div class="blank-area print-only block">一組是什麼？下一圖是：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q9">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q10">
+        <p>小明依規律寫數：5、10、15、20、25……</p>
+        <p>（1）下一個數是
+          <input type="text" class="ans-input screen-only" data-key="q10a" inputmode="numeric" aria-label="第10題(1)" />
+          <span class="answer-box print-only inline-block"></span>
+        </p>
+        <p>（2）再下一個數是
+          <input type="text" class="ans-input screen-only" data-key="q10b" inputmode="numeric" aria-label="第10題(2)" />
+          <span class="answer-box print-only inline-block"></span>
+        </p>
+        <p>（3）用一句話說出規律：</p>
+        <div class="work-space print-only block"></div>
+        <p class="screen-only small">（第 3 小題口頭說給家長聽即可，不計分。）</p>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q10">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+    </ol>
+
+    <div class="summary-panel screen-only" id="practice-summary">
+      <h2>練習結果</h2>
+      <p>得分：<strong id="final-score">—</strong></p>
+      <p class="small"><strong>精熟門檻：</strong>約 8／10 以上正確，且能說出多數題的規律；到期錯題清完再進下一週。</p>
+      <h3>需要再練的題</h3>
+      <ul class="wrong-list" id="wrong-list"></ul>
+      <p class="small">詳細解析請看 <a href="answers.html">答案頁</a>。錯題已進 <a href="../../../wrongbook.html?track=p2">錯題本</a>，記得去 <a href="../../../review.html?track=p2">重溫</a>。準備好了可以做 <a href="quiz.html">測驗</a>。</p>
+    </div>
+
+    <div class="tip">
+      <strong>做完自查：</strong>任選兩題，用「前一個數 ± 固定數」驗算一次。有問號的題明天再問家長。
+    </div>
+
+    <footer class="sheet-footer">
+      <span>澳門小二・學界賽預備教學庫・第1週</span>
+      <span>練習頁・螢幕互動／可列印 A4</span>
+    </footer>
+  </article>
+
+  <script src="../../../js/track.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script>if(window.MathTrack)MathTrack.initFromPage("p2");</script>
+  <script src="../../../js/wrongbook.js"></script>
+  <script src="practice.js"></script>
+</body>
+</html>

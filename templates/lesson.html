@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<!-- 複製到 tracks/p2/wXX-.../ 或 tracks/k3/wXX-.../ 後調整路徑與 data-track -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>【模板】教學頁 — 澳門學界賽預備</title>
+  <link rel="stylesheet" href="../../css/print-a4.css" />
+  <link rel="stylesheet" href="../../css/screen.css" />
+</head>
+<body>
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="../../index.html">首頁</a>
+    <a href="#">練習</a>
+    <a href="#">測驗</a>
+    <a href="#">答案</a>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印 A4</button>
+  </nav>
+
+  <article class="sheet">
+    <header class="sheet-header">
+      <div class="titles">
+        <h1>第〇週｜單元標題（教學）</h1>
+        <div class="meta">學界賽專軌・小二程度・家長／教師用</div>
+      </div>
+      <span class="badge badge-parent">家長用・教學</span>
+    </header>
+
+    <div class="mode-banner screen-only">
+      <strong>螢幕模式：</strong>逐步例題＋提示。可參考 tracks/p2/w01-patterns/teach.html。
+    </div>
+
+    <section>
+      <h2>本週學什麼？</h2>
+      <p>用一兩句話說明本週目標。</p>
+      <div class="callout">
+        <div class="callout-title">學習目標</div>
+        <ul class="mb-0">
+          <li>目標一</li>
+          <li>目標二</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>例題講解</h2>
+      <div class="toolbar teach-controls screen-only">
+        <button type="button" class="btn btn-secondary" id="btn-prev">← 上一題</button>
+        <span class="step-indicator" id="step-indicator">例題 1 / 1</span>
+        <button type="button" class="btn" id="btn-next">下一題 →</button>
+        <button type="button" class="btn btn-warn btn-sm" id="btn-hint">顯示提示／怎麼想</button>
+      </div>
+      <div class="example example-slide">
+        <div class="example-label">例題 1</div>
+        <p class="seq">2、4、6、8、<span class="gap">？</span></p>
+        <div class="hint-block">
+          <div class="hint-content">
+            <p><strong>怎麼想：</strong>每個數都比前一個多 2。所以？＝10。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <details class="parent-guide-details parent-guide">
+      <summary>家長怎麼教（約 15–20 分鐘）</summary>
+      <div class="parent-guide-body">
+        <ol class="steps">
+          <li>先一起讀題，請孩子指出「已知」與「要求」。</li>
+          <li>不急著報答案；先請孩子猜規律，再一起驗算。</li>
+        </ol>
+      </div>
+    </details>
+
+    <footer class="sheet-footer">
+      <span>澳門小二・學界賽預備教學庫</span>
+      <span>教學頁・螢幕／列印</span>
+    </footer>
+  </article>
+
+  <script src="../../js/common.js"></script>
+  <script src="../../js/teach.js"></script>
+</body>
+</html>

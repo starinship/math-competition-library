@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>第1週｜找規律・填數（測驗）</title>
+  <link rel="stylesheet" href="../../../css/print-a4.css" />
+  <link rel="stylesheet" href="../../../css/screen.css" />
+</head>
+<body data-track="p2">
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="../../../index.html">首頁</a>
+    <a href="teach.html">教學</a>
+    <a href="practice.html">練習</a>
+    <a href="answers.html">答案</a>
+    <a href="../../../wrongbook.html?track=p2">錯題本</a>
+    <a href="../../../review.html?track=p2">重溫</a>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印 A4</button>
+  </nav>
+
+  <article class="sheet">
+    <header class="sheet-header">
+      <div class="titles">
+        <h1>第1週｜找規律・填數（測驗）</h1>
+        <div class="meta">學界賽專軌・小二程度・學生用・共 7 題</div>
+      </div>
+      <span class="badge badge-student">學生用・測驗</span>
+    </header>
+
+    <div class="mode-banner screen-only">
+      <strong>螢幕模式：</strong>先選擇「開始計時 15 分」或「不計時開始」。全部做完再按「交卷」；交卷後才顯示分數與錯題，並鎖定答案。列印為空白限時卷。
+    </div>
+
+    <div class="quiz-gate screen-only" id="quiz-gate">
+      <p><strong>準備好再開始</strong></p>
+      <p class="small">建議獨立完成。計時約 15 分鐘；時間到會自動交卷。</p>
+      <button type="button" class="btn" id="btn-start-timed">⏱ 開始計時（15 分）</button>
+      <button type="button" class="btn btn-secondary" id="btn-start-free">不計時開始</button>
+    </div>
+
+    <div class="toolbar screen-only" id="quiz-toolbar" style="display:none" role="group" aria-label="測驗工具">
+      <span class="timer-display" id="timer-display">剩餘 15:00</span>
+      <button type="button" class="btn btn-success" id="btn-submit">交卷看成績</button>
+    </div>
+
+    <div id="quiz-body" class="quiz-body">
+      <div class="meta-fields">
+        <span class="print-only">姓名：<span class="answer-line" style="min-width:6em"></span>
+           日期：<span class="answer-line" style="min-width:5em"></span>
+           用時：<span class="answer-line" style="min-width:3em"></span> 分鐘</span>
+        <label class="screen-only">姓名 <input class="meta-input" type="text" autocomplete="name" /></label>
+        <label class="screen-only">日期 <input class="meta-input" type="text" /></label>
+      </div>
+      <div class="time-box print-only block">⏱ 建議限時：15 分鐘・請獨立完成・完成後再對答案</div>
+      <p class="small">答題時可在空白處計算。不會的題先跳過，最後再回來。螢幕交卷前看不到分數。</p>
+
+      <ol class="questions quiz-questions">
+        <li class="problem-card" data-unit="q1">
+          <p class="seq">5、10、15、20、
+            <input type="text" class="ans-input screen-only" data-key="q1" inputmode="numeric" aria-label="第1題" />
+            <span class="gap print-only inline-block"></span>
+          </p>
+          <div class="blank-area print-only block"></div>
+        </li>
+        <li class="problem-card" data-unit="q2">
+          <p class="seq">30、27、24、21、
+            <input type="text" class="ans-input screen-only" data-key="q2" inputmode="numeric" aria-label="第2題" />
+            <span class="gap print-only inline-block"></span>
+          </p>
+          <div class="blank-area print-only block"></div>
+        </li>
+        <li class="problem-card" data-unit="q3">
+          <p class="seq">2、5、8、
+            <input type="text" class="ans-input screen-only" data-key="q3" inputmode="numeric" aria-label="第3題" />
+            <span class="gap print-only inline-block"></span>、14
+          </p>
+          <div class="blank-area print-only block"></div>
+        </li>
+        <li class="problem-card" data-unit="q4">
+          <p class="seq">1、2、4、8、
+            <input type="text" class="ans-input screen-only" data-key="q4" inputmode="numeric" aria-label="第4題" />
+            <span class="gap print-only inline-block"></span>
+          </p>
+          <p class="small">（提示：每次可能不是「加固定數」，想想每次如何變大。）</p>
+          <div class="blank-area print-only block"></div>
+        </li>
+        <li class="problem-card" data-unit="q5">
+          <p class="seq">□ ○ □ ○ □
+            <span class="screen-only">
+              <span class="choice-group" data-key="q5" role="group" aria-label="第5題">
+                <button type="button" class="choice-btn" data-value="□">□</button>
+                <button type="button" class="choice-btn" data-value="○">○</button>
+                <button type="button" class="choice-btn" data-value="△">△</button>
+              </span>
+            </span>
+            <span class="gap print-only inline-block"></span>
+          </p>
+          <div class="blank-area print-only block"></div>
+        </li>
+        <li class="problem-card" data-unit="q6">
+          <p>依規律：9、12、15、18、21……</p>
+          <p>第 6 個數是多少？答：
+            <input type="text" class="ans-input screen-only" data-key="q6" inputmode="numeric" aria-label="第6題" />
+            <span class="answer-box print-only inline-block"></span>
+          </p>
+          <div class="work-space print-only block"></div>
+        </li>
+        <li class="problem-card" data-unit="q7">
+          <p>下面哪一個數列的規律是「每次少 4」？</p>
+          <div class="screen-only">
+            <span class="choice-group" data-key="q7" role="group" aria-label="第7題">
+              <button type="button" class="choice-btn" data-value="A">A. 16、12、8、4</button>
+              <button type="button" class="choice-btn" data-value="B">B. 16、20、24、28</button>
+              <button type="button" class="choice-btn" data-value="C">C. 16、15、14、13</button>
+            </span>
+          </div>
+          <div class="choice-row print-only block">
+            <span>A. 16、12、8、4</span>
+            <span>B. 16、20、24、28</span>
+            <span>C. 16、15、14、13</span>
+          </div>
+          <div class="blank-area print-only block">我選：　　　理由：</div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="summary-panel screen-only" id="quiz-summary">
+      <h2>測驗結果</h2>
+      <p>得分：<strong id="quiz-score">—</strong></p>
+      <p>用時：<span id="quiz-time-used">—</span></p>
+      <p class="small">過關參考：約 5 題以上正確；第 4 題（倍增）可當挑戰。</p>
+      <h3>答錯的題</h3>
+      <ul class="wrong-list" id="quiz-wrong-list"></ul>
+      <p class="small">解析請對照 <a href="answers.html">答案頁</a>。錯題已進 <a href="../../../wrongbook.html?track=p2">錯題本</a>，請到 <a href="../../../review.html?track=p2">重溫</a> 做間隔複習（必做）。</p>
+    </div>
+
+    <footer class="sheet-footer">
+      <span>澳門小二・學界賽預備教學庫・第1週</span>
+      <span>測驗頁・螢幕互動／可列印 A4・限時 15 分</span>
+    </footer>
+  </article>
+
+  <script src="../../../js/track.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script>if(window.MathTrack)MathTrack.initFromPage("p2");</script>
+  <script src="../../../js/wrongbook.js"></script>
+  <script src="quiz.js"></script>
+</body>
+</html>

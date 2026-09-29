@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>錯題重溫｜雙孩分軌</title>
+  <link rel="stylesheet" href="css/print-a4.css" />
+  <link rel="stylesheet" href="css/screen.css" />
+</head>
+<body>
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="index.html">首頁</a>
+    <a href="wrongbook.html" id="nav-wrongbook">錯題本</a>
+    <button type="button" class="btn btn-sm btn-secondary" id="btn-switch-track">切換孩子</button>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印本頁</button>
+  </nav>
+
+  <article class="sheet">
+    <header class="sheet-header">
+      <div class="titles">
+        <h1>錯題重溫 <span id="track-badge" class="badge badge-student">—</span></h1>
+        <div class="meta" id="track-meta">間隔複習（1→3→7 天）・連續 3 次間隔答對 → 已掌握・分孩分庫</div>
+      </div>
+      <span class="badge badge-student">學生用・重溫</span>
+    </header>
+
+    <div class="mode-banner screen-only">
+      <strong>必做節奏：</strong>練習／測驗答錯 → 該孩錯題本自動記錄 → 到期日回來重溫（依技能標籤）。答對拉長間隔；答錯重置。清完「今日到期」才建議換週。
+    </div>
+
+    <div class="toolbar screen-only" role="group" aria-label="重溫設定">
+      <label>
+        <input type="checkbox" id="include-pending" /> 含全部待覆習（不只今日到期）
+      </label>
+      <button type="button" class="btn" id="btn-start-review">開始重溫</button>
+      <span class="progress-text" id="review-progress">尚未開始</span>
+    </div>
+
+    <div id="review-idle" class="review-idle">
+      <p id="review-idle-msg">載入中…</p>
+    </div>
+
+    <div id="review-card" class="review-card screen-only" hidden>
+      <div class="review-meta small" id="review-meta"></div>
+      <p class="wb-prompt" id="review-prompt"></p>
+      <div id="review-input-area"></div>
+      <div class="q-actions">
+        <button type="button" class="btn btn-success" id="btn-check-review">檢查</button>
+        <button type="button" class="btn btn-secondary" id="btn-skip-review">暫時跳過</button>
+      </div>
+      <div class="feedback" id="review-feedback" role="status"></div>
+      <div class="q-actions" id="review-next-wrap" hidden>
+        <button type="button" class="btn" id="btn-next-review">下一題</button>
+      </div>
+    </div>
+
+    <div id="review-done" class="summary-panel screen-only" hidden>
+      <h2>本輪重溫結束</h2>
+      <p id="review-done-msg"></p>
+      <p>
+        <a class="btn" href="wrongbook.html" id="done-wrongbook">回錯題本</a>
+        <a class="btn btn-secondary" href="index.html">回首頁</a>
+      </p>
+    </div>
+
+    <div class="tip">
+      <strong>間隔說明：</strong>第 1 次答對 → 約 1 天後再練；第 2 次答對 → 約 3 天；第 3 次答對 → 標成「已掌握」（約 7 天檔）。中間任何一次答錯，間隔重置回 1 天。
+    </div>
+
+    <footer class="sheet-footer">
+      <span>雙孩教學庫・重溫</span>
+      <span>重溫・間隔複習</span>
+    </footer>
+  </article>
+
+  <script src="js/track.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/wrongbook.js"></script>
+  <script>
+(function () {
+  "use strict";
+  var MT = window.MathTrack;
+  var WB = window.WrongBook;
+  if (!MT || !WB) return;
+  var track = MT.initFromPage("p2") || MT.requireTrack("p2");
+
+  function applyTrackChrome() {
+    track = MT.current() || MT.requireTrack("p2");
+    var badge = document.getElementById("track-badge");
+    var meta = document.getElementById("track-meta");
+    if (badge) badge.textContent = track.fullLabel;
+    if (meta) meta.textContent = "軌道：" + track.fullLabel + "・key " + track.wrongbookKey + "・1→3→7 天";
+    var nb = document.getElementById("nav-wrongbook");
+    if (nb) nb.href = "wrongbook.html?track=" + track.id;
+    var dw = document.getElementById("done-wrongbook");
+    if (dw) dw.href = "wrongbook.html?track=" + track.id;
+    document.body.setAttribute("data-track", track.id);
+  }
+  applyTrackChrome();
+
+  var switchBtn = document.getElementById("btn-switch-track");
+  if (switchBtn) {
+    switchBtn.addEventListener("click", function () {
+      var next = track.id === "p2" ? "k3" : "p2";
+      MT.setTrack(next);
+      location.href = "review.html?track=" + next;
+    });
+  }
+
+  var queue = [];
+  var index = 0;
+  var sessionCorrect = 0;
+  var sessionWrong = 0;
+  var answered = false;
+
+  var idle = document.getElementById("review-idle");
+  var idleMsg = document.getElementById("review-idle-msg");
+  var card = document.getElementById("review-card");
+  var done = document.getElementById("review-done");
+  var progress = document.getElementById("review-progress");
+  var includePending = document.getElementById("include-pending");
+  var promptEl = document.getElementById("review-prompt");
+  var metaEl = document.getElementById("review-meta");
+  var inputArea = document.getElementById("review-input-area");
+  var feedback = document.getElementById("review-feedback");
+  var nextWrap = document.getElementById("review-next-wrap");
+
+  function qs(name) {
+    var m = location.search.match(new RegExp("[?&]" + name + "=([^&]*)"));
+    return m ? decodeURIComponent(m[1]) : "";
+  }
+
+  function updateIdle() {
+    var due = WB.getDue(false);
+    var pending = WB.getDue(true);
+    var st = WB.stats();
+    idleMsg.innerHTML =
+      "（" + track.label + "）今日到期 <strong>" +
+      due.length +
+      "</strong> 題・待覆習共 <strong>" +
+      pending.length +
+      "</strong> 題・已掌握 <strong>" +
+      st.mastered +
+      "</strong> 題。<br />按「開始重溫」做到期題；勾選上方可一次練完全部待覆習。到期清完再換週。";
+  }
+
+  function buildInput(item) {
+    inputArea.innerHTML = "";
+    /* 多空：依 blanks；否則 choice 或單一文字 */
+    if (item.blanks && item.blanks.length > 1) {
+      item.blanks.forEach(function (b, i) {
+        var row = document.createElement("div");
+        row.className = "review-blank-row";
+        var lab = document.createElement("label");
+        lab.textContent = "空格 " + (i + 1) + " ";
+        var inp = document.createElement("input");
+        inp.type = "text";
+        inp.className = "ans-input";
+        inp.setAttribute("data-blank", String(i));
+        inp.setAttribute("autocomplete", "off");
+        lab.appendChild(inp);
+        row.appendChild(lab);
+        inputArea.appendChild(row);
+      });
+      return;
+    }
+    if (item.answerType === "choice" && item.choices && item.choices.length) {
+      var group = document.createElement("span");
+      group.className = "choice-group";
+      group.setAttribute("data-key", "review");
+      item.choices.forEach(function (c) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "choice-btn";
+        btn.setAttribute("data-value", c);
+        btn.textContent = c;
+        btn.addEventListener("click", function () {
+          group.querySelectorAll(".choice-btn").forEach(function (b) {
+            b.classList.remove("is-selected");
+          });
+          btn.classList.add("is-selected");
+        });
+        group.appendChild(btn);
+      });
+      inputArea.appendChild(group);
+      return;
+    }
+    var inp = document.createElement("input");
+    inp.type = "text";
+    inp.className = "ans-input";
+    inp.id = "review-single";
+    inp.setAttribute("autocomplete", "off");
+    inp.setAttribute("aria-label", "你的答案");
+    inputArea.appendChild(inp);
+  }
+
+  function readUserAnswer(item) {
+    if (item.blanks && item.blanks.length > 1) {
+      var vals = [];
+      item.blanks.forEach(function (_, i) {
+        var el = inputArea.querySelector('[data-blank="' + i + '"]');
+        vals.push(el ? el.value : "");
+      });
+      return vals;
+    }
+    var group = inputArea.querySelector(".choice-group");
+    if (group) {
+      var sel = group.querySelector(".choice-btn.is-selected");
+      return sel ? sel.getAttribute("data-value") : "";
+    }
+    var single = document.getElementById("review-single");
+    return single ? single.value : "";
+  }
+
+  function grade(item, user) {
+    if (item.blanks && item.blanks.length > 1 && Array.isArray(user)) {
+      var allOk = true;
+      for (var i = 0; i < item.blanks.length; i++) {
+        var ok = WB.checkAnswer(user[i], item.blanks[i].correctAnswers);
+        if (!ok) allOk = false;
+      }
+      return allOk;
+    }
+    var expected = item.correctAnswers;
+    if (item.blanks && item.blanks.length === 1) {
+      expected = item.blanks[0].correctAnswers;
+    }
+    return WB.checkAnswer(user, expected);
+  }
+
+  function showItem() {
+    answered = false;
+    feedback.classList.remove("is-visible", "ok", "bad", "info");
+    feedback.textContent = "";
+    nextWrap.hidden = true;
+    document.getElementById("btn-check-review").disabled = false;
+
+    if (index >= queue.length) {
+      finishSession();
+      return;
+    }
+    var item = queue[index];
+    progress.textContent = "第 " + (index + 1) + " / " + queue.length + " 題";
+    metaEl.textContent =
+      (item.label || item.id) +
+      "・第 " +
+      (item.week || "?") +
+      " 週・錯 " +
+      (item.timesWrong || 0) +
+      " 次・連續對 " +
+      (item.correctStreak || 0) +
+      "/" +
+      WB.MASTER_STREAK;
+    promptEl.textContent = item.prompt || "（無題幹，請依正確答案回想原題）";
+    buildInput(item);
+    idle.hidden = true;
+    done.hidden = true;
+    card.hidden = false;
+  }
+
+  function finishSession() {
+    card.hidden = true;
+    done.hidden = false;
+    document.getElementById("review-done-msg").innerHTML =
+      "本輪答對 <strong>" +
+      sessionCorrect +
+      "</strong> 題、答錯 <strong>" +
+      sessionWrong +
+      "</strong> 題。<br />請到錯題本查看下次覆習時間；已掌握的題會標成綠色。";
+    progress.textContent = "完成";
+    updateIdle();
+  }
+
+  function startReview(forceId) {
+    sessionCorrect = 0;
+    sessionWrong = 0;
+    index = 0;
+    if (forceId) {
+      var one = WB.getById(forceId);
+      queue = one ? [one] : [];
+    } else {
+      queue = WB.getDue(includePending.checked);
+    }
+    if (!queue.length) {
+      alert("目前沒有需要重溫的題。去做練習／測驗累積錯題，或勾選「含全部待覆習」。");
+      updateIdle();
+      return;
+    }
+    showItem();
+  }
+
+  document.getElementById("btn-start-review").addEventListener("click", function () {
+    startReview(null);
+  });
+
+  document.getElementById("btn-check-review").addEventListener("click", function () {
+    if (answered) return;
+    if (index >= queue.length) return;
+    var item = queue[index];
+    var user = readUserAnswer(item);
+    var empty = false;
+    if (Array.isArray(user)) {
+      empty = user.some(function (v) {
+        return !v;
+      });
+    } else {
+      empty = !user;
+    }
+    if (empty) {
+      feedback.classList.add("is-visible", "info");
+      feedback.classList.remove("ok", "bad");
+      feedback.textContent = "先填完再檢查喔。";
+      return;
+    }
+    var ok = grade(item, user);
+    answered = true;
+    document.getElementById("btn-check-review").disabled = true;
+    feedback.classList.add("is-visible");
+    feedback.classList.remove("ok", "bad", "info");
+    if (ok) {
+      sessionCorrect++;
+      var updated = WB.recordCorrect(item.id);
+      feedback.classList.add("ok");
+      if (updated && updated.status === "mastered") {
+        feedback.textContent =
+          "答對！已連續間隔答對 " +
+          WB.MASTER_STREAK +
+          " 次，標成「已掌握」。太棒了！";
+      } else {
+        var days =
+          WB.INTERVALS[
+            updated && typeof updated.intervalIndex === "number"
+              ? updated.intervalIndex
+              : 0
+          ];
+        feedback.textContent =
+          "答對！下次約 " +
+          days +
+          " 天後再練（連續對 " +
+          (updated ? updated.correctStreak : 0) +
+          "/" +
+          WB.MASTER_STREAK +
+          "）。";
+      }
+    } else {
+      sessionWrong++;
+      WB.recordReviewWrong(item.id);
+      feedback.classList.add("bad");
+      feedback.textContent =
+        "再想想。正確答案是：" +
+        (item.correctAnswer || "—") +
+        "。間隔已重置，可立刻再練或改天回來。";
+    }
+    nextWrap.hidden = false;
+  });
+
+  document.getElementById("btn-next-review").addEventListener("click", function () {
+    index++;
+    showItem();
+  });
+
+  document.getElementById("btn-skip-review").addEventListener("click", function () {
+    index++;
+    showItem();
+  });
+
+  if (window.MathLib) window.MathLib.bindPrintButton("#btn-print");
+
+  updateIdle();
+  var focusId = qs("id");
+  if (focusId) {
+    includePending.checked = true;
+    startReview(focusId);
+  }
+})();
+  </script>
+</body>
+</html>

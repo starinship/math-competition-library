@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>第1週｜找規律・填數（教學）</title>
+  <link rel="stylesheet" href="../../../css/print-a4.css" />
+  <link rel="stylesheet" href="../../../css/screen.css" />
+</head>
+<body data-track="p2">
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="../../../index.html">首頁</a>
+    <a href="practice.html">練習</a>
+    <a href="quiz.html">測驗</a>
+    <a href="answers.html">答案</a>
+    <a href="../../../wrongbook.html?track=p2">錯題本</a>
+    <a href="../../../review.html?track=p2">重溫</a>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印 A4</button>
+  </nav>
+
+  <article class="sheet">
+    <header class="sheet-header">
+      <div class="titles">
+        <h1>第1週｜找規律・填數（教學）</h1>
+        <div class="meta">學界賽專軌・小二程度・家長／教師用・螢幕可逐步教學</div>
+      </div>
+      <span class="badge badge-parent">家長用・教學</span>
+    </header>
+
+    <div class="mode-banner screen-only">
+      <strong>螢幕模式：</strong>用「上一題／下一題」逐步講例題；需要時再按「顯示提示」。列印時會一次展開全部內容與空白卷面。
+    </div>
+
+    <div class="callout pedagogy-note">
+      <div class="callout-title">科學節奏・本週</div>
+      <ul class="mb-0">
+        <li><strong>序列：</strong>明確教學 → 引導 → 獨立練習 → 錯題提取重溫 → 測驗。</li>
+        <li><strong>精熟門檻：</strong>練習約 ≥8/10、測驗約 ≥5/7，且到期錯題清完，再進第 2 週。</li>
+        <li><strong>錯題：</strong>依技能標籤（數列／奇偶／圖形規律）訂正，非整份重刷。</li>
+        <li><strong>停損：</strong>孩子明顯挫折就停；明天只練錯題 2–3 題。</li>
+      </ul>
+    </div>
+
+    <section>
+      <h2>本週學什麼？</h2>
+      <p>學界賽很喜歡考「看出變化的規則」。本週先練最基礎的：數字數列與簡單圖形重複。孩子要做到——能說出規律、能填空、能自己檢查。</p>
+      <div class="callout">
+        <div class="callout-title">學習目標</div>
+        <ul class="mb-0">
+          <li>看出「每次加／減固定數」的規律，並填出缺項。</li>
+          <li>看出奇數、偶數，或「隔一個」的規律。</li>
+          <li>用一句話說出規律（例如：「每次多 3」）。</li>
+        </ul>
+      </div>
+      <div class="tip">
+        <strong>和學界賽的關係：</strong>正式比賽多在小四至小六，但「觀察規律」是底層功夫。小二先練清楚、說明白，以後才接得上較難的數表與圖形推理。
+      </div>
+    </section>
+
+    <section>
+      <h2>例題講解（請和孩子一起做）</h2>
+
+      <div class="toolbar teach-controls screen-only" role="group" aria-label="例題控制">
+        <button type="button" class="btn btn-secondary" id="btn-prev">← 上一題</button>
+        <span class="step-indicator" id="step-indicator">例題 1 / 5</span>
+        <button type="button" class="btn" id="btn-next">下一題 →</button>
+        <button type="button" class="btn btn-warn btn-sm" id="btn-hint">顯示提示／怎麼想</button>
+      </div>
+
+      <div class="example example-slide" data-ex="1">
+        <div class="example-label">例題 1｜每次多幾？</div>
+        <p class="seq">2、4、6、8、<span class="gap">？</span></p>
+        <p class="screen-only small">先請孩子猜：下一個是多少？為什麼？</p>
+        <div class="hint-block">
+          <div class="hint-content">
+            <p><strong>怎麼想：</strong></p>
+            <ol class="steps">
+              <li>看相鄰兩數差多少：4−2＝2，6−4＝2，8−6＝2。</li>
+              <li>規律是「每次多 2」。</li>
+              <li>所以？＝8＋2＝<strong>10</strong>。</li>
+            </ol>
+            <p class="small">家長可問：「下一個呢？再下一個呢？」→ 12、14。鞏固「規律一直有效」。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="example example-slide" data-ex="2">
+        <div class="example-label">例題 2｜中間缺一格</div>
+        <p class="seq">5、8、<span class="gap">？</span>、14、17</p>
+        <p class="screen-only small">先請孩子說：你覺得每次多幾？再用後面的數檢查。</p>
+        <div class="hint-block">
+          <div class="hint-content">
+            <p><strong>怎麼想：</strong></p>
+            <ol class="steps">
+              <li>先看已知的差：8−5＝3，17−14＝3。</li>
+              <li>猜測「每次多 3」。</li>
+              <li>檢查：5→8→11→14→17，剛好接上。</li>
+              <li>所以？＝<strong>11</strong>。</li>
+            </ol>
+            <p class="small">重點：先猜規律，再用已知數「驗算」一次，養成比賽好習慣。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="example example-slide" data-ex="3">
+        <div class="example-label">例題 3｜奇數數列</div>
+        <p class="seq">1、3、5、7、<span class="gap">？</span>、<span class="gap">？</span></p>
+        <p class="screen-only small">這些數有什麼共同點？奇數還是偶數？</p>
+        <div class="hint-block">
+          <div class="hint-content">
+            <p><strong>怎麼想：</strong>都是奇數，每次多 2。？＝<strong>9</strong>，再下一個＝<strong>11</strong>。</p>
+            <p class="small">可順便複習：奇數是 1、3、5、7…；偶數是 2、4、6、8…。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="example example-slide" data-ex="4">
+        <div class="example-label">例題 4｜圖形重複規律</div>
+        <p class="seq">○ △ ○ △ ○ <span class="gap">？</span></p>
+        <p class="screen-only small">請孩子用手指圈出「一組」是什麼。</p>
+        <div class="hint-block">
+          <div class="hint-content">
+            <p><strong>怎麼想：</strong>「圓、三角」一再重複。下一個應是<strong>△</strong>。</p>
+            <p class="small">學界賽圖形題常藏在重複組裡；先圈出一組（○△），再數位置。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="example example-slide" data-ex="5">
+        <div class="example-label">例題 5｜前兩數相加（挑戰・可選）</div>
+        <p class="seq">1、1、2、3、5、<span class="gap">？</span></p>
+        <p class="screen-only small">這一題可以當挑戰：每一項和前面兩項有什麼關係？</p>
+        <div class="hint-block">
+          <div class="hint-content">
+            <p><strong>怎麼想：</strong>從前兩項開始，每一項＝前面兩項相加。</p>
+            <ol class="steps">
+              <li>1＋1＝2</li>
+              <li>1＋2＝3</li>
+              <li>2＋3＝5</li>
+              <li>3＋5＝<strong>8</strong>，所以？＝8</li>
+            </ol>
+            <p class="small">這是趣味延伸，不必要求小二一次精通；能聽懂「相加」即可，學界賽以後才會再見到類似想法。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <details class="parent-guide-details parent-guide">
+      <summary>家長怎麼教（約 15–20 分鐘）</summary>
+      <div class="parent-guide-body">
+        <ol class="steps">
+          <li><strong>暖身 2 分鐘：</strong>口頭玩「2、4、6…接下來？」讓孩子開心進入狀態。</li>
+          <li><strong>一起做例題 1–3：</strong>你示範「找差 → 說規律 → 填空 → 驗算」四步。</li>
+          <li><strong>孩子主講例題 4：</strong>請他指著圖形說「一組是什麼」。說得出比填對更重要。</li>
+          <li><strong>收束：</strong>請孩子用自己的話說：「規律就是……每次……」</li>
+        </ol>
+        <div class="callout">
+          <div class="callout-title">常見卡關與溫柔回應</div>
+          <ul class="mb-0">
+            <li>只會往後填、不會填中間空 → 帶他先算「每步差多少」，再往中間推。</li>
+            <li>說得出但寫錯 → 放慢，要求邊說邊寫「＋2、＋2」。</li>
+            <li>想太快亂猜 → 問：「你用哪兩個數檢查過了？」</li>
+          </ul>
+        </div>
+        <p class="small">下一份：<strong>練習頁</strong>（螢幕可即時核對；也可列印成空白卷）。測前請勿先看答案頁。</p>
+      </div>
+    </details>
+
+    <footer class="sheet-footer">
+      <span>澳門小二・學界賽預備教學庫・第1週</span>
+      <span>教學頁・螢幕互動／可列印 A4</span>
+    </footer>
+  </article>
+
+  <script src="../../../js/track.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script>if(window.MathTrack)MathTrack.initFromPage("p2");</script>
+  <script src="../../../js/teach.js"></script>
+</body>
+</html>

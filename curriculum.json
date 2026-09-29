@@ -1,0 +1,332 @@
+{
+  "title": "雙孩數學教學庫｜K3 數感＋小二學界賽預備",
+  "locale": "zh-TW",
+  "audience": "家長／教師・兩個孩子分軌使用",
+  "print": "A4，離線 HTML；螢幕互動＋列印雙模式",
+  "storage": {
+    "trackKey": "mathLibTrack",
+    "wrongbook": {
+      "p2": "mathWrongbook_p2",
+      "k3": "mathWrongbook_k3",
+      "legacy": "mathLibWrongbook.v1（自動遷移至 p2）"
+    }
+  },
+  "pedagogy": {
+    "summary": "依年齡調認知負荷；精熟學習；間隔提取；輕度穿插；直接教學→引導→獨立→提取重溫→測驗；錯題依技能標籤訂正；家長挫折停損。",
+    "cognitiveLoad": {
+      "k3": "具體數感（圖點／實物）、大字大按鈕、每份 5–8 題、單次 10–15 分；不做應用題長句。",
+      "p2": "朝學界賽底層技能（觀察、關係、讀題、過程）、每份約 7–10 題、單次 15–25 分。"
+    },
+    "masteryLearning": {
+      "rule": "同一週未達練習正確率門檻、或錯題本「今日到期」未清完，不建議進入下一週。",
+      "thresholds": {
+        "k3": "練習約 ≥5/6；小測約 ≥4/5",
+        "p2": "練習約 ≥8/10；測驗約 ≥5/7"
+      },
+      "uiNote": "首頁與各週節奏會標示「精熟再前進」。"
+    },
+    "spacedRetrieval": {
+      "engine": "SM-2-lite",
+      "intervalsDays": [1, 3, 7],
+      "masterAfterCorrectStreak": 3,
+      "perTrackStores": true,
+      "note": "兩個孩子錯題本完全分開，不會互相污染。"
+    },
+    "interleaving": {
+      "k3": "主軸數感／比較；每週最多穿插 1 題簡單規律，避免純阻塞式刷同一題型。",
+      "p2": "主軸技能內混合數字與圖形規律；週間再交錯舊技能（透過錯題重溫）。"
+    },
+    "instructionalSequence": [
+      "明確教學（teach：示範＋怎麼想）",
+      "引導練習（家長陪做例題）",
+      "獨立練習（practice：即時回饋）",
+      "提取重溫（review：間隔提取，desirable difficulty）",
+      "小測／測驗（quiz：獨立表現）"
+    ],
+    "errorAnalysis": {
+      "skillTagsDriveReview": true,
+      "note": "訂正依技能標籤（如「比較多少」），非整份隨機重做。"
+    },
+    "parentGuidance": {
+      "praiseProcess": "稱讚「你有慢慢數／有再檢查」而非只說聰明。",
+      "stopWhenFrustrated": "連錯 2 題、哭泣、強烈抗拒 → 立刻停，明天只練錯題 2–3 題。"
+    }
+  },
+  "tracks": [
+    {
+      "id": "k3",
+      "label": "K3",
+      "fullLabel": "K3｜幼稚園高班數感",
+      "ageHint": "約 5–6 歲",
+      "goal": "數學就緒：數感、比較、簡單規律與圖形，非整數應用題。",
+      "sessionMinutes": "10–15",
+      "itemsPerPractice": "5–8",
+      "wrongbookKey": "mathWrongbook_k3",
+      "weeks": [
+        {
+          "id": "k3-w01",
+          "folder": "tracks/k3/w01-count-compare",
+          "week": 1,
+          "title": "數一數・比多少",
+          "skills": ["數數1-20", "一一對應", "比較多少", "簡單規律"],
+          "level": "K3 核心・具體物",
+          "status": "ready",
+          "sheets": ["teach.html", "practice.html", "quiz.html", "answers.html"],
+          "sessionHint": "10–15 分・練習 6 題・小測 5 題"
+        },
+        {
+          "id": "k3-w02",
+          "folder": "tracks/k3/w02-count-to-20",
+          "week": 2,
+          "title": "數到 20・前後是誰",
+          "skills": ["數數1-20", "前後數", "數字認讀"],
+          "level": "K3 核心",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "k3-w03",
+          "folder": "tracks/k3/w03-more-less-same",
+          "week": 3,
+          "title": "多・少・一樣多（加深）",
+          "skills": ["比較多少", "一一對應", "口頭說比較句"],
+          "level": "K3 核心",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "k3-w04",
+          "folder": "tracks/k3/w04-shapes",
+          "week": 4,
+          "title": "認識形狀",
+          "skills": ["圓方三角", "形狀特徵", "生活中的形狀"],
+          "level": "K3 核心",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "k3-w05",
+          "folder": "tracks/k3/w05-patterns",
+          "week": 5,
+          "title": "簡單重複規律",
+          "skills": ["AB／ABC 規律", "接著排", "說出規律"],
+          "level": "K3 核心",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "k3-w06",
+          "folder": "tracks/k3/w06-compose-10",
+          "week": 6,
+          "title": "湊一湊・認識 10",
+          "skills": ["組成與分解", "手指湊十", "數感"],
+          "level": "K3→小一橋接",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "k3-w07",
+          "folder": "tracks/k3/w07-count-to-50",
+          "week": 7,
+          "title": "數到 50・十個一組",
+          "skills": ["十進直覺", "數數至50", "分組"],
+          "level": "K3→小一橋接",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "k3-w08",
+          "folder": "tracks/k3/w08-positions",
+          "week": 8,
+          "title": "上下左右・第幾個",
+          "skills": ["空間方位", "序數初步"],
+          "level": "K3 核心",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "k3-w09",
+          "folder": "tracks/k3/w09-simple-add",
+          "week": 9,
+          "title": "合起來是多少（實物加）",
+          "skills": ["合起來", "實物加減直覺", "不寫直式"],
+          "level": "K3→小一橋接",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "k3-w10",
+          "folder": "tracks/k3/w10-review-fun",
+          "week": 10,
+          "title": "綜合遊戲複習",
+          "skills": ["數感綜合", "比較", "規律", "形狀"],
+          "level": "階段總結",
+          "status": "planned",
+          "sheets": []
+        }
+      ]
+    },
+    {
+      "id": "p2",
+      "label": "小二",
+      "fullLabel": "小二｜學界賽預備",
+      "ageHint": "約 7–8 歲",
+      "goal": "DSEDJ 學界賽專軌底層能力；由小二扎根橋接小三（正式賽多為小四至小六）。",
+      "sessionMinutes": "15–25",
+      "itemsPerPractice": "7–10",
+      "wrongbookKey": "mathWrongbook_p2",
+      "target": "DSEDJ 學界數學比賽（預備）",
+      "weeks": [
+        {
+          "id": "w01",
+          "folder": "tracks/p2/w01-patterns",
+          "week": 1,
+          "title": "找規律・填數",
+          "skills": ["觀察數列規律", "奇偶／加減規律", "圖形重複規律", "填空推理"],
+          "level": "小二核心",
+          "status": "ready",
+          "sheets": ["teach.html", "practice.html", "quiz.html", "answers.html"],
+          "sessionHint": "15–20 分・練習 10 題・測驗 7 題"
+        },
+        {
+          "id": "w02",
+          "folder": "tracks/p2/w02-sum-diff",
+          "week": 2,
+          "title": "和與差・加減進階",
+          "skills": ["已知和求一部分", "已知差求一部分", "和差關係口訣", "驗算習慣"],
+          "level": "小二→小三橋接",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "w03",
+          "folder": "tracks/p2/w03-word-problems",
+          "week": 3,
+          "title": "應用題入門・讀題畫重點",
+          "skills": ["抓條件與問題", "一至兩步加減應用題", "畫簡圖／線段圖", "單位意識"],
+          "level": "小二→小三橋接",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "w04",
+          "folder": "tracks/p2/w04-clock",
+          "week": 4,
+          "title": "時鐘與時間",
+          "skills": ["整點半點", "經過多久", "前後時刻", "日程簡單計算"],
+          "level": "小二核心",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "w05",
+          "folder": "tracks/p2/w05-figures",
+          "week": 5,
+          "title": "圖形認識・簡單空間",
+          "skills": ["平面圖形特徵", "對稱初步", "數方格與周界直覺", "圖形組合觀察"],
+          "level": "小二核心",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "w06",
+          "folder": "tracks/p2/w06-compare",
+          "week": 6,
+          "title": "比較・排序・多條件",
+          "skills": ["大小多少比較", "排序推理", "表格讀取", "排除法"],
+          "level": "小二→小三橋接",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "w07",
+          "folder": "tracks/p2/w07-multiplication-ready",
+          "week": 7,
+          "title": "乘法預備・等量累加",
+          "skills": ["幾個幾的意義", "乘法口訣連結", "陣列與分組", "簡單乘加混合"],
+          "level": "小二→小三橋接",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "w08",
+          "folder": "tracks/p2/w08-division-share",
+          "week": 8,
+          "title": "除法直覺・平均分與包含",
+          "skills": ["平均分", "包含除", "餘數初步感受", "乘除互逆"],
+          "level": "小三預備",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "w09",
+          "folder": "tracks/p2/w09-money-measure",
+          "week": 9,
+          "title": "金錢與量度",
+          "skills": ["元角兌換", "找續", "長度量感", "單位換算入門"],
+          "level": "小二→小三橋接",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "w10",
+          "folder": "tracks/p2/w10-tables-charts",
+          "week": 10,
+          "title": "表格・簡單統計圖",
+          "skills": ["讀表取數", "比較與合計", "象形圖／長條圖入門", "提問與作答"],
+          "level": "小三預備",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "w11",
+          "folder": "tracks/p2/w11-logic-puzzles",
+          "week": 11,
+          "title": "邏輯推理・學界賽思維入門",
+          "skills": ["條件推理", "真假判斷入門", "配對與排除", "一步多條件"],
+          "level": "學界賽橋接",
+          "status": "planned",
+          "sheets": []
+        },
+        {
+          "id": "w12",
+          "folder": "tracks/p2/w12-mixed-review",
+          "week": 12,
+          "title": "綜合複習・小測驗週",
+          "skills": ["規律＋和差＋應用題", "時間＋圖形", "乘除預備綜合", "錯題回顧與節奏檢視"],
+          "level": "階段總結",
+          "status": "planned",
+          "sheets": []
+        }
+      ]
+    }
+  ],
+  "weekly_rhythm": {
+    "shared": {
+      "day1": "教學（teach）明確示範＋家長怎麼教",
+      "day2_3": "練習（practice）獨立作答；錯題進該孩錯題本",
+      "day3_5_or_4": "錯題重溫（review）必做：到期題；依技能標籤訂正",
+      "day4_or_5": "測驗／小測（quiz）；錯題再進錯題本",
+      "day5_plus": "間隔複習：1→3→7 天；連續 3 次間隔答對→已掌握",
+      "masteryGate": "未達正確率門檻或到期錯題未清 → 不進下一週"
+    },
+    "k3": "單次 10–15 分；題少圖大；挫折立刻停。",
+    "p2": "單次 15–25 分；強調說出過程；可列印空白卷。"
+  },
+  "reviewPolicy": {
+    "engine": "SM-2-lite",
+    "intervalsDays": [1, 3, 7],
+    "masterAfterCorrectStreak": 3,
+    "onWrong": "reset interval to 1 day, status=learning",
+    "storage": "localStorage 分軌：mathWrongbook_p2 / mathWrongbook_k3",
+    "pages": ["wrongbook.html", "review.html"],
+    "required": true,
+    "note": "錯題重溫與間隔複習為每週必做閉環。學習路徑：teach → practice → review-wrong → quiz → spaced review。"
+  },
+  "notes": [
+    "兩個孩子分開選軌；錯題本不會混在一起。",
+    "K3 不做小二應用題；小二不做幼稚園刷數遊戲化超前。",
+    "離線、無 CDN；相對路徑；繁體中文 zh-TW。",
+    "螢幕可教學／練習／測驗；Ctrl+P 列印 A4 空白卷。"
+  ]
+}

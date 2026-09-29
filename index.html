@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>雙孩數學教學庫｜選軌：小二｜K3</title>
+  <link rel="stylesheet" href="css/print-a4.css" />
+  <link rel="stylesheet" href="css/screen.css" />
+</head>
+<body>
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="README.md">說明（README）</a>
+    <a href="curriculum.json">課程大綱 JSON</a>
+    <a href="wrongbook.html" id="nav-wrongbook">錯題本</a>
+    <a href="review.html" id="nav-review">重溫</a>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印本頁</button>
+  </nav>
+
+  <article class="sheet">
+    <div class="index-hero">
+      <h1>雙孩數學教學庫</h1>
+      <p class="subtitle">兩個孩子・兩條科學分軌・螢幕互動＋A4 列印・離線可用</p>
+      <p class="small">請先選擇孩子的軌道。錯題本與重溫會<strong>自動分開存放</strong>（小二 ≠ K3），不會混在一起。</p>
+    </div>
+
+    <section class="track-picker screen-only" aria-label="選擇軌道">
+      <h2>選擇孩子</h2>
+      <div class="track-cards">
+        <button type="button" class="track-card" data-pick="p2" id="pick-p2">
+          <span class="track-emoji" aria-hidden="true">📘</span>
+          <span class="track-name">小二</span>
+          <span class="track-desc">約 7–8 歲・學界賽預備<br />15–25 分／次・觀察規律與讀題</span>
+        </button>
+        <button type="button" class="track-card" data-pick="k3" id="pick-k3">
+          <span class="track-emoji" aria-hidden="true">📗</span>
+          <span class="track-name">K3</span>
+          <span class="track-desc">約 5–6 歲・幼稚園高班數感<br />10–15 分／次・數一數・比多少</span>
+        </button>
+      </div>
+      <p class="small" id="track-status">尚未選擇軌道。點上方卡片開始。</p>
+    </section>
+
+    <div class="feature-note screen-only rhythm-required">
+      <strong>學習閉環（必做）＋精熟再前進：</strong>
+      <div class="loop-flow">
+        <span>教學</span><span class="arrow">→</span>
+        <span>練習</span><span class="arrow">→</span>
+        <span>錯題重溫</span><span class="arrow">→</span>
+        <span>測驗</span><span class="arrow">→</span>
+        <span>間隔複習</span>
+      </div>
+      <p class="small" style="margin:8px 0 0">
+        <strong>精熟門檻：</strong>練習未達標（K3≈5/6；小二≈8/10）或錯題本「今日到期」未清完 → <strong>不要進下一週</strong>。
+        間隔：答對 1→3→7 天；連續 3 次間隔答對→已掌握。挫折（連錯 2 題／抗拒）→立刻停。
+      </p>
+    </div>
+
+    <div id="panel-p2" class="track-panel" hidden>
+      <section>
+        <h2>📘 小二｜學界賽預備（12 週）</h2>
+        <p class="small">DSEDJ 學界賽專軌底層能力。正式參賽多為小四至小六；本軌由小二扎根。單次約 15–25 分。</p>
+        <table class="simple">
+          <thead><tr><th>日次</th><th>做什麼</th><th>時間</th></tr></thead>
+          <tbody>
+            <tr><td>第 1 天</td><td><strong>教學</strong>：逐步例題＋家長怎麼教</td><td>15–20 分</td></tr>
+            <tr><td>第 2–3 天</td><td><strong>練習</strong>：核對；錯題進小二錯題本</td><td>15–20 分</td></tr>
+            <tr><td>第 3.5／4 天</td><td><strong>錯題重溫（必做）</strong>：到期題；依技能標籤訂正</td><td>10–15 分</td></tr>
+            <tr><td>第 4／5 天</td><td><strong>測驗</strong>：限時或自由；錯題再進錯題本</td><td>15 分＋訂正</td></tr>
+            <tr><td>之後</td><td><strong>間隔複習</strong>＋精熟達標才進下一週</td><td>約 10 分</td></tr>
+          </tbody>
+        </table>
+
+        <div class="unit-card">
+          <h2>第 1 週｜找規律・填數 ✅ 已備妥</h2>
+          <div class="week-meta">小二核心・15–20 分・練習 10 題・測驗 7 題・精熟≈8/10</div>
+          <div class="links">
+            <a href="tracks/p2/w01-patterns/teach.html">教學</a>
+            <a href="tracks/p2/w01-patterns/practice.html">練習</a>
+            <a href="tracks/p2/w01-patterns/quiz.html">測驗</a>
+            <a href="tracks/p2/w01-patterns/answers.html">答案</a>
+            <a href="review.html?track=p2">錯題重溫</a>
+            <a href="wrongbook.html?track=p2">錯題本</a>
+          </div>
+        </div>
+        <div class="unit-card locked"><h2>第 2–12 週</h2><div class="week-meta">見 curriculum.json（和差、應用題、時間、圖形、乘除預備…）</div><div class="links">教材規劃中</div></div>
+      </section>
+    </div>
+
+    <div id="panel-k3" class="track-panel" hidden>
+      <section>
+        <h2>📗 K3｜幼稚園高班數感（約 10 週）</h2>
+        <p class="small">具體數感：數一數、比多少、形狀、簡單規律。<strong>不是</strong>小二應用題。單次約 10–15 分・大圖大按鈕・5–8 題。</p>
+        <table class="simple">
+          <thead><tr><th>日次</th><th>做什麼</th><th>時間</th></tr></thead>
+          <tbody>
+            <tr><td>第 1 天</td><td><strong>教學</strong>：一起指著數、說多／少</td><td>10–12 分</td></tr>
+            <tr><td>第 2–3 天</td><td><strong>練習</strong>：點選；錯題進 K3 錯題本</td><td>10–15 分</td></tr>
+            <tr><td>中間</td><td><strong>錯題重溫（必做）</strong>：只練到期／錯題技能</td><td>5–10 分</td></tr>
+            <tr><td>週末</td><td><strong>小測</strong> 5 題；精熟≈4/5 才進下週</td><td>8–10 分</td></tr>
+          </tbody>
+        </table>
+        <div class="tip"><strong>家長停損：</strong>連錯 2 題或煩躁 → 立刻收工，明天只練 2–3 題錯題。</div>
+
+        <div class="unit-card">
+          <h2>第 1 週｜數一數・比多少 ✅ 已備妥</h2>
+          <div class="week-meta">K3 核心・10–15 分・練習 6 題・小測 5 題・精熟≈5/6</div>
+          <div class="links">
+            <a href="tracks/k3/w01-count-compare/teach.html">教學</a>
+            <a href="tracks/k3/w01-count-compare/practice.html">練習</a>
+            <a href="tracks/k3/w01-count-compare/quiz.html">小測</a>
+            <a href="tracks/k3/w01-count-compare/answers.html">答案</a>
+            <a href="review.html?track=k3">錯題重溫</a>
+            <a href="wrongbook.html?track=k3">錯題本</a>
+          </div>
+        </div>
+        <div class="unit-card locked"><h2>第 2–10 週</h2><div class="week-meta">數到 20／50、形狀、規律、湊十、方位…（見 curriculum.json）</div><div class="links">教材規劃中</div></div>
+      </section>
+    </div>
+
+    <section>
+      <h2>科學設計摘要</h2>
+      <ul>
+        <li><strong>認知負荷</strong>：K3 具體短少；小二朝賽事技能、時間稍長。</li>
+        <li><strong>精熟學習</strong>：達標＋清完到期錯題才換週。</li>
+        <li><strong>間隔提取</strong>：1→3→7 天；分孩分庫。</li>
+        <li><strong>輕度穿插</strong>：主軸內混 1 題相關技能，不純阻塞刷題。</li>
+        <li><strong>教學序列</strong>：明確教學 → 引導 → 獨立 → 提取重溫 → 測驗。</li>
+        <li><strong>錯誤分析</strong>：依技能標籤訂正，非整份隨機重做。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>資料夾對照</h2>
+      <table class="simple">
+        <thead><tr><th>路徑</th><th>內容</th></tr></thead>
+        <tbody>
+          <tr><td>index.html</td><td>選軌首頁</td></tr>
+          <tr><td>tracks/p2/</td><td>小二各週</td></tr>
+          <tr><td>tracks/k3/</td><td>K3 各週</td></tr>
+          <tr><td>wrongbook.html / review.html</td><td>依目前軌道過濾</td></tr>
+          <tr><td>js/track.js</td><td>軌道與分庫 key</td></tr>
+          <tr><td>curriculum.json</td><td>雙軌大綱＋pedagogy</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <footer class="sheet-footer">
+      <span>雙孩數學教學庫・K3＋小二</span>
+      <span>離線・螢幕＋A4</span>
+    </footer>
+  </article>
+
+  <script src="js/track.js"></script>
+  <script src="js/common.js"></script>
+  <script>
+(function () {
+  "use strict";
+  var MT = window.MathTrack;
+  if (!MT) return;
+
+  function showTrack(id) {
+    MT.setTrack(id);
+    document.getElementById("panel-p2").hidden = id !== "p2";
+    document.getElementById("panel-k3").hidden = id !== "k3";
+    document.querySelectorAll(".track-card").forEach(function (c) {
+      c.classList.toggle("is-selected", c.getAttribute("data-pick") === id);
+    });
+    var t = MT.TRACKS[id];
+    var st = document.getElementById("track-status");
+    if (st && t) {
+      st.innerHTML =
+        "目前軌道：<strong>" +
+        t.fullLabel +
+        "</strong>　・錯題庫 key：<code>" +
+        t.wrongbookKey +
+        "</code>";
+    }
+    var wb = document.getElementById("nav-wrongbook");
+    var rv = document.getElementById("nav-review");
+    if (wb) wb.href = "wrongbook.html?track=" + id;
+    if (rv) rv.href = "review.html?track=" + id;
+  }
+
+  document.querySelectorAll("[data-pick]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      showTrack(btn.getAttribute("data-pick"));
+    });
+  });
+
+  var cur = MT.initFromPage(null);
+  if (cur) showTrack(cur.id);
+  if (window.MathLib) window.MathLib.bindPrintButton("#btn-print");
+})();
+  </script>
+</body>
+</html>

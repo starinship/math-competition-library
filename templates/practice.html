@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<!-- 複製到 tracks/p2/wXX-.../ 或 tracks/k3/wXX-.../ 後調整路徑與 data-track -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>【模板】練習頁 — 澳門學界賽預備</title>
+  <link rel="stylesheet" href="../../css/print-a4.css" />
+  <link rel="stylesheet" href="../../css/screen.css" />
+</head>
+<body>
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="../../index.html">首頁</a>
+    <a href="#">教學</a>
+    <a href="#">測驗</a>
+    <a href="#">答案</a>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印 A4</button>
+  </nav>
+
+  <article class="sheet">
+    <header class="sheet-header">
+      <div class="titles">
+        <h1>第〇週｜單元標題（練習）</h1>
+        <div class="meta">學界賽專軌・小二程度・學生用</div>
+      </div>
+      <span class="badge badge-student">學生用・練習</span>
+    </header>
+
+    <div class="mode-banner screen-only">
+      <strong>螢幕模式：</strong>填答後檢查。完整範例見 tracks/p2/w01-patterns/practice.html（需自訂 KEYS）。
+    </div>
+
+    <ol class="questions">
+      <li class="problem-card" data-unit="q1">
+        <p class="seq">1、3、5、7、
+          <input type="text" class="ans-input screen-only" data-key="q1" />
+          <span class="gap print-only inline-block"></span>
+        </p>
+        <div class="blank-area print-only block"></div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q1">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+    </ol>
+
+    <footer class="sheet-footer">
+      <span>澳門小二・學界賽預備教學庫</span>
+      <span>練習頁・螢幕／列印</span>
+    </footer>
+  </article>
+
+  <script src="../../js/common.js"></script>
+  <!-- 複製並修改 js/practice.js 的 KEYS 後引用 -->
+</body>
+</html>
