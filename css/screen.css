@@ -729,3 +729,158 @@ body.track-k3 .sheet {
 }
 body[data-track="k3"] .nav-bar a[href*="track=k3"],
 body[data-track="p2"] .nav-bar { /* marker only */ }
+
+/* ---------- 第 2 週新增：線段圖／數字火車／過關判定／停損提示 ---------- */
+/* 線段圖（小二和差）：螢幕與列印共用，黑白可辨 */
+.bar-model {
+  margin: 10px 0 12px;
+  padding: 10px 12px;
+  border: 1.5px dashed #9fb3c8;
+  border-radius: 8px;
+  background: #fbfcfe;
+  font-size: 0.95rem;
+}
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+.bar-name {
+  flex: 0 0 4.6em;
+  font-weight: 700;
+  text-align: right;
+}
+.bar-track {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: stretch;
+  min-height: 30px;
+}
+.bar-seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  border: 2px solid #1a4d8c;
+  background: #e3ecf7;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.bar-seg + .bar-seg { border-left-width: 0; }
+.bar-seg.bar-unknown {
+  background: #fff6db;
+  border-style: dashed;
+  border-color: #8a5a00;
+}
+.bar-seg.bar-diff {
+  background: #fdecee;
+  border-style: dashed;
+  border-color: #b00020;
+}
+.bar-brace {
+  border: 2px solid #1a4d8c;
+  border-bottom: 0;
+  min-height: 12px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1;
+  padding-top: 2px;
+}
+.bar-caption { font-size: 0.85rem; color: #445; margin: 4px 0 0; }
+
+/* 算式家族（和差關係） */
+.fact-family {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin: 6px 0;
+}
+.fact-family span {
+  padding: 4px 10px;
+  border: 1.5px solid #c5d0dc;
+  border-radius: 6px;
+  background: #fff;
+}
+.list-table td, .list-table th { text-align: center; }
+.list-table tr.is-hit td { background: #e8f5ee; font-weight: 800; }
+
+/* 數字火車（K3 前後數） */
+.num-train {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0 12px;
+  padding: 12px;
+  background: #f7faf8;
+  border-radius: 12px;
+  border: 1.5px dashed #a8c5b5;
+}
+.num-car {
+  min-width: 64px;
+  min-height: 60px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 800;
+  border: 3px solid #2d6a4f;
+  border-radius: 10px;
+  background: #fff;
+}
+.num-car.is-gap {
+  border-style: dashed;
+  color: #8a5a00;
+  background: #fff6db;
+}
+.num-engine { font-size: 2rem; }
+.num-card-big {
+  display: inline-block;
+  min-width: 2.2em;
+  padding: 6px 14px;
+  font-size: 3rem;
+  font-weight: 800;
+  border: 3px solid #2d6a4f;
+  border-radius: 12px;
+  background: #fff;
+  text-align: center;
+}
+.big-visual.dot-rows { display: block; font-size: 1.6rem; letter-spacing: 0.08em; text-align: left; padding-left: 18px; }
+.dot-rows .dot-row { display: block; }
+
+/* 過關判定與停損提示 */
+.verdict {
+  margin: 10px 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  display: none;
+}
+.verdict.is-visible { display: block; }
+.verdict.pass { background: #e8f5ee; border: 2px solid #1b6b3a; color: #124d29; }
+.verdict.notyet { background: #fff6db; border: 2px solid #8a5a00; color: #5c3c00; }
+.verdict ul { margin: 6px 0 0; font-weight: 400; }
+.stop-cue {
+  display: none;
+  margin: 10px 0;
+  padding: 10px 12px;
+  border: 2px solid #b00020;
+  border-radius: 8px;
+  background: #fdecee;
+  font-weight: 700;
+}
+.stop-cue.is-visible { display: block; }
+@media print {
+  .verdict, .stop-cue { display: none !important; }
+  .bar-seg, .bar-brace, .num-car, .num-card-big { background: #fff !important; }
+}
+@media screen and (max-width: 560px) {
+  .bar-name { flex-basis: 3.6em; font-size: 0.85rem; }
+  .num-car { min-width: 52px; min-height: 52px; font-size: 1.6rem; }
+}

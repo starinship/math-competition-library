@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>第2週｜和與差・加減進階（教學）</title>
+  <link rel="stylesheet" href="../../../css/print-a4.css" />
+  <link rel="stylesheet" href="../../../css/screen.css" />
+</head>
+<body data-track="p2">
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="../../../index.html">首頁</a>
+    <a href="practice.html">練習</a>
+    <a href="quiz.html">測驗</a>
+    <a href="answers.html">答案</a>
+    <a href="../../../wrongbook.html?track=p2">錯題本</a>
+    <a href="../../../review.html?track=p2">重溫</a>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印 A4</button>
+  </nav>
+
+  <article class="sheet">
+    <header class="sheet-header">
+      <div class="titles">
+        <h1>第2週｜和與差・加減進階（教學）</h1>
+        <div class="meta">學界賽專軌・小二→小三橋接・家長／教師用・螢幕可逐步教學</div>
+      </div>
+      <span class="badge badge-parent">家長用・教學</span>
+    </header>
+
+    <div class="mode-banner screen-only">
+      <strong>螢幕模式：</strong>用「上一題／下一題」逐步講例題；需要時再按「顯示提示」。列印時會一次展開全部內容。
+    </div>
+
+    <div class="callout pedagogy-note">
+      <div class="callout-title">科學節奏・本週</div>
+      <ul class="mb-0">
+        <li><strong>先決條件：</strong>第 1 週練習約 ≥8/10、測驗約 ≥5/7，且錯題本「今日到期」已清完，才開始本週。</li>
+        <li><strong>序列：</strong>明確教學 → 引導 → 獨立練習 → 錯題提取重溫 → 測驗。</li>
+        <li><strong>精熟門檻：</strong>練習約 ≥8/10、測驗約 ≥5/7，且到期錯題清完，再進第 3 週。</li>
+        <li><strong>穿插溫故：</strong>練習與測驗各混入 1–2 題第 1 週「找規律」，幫助長期記憶。</li>
+        <li><strong>停損：</strong>連錯 2 題、哭泣或強烈抗拒 → 立刻停；明天只練錯題 2–3 題。</li>
+      </ul>
+    </div>
+
+    <section>
+      <h2>本週學什麼？</h2>
+      <p>學界賽是<strong>筆試</strong>，評分看「有沒有清楚的過程」。本週把加減法升級成「看關係」：誰是總數、誰是部分、誰大誰小、差多少。孩子要做到——<strong>先畫圖、再列式、寫答句、最後驗算</strong>。</p>
+      <div class="callout">
+        <div class="callout-title">學習目標</div>
+        <ul class="mb-0">
+          <li>已知「總數（和）」和其中一部分，求另一部分：總數 − 一部分 ＝ 另一部分。</li>
+          <li>已知「差」（比……多／比……少），求較大數或較小數；先找出<strong>誰大誰小</strong>，不要見「多」就加。</li>
+          <li>懂得一組算式家族（例如 18＋17＝35、35−18＝17、35−17＝18）。</li>
+          <li>每題用相反的算法<strong>驗算</strong>一次。</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">和差關係口訣（貼在書桌旁）</div>
+        <ul class="mb-0">
+          <li><strong>求總數用加</strong>：部分 ＋ 部分 ＝ 總數</li>
+          <li><strong>求部分用減</strong>：總數 − 一部分 ＝ 另一部分</li>
+          <li><strong>求差用減</strong>：大數 − 小數 ＝ 差</li>
+          <li><strong>求大數用加</strong>：小數 ＋ 差 ＝ 大數</li>
+          <li><strong>求小數用減</strong>：大數 − 差 ＝ 小數</li>
+          <li><strong>做完要驗算</strong>：加法用減法驗，減法用加法驗。</li>
+        </ul>
+      </div>
+
+      <div class="tip">
+        <strong>四步作答格式（學界賽好習慣）：</strong>① 圖：畫線段圖，標出已知和「？」　② 式：寫出算式　③ 答：寫完整答句（要有單位，例如「17 個」）　④ 驗：用相反算法檢查。
+      </div>
+    </section>
+
+    <section>
+      <h2>例題講解（請和孩子一起做）</h2>
+
+      <div class="toolbar teach-controls screen-only" role="group" aria-label="例題控制">
+        <button type="button" class="btn btn-secondary" id="btn-prev">← 上一題</button>
+        <span class="step-indicator" id="step-indicator">例題 1 / 5</span>
+        <button type="button" class="btn" id="btn-next">下一題 →</button>
+        <button type="button" class="btn btn-warn btn-sm" id="btn-hint">顯示提示／怎麼想</button>
+      </div>
+
+      <div class="example example-slide" data-ex="1">
+        <div class="example-label">例題 1｜已知總數，求一部分</div>
+        <p>籃子裡有蘋果和橙共 35 個，其中蘋果有 18 個。橙有多少個？</p>
+        <div class="bar-model" aria-label="線段圖：總數 35，蘋果 18，橙未知">
+          <div class="bar-row"><span class="bar-name"></span><div class="bar-track"><div class="bar-brace" style="flex:35">共 35 個</div></div></div>
+          <div class="bar-row"><span class="bar-name">水果</span><div class="bar-track"><span class="bar-seg" style="flex:18">蘋果 18</span><span class="bar-seg bar-unknown" style="flex:17">橙 ？</span></div></div>
+        </div>
+        <p class="screen-only small">先請孩子指出：哪個是總數？哪個是部分？要求的是什麼？</p>
+        <div class="hint-block">
+          <div class="hint-content">
+            <p><strong>怎麼想：</strong></p>
+            <ol class="steps">
+              <li>圖：整條是總數 35；蘋果是其中一段 18；橙是另一段「？」。</li>
+              <li>式：求部分用減 → 35 − 18 ＝ 17</li>
+              <li>答：橙有 <strong>17</strong> 個。</li>
+              <li>驗：17 ＋ 18 ＝ 35 ✓（兩部分加起來等於總數）</li>
+            </ol>
+            <p class="small">家長可問：「如果橙有 17 個，蘋果和橙加起來是多少？」讓孩子自己說出驗算。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="example example-slide" data-ex="2">
+        <div class="example-label">例題 2｜比較多：求較大數</div>
+        <p>弟弟有 26 張貼紙，哥哥比弟弟多 8 張。哥哥有多少張？</p>
+        <div class="bar-model" aria-label="線段圖：弟弟 26，哥哥比弟弟多 8">
+          <div class="bar-row"><span class="bar-name">弟弟</span><div class="bar-track"><span class="bar-seg" style="flex:26">26</span><span style="flex:8"></span></div></div>
+          <div class="bar-row"><span class="bar-name">哥哥</span><div class="bar-track"><span class="bar-seg" style="flex:26">和弟弟一樣 26</span><span class="bar-seg bar-diff" style="flex:8">多 8</span></div></div>
+          <p class="bar-caption">哥哥的線段＝弟弟那麼長，再多出 8。</p>
+        </div>
+        <div class="hint-block">
+          <div class="hint-content">
+            <p><strong>怎麼想：</strong></p>
+            <ol class="steps">
+              <li>誰大誰小？「哥哥比弟弟<strong>多</strong>」→ 哥哥是大數，弟弟是小數，差是 8。</li>
+              <li>式：求大數用加 → 26 ＋ 8 ＝ 34</li>
+              <li>答：哥哥有 <strong>34</strong> 張。</li>
+              <li>驗：34 − 26 ＝ 8 ✓（相差真的是 8）</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="example example-slide" data-ex="3">
+        <div class="example-label">例題 3｜小心陷阱：見「多」不一定加</div>
+        <p>哥哥有 34 張貼紙，哥哥比弟弟多 8 張。弟弟有多少張？</p>
+        <div class="bar-model" aria-label="線段圖：哥哥 34，比弟弟多 8，弟弟未知">
+          <div class="bar-row"><span class="bar-name"></span><div class="bar-track"><div class="bar-brace" style="flex:34">哥哥共 34</div></div></div>
+          <div class="bar-row"><span class="bar-name">哥哥</span><div class="bar-track"><span class="bar-seg" style="flex:26">和弟弟一樣</span><span class="bar-seg bar-diff" style="flex:8">多 8</span></div></div>
+          <div class="bar-row"><span class="bar-name">弟弟</span><div class="bar-track"><span class="bar-seg bar-unknown" style="flex:26">？</span><span style="flex:8"></span></div></div>
+        </div>
+        <p class="screen-only small">先問孩子：題目有「多」字，是不是一定用加？誰比較多？</p>
+        <div class="hint-block">
+          <div class="hint-content">
+            <p><strong>怎麼想：</strong></p>
+            <ol class="steps">
+              <li>誰大誰小？哥哥比較多 → 哥哥 34 是大數；要求的弟弟是<strong>小數</strong>。</li>
+              <li>式：求小數用減 → 34 − 8 ＝ 26</li>
+              <li>答：弟弟有 <strong>26</strong> 張。</li>
+              <li>驗：26 ＋ 8 ＝ 34 ✓</li>
+            </ol>
+            <p class="small">和例題 2 比一比：同一組數，問法不同，算法就不同。學界賽很愛考這種「字眼陷阱」，所以一定要先畫圖、先找誰大誰小。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="example example-slide" data-ex="4">
+        <div class="example-label">例題 4｜算式家族與填方格</div>
+        <p>已知 28 ＋ 15 ＝ 43，你還能寫出哪兩條減法？</p>
+        <div class="fact-family"><span>28 ＋ 15 ＝ 43</span><span>15 ＋ 28 ＝ 43</span><span>43 − 15 ＝ ？</span><span>43 − 28 ＝ ？</span></div>
+        <p>再試：（1）□ ＋ 24 ＝ 61　（2）50 − □ ＝ 18</p>
+        <div class="hint-block">
+          <div class="hint-content">
+            <p><strong>怎麼想：</strong>同一組三個數（兩個部分、一個總數），可以寫成 2 條加法、2 條減法。</p>
+            <ol class="steps">
+              <li>43 − 15 ＝ <strong>28</strong>；43 − 28 ＝ <strong>15</strong>。</li>
+              <li>（1）□ 和 24 是兩個部分，61 是總數 → □ ＝ 61 − 24 ＝ <strong>37</strong>。驗：37 ＋ 24 ＝ 61 ✓</li>
+              <li>（2）50 是總數，□ 和 18 是兩個部分 → □ ＝ 50 − 18 ＝ <strong>32</strong>。驗：50 − 32 ＝ 18 ✓</li>
+            </ol>
+            <p class="small">先問「誰是總數？」再決定用加或減，比死記規則更可靠。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="example example-slide" data-ex="5">
+        <div class="example-label">例題 5｜知道和又知道差（挑戰・可選）</div>
+        <p>兩個數相加是 20，大數比小數多 4。兩個數各是多少？</p>
+        <p class="screen-only small">用「列表法」：一行一行試，直到和與差都對。</p>
+        <div class="hint-block">
+          <div class="hint-content">
+            <p><strong>怎麼想（列表法）：</strong>先寫和是 20 的組合，再看差是不是 4。</p>
+            <table class="simple list-table">
+              <thead><tr><th>大數</th><th>小數</th><th>和</th><th>差</th><th>對嗎？</th></tr></thead>
+              <tbody>
+                <tr><td>10</td><td>10</td><td>20</td><td>0</td><td>✗</td></tr>
+                <tr><td>11</td><td>9</td><td>20</td><td>2</td><td>✗</td></tr>
+                <tr class="is-hit"><td>12</td><td>8</td><td>20</td><td>4</td><td>✓</td></tr>
+                <tr><td>13</td><td>7</td><td>20</td><td>6</td><td>✗（差太大）</td></tr>
+              </tbody>
+            </table>
+            <p>答：大數是 <strong>12</strong>，小數是 <strong>8</strong>。驗：12 ＋ 8 ＝ 20 ✓；12 − 8 ＝ 4 ✓</p>
+            <p class="small">發現：大數每多 1、小數每少 1，差就多 2。這是趣味延伸；小二能用列表找出答案已很好，不必教公式。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <details class="parent-guide-details parent-guide">
+      <summary>家長怎麼教（約 20–25 分鐘）</summary>
+      <div class="parent-guide-body">
+        <ol class="steps">
+          <li><strong>溫故 2 分鐘（第 1 週）：</strong>口頭問「10、13、16、？」（19）及「30、25、20、？」（15），請孩子說出規律。</li>
+          <li><strong>實物熱身 3 分鐘：</strong>拿 10 粒積木分成兩堆，問「總數幾？一堆幾？另一堆幾？」讓孩子感受「部分＋部分＝總數」。</li>
+          <li><strong>一起做例題 1–3：</strong>你示範「圖 → 式 → 答 → 驗」四步，並把線段圖畫在紙上。</li>
+          <li><strong>孩子主講例題 3：</strong>請他自己說出「誰比較多？要求的是大數還是小數？」說得出比算得快更重要。</li>
+          <li><strong>收束：</strong>請孩子用自己的話說口訣：「求部分用……，求大數用……，求小數用……」</li>
+        </ol>
+        <div class="callout">
+          <div class="callout-title">常見卡關與溫柔回應</div>
+          <ul class="mb-0">
+            <li>見「多」就加、見「少」就減 → 回到圖：先畫兩條線段，問「哪一條比較長？要求的是長的還是短的？」</li>
+            <li>退位減法算錯（如 35 − 18）→ 允許用「35 − 20 ＋ 2」或數線跳數，重點是驗算能抓到錯。</li>
+            <li>不想畫圖 → 告訴他「學界賽評分看過程，圖就是你的過程」，只要求畫最簡單的兩條線。</li>
+            <li>沒寫單位 → 答句一定要寫「個／張／厘米／元」。</li>
+          </ul>
+        </div>
+        <p class="small">下一份：<strong>練習頁</strong>（螢幕可即時核對；也可列印成空白卷，請孩子在虛線框寫圖和算式）。測前請勿先看答案頁。</p>
+      </div>
+    </details>
+
+    <footer class="sheet-footer">
+      <span>澳門小二・學界賽預備教學庫・第2週</span>
+      <span>教學頁・螢幕互動／可列印 A4</span>
+    </footer>
+  </article>
+
+  <script src="../../../js/track.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script>if(window.MathTrack)MathTrack.initFromPage("p2");</script>
+  <script src="../../../js/teach.js"></script>
+</body>
+</html>

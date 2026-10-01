@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>第2週｜和與差・加減進階（練習）</title>
+  <link rel="stylesheet" href="../../../css/print-a4.css" />
+  <link rel="stylesheet" href="../../../css/screen.css" />
+</head>
+<body data-track="p2">
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="../../../index.html">首頁</a>
+    <a href="teach.html">教學</a>
+    <a href="quiz.html">測驗</a>
+    <a href="answers.html">答案</a>
+    <a href="../../../wrongbook.html?track=p2">錯題本</a>
+    <a href="../../../review.html?track=p2">重溫</a>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印 A4</button>
+  </nav>
+
+  <article class="sheet">
+    <header class="sheet-header">
+      <div class="titles">
+        <h1>第2週｜和與差・加減進階（練習）</h1>
+        <div class="meta">學界賽專軌・小二→小三橋接・學生用・共 10 題（含第 1 週溫故 2 題）</div>
+      </div>
+      <span class="badge badge-student">學生用・練習</span>
+    </header>
+
+    <div class="mode-banner screen-only">
+      <strong>螢幕模式：</strong>先在紙上畫圖、寫算式，再把答案填入空格，按「檢查」立刻看回饋。「算式」格是寫給家長看的，不計分。也可按上方「全部檢查」看總分。列印時會變成空白作答卷。
+    </div>
+
+    <div class="toolbar screen-only" role="group" aria-label="練習進度">
+      <div class="progress-bar-wrap" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
+      <span class="progress-text" id="progress-text">已檢查 0 / 10　答對 0</span>
+      <button type="button" class="btn btn-success" id="btn-check-all">全部檢查</button>
+    </div>
+
+    <div class="stop-cue screen-only" id="stop-cue" role="alert">家長停損：已連錯 2 題。請先停一停、喝口水；今天可以到此為止，明天只重做錯題 2–3 題。</div>
+
+    <div class="meta-fields">
+      <span class="print-only">姓名：<span class="answer-line" style="min-width:6em"></span>
+         日期：<span class="answer-line" style="min-width:5em"></span></span>
+      <label class="screen-only">姓名 <input class="meta-input" type="text" autocomplete="name" /></label>
+      <label class="screen-only">日期 <input class="meta-input" type="text" /></label>
+    </div>
+    <p class="small">每題照「① 圖 → ② 式 → ③ 答 → ④ 驗」來做。答案要寫單位。先想：誰是總數？誰大誰小？</p>
+
+    <h2>A. 已知總數，求一部分</h2>
+    <ol class="questions">
+      <li class="problem-card" data-unit="q1">
+        <p>一盒筆有紅筆和藍筆共 24 枝，其中紅筆有 9 枝。藍筆有多少枝？</p>
+        <div class="bar-model" aria-label="線段圖：共 24 枝，紅筆 9 枝，藍筆未知">
+          <div class="bar-row"><span class="bar-name"></span><div class="bar-track"><div class="bar-brace" style="flex:24">共 24 枝</div></div></div>
+          <div class="bar-row"><span class="bar-name">筆</span><div class="bar-track"><span class="bar-seg" style="flex:9">紅 9</span><span class="bar-seg bar-unknown" style="flex:15">藍 ？</span></div></div>
+        </div>
+        <p>答：藍筆有 <input type="text" class="ans-input screen-only" data-key="q1" inputmode="numeric" aria-label="第1題答案" /><span class="answer-box print-only inline-block"></span> 枝。</p>
+        <p class="q-actions screen-only small">算式（寫給家長看，不計分）：<input type="text" class="ans-input wide" style="width:12em" aria-label="第1題算式（不計分）" autocomplete="off" /></p>
+        <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q1">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q2">
+        <p>二年級甲班共有 36 人，其中男生有 19 人。女生有多少人？</p>
+        <p>（1）答：女生有 <input type="text" class="ans-input screen-only" data-key="q2a" inputmode="numeric" aria-label="第2題(1)" /><span class="answer-box print-only inline-block"></span> 人。</p>
+        <p>（2）驗算：女生人數 ＋ 19 ＝ <input type="text" class="ans-input screen-only" data-key="q2b" inputmode="numeric" aria-label="第2題(2)驗算" /><span class="answer-box print-only inline-block"></span>　（要等於全班人數才對）</p>
+        <p class="q-actions screen-only small">算式（寫給家長看，不計分）：<input type="text" class="ans-input wide" style="width:12em" aria-label="第2題算式（不計分）" autocomplete="off" /></p>
+        <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q2">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q3">
+        <p>小美要讀一本 50 頁的故事書，已經讀了 28 頁。還有多少頁未讀？</p>
+        <p>答：還有 <input type="text" class="ans-input screen-only" data-key="q3" inputmode="numeric" aria-label="第3題答案" /><span class="answer-box print-only inline-block"></span> 頁未讀。</p>
+        <p class="q-actions screen-only small">算式（寫給家長看，不計分）：<input type="text" class="ans-input wide" style="width:12em" aria-label="第3題算式（不計分）" autocomplete="off" /></p>
+        <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q3">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+    </ol>
+
+    <h2>B. 比多・比少（先找誰大誰小）</h2>
+    <ol class="questions" start="4">
+      <li class="problem-card" data-unit="q4">
+        <p>小明有 38 粒波子，小強比小明多 7 粒。小強有多少粒波子？</p>
+        <p>答：小強有 <input type="text" class="ans-input screen-only" data-key="q4" inputmode="numeric" aria-label="第4題答案" /><span class="answer-box print-only inline-block"></span> 粒波子。</p>
+        <p class="q-actions screen-only small">算式（寫給家長看，不計分）：<input type="text" class="ans-input wide" style="width:12em" aria-label="第4題算式（不計分）" autocomplete="off" /></p>
+        <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q4">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q5">
+        <p>紅繩長 52 厘米，藍繩比紅繩短 15 厘米。藍繩長多少厘米？</p>
+        <p>答：藍繩長 <input type="text" class="ans-input screen-only" data-key="q5" inputmode="numeric" aria-label="第5題答案" /><span class="answer-box print-only inline-block"></span> 厘米。</p>
+        <p class="q-actions screen-only small">算式（寫給家長看，不計分）：<input type="text" class="ans-input wide" style="width:12em" aria-label="第5題算式（不計分）" autocomplete="off" /></p>
+        <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q5">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q6">
+        <p>姐姐有 43 元，姐姐比妹妹多 16 元。妹妹有多少元？</p>
+        <p>（1）這題要用加法還是減法？
+          <span class="screen-only">
+            <span class="choice-group" data-key="q6a" role="group" aria-label="第6題(1)加或減">
+              <button type="button" class="choice-btn" data-value="加法">加法</button>
+              <button type="button" class="choice-btn" data-value="減法">減法</button>
+            </span>
+          </span>
+          <span class="print-only">圈起來：　加法　／　減法</span>
+        </p>
+        <p>（2）答：妹妹有 <input type="text" class="ans-input screen-only" data-key="q6b" inputmode="numeric" aria-label="第6題(2)" /><span class="answer-box print-only inline-block"></span> 元。</p>
+        <p class="q-actions screen-only small">算式（寫給家長看，不計分）：<input type="text" class="ans-input wide" style="width:12em" aria-label="第6題算式（不計分）" autocomplete="off" /></p>
+        <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q6">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q7">
+        <p>籃球比賽，甲隊得 61 分，乙隊得 45 分。甲隊比乙隊多得多少分？</p>
+        <p>答：甲隊比乙隊多得 <input type="text" class="ans-input screen-only" data-key="q7" inputmode="numeric" aria-label="第7題答案" /><span class="answer-box print-only inline-block"></span> 分。</p>
+        <p class="q-actions screen-only small">算式（寫給家長看，不計分）：<input type="text" class="ans-input wide" style="width:12em" aria-label="第7題算式（不計分）" autocomplete="off" /></p>
+        <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q7">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+    </ol>
+
+    <h2>C. 和差關係・填方格</h2>
+    <ol class="questions" start="8">
+      <li class="problem-card" data-unit="q8">
+        <p>在方格內填上正確的數，並用相反的算法驗算。</p>
+        <p class="seq">（1）<input type="text" class="ans-input screen-only" data-key="q8a" inputmode="numeric" aria-label="第8題(1)方格" /><span class="answer-box print-only inline-block"></span> ＋ 27 ＝ 64</p>
+        <p class="seq">（2）81 − <input type="text" class="ans-input screen-only" data-key="q8b" inputmode="numeric" aria-label="第8題(2)方格" /><span class="answer-box print-only inline-block"></span> ＝ 35</p>
+        <div class="blank-area print-only block">驗算（1）：　　　　　　　驗算（2）：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q8">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+    </ol>
+
+    <h2>D. 溫故：第 1 週找規律（穿插複習）</h2>
+    <ol class="questions" start="9">
+      <li class="problem-card" data-unit="q9">
+        <p class="seq">6、11、16、21、
+          <input type="text" class="ans-input screen-only" data-key="q9" inputmode="numeric" aria-label="第9題答案" />
+          <span class="gap print-only inline-block"></span>
+        </p>
+        <div class="blank-area print-only block">規律：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q9">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q10">
+        <p class="seq">40、36、32、
+          <input type="text" class="ans-input screen-only" data-key="q10" inputmode="numeric" aria-label="第10題答案" />
+          <span class="gap print-only inline-block"></span>、24
+        </p>
+        <div class="blank-area print-only block">規律：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q10">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+    </ol>
+
+    <div class="summary-panel screen-only" id="practice-summary">
+      <h2>練習結果</h2>
+      <p>得分：<strong id="final-score">—</strong></p>
+      <div class="verdict" id="practice-verdict" role="status"></div>
+      <p class="small"><strong>精熟門檻：</strong>約 8／10 以上正確，且每題能說出「誰是總數／誰大誰小」；到期錯題清完再進下一週。</p>
+      <h3>需要再練的題</h3>
+      <ul class="wrong-list" id="wrong-list"></ul>
+      <p class="small">詳細解析請看 <a href="answers.html">答案頁</a>。錯題已進 <a href="../../../wrongbook.html?track=p2">錯題本</a>，記得去 <a href="../../../review.html?track=p2">重溫</a>。準備好了可以做 <a href="quiz.html">測驗</a>。</p>
+    </div>
+
+    <div class="tip">
+      <strong>做完自查：</strong>任選兩題，用相反的算法驗算（減法用加法驗、加法用減法驗）。有問號的題明天再問家長。
+    </div>
+    <div class="tip">
+      <strong>家長停損：</strong>連錯 2 題、哭泣或強烈抗拒 → 立刻停。明天只重做錯題 2–3 題，不要整份重刷。
+    </div>
+
+    <footer class="sheet-footer">
+      <span>澳門小二・學界賽預備教學庫・第2週</span>
+      <span>練習頁・螢幕互動／可列印 A4</span>
+    </footer>
+  </article>
+
+  <script src="../../../js/track.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script>if(window.MathTrack)MathTrack.initFromPage("p2");</script>
+  <script src="../../../js/wrongbook.js"></script>
+  <script src="practice.js"></script>
+</body>
+</html>

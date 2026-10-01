@@ -104,8 +104,10 @@
     sel.innerHTML = '<option value="">全部單元</option>';
     if (track.id === "p2") {
       sel.innerHTML += '<option value="w01">第 1 週・找規律</option>';
+      sel.innerHTML += '<option value="w02">第 2 週・和與差</option>';
     } else {
       sel.innerHTML += '<option value="k3-w01">第 1 週・數一數比多少</option>';
+      sel.innerHTML += '<option value="k3-w02">第 2 週・數到 20 前後數</option>';
     }
     sel.value = cur;
   }
@@ -152,7 +154,7 @@
       '<div class="wb-stat"><strong>' + st.total + "</strong><span>總錯題</span></div>" +
       '<div class="wb-stat"><strong>' + st.due + "</strong><span>今日到期</span></div>" +
       '<div class="wb-stat"><strong>' + st.learning + "</strong><span>待覆習</span></div>" +
-      '<div class="wb-stat"><strong>' + st.mastered + "</strong><span>已掌握</span></div>';
+      '<div class="wb-stat"><strong>' + st.mastered + "</strong><span>已掌握</span></div>";
   }
 
   function render() {

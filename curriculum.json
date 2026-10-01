@@ -81,8 +81,10 @@
           "title": "數到 20・前後是誰",
           "skills": ["數數1-20", "前後數", "數字認讀"],
           "level": "K3 核心",
-          "status": "planned",
-          "sheets": []
+          "status": "ready",
+          "sheets": ["teach.html", "practice.html", "quiz.html", "answers.html"],
+          "sessionHint": "10–15 分・練習 6 題（含溫故 1 題）・小測 5 題",
+          "interleave": ["比較多少"]
         },
         {
           "id": "k3-w03",
@@ -195,8 +197,10 @@
           "title": "和與差・加減進階",
           "skills": ["已知和求一部分", "已知差求一部分", "和差關係口訣", "驗算習慣"],
           "level": "小二→小三橋接",
-          "status": "planned",
-          "sheets": []
+          "status": "ready",
+          "sheets": ["teach.html", "practice.html", "quiz.html", "answers.html"],
+          "sessionHint": "20–25 分・練習 10 題（含第 1 週溫故 2 題）・測驗 7 題（含溫故 1 題）・限時 20 分",
+          "spiralReview": ["觀察數列規律", "奇偶／加減規律", "填空推理"]
         },
         {
           "id": "w03",
