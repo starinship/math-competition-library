@@ -33,6 +33,32 @@
   /* 看過解法（答錯後顯示）的題，之後答對不計入錯題本 streak；每題每次開頁最多計一次 */
   var revealed = {};
   var counted = {};
+  /* 「答案」按鈕（家長用）：孩子第一次檢查前就打開答案 → 這題標記「先看答案」：
+     答對不計分、不計入錯題本進度；答錯照樣記入錯題本 */
+  var attempted = {};
+  var viewed = {};
+  var answerCtl = {};
+
+  function viewedCount() {
+    return UNITS.filter(function (u) {
+      return viewed[u.id];
+    }).length;
+  }
+
+  function markViewed(unit) {
+    if (attempted[unit.id] || viewed[unit.id]) return;
+    viewed[unit.id] = true;
+    revealed[unit.id] = true;
+    var ctl = answerCtl[unit.id];
+    var card = document.querySelector('[data-unit="' + unit.id + '"]');
+    if (ctl && card && !card.querySelector(".ans-viewed-note")) {
+      var note = document.createElement("span");
+      note.className = "ans-viewed-note";
+      note.textContent = "👀 已先看答案・這題不計分";
+      ctl.button.insertAdjacentElement("afterend", note);
+    }
+    updateProgress(); /* 進度列顯示「先看答案」題數 */
+  }
 
   function explainKey(unit) {
     return CTX.unit + "|" + CTX.source + "|" + unit.id;
@@ -127,6 +153,7 @@
     if (empty) allOk = false;
 
     checked[unit.id] = true;
+    if (!empty) attempted[unit.id] = true;
     results[unit.id] = allOk;
 
     var card = document.querySelector('[data-unit="' + unit.id + '"]');
@@ -150,20 +177,25 @@
       }
     }
     var wasRevealed = !!revealed[unit.id];
+    var ctl = answerCtl[unit.id];
+    var answerOpen = !!(ctl && ctl.answerShown());
     syncWrongBook(unit, allOk, empty);
     if (window.MathExplain && card) {
       if (empty) {
-        window.MathExplain.detach(card);
+        if (!answerOpen) window.MathExplain.detach(card);
       } else {
-        window.MathExplain.attach(card, explainKey(unit), { wrong: !allOk });
+        window.MathExplain.attach(card, explainKey(unit), { wrong: !allOk, open: !allOk || answerOpen });
         if (!allOk) {
           revealed[unit.id] = true;
           if (fb) fb.textContent += " 👇 先看下面「看看怎樣做」。";
+        } else if (viewed[unit.id] && fb) {
+          fb.textContent += "（先看過答案：這題不計分，也不計入錯題本進度。）";
         } else if (wasRevealed && fb) {
           fb.textContent += "（看過解法後答對：這次不計入錯題本進度，記得之後到「重溫」再做一次。）";
         }
       }
     }
+    if (ctl) ctl.sync();
     updateProgress();
   }
 
@@ -173,14 +205,15 @@
     UNITS.forEach(function (u) {
       if (checked[u.id]) {
         done++;
-        if (results[u.id]) correct++;
+        if (results[u.id] && !viewed[u.id]) correct++;
       }
     });
     var pct = Math.round((done / UNITS.length) * 100);
     var bar = document.getElementById("progress-bar");
     var text = document.getElementById("progress-text");
     if (bar) bar.style.width = pct + "%";
-    if (text) text.textContent = "已檢查 " + done + " / " + UNITS.length + "　答對 " + correct;
+    if (text) text.textContent = "已檢查 " + done + " / " + UNITS.length + "　答對 " + correct +
+      (viewedCount() ? "　先看答案 " + viewedCount() + "（不計分）" : "");
     if (done === UNITS.length) showSummary(correct);
   }
 
@@ -188,6 +221,20 @@
     var panel = document.getElementById("practice-summary");
     if (!panel) return;
     panel.classList.add("is-visible");
+    var vn = document.getElementById("viewed-note");
+    var scoreHost = document.getElementById("final-score");
+    if (!vn && scoreHost && scoreHost.parentNode) {
+      vn = document.createElement("p");
+      vn.id = "viewed-note";
+      vn.className = "small viewed-note";
+      scoreHost.parentNode.parentNode.insertBefore(vn, scoreHost.parentNode.nextSibling);
+    }
+    if (vn) {
+      vn.textContent = viewedCount()
+        ? "👀 先看答案 " + viewedCount() + " 題：這些題即使答對也不計分（不算入上面的得分）。"
+        : "";
+      vn.style.display = viewedCount() ? "" : "none";
+    }
     var scoreEl = document.getElementById("final-score");
     if (scoreEl) scoreEl.textContent = correct + " / " + UNITS.length;
     var list = document.getElementById("wrong-list");
@@ -196,7 +243,10 @@
       var wrongs = UNITS.filter(function (u) {
         return checked[u.id] && !results[u.id];
       });
-      if (wrongs.length === 0) {
+      var seen = UNITS.filter(function (u) {
+        return viewed[u.id] && checked[u.id] && results[u.id];
+      });
+      if (wrongs.length === 0 && seen.length === 0) {
         list.innerHTML = "<li>全部正確！可以休息，或做小測（約 5 題）。</li>";
       } else {
         wrongs.forEach(function (u) {
@@ -209,6 +259,11 @@
           list.appendChild(li);
         });
       }
+      seen.forEach(function (u) {
+        var li = document.createElement("li");
+        li.textContent = u.label + " — 先看了答案才作答，這次不計分；建議隔天不看答案再做一次。";
+        list.appendChild(li);
+      });
     }
   }
 
@@ -219,6 +274,23 @@
         return u.id === id;
       })[0];
       if (unit) checkUnit(unit);
+    });
+  });
+
+  /* 每題「檢查」右邊加「答案」按鈕（列印時與 .q-actions 一起隱藏） */
+  UNITS.forEach(function (u) {
+    var card = document.querySelector('[data-unit="' + u.id + '"]');
+    if (!card || !window.MathExplain || !window.MathExplain.answerButton) return;
+    answerCtl[u.id] = window.MathExplain.answerButton(card, explainKey(u), {
+      fallback: u.keys
+        .map(function (k) {
+          var e = KEYS[k];
+          return Array.isArray(e) ? e[0] : e;
+        })
+        .join("、"),
+      onReveal: function () {
+        markViewed(u);
+      }
     });
   });
 

@@ -688,14 +688,14 @@
   function buildPanel(spec, opts) {
     opts = opts || {};
     var wrap = document.createElement("div");
-    wrap.className = "sol-panel " + (opts.wrong ? "is-wrong" : "is-right") + (opts.screenOnly ? " screen-only" : "") +
+    wrap.className = "sol-panel " + (opts.answer ? "is-answer" : opts.wrong ? "is-wrong" : "is-right") + (opts.screenOnly ? " screen-only" : "") +
       (trackOf(spec) === "k3" ? " sol-panel-k3" : "");
     var d = document.createElement("details");
     d.className = "sol-details";
     if (opts.open != null ? opts.open : opts.wrong) d.open = true;
     var sum = document.createElement("summary");
     sum.className = "sol-summary";
-    sum.textContent = opts.wrong ? "💡 看看怎樣做（圖解）" : "📖 看解法（圖解）";
+    sum.textContent = opts.answer ? "🔑 答案與圖解（家長用）" : opts.wrong ? "💡 看看怎樣做（圖解）" : "📖 看解法（圖解）";
     d.appendChild(sum);
     var body = document.createElement("div");
     body.innerHTML = renderBody(spec, opts);
@@ -719,10 +719,73 @@
     opts = opts || {};
     if (opts.screenOnly == null) opts.screenOnly = true;
     var panel = buildPanel(spec, opts);
+    place(container, panel);
+    return panel;
+  }
+
+  function place(container, panel) {
     var fb = container.querySelector(":scope > .feedback");
     if (fb && fb.nextSibling) container.insertBefore(panel, fb.nextSibling);
     else container.appendChild(panel);
-    return panel;
+  }
+
+  /** 練習頁「答案」按鈕：放在該題「檢查」右邊，按一下顯示答案＋圖解，再按收起。
+   *  已有檢查後的解法面板時，改為開／合那個面板（不重複顯示）。
+   *  opts.fallback：沒有圖解資料時顯示的答案文字；opts.onReveal()：每次打開時通知（由練習頁決定是否計分）。 */
+  function answerButton(card, k, opts) {
+    opts = opts || {};
+    if (!card) return null;
+    var checkBtn = card.querySelector("[data-check-unit]");
+    if (!checkBtn) return null;
+    var btn = document.createElement("button");
+    btn.type = "button";
+    /* 與「檢查」同一套尺寸（例如 btn-sm），外觀用次要樣式區分 */
+    btn.className = (checkBtn.className || "btn") + " btn-secondary btn-answer";
+    btn.textContent = "答案";
+    btn.setAttribute("aria-pressed", "false");
+    btn.title = "家長用：隨時看答案與圖解（在孩子檢查前打開，這題不計分）";
+    checkBtn.insertAdjacentElement("afterend", btn);
+
+    function panel() { return card.querySelector(".sol-panel"); }
+    function details() { var p = panel(); return p ? p.querySelector("details") : null; }
+    function shown() { var d = details(); return !!(d && d.open); }
+    function sync() {
+      var on = shown();
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+      btn.classList.toggle("is-active", on);
+    }
+    function buildAnswerPanel() {
+      var spec = typeof k === "string" ? get(k) : k;
+      if (spec) return buildPanel(spec, { answer: true, open: true, screenOnly: true });
+      var wrap = document.createElement("div");
+      wrap.className = "sol-panel is-answer screen-only";
+      wrap.innerHTML = '<details class="sol-details" open><summary class="sol-summary">🔑 答案（家長用）</summary>' +
+        '<div class="sol-body"><p class="sol-answer">正確答案：<strong>' + esc(opts.fallback || "—") + "</strong></p></div></details>";
+      return wrap;
+    }
+    btn.addEventListener("click", function () {
+      var p = panel();
+      var d = details();
+      if (p && d && d.open) {
+        if (p.classList.contains("is-answer")) p.parentNode.removeChild(p);
+        else d.open = false;
+      } else {
+        if (p && d) d.open = true;
+        else place(card, buildAnswerPanel());
+        if (opts.onReveal) opts.onReveal();
+      }
+      sync();
+    });
+    /* 直接點面板標題開合時，同步按鈕狀態（toggle 不冒泡，用 capture） */
+    card.addEventListener("toggle", function (e) {
+      if (e.target && e.target.classList && e.target.classList.contains("sol-details")) {
+        sync();
+        if (e.target.open && opts.onReveal) opts.onReveal();
+      }
+    }, true);
+    /* 「答案」面板（未檢查前由按鈕打開的那個）是否開著 */
+    function answerShown() { var p = panel(); return !!(p && p.classList.contains("is-answer") && shown()); }
+    return { button: btn, sync: sync, shown: shown, answerShown: answerShown };
   }
 
   /** 錯題本項目 → 解法（先以題號查最新資料；舊項目沒有存解法也查得到；最後用項目內存的副本） */
@@ -773,6 +836,7 @@
     buildPanel: buildPanel,
     attach: attach,
     detach: detach,
+    answerButton: answerButton,
     forItem: forItem,
     fillAnswers: fillAnswers,
     knownNumbers: knownNumbers,

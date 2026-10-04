@@ -576,3 +576,12 @@ table.simple th {
     break-inside: avoid;
   }
 }
+/* 練習頁「答案」按鈕與「先看答案」標記：列印空白卷時不出現 */
+@media print {
+  .btn-answer,
+  .ans-viewed-note,
+  .viewed-note,
+  .sol-panel.is-answer {
+    display: none !important;
+  }
+}
