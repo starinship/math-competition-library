@@ -158,7 +158,9 @@
         answerType: unit.answerType || "text",
         choices: unit.choices || null,
         blanks: blanks,
-        href: CTX.href
+        href: CTX.href,
+        explainKey: CTX.unit + "|" + CTX.source + "|" + unit.id,
+        explain: window.MathExplain ? window.MathExplain.get(CTX.unit, CTX.source, unit.id) : null
       });
     }
   }
@@ -205,6 +207,10 @@
       if (allOk) correct++;
       else wrongs.push(unit.label + "（" + (unit.skills || []).join("、") + "）");
       syncWrongBook(unit, allOk);
+      /* 交卷後才顯示圖解（答錯的自動打開） */
+      if (window.MathExplain) {
+        window.MathExplain.attach(document.querySelector('[data-unit="' + unit.id + '"]'), CTX.unit + "|" + CTX.source + "|" + unit.id, { wrong: !allOk });
+      }
     });
 
     if (summary) {

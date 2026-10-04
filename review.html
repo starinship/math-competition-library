@@ -50,6 +50,7 @@
         <button type="button" class="btn btn-secondary" id="btn-skip-review">暫時跳過</button>
       </div>
       <div class="feedback" id="review-feedback" role="status"></div>
+      <div id="review-explain" class="review-explain"></div>
       <div class="q-actions" id="review-next-wrap" hidden>
         <button type="button" class="btn" id="btn-next-review">下一題</button>
       </div>
@@ -77,6 +78,8 @@
   <script src="js/track.js"></script>
   <script src="js/common.js"></script>
   <script src="js/wrongbook.js"></script>
+  <script src="js/explain-data.js"></script>
+  <script src="js/explain.js"></script>
   <script>
 (function () {
   "use strict";
@@ -125,6 +128,16 @@
   var inputArea = document.getElementById("review-input-area");
   var feedback = document.getElementById("review-feedback");
   var nextWrap = document.getElementById("review-next-wrap");
+  var explainEl = document.getElementById("review-explain");
+
+  /* 作答後才顯示圖解：答錯自動打開，答對可按開 */
+  function showExplain(item, ok) {
+    explainEl.innerHTML = "";
+    var sol = window.MathExplain ? window.MathExplain.forItem(item) : null;
+    if (!sol) return false;
+    explainEl.appendChild(window.MathExplain.buildPanel(sol, { wrong: !ok, screenOnly: true }));
+    return true;
+  }
 
   function qs(name) {
     var m = location.search.match(new RegExp("[?&]" + name + "=([^&]*)"));
@@ -235,6 +248,7 @@
     feedback.textContent = "";
     nextWrap.hidden = true;
     document.getElementById("btn-check-review").disabled = false;
+    explainEl.innerHTML = "";
 
     if (index >= queue.length) {
       finishSession();
@@ -351,6 +365,9 @@
         "再想想。正確答案是：" +
         (item.correctAnswer || "—") +
         "。間隔已重置，可立刻再練或改天回來。";
+    }
+    if (showExplain(item, ok) && !ok) {
+      feedback.textContent += " 👇 先看下面「看看怎樣做」。";
     }
     nextWrap.hidden = false;
   });

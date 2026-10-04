@@ -884,3 +884,174 @@ body[data-track="p2"] .nav-bar { /* marker only */ }
   .bar-name { flex-basis: 3.6em; font-size: 0.85rem; }
   .num-car { min-width: 52px; min-height: 52px; font-size: 1.6rem; }
 }
+
+/* ============================================================
+   圖解解法（看看怎樣做）・js/explain.js
+   ============================================================ */
+.sol-panel { margin-top: 10px; }
+.sol-details {
+  border: 2px solid #1a4d8c;
+  border-radius: 10px;
+  background: #f7faff;
+}
+.sol-panel.is-wrong .sol-details {
+  border-color: #c0392b;
+  background: #fffaf6;
+  box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12);
+}
+.sol-summary {
+  cursor: pointer;
+  padding: 10px 14px;
+  font-weight: 800;
+  font-size: 1.02rem;
+  color: #1a4d8c;
+  list-style: none;
+}
+.sol-summary::-webkit-details-marker { display: none; }
+.sol-summary::before { content: "▶ "; font-size: 0.85em; }
+.sol-details[open] > .sol-summary::before { content: "▼ "; }
+.sol-panel.is-wrong .sol-summary { color: #b03a00; font-size: 1.15rem; }
+.sol-body { padding: 2px 14px 12px; }
+.sol-answer { font-size: 1.05rem; margin: 2px 0 8px; }
+.sol-answer strong { color: #1b6b3a; font-size: 1.12em; }
+.sol-steps { list-style: none; padding: 0; margin: 0; }
+.sol-step {
+  margin: 6px 0;
+  padding: 7px 10px;
+  background: #fff;
+  border: 1px solid #dde5ee;
+  border-radius: 8px;
+  line-height: 1.6;
+}
+.sol-tag {
+  display: inline-block;
+  font-weight: 800;
+  color: #fff;
+  background: #1a4d8c;
+  border-radius: 6px;
+  padding: 0 8px;
+  margin-right: 8px;
+  white-space: nowrap;
+}
+.sol-think { color: #333; }
+.sol-math { font-size: 1.08rem; font-weight: 700; letter-spacing: 0.02em; }
+.sol-fig { margin-top: 6px; overflow-x: auto; }
+.sol-svg { display: block; max-width: 100%; height: auto; }
+.sol-sub { font-weight: 800; margin: 8px 0 2px; }
+.sol-part + .sol-part { border-top: 1px dashed #b9c4d0; margin-top: 10px; padding-top: 4px; }
+.sol-tip {
+  font-size: 0.92rem;
+  background: #fff6db;
+  border-left: 4px solid #8a5a00;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin: 8px 0 0;
+}
+/* K3：大圖少字 */
+.sol-k3 { text-align: center; }
+.sol-k3-answer { font-size: 1.35rem; font-weight: 800; margin: 4px 0 6px; }
+.sol-big {
+  display: inline-block;
+  font-size: 2.1rem;
+  line-height: 1.2;
+  color: #1b6b3a;
+  border: 3px solid #1b6b3a;
+  border-radius: 12px;
+  padding: 0 14px;
+  margin-left: 6px;
+  background: #fff;
+}
+.sol-fig-k3 .sol-svg { margin: 0 auto; }
+.sol-k3-kid { font-size: 1.3rem; font-weight: 700; margin: 8px 0; }
+.sol-parent {
+  text-align: left;
+  font-size: 0.95rem;
+  background: #eef7f2;
+  border-left: 4px solid #2d6a4f;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin: 6px 0 0;
+}
+.sol-parent-tag { font-weight: 800; color: #2d6a4f; margin-right: 6px; }
+.sol-panel-k3 .sol-details { border-color: #2d6a4f; background: #f6fbf8; }
+.sol-panel-k3.is-wrong .sol-details { border-color: #c0392b; background: #fffaf6; }
+/* 答案頁：只放圖 */
+.sol-static { margin-top: 6px; }
+.sol-figs { display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: flex-start; }
+.sol-fig-item { flex: 1 1 240px; }
+.sol-fig-cap { font-weight: 700; font-size: 0.92rem; }
+.sol-static .sol-svg { max-width: min(100%, 460px); }
+.sol-static .sol-figs-k3 .sol-svg { max-width: min(100%, 420px); }
+.sol-static .sol-fig-item .sol-svg { max-width: 100%; }
+
+/* SVG 內文字與形狀 */
+.sol-svg text { font-family: inherit; font-size: 15px; fill: #111; }
+.sol-svg .sol-t-c { text-anchor: middle; }
+.sol-svg .sol-t-r { text-anchor: end; }
+.sol-svg .sol-t-l { text-anchor: start; }
+.sol-svg .sol-t-strong { font-weight: 700; }
+.sol-svg .sol-t-unknown { fill: #8a5a00; font-weight: 700; }
+.sol-svg .sol-t-ans { fill: #1b6b3a; font-weight: 800; }
+.sol-svg .sol-t-wrong { fill: #9a1b1b; font-weight: 700; }
+.sol-svg .sol-t-note { font-size: 12px; fill: #666; }
+.sol-svg .sol-t-step { font-size: 15px; font-weight: 800; fill: #b03a00; }
+.sol-svg .sol-t-small { font-size: 13px; }
+.sol-svg .sol-t-num { font-size: 18px; font-weight: 700; }
+.sol-svg .sol-t-diff { fill: #8a5a00; font-weight: 700; }
+.sol-svg .sol-t-shape { font-size: 26px; }
+.sol-svg .sol-t-k3shape { font-size: 30px; }
+.sol-svg .sol-t-order { font-size: 11px; fill: #555; }
+.sol-svg .sol-t-k3cap { font-size: 18px; font-weight: 800; fill: #2d6a4f; }
+.sol-svg .sol-t-k3label { font-size: 20px; font-weight: 800; fill: #2d6a4f; }
+.sol-svg .sol-t-extra { font-size: 15px; font-weight: 800; fill: #b03a00; }
+.sol-svg .sol-t-nl { font-size: 20px; }
+.sol-svg .sol-seg-known { fill: #dbe8f6; stroke: #1a4d8c; stroke-width: 2; }
+.sol-svg .sol-seg-unknown { fill: #fff3c4; stroke: #8a5a00; stroke-width: 2; stroke-dasharray: 6 4; }
+.sol-svg .sol-seg-diff { fill: #fde2d0; stroke: #b03a00; stroke-width: 2; stroke-dasharray: 5 4; }
+.sol-svg .sol-brace { fill: none; stroke: #1a4d8c; stroke-width: 2; }
+.sol-svg .sol-guide { stroke: #888; stroke-width: 1.5; stroke-dasharray: 4 4; }
+.sol-svg .sol-box { fill: #fff; stroke: #1a4d8c; stroke-width: 2; }
+.sol-svg .sol-box-ans { fill: #fff3c4; stroke: #1b6b3a; stroke-width: 2.5; stroke-dasharray: 6 3; }
+.sol-svg .sol-arc { fill: none; stroke: #7a8ca3; stroke-width: 2; }
+.sol-svg .sol-arc.is-hot { stroke: #b03a00; }
+.sol-svg .sol-arrowhead { fill: #7a8ca3; stroke: none; }
+.sol-svg .sol-arrowhead.is-hot { fill: #b03a00; }
+.sol-svg .sol-group-a { fill: #e7f0fb; stroke: #9bb7d9; }
+.sol-svg .sol-group-b { fill: #eaf6ee; stroke: #9fcdb0; }
+.sol-svg .sol-row-ok { fill: #e8f5ee; stroke: #1b6b3a; stroke-width: 2; }
+.sol-svg .sol-frame { fill: #fff; stroke: #2d6a4f; stroke-width: 2.5; }
+.sol-svg .sol-frame-line { stroke: #2d6a4f; stroke-width: 1.5; }
+.sol-svg .sol-match-line { stroke: #8a8a8a; stroke-width: 2; }
+.sol-svg .sol-extra { fill: #fff1e6; stroke: #b03a00; stroke-width: 2.5; stroke-dasharray: 6 4; }
+.sol-svg .sol-nl-axis { stroke: #333; stroke-width: 3; }
+.sol-svg .sol-nl-tick { stroke: #333; stroke-width: 2; }
+.sol-svg .sol-nl-ans { fill: #e8f5ee; stroke: #1b6b3a; stroke-width: 3; }
+.sol-svg .sol-nl-known { fill: #e7f0fb; stroke: #1a4d8c; stroke-width: 2; }
+
+/* 答案頁（列印及闊螢幕）：文字在左、圖在右，A4 不會太長 */
+@media print, (min-width: 760px) {
+  .answer-item:has(> .sol-static) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 86mm;
+    column-gap: 5mm;
+    align-items: start;
+  }
+  .answer-item:has(> .sol-static) > .ans,
+  .answer-item:has(> .sol-static) > .explain { grid-column: 1; }
+  .answer-item > .sol-static { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; }
+  .answer-item > .sol-static:has(.sol-fig-item) { grid-column: 1 / -1; grid-row: auto; margin-top: 4px; }
+  .answer-item > .sol-static .sol-svg { max-width: 100%; }
+  li:has(> .sol-static) { margin-bottom: 6px; }
+  li:has(> .sol-static)::after { content: ""; display: block; clear: both; }
+  li > .sol-static { float: right; width: 88mm; margin: 0 0 6px 6mm; }
+  li > .sol-static .sol-svg { max-width: 100%; }
+}
+@media print {
+  .sol-panel, .sol-static { page-break-inside: avoid; break-inside: avoid; }
+  .sol-details { border-width: 1px; background: #fff !important; box-shadow: none !important; }
+  .sol-summary { list-style: none; pointer-events: none; padding: 4px 10px; font-size: 0.95rem !important; }
+  .sol-summary::before { content: none !important; }
+  .sol-step { padding: 3px 8px; margin: 3px 0; }
+  .sol-static .sol-fig-item .sol-svg { max-width: 88mm; }
+  .wb-card .sol-svg { max-width: 130mm; }
+}

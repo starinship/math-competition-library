@@ -54,6 +54,13 @@
   }
 
   var checked = {};
+  /* 看過解法（答錯後顯示）的題，之後答對不計入錯題本 streak；每題每次開頁最多計一次 */
+  var revealed = {};
+  var counted = {};
+
+  function explainKey(unit) {
+    return CTX.unit + "|" + CTX.source + "|" + unit.id;
+  }
   var bulkChecking = false;
   var results = {};
 
@@ -120,6 +127,8 @@
       choices: unit.choices || null,
       blanks: blanks,
       href: CTX.href,
+      explainKey: explainKey(unit),
+      explain: window.MathExplain ? window.MathExplain.get(explainKey(unit)) : null,
       _allOk: allOk,
       _empty: empty
     };
@@ -130,6 +139,8 @@
     if (empty) return; /* 未填完不記錯 */
     var payload = buildPayload(unit, allOk, empty);
     if (allOk) {
+      if (revealed[unit.id] || counted[unit.id]) return;
+      counted[unit.id] = true;
       /* 若先前錯過，這次做對 → 計入正確 streak（練習核對也算一次） */
       window.WrongBook.recordCorrect({
         unit: CTX.unit,
@@ -177,7 +188,21 @@
       }
     }
 
+    var wasRevealed = !!revealed[unit.id];
     syncWrongBook(unit, allOk, empty);
+    if (window.MathExplain && card) {
+      if (empty) {
+        window.MathExplain.detach(card);
+      } else {
+        window.MathExplain.attach(card, explainKey(unit), { wrong: !allOk });
+        if (!allOk) {
+          revealed[unit.id] = true;
+          if (fb) fb.textContent += " 👇 先看下面「看看怎樣做」。";
+        } else if (wasRevealed && fb) {
+          fb.textContent += "（看過解法後答對：這次不計入錯題本進度，記得之後到「重溫」再做一次。）";
+        }
+      }
+    }
     if (!bulkChecking) updateStopCue(allOk, empty);
     updateProgress();
   }

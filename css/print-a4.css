@@ -556,3 +556,23 @@ table.simple th {
     display: block !important;
   }
 }
+
+/* ---------- 圖解解法（js/explain.js）列印 ----------
+   練習／測驗／重溫頁的解法面板屬 .screen-only，列印空白卷時不出現；
+   答案頁（.sol-static）與錯題本的解法會印出，避免跨頁切開。 */
+@media print {
+  .sol-static,
+  .wb-card .sol-panel {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .sol-panel.screen-only {
+    display: none !important;
+  }
+}
+@media print {
+  li:has(> .sol-static) {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}

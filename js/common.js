@@ -37,6 +37,10 @@
     document.querySelectorAll(".example-slide").forEach(function (el) {
       el.classList.remove("is-hidden-screen");
     });
+    /* 圖解解法：會印出的（錯題本）先展開；練習／測驗頁的面板屬 screen-only，不受影響 */
+    document.querySelectorAll("details.sol-details").forEach(function (d) {
+      if (!d.closest(".screen-only")) d.setAttribute("open", "");
+    });
   }
 
   function bindPrintButton(selector) {

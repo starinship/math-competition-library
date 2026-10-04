@@ -43,6 +43,13 @@
   }
 
   var checked = {};
+  /* 看過解法（答錯後顯示）的題，之後答對不計入錯題本 streak；每題每次開頁最多計一次 */
+  var revealed = {};
+  var counted = {};
+
+  function explainKey(unit) {
+    return CTX.unit + "|" + CTX.source + "|" + unit.id;
+  }
   var results = {};
 
   function getValue(key) {
@@ -99,13 +106,17 @@
       answerType: unit.answerType || "choice",
       choices: unit.choices || null,
       blanks: blanks,
-      href: CTX.href
+      href: CTX.href,
+      explainKey: explainKey(unit),
+      explain: window.MathExplain ? window.MathExplain.get(explainKey(unit)) : null
     };
   }
 
   function syncWrongBook(unit, allOk, empty) {
     if (!window.WrongBook || empty) return;
     if (allOk) {
+      if (revealed[unit.id] || counted[unit.id]) return;
+      counted[unit.id] = true;
       window.WrongBook.recordCorrect({
         unit: CTX.unit,
         source: CTX.source,
@@ -151,7 +162,21 @@
         fb.textContent = "再試一次：用手指一個一個指，或往前／往後數一下。已記入錯題本。";
       }
     }
+    var wasRevealed = !!revealed[unit.id];
     syncWrongBook(unit, allOk, empty);
+    if (window.MathExplain && card) {
+      if (empty) {
+        window.MathExplain.detach(card);
+      } else {
+        window.MathExplain.attach(card, explainKey(unit), { wrong: !allOk });
+        if (!allOk) {
+          revealed[unit.id] = true;
+          if (fb) fb.textContent += " 👇 先看下面「看看怎樣做」。";
+        } else if (wasRevealed && fb) {
+          fb.textContent += "（看過解法後答對：這次不計入錯題本進度，記得之後到「重溫」再做一次。）";
+        }
+      }
+    }
     if (!bulkChecking) updateStopCue(allOk, empty);
     updateProgress();
   }

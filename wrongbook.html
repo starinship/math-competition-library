@@ -72,6 +72,8 @@
   <script src="js/track.js"></script>
   <script src="js/common.js"></script>
   <script src="js/wrongbook.js"></script>
+  <script src="js/explain-data.js"></script>
+  <script src="js/explain.js"></script>
   <script>
 (function () {
   "use strict";
@@ -236,6 +238,12 @@
           ? '<a class="btn btn-sm btn-secondary" href="' + it.href + '">回原頁</a>'
           : "") +
         "</div>";
+      /* 圖解（與練習頁「看看怎樣做」相同）：新項目有存副本；舊項目以題號查回 */
+      var sol = window.MathExplain ? window.MathExplain.forItem(it) : null;
+      if (sol) {
+        var panel = window.MathExplain.buildPanel(sol, { wrong: true, open: false });
+        card.insertBefore(panel, card.querySelector(".wb-actions"));
+      }
       listEl.appendChild(card);
     });
   }

@@ -74,7 +74,8 @@
    * payload: {
    *   unit, week, source, questionId, label,
    *   prompt, userAnswer, correctAnswer, correctAnswers,
-   *   skillTags, answerType, choices, blanks, href
+   *   skillTags, answerType, choices, blanks, href,
+ *   explainKey, explain   （圖解：見 js/explain.js）
    * }
    */
   function recordWrong(payload) {
@@ -106,6 +107,8 @@
       if (payload.blanks) prev.blanks = payload.blanks;
       if (payload.label) prev.label = payload.label;
       if (payload.href) prev.href = payload.href;
+      if (payload.explainKey) prev.explainKey = payload.explainKey;
+      if (payload.explain) prev.explain = payload.explain;
       prev.week = payload.week != null ? payload.week : prev.week;
       items[idx] = prev;
       saveAll(items);
@@ -131,6 +134,9 @@
       choices: payload.choices || null,
       blanks: payload.blanks || null,
       href: payload.href || "",
+      /* 圖解：存 key＋資料副本（舊項目沒有也可用 unit|source|questionId 查回） */
+      explainKey: payload.explainKey || [payload.unit, payload.source, payload.questionId].join("|"),
+      explain: payload.explain || null,
       timesWrong: 1,
       lastWrongAt: t,
       nextReviewAt: next,
