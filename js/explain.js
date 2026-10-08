@@ -55,24 +55,28 @@
   /* ============================================================
      解題（由圖上的數字計算，確保圖、式、答一致）
      ============================================================ */
+  /* 兩部分或多部分（第 3 週：例如 50 − 18 − 7 ＝ 25）；兩部分的輸出與第 2 週相同 */
+  function chain(nums, op, result) {
+    return nums.join(" " + op + " ") + " " + EQ + " " + result;
+  }
   function solvePartWhole(spec) {
     var parts = spec.parts.map(function (p) { return p.v; });
     var T = spec.total.v;
     var r = { kind: "partWhole" };
     if (T == null) {
-      T = parts[0] + parts[1];
+      T = parts.reduce(function (a, b) { return a + b; }, 0);
       r.answer = T;
-      r.formula = expr(parts[0], PLUS, parts[1], T);
-      r.check = expr(T, MINUS, parts[0], parts[1]);
+      r.formula = chain(parts, PLUS, T);
+      r.check = chain([T].concat(parts.slice(0, -1)), MINUS, parts[parts.length - 1]);
       r.op = "加法";
     } else {
-      var u = parts[0] == null ? 0 : 1;
-      var known = parts[1 - u];
-      var x = T - known;
+      var u = parts.indexOf(null);
+      var known = parts.filter(function (v, i) { return i !== u; });
+      var x = T - known.reduce(function (a, b) { return a + b; }, 0);
       parts[u] = x;
       r.answer = x;
-      r.formula = expr(T, MINUS, known, x);
-      r.check = expr(x, PLUS, known, T);
+      r.formula = chain([T].concat(known), MINUS, x);
+      r.check = chain([x].concat(known), PLUS, T);
       r.op = "減法";
     }
     r.total = T;
@@ -216,14 +220,23 @@
     return { kind: "count", answer: spec.n, answers: [String(spec.n)] };
   }
 
+  /* ask："more"（哪邊多，預設）／"less"（哪邊少）／"diff"（多幾個）／"toEqual"（少的一邊再加幾個才一樣多） */
   function solveMatch(spec) {
     var L = spec.left.n, R = spec.right.n;
     var labels = spec.answerLabels || {};
+    var ask = spec.ask || "more";
+    var more = L > R ? "left" : R > L ? "right" : "equal";
+    var less = L < R ? "left" : R < L ? "right" : "equal";
     var ans;
-    if (L > R) ans = labels.left || spec.left.label;
-    else if (R > L) ans = labels.right || spec.right.label;
-    else ans = labels.equal || "一樣多";
-    return { kind: "match", answer: ans, answers: [ans], more: L > R ? "left" : R > L ? "right" : "equal", extra: Math.abs(L - R) };
+    if (ask === "diff" || ask === "toEqual") {
+      ans = String(Math.abs(L - R));
+    } else {
+      var target = ask === "less" ? less : more;
+      if (target === "left") ans = labels.left || spec.left.label;
+      else if (target === "right") ans = labels.right || spec.right.label;
+      else ans = labels.equal || "一樣多";
+    }
+    return { kind: "match", ask: ask, answer: ans, answers: [ans], more: more, less: less, extra: Math.abs(L - R) };
   }
 
   function solveNumeral(spec) {
@@ -238,8 +251,55 @@
     return { kind: "numberLine", answer: ans, answers: [String(ans)] };
   }
 
+  /* 小二第 3 週：數量變化（例如 35 人 → 下車 12 → 上車 8）；答案由圖上數字逐步計算 */
+  function solveSteps(spec) {
+    var vals = [spec.start.v];
+    var forms = [], checks = [];
+    spec.ops.forEach(function (o) {
+      var prev = vals[vals.length - 1];
+      var nx = o.op === "+" ? prev + o.v : prev - o.v;
+      vals.push(nx);
+      forms.push(expr(prev, o.op === "+" ? PLUS : MINUS, o.v, nx));
+    });
+    for (var i = spec.ops.length - 1; i >= 0; i--) {
+      var o = spec.ops[i];
+      checks.push(expr(vals[i + 1], o.op === "+" ? MINUS : PLUS, o.v, vals[i]));
+    }
+    var ans = vals[vals.length - 1];
+    return {
+      kind: "steps", vals: vals, answer: ans, answers: [String(ans)],
+      formula: forms.join("，"),
+      check: "倒推：" + checks.join("，") + "（回到" + (spec.start.label || "原有") + "的 " + spec.start.v + "）"
+    };
+  }
+
+  /* 兩步應用題：第二步用 "$1" 代表第一步的答案 */
+  function resolveStep2(step, val) {
+    var s = clone(step);
+    (function walk(o) {
+      if (!o || typeof o !== "object") return;
+      Object.keys(o).forEach(function (k) {
+        if (o[k] === "$1") { o[k] = val; o.derived = true; }
+        else if (typeof o[k] === "object") walk(o[k]);
+      });
+    })(s);
+    return s;
+  }
+  function solveTwoStep(spec) {
+    var r1 = solve(spec.steps[0]);
+    var s2 = resolveStep2(spec.steps[1], r1.answer);
+    var r2 = solve(s2);
+    return {
+      kind: "twoStep", r1: r1, r2: r2, s2: s2, answer: r2.answer, answers: [String(r2.answer)],
+      formula: "第一步：" + r1.formula + "；第二步：" + r2.formula,
+      check: "第二步：" + r2.check + "；第一步：" + r1.check
+    };
+  }
+
   function solve(spec) {
     switch (spec.type) {
+      case "steps": return solveSteps(spec);
+      case "twoStep": return solveTwoStep(spec);
       case "partWhole": return solvePartWhole(spec);
       case "compare": return solveCompare(spec);
       case "seq": return solveSeq(spec);
@@ -318,7 +378,7 @@
     spec.parts.forEach(function (p, i) {
       var w = widths[i];
       var unknown = p.v == null;
-      s += rect(x, 46, w, 40, unknown ? "sol-seg-unknown" : "sol-seg-known", 0);
+      s += rect(x, 46, w, 40, unknown ? "sol-seg-unknown" : p.derived ? "sol-seg-derived" : "sol-seg-known", 0);
       s += txt(x + w / 2, 72, (p.label ? p.label + " " : "") + (unknown ? "？" : p.v), "sol-t-c" + (unknown ? " sol-t-unknown" : ""));
       if (unknown) s += txt(x + w / 2, 108, "？ " + EQ + " " + r.parts[i], "sol-t-c sol-t-ans");
       x += w;
@@ -345,7 +405,7 @@
       var unknown = row.v == null;
       var L = isBig ? Lbig : Lsmall;
       s += txt(x0 - 10, y + 24, row.label, "sol-t-r sol-t-strong");
-      s += rect(x0, y, L, rowH, unknown ? "sol-seg-unknown" : "sol-seg-known", 0);
+      s += rect(x0, y, L, rowH, unknown ? "sol-seg-unknown" : row.derived ? "sol-seg-derived" : "sol-seg-known", 0);
       s += txt(x0 + L / 2, y + 24, unknown ? "？" : String(val), "sol-t-c" + (unknown ? " sol-t-unknown" : ""));
       if (!isBig) {
         var dUnknown = spec.diff.v == null;
@@ -358,6 +418,40 @@
     });
     s += "</svg>";
     return s;
+  }
+
+  /* ---------- 小二：數量變化流程（原有 → 第一步 → 現在） ---------- */
+  function svgSteps(spec, r) {
+    var bw = 72, gap = 118, x0 = 14;
+    var n = r.vals.length;
+    var W = x0 * 2 + n * bw + (n - 1) * gap;
+    var H = 118;
+    var s = svgOpen(W, H, "數量變化：" + r.vals.join(" → "), "sol-steps-fig");
+    for (var i = 0; i < n; i++) {
+      var x = x0 + i * (bw + gap);
+      var last = i === n - 1;
+      s += rect(x, 44, bw, 40, i === 0 ? "sol-box" : last ? "sol-box-ans" : "sol-box-mid", 6);
+      s += txt(x + bw / 2, 71, String(r.vals[i]), "sol-t-c sol-t-num" + (i === 0 ? "" : " sol-t-ans"));
+      var cap = i === 0 ? (spec.start.label || "原有") : last ? (spec.endLabel || "現在") + "？" : "第" + CN[i] + "步後";
+      s += txt(x + bw / 2, 104, cap, "sol-t-c sol-t-note");
+      if (i < n - 1) {
+        var o = spec.ops[i];
+        var xa = x + bw / 2 + 8, xb = x + bw + gap + bw / 2 - 8;
+        s += arcArrow(xa, xb, 42, 26, "is-hot");
+        s += txt((xa + xb) / 2, 20, (o.label ? o.label + " " : "") + (o.op === "+" ? PLUS : MINUS) + o.v, "sol-t-c sol-t-step");
+      }
+    }
+    s += "</svg>";
+    return s;
+  }
+
+  /* ---------- 小二：兩步應用題（兩張圖，第二張用第一步的答案） ---------- */
+  function svgTwoStep(spec, r) {
+    var s1 = spec.steps[0];
+    return '<div class="sol-twostep">' +
+      '<div class="sol-twostep-item"><p class="sol-fig-cap">' + esc(s1.cap || "第一步") + "</p>" + figure(s1, r.r1) + "</div>" +
+      '<div class="sol-twostep-item"><p class="sol-fig-cap">' + esc(spec.steps[1].cap || "第二步") + "</p>" + figure(r.s2, r.r2) + "</div>" +
+      "</div>";
   }
 
   /* ---------- 數列：方格＋箭咀（每次多／少幾） ---------- */
@@ -447,7 +541,8 @@
   /* ---------- K3：十格框（按順序標 1、2、3…） ---------- */
   var ICON_COLORS = {
     "●": "#2d6a4f", "⭐": "#f2c94c", "🍎": "#e57373", "🌸": "#f4a7c0", "🍓": "#e57373",
-    "🐱": "#f6c177", "🐶": "#c8a27a", "🔵": "#5b8def", "🔺": "#e57373", "⬛": "#555", "🟡": "#f2c94c", "🟢": "#5bbf7a"
+    "🐱": "#f6c177", "🐶": "#c8a27a", "🔵": "#5b8def", "🔺": "#e57373", "⬛": "#555", "🟡": "#f2c94c", "🟢": "#5bbf7a",
+    "🐟": "#5b8def", "🐰": "#c9c9d6", "🥕": "#f39c4a", "🚗": "#e57373", "🚌": "#f2c94c", "🥣": "#8fb3d9", "🥄": "#b0b0b0", "🍌": "#f2d64c"
   };
   function iconAt(icon, cx, cy, rr) {
     var col = ICON_COLORS[icon] || "#2d6a4f";
@@ -511,6 +606,23 @@
     for (var a = 0; a < L; a++) s += iconAt(spec.left.icon, x0 + a * step + step / 2, y1, rr);
     for (var b = 0; b < R; b++) s += iconAt(spec.right.icon, x0 + b * step + step / 2, y2, rr);
     if (r.more === "equal") s += txt(x0 + m * step + 14, (y1 + y2) / 2 + 7, "✓ 全部配對", "sol-t-l sol-t-ans");
+    else {
+      var fy = r.less === "left" ? y1 : y2;
+      var my = r.more === "left" ? y1 : y2;
+      if (r.ask === "less") s += txt(x0 + mn * step + 12, fy + 7, "← 比較少", "sol-t-l sol-t-ans");
+      if (r.ask === "diff") {
+        var ny = r.more === "left" ? y1 - 24 : y2 + 36;
+        for (var e = 0; e < m - mn; e++) s += txt(x0 + (mn + e) * step + step / 2, ny, String(e + 1), "sol-t-c sol-t-count");
+        s += txt(x0 + m * step + 10, my + 7, "多 " + r.extra + " 個", "sol-t-l sol-t-ans");
+      }
+      if (r.ask === "toEqual") {
+        for (var g = mn; g < m; g++) {
+          s += '<circle cx="' + (x0 + g * step + step / 2) + '" cy="' + fy + '" r="' + rr + '" class="sol-ghost"/>';
+          s += txt(x0 + g * step + step / 2, fy + 6, PLUS, "sol-t-c sol-t-ans");
+        }
+        s += txt(x0 + m * step + 10, fy + 7, "再加 " + r.extra + " 個", "sol-t-l sol-t-ans");
+      }
+    }
     s += "</svg>";
     return s;
   }
@@ -568,6 +680,8 @@
     switch (spec.type) {
       case "partWhole": return svgPartWhole(spec, r);
       case "compare": return svgCompare(spec, r);
+      case "steps": return svgSteps(spec, r);
+      case "twoStep": return svgTwoStep(spec, r);
       case "seq": return svgSeq(spec, r);
       case "shapes": return svgShapes(spec, r, k3);
       case "choiceSeq": return svgChoiceSeq(spec, r);
@@ -628,8 +742,15 @@
         var rest = [];
         for (var j = 11; j <= spec.n; j++) rest.push(j);
         return "滿格是 10，再數 " + rest.join("、");
-      case "match":
-        return r.more === "equal" ? "一個配一個，沒有多出來" : "一個配一個，" + (r.more === "left" ? spec.left.label : spec.right.label) + " 有多出來";
+      case "match": {
+        var moreL = r.more === "left" ? spec.left.label : spec.right.label;
+        var lessL = r.less === "left" ? spec.left.label : spec.right.label;
+        if (r.more === "equal") return "一個配一個，沒有多出來 → 一樣多";
+        if (r.ask === "less") return "一個配一個，" + lessL + " 先配完 → " + lessL + " 比較少";
+        if (r.ask === "diff") return "一個配一個，" + moreL + " 多出來 " + r.extra + " 個";
+        if (r.ask === "toEqual") return lessL + " 再加 " + r.extra + " 個，就一樣多";
+        return "一個配一個，" + moreL + " 有多出來";
+      }
       case "numberLine":
         return spec.dir === "after" ? spec.ref + " 後面 → " + r.answer : spec.dir === "before" ? r.answer + " ← " + spec.ref + " 前面" : spec.known[0] + "、" + r.answer + "、" + spec.known[1];
       case "numeral":
@@ -816,7 +937,7 @@
   /** 測試用：圖上「題目已給」的數字（要在題幹出現） */
   function knownNumbers(spec) {
     var out = [];
-    function add(v) { if (v != null) out.push(v); }
+    function add(v) { if (typeof v === "number") out.push(v); }
     switch (spec.type) {
       case "partWhole": add(spec.total.v); spec.parts.forEach(function (p) { add(p.v); }); break;
       case "compare": spec.rows.forEach(function (r) { add(r.v); }); add(spec.diff.v); break;
@@ -824,6 +945,8 @@
       case "choiceSeq": spec.rows.forEach(function (r) { r.terms.forEach(add); }); break;
       case "numberLine": spec.known.forEach(add); break;
       case "multi": spec.parts.forEach(function (p) { out = out.concat(knownNumbers(p)); }); break;
+      case "steps": add(spec.start.v); spec.ops.forEach(function (o) { add(o.v); }); break;
+      case "twoStep": spec.steps.forEach(function (p) { out = out.concat(knownNumbers(p)); }); break;
     }
     return out;
   }

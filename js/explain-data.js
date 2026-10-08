@@ -1,7 +1,8 @@
 /* 各題圖解資料（每題一筆，key = 單元|來源|題號）
  * 圖上的數字＝題目的數字；答案由 js/explain.js 依圖計算，並由測試核對答案鍵。
- * 小二：type partWhole（已知總數）/ compare（比多比少）/ seq（數列）/ shapes（圖形重複）/ choiceSeq / multi
- * K3：count（十格框）/ match（一一配對）/ numeral（讀數）/ numberLine（數線）/ shapes
+ * 小二：type partWhole（已知總數，可多部分）/ compare（比多比少）/ seq（數列）/ shapes（圖形重複）/ choiceSeq / multi
+ *       steps（數量變化：原有 → 下車 → 上車）/ twoStep（兩步應用題，第二步用 "$1" 代表第一步答案）
+ * K3：count（十格框）/ match（一一配對；ask: more／less／diff／toEqual）/ numeral（讀數）/ numberLine（數線）/ shapes
  */
 (function (global) {
   "use strict";
@@ -119,6 +120,76 @@
       think: "溫故第 1 週：3→7→11→15，每次多 4。", say: "下一個數是 19。" }
   });
 
+  /* ================= 小二 第3週：應用題入門・讀題畫重點 ================= */
+  add("w03", "practice", {
+    q1: { type: "partWhole", total: { label: "原有", v: 46 }, parts: [{ label: "借出", v: 19 }, { label: "還剩", v: null }],
+      answer: "27 本", expect: { q1: "27" },
+      think: "圈數字：46 本、19 本；劃問題：「還剩多少本？」原有 46 本是總數，借出和還剩是兩部分 → 求部分用減法。", say: "還剩 27 本。" },
+    q2: { type: "partWhole", total: { label: "雀鳥共", v: null }, parts: [{ label: "白鴿", v: 18 }, { label: "麻雀", v: 7 }],
+      answer: "（1）5（2）25 隻", expect: { q2a: "5", q2b: "25" },
+      think: "問題問「雀鳥」共有多少隻。5 個小朋友不是雀鳥 → 用不着（多餘資料）。白鴿和麻雀是兩部分，合起來是總數。", say: "（1）5 用不着（2）公園裏共有 25 隻雀鳥。",
+      tip: "讀題時把用不着的資料劃走（例如「5 個小朋友」），畫圖時不用畫。" },
+    q3: { type: "partWhole", total: { label: "全長", v: 60 }, parts: [{ label: "用去", v: 24 }, { label: "還剩", v: null }],
+      answer: "（1）36（2）厘米", expect: { q3a: "36", q3b: "厘米" },
+      think: "全長 60 厘米是總數，用去和還剩是兩部分。題目量長度用「厘米」，答句也要寫厘米。", say: "絲帶還剩 36 厘米。" },
+    q4: { type: "steps", start: { label: "原有", v: 35 }, ops: [{ op: "-", v: 12, label: "下車" }, { op: "+", v: 8, label: "上車" }], endLabel: "現在",
+      answer: "（1）23（2）31 人", expect: { q4a: "23", q4b: "31" },
+      think: "兩步題：人數變了兩次。下車 → 少了，用減；上車 → 多了，用加。一步一步跟着變。", say: "（1）下車後有 23 人（2）現在巴士上有 31 人。" },
+    q5: { type: "twoStep", steps: [
+        { type: "compare", cap: "第一步：先求小華（小華比小明多 → 小華是大數）",
+          rows: [{ label: "小明", v: 25, role: "small" }, { label: "小華", v: null, role: "big" }], diff: { v: 9, word: "多" } },
+        { type: "partWhole", cap: "第二步：再求兩人共有多少元",
+          total: { label: "兩人共", v: null }, parts: [{ label: "小明", v: 25 }, { label: "小華", v: "$1" }] }
+      ],
+      answer: "（1）34（2）59 元", expect: { q5a: "34", q5b: "59" },
+      think: "問題問「兩人共有」，但小華有多少還未知 → 要先求小華，再求合共。", say: "（1）小華有 34 元（2）兩人共有 59 元。" },
+    q6: { type: "partWhole", total: { label: "帶了", v: 50 }, parts: [{ label: "圖書", v: 18 }, { label: "筆", v: 9 }, { label: "還剩", v: null }],
+      answer: "23 元", expect: { q6: "23" },
+      think: "50 元是總數，分成三部分：圖書、筆、還剩。從總數減去用了的兩部分。", say: "她還剩 23 元。",
+      tip: "也可以先算一共用了多少：18 ＋ 9 ＝ 27，再算 50 − 27 ＝ 23。" },
+    q7: { type: "partWhole", total: { label: "一盒", v: 30 }, parts: [{ label: "哥哥吃", v: 8 }, { label: "妹妹吃", v: 6 }, { label: "還剩", v: null }],
+      answer: "B（30 − 8 − 6 ＝ 16，還剩 16 粒）", expect: { q7: "B" },
+      think: "哥哥吃了、妹妹也吃了 → 兩次都是拿走，所以兩次都用減。", say: "選 B：30 − 8 − 6 ＝ 16，還剩 16 粒。",
+      tip: "A（30 − 8 ＋ 6）把妹妹吃掉的又加回去，不合理；C（30 ＋ 8 ＋ 6）越吃越多，更不合理。" },
+    q8: { type: "compare", rows: [{ label: "哥哥", v: 52, role: "big" }, { label: "弟弟", v: null, role: "small" }], diff: { v: 17, word: "多" },
+      answer: "35 粒", expect: { q8: "35" },
+      think: "溫故第 2 週（陷阱）：哥哥比弟弟多 → 哥哥 52 是大數，要求的弟弟是小數 → 用減法。", say: "弟弟有 35 粒波子。" },
+    q9: { type: "partWhole", total: { label: "□", v: null }, parts: [{ label: "", v: 26 }, { label: "", v: 38 }],
+      answer: "64", expect: { q9: "64" },
+      think: "溫故第 2 週：□ − 26 ＝ 38，□ 是總數，拿走 26 剩 38 → 26 和 38 合起來就是 □。", say: "□ ＝ 64" },
+    q10: { type: "seq", terms: [9, 16, 23, 30, null], step: 7, answer: "37", expect: { q10: "37" },
+      think: "溫故第 1 週：9→16→23→30，每次多 7。", say: "下一個數是 37。" }
+  });
+
+  add("w03", "quiz", {
+    q1: { type: "partWhole", total: { label: "摘了", v: 63 }, parts: [{ label: "賣出", v: 28 }, { label: "還剩", v: null }],
+      answer: "35 個", expect: { q1: "35" },
+      think: "摘了 63 個是總數，賣出和還剩是兩部分 → 用減法。", say: "還剩 35 個橙。" },
+    q2: { type: "partWhole", total: { label: "現在共", v: null }, parts: [{ label: "原有", v: 34 }, { label: "姐姐給", v: 17 }],
+      answer: "（1）8（2）51 張", expect: { q2a: "8", q2b: "51" },
+      think: "問題問貼紙。「8 歲」是年齡，和貼紙無關 → 用不着。原有 34 張和姐姐給的 17 張合起來。", say: "（1）8 用不着（2）小強現在有 51 張貼紙。" },
+    q3: { type: "steps", start: { label: "原有", v: 26 }, ops: [{ op: "-", v: 9, label: "開走" }, { op: "+", v: 14, label: "駛入" }], endLabel: "現在",
+      answer: "31 架", expect: { q3: "31" },
+      think: "車的數量變了兩次：開走 → 少了，用減；駛入 → 多了，用加。", say: "現在停車場有 31 架車。" },
+    q4: { type: "twoStep", steps: [
+        { type: "compare", cap: "第一步：先求黃花（黃花比紅花少 → 黃花是小數）",
+          rows: [{ label: "紅花", v: 27, role: "big" }, { label: "黃花", v: null, role: "small" }], diff: { v: 8, word: "少" } },
+        { type: "partWhole", cap: "第二步：再求兩種花共有多少朵",
+          total: { label: "共", v: null }, parts: [{ label: "紅花", v: 27 }, { label: "黃花", v: "$1" }] }
+      ],
+      answer: "46 朵", expect: { q4: "46" },
+      think: "問題問「共有」，但黃花有多少還未知 → 先求黃花，再求合共。", say: "紅花和黃花共有 46 朵。" },
+    q5: { type: "partWhole", total: { label: "爸爸有", v: 100 }, parts: [{ label: "買菜", v: 45 }, { label: "買水果", v: 28 }, { label: "還剩", v: null }],
+      answer: "27 元", expect: { q5: "27" },
+      think: "100 元是總數，分成買菜、買水果、還剩三部分。", say: "爸爸還剩 27 元。",
+      tip: "也可以先算一共用了多少：45 ＋ 28 ＝ 73，再算 100 − 73 ＝ 27。" },
+    q6: { type: "compare", rows: [{ label: "鉛筆", v: 18, role: "small" }, { label: "尺", v: null, role: "big" }], diff: { v: 12, word: "長" },
+      answer: "（1）30（2）厘米", expect: { q6a: "30", q6b: "厘米" },
+      think: "尺比鉛筆長 → 尺是大數。大數 ＝ 小數 ＋ 相差。量長度用「厘米」。", say: "尺長 30 厘米。" },
+    q7: { type: "seq", terms: [12, 20, 28, 36, null], step: 8, answer: "44", expect: { q7: "44" },
+      think: "溫故第 1 週：12→20→28→36，每次多 8。", say: "下一個數是 44。" }
+  });
+
   /* ================= K3 第1週：數一數・比多少 ================= */
   add("k3-w01", "practice", {
     q1: { type: "count", n: 4, icon: "●", answer: "4", expect: { q1: "4" },
@@ -176,6 +247,38 @@
       parent: "「前面少 1：20 向左走一格是 19。」" },
     q5: { type: "numberLine", known: [12, 14], dir: "between", answer: "13", expect: { q5: "13" },
       parent: "「12 後面一格是 13，13 後面一格是 14 → 中間是 13。」" }
+  });
+
+  /* ================= K3 第3週：多・少・一樣多（加深） ================= */
+  add("k3-w03", "practice", {
+    q1: { type: "match", left: { label: "A", n: 5, icon: "🍎" }, right: { label: "B", n: 7, icon: "🍎" }, answer: "B", expect: { q1: "B" },
+      parent: "「上下一個配一個（拉線）。A 配完了，B 還多出 2 個 → B 比較多。」" },
+    q2: { type: "match", ask: "less", left: { label: "A", n: 6, icon: "🐟" }, right: { label: "B", n: 4, icon: "🐟" }, answer: "B", expect: { q2: "B" },
+      parent: "「一個配一個。B 先配完，A 還有多出來 → B 比較少。一起說：『B 比 A 少』。」" },
+    q3: { type: "match", left: { label: "兔子", n: 5, icon: "🐰" }, right: { label: "蘿蔔", n: 5, icon: "🥕" },
+      answerLabels: { left: "兔子多", right: "蘿蔔多", equal: "一樣多" }, answer: "一樣多", expect: { q3: "一樣多" },
+      parent: "「每隻兔子配一個蘿蔔，全部配完，沒有多出來 → 一樣多。一起說：『兔子和蘿蔔一樣多』。」" },
+    q4: { type: "match", ask: "diff", left: { label: "A", n: 3, icon: "⭐" }, right: { label: "B", n: 5, icon: "⭐" }, answer: "2", expect: { q4: "2" },
+      parent: "「先一個配一個，再數多出來的：1、2 → B 比 A 多 2 個。」" },
+    q5: { type: "match", left: { label: "汽車", n: 4, icon: "🚗" }, right: { label: "巴士", n: 2, icon: "🚌" },
+      answerLabels: { left: "汽車比巴士多", right: "汽車比巴士少", equal: "一樣多" }, answer: "汽車比巴士多", expect: { q5: "汽車比巴士多" },
+      parent: "「汽車配巴士，巴士先配完，汽車多出 2 架。所以說：『汽車比巴士多』，也可以說『巴士比汽車少』。」" },
+    q6: { type: "numberLine", known: [14, 15], ref: 15, dir: "after", answer: "16", expect: { q6: "16" },
+      parent: "「溫故：後面的數多 1，15 向右走一格是 16。」" }
+  });
+
+  add("k3-w03", "quiz", {
+    q1: { type: "match", left: { label: "A", n: 8, icon: "🌸" }, right: { label: "B", n: 6, icon: "🌸" }, answer: "A", expect: { q1: "A" },
+      parent: "「一個配一個。B 配完了，A 還多出 2 朵 → A 比較多。」" },
+    q2: { type: "match", ask: "less", left: { label: "小狗", n: 3, icon: "🐶" }, right: { label: "小貓", n: 5, icon: "🐱" }, answer: "小狗", expect: { q2: "小狗" },
+      parent: "「小狗配小貓，小狗先配完 → 小狗比較少（小狗比小貓少）。」" },
+    q3: { type: "match", ask: "diff", left: { label: "A", n: 7, icon: "●" }, right: { label: "B", n: 4, icon: "●" }, answer: "3", expect: { q3: "3" },
+      parent: "「一個配一個，再數 A 多出來的：1、2、3 → A 比 B 多 3 個。」" },
+    q4: { type: "match", ask: "toEqual", left: { label: "碗", n: 5, icon: "🥣" }, right: { label: "匙羹", n: 3, icon: "🥄" }, answer: "2", expect: { q4: "2" },
+      parent: "「每個碗配一隻匙羹。有 2 個碗沒有匙羹 → 再拿 2 隻匙羹，就一樣多。」" },
+    q5: { type: "match", left: { label: "香蕉", n: 3, icon: "🍌" }, right: { label: "蘋果", n: 3, icon: "🍎" },
+      answerLabels: { left: "香蕉比蘋果多", right: "香蕉比蘋果少", equal: "香蕉和蘋果一樣多" }, answer: "香蕉和蘋果一樣多", expect: { q5: "香蕉和蘋果一樣多" },
+      parent: "「一條香蕉配一個蘋果，全部配完，沒有多出來 → 香蕉和蘋果一樣多。」" }
   });
 
   global.MathExplainData = D;

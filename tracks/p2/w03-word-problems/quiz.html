@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>第3週｜應用題入門・讀題畫重點（測驗）</title>
+  <link rel="stylesheet" href="../../../css/print-a4.css" />
+  <link rel="stylesheet" href="../../../css/screen.css" />
+</head>
+<body data-track="p2">
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="../../../index.html">首頁</a>
+    <a href="teach.html">教學</a>
+    <a href="practice.html">練習</a>
+    <a href="answers.html">答案</a>
+    <a href="../../../wrongbook.html?track=p2">錯題本</a>
+    <a href="../../../review.html?track=p2">重溫</a>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印 A4</button>
+  </nav>
+
+  <article class="sheet">
+    <header class="sheet-header">
+      <div class="titles">
+        <h1>第3週｜應用題入門・讀題畫重點（測驗）</h1>
+        <div class="meta">學界賽專軌・小二→小三橋接・學生用・共 7 題（含溫故 1 題）</div>
+      </div>
+      <span class="badge badge-student">學生用・測驗</span>
+    </header>
+
+    <div class="mode-banner screen-only">
+      <strong>螢幕模式：</strong>先選擇「開始計時 20 分」或「不計時開始」。請準備一張白紙寫圖和算式。全部做完再按「交卷」；交卷後才顯示分數、錯題與圖解，並鎖定答案。列印為空白限時卷。
+    </div>
+
+    <div class="quiz-gate screen-only" id="quiz-gate">
+      <p><strong>準備好再開始</strong></p>
+      <p class="small">建議獨立完成：每題先圈數字、劃問題，再在紙上寫「圖 → 式 → 答 → 驗」。計時約 20 分鐘；時間到會自動交卷。</p>
+      <button type="button" class="btn" id="btn-start-timed">⏱ 開始計時（20 分）</button>
+      <button type="button" class="btn btn-secondary" id="btn-start-free">不計時開始</button>
+    </div>
+
+    <div class="toolbar screen-only" id="quiz-toolbar" style="display:none" role="group" aria-label="測驗工具">
+      <span class="timer-display" id="timer-display">剩餘 20:00</span>
+      <button type="button" class="btn btn-success" id="btn-submit">交卷看成績</button>
+    </div>
+
+    <div id="quiz-body" class="quiz-body">
+      <div class="meta-fields">
+        <span class="print-only">姓名：<span class="answer-line" style="min-width:6em"></span>
+           日期：<span class="answer-line" style="min-width:5em"></span>
+           用時：<span class="answer-line" style="min-width:3em"></span> 分鐘</span>
+        <label class="screen-only">姓名 <input class="meta-input" type="text" autocomplete="name" /></label>
+        <label class="screen-only">日期 <input class="meta-input" type="text" /></label>
+      </div>
+      <div class="time-box print-only block">⏱ 建議限時：20 分鐘・請獨立完成・每題寫出圖、算式、答句（要有單位）和驗算</div>
+      <p class="small">先讀題：圈數字、劃問題、劃走用不着的資料。兩步題先想「先求甚麼」。不會的題先跳過，最後再回來。螢幕交卷前看不到分數。</p>
+
+      <ol class="questions quiz-questions">
+        <li class="problem-card" data-unit="q1">
+          <p>果園摘了 63 個橙，賣出了 28 個。還剩多少個橙？</p>
+          <p>答：還剩 <input type="text" class="ans-input screen-only" data-key="q1" inputmode="numeric" aria-label="第1題" /><span class="answer-box print-only inline-block"></span> 個橙。</p>
+          <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
+        </li>
+        <li class="problem-card" data-unit="q2">
+          <p>小強今年 8 歲，他有 34 張貼紙，姐姐再給他 17 張。小強現在有多少張貼紙？</p>
+          <p>（1）哪一個數用不着？
+            <span class="screen-only">
+              <span class="choice-group" data-key="q2a" role="group" aria-label="第2題(1)用不着的數">
+                <button type="button" class="choice-btn" data-value="8">8</button>
+                <button type="button" class="choice-btn" data-value="34">34</button>
+                <button type="button" class="choice-btn" data-value="17">17</button>
+              </span>
+            </span>
+            <span class="print-only">圈起來：　8　／　34　／　17</span>
+          </p>
+          <p>（2）答：小強現在有 <input type="text" class="ans-input screen-only" data-key="q2b" inputmode="numeric" aria-label="第2題(2)" /><span class="answer-box print-only inline-block"></span> 張貼紙。</p>
+          <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
+        </li>
+        <li class="problem-card" data-unit="q3">
+          <p>停車場有 26 架車，開走了 9 架，又駛入 14 架。現在停車場有多少架車？</p>
+          <p>答：現在有 <input type="text" class="ans-input screen-only" data-key="q3" inputmode="numeric" aria-label="第3題" /><span class="answer-box print-only inline-block"></span> 架車。</p>
+          <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
+        </li>
+        <li class="problem-card" data-unit="q4">
+          <p>花園裏有紅花 27 朵，黃花比紅花少 8 朵。紅花和黃花共有多少朵？</p>
+          <p class="small">（提示：這是兩步題，先想想要先求甚麼。）</p>
+          <p>答：共有 <input type="text" class="ans-input screen-only" data-key="q4" inputmode="numeric" aria-label="第4題" /><span class="answer-box print-only inline-block"></span> 朵。</p>
+          <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
+        </li>
+        <li class="problem-card" data-unit="q5">
+          <p>爸爸有 100 元，買菜用了 45 元，買水果用了 28 元。爸爸還剩多少元？</p>
+          <p>答：還剩 <input type="text" class="ans-input screen-only" data-key="q5" inputmode="numeric" aria-label="第5題" /><span class="answer-box print-only inline-block"></span> 元。</p>
+          <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
+        </li>
+        <li class="problem-card" data-unit="q6">
+          <p>一枝鉛筆長 18 厘米，一把尺比鉛筆長 12 厘米。尺長多少？</p>
+          <p>（1）尺長 <input type="text" class="ans-input screen-only" data-key="q6a" inputmode="numeric" aria-label="第6題(1)數字" /><span class="answer-box print-only inline-block"></span></p>
+          <p>（2）單位是：
+            <span class="screen-only">
+              <span class="choice-group" data-key="q6b" role="group" aria-label="第6題(2)單位">
+                <button type="button" class="choice-btn" data-value="厘米">厘米</button>
+                <button type="button" class="choice-btn" data-value="個">個</button>
+                <button type="button" class="choice-btn" data-value="元">元</button>
+              </span>
+            </span>
+            <span class="print-only">圈起來：　厘米　／　個　／　元</span>
+          </p>
+          <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
+        </li>
+        <li class="problem-card" data-unit="q7">
+          <p class="small">溫故（第 1 週）：找規律，填出下一個數。</p>
+          <p class="seq">12、20、28、36、
+            <input type="text" class="ans-input screen-only" data-key="q7" inputmode="numeric" aria-label="第7題" />
+            <span class="gap print-only inline-block"></span>
+          </p>
+          <div class="blank-area print-only block">規律：</div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="summary-panel screen-only" id="quiz-summary">
+      <h2>測驗結果</h2>
+      <p>得分：<strong id="quiz-score">—</strong></p>
+      <p>用時：<span id="quiz-time-used">—</span></p>
+      <div class="verdict" id="quiz-verdict" role="status"></div>
+      <p class="small">過關參考：約 5／7 題以上正確；第 3、4 題是兩步題，錯了請回看教學例題 3、4。</p>
+      <h3>答錯的題</h3>
+      <ul class="wrong-list" id="quiz-wrong-list"></ul>
+      <p class="small">解析請對照 <a href="answers.html">答案頁</a>。錯題已進 <a href="../../../wrongbook.html?track=p2">錯題本</a>，請到 <a href="../../../review.html?track=p2">重溫</a> 做間隔複習（必做）。</p>
+    </div>
+
+    <div class="tip">
+      <strong>家長停損：</strong>測驗中孩子明顯焦慮、哭泣 → 可以改為「不計時」或停止，明天再做。交卷後只講錯題的技能標籤，不要整份重做。
+    </div>
+
+    <footer class="sheet-footer">
+      <span>澳門小二・學界賽預備教學庫・第3週</span>
+      <span>測驗頁・螢幕互動／可列印 A4・限時 20 分</span>
+    </footer>
+  </article>
+
+  <script src="../../../js/track.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script>if(window.MathTrack)MathTrack.initFromPage("p2");</script>
+  <script src="../../../js/wrongbook.js"></script>
+  <script src="../../../js/explain-data.js"></script>
+  <script src="../../../js/explain.js"></script>
+  <script src="quiz.js"></script>
+</body>
+</html>

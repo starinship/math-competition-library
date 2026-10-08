@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>K3 第3週｜多・少・一樣多（練習）</title>
+  <link rel="stylesheet" href="../../../css/print-a4.css" />
+  <link rel="stylesheet" href="../../../css/screen.css" />
+  <link rel="stylesheet" href="../../../css/draw.css" />
+</head>
+<body data-track="k3" class="track-k3">
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="../../../index.html">首頁</a>
+    <a href="teach.html">教學</a>
+    <a href="quiz.html">小測</a>
+    <a href="answers.html">答案</a>
+    <a href="../../../wrongbook.html?track=k3">錯題本</a>
+    <a href="../../../review.html?track=k3">重溫</a>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印 A4</button>
+  </nav>
+
+  <article class="sheet sheet-k3">
+    <header class="sheet-header">
+      <div class="titles">
+        <h1>K3 第3週｜多・少・一樣多（練習）</h1>
+        <div class="meta">幼稚園高班・共 6 題・約 10–15 分・大圖大字・可觸控</div>
+      </div>
+      <span class="badge badge-student">學生用・練習</span>
+    </header>
+
+    <div class="mode-banner screen-only">
+      <strong>怎麼做：</strong>看圖 → 一個配一個（可用右下角「✏️ 畫筆」拉線）→ 點選答案 → 按「檢查」。第 5 題請家長讀出三句話。連錯 2 題就休息。列印時變成空白卷，可拉線、塗圈作答。
+    </div>
+
+    <div class="toolbar screen-only" role="group" aria-label="練習進度">
+      <div class="progress-bar-wrap" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
+      <span class="progress-text" id="progress-text">已檢查 0 / 6　答對 0</span>
+      <button type="button" class="btn btn-success" id="btn-check-all">全部檢查</button>
+    </div>
+
+    <div class="stop-cue screen-only" id="stop-cue" role="alert">家長停損：已連錯 2 題。今天先休息，玩一下「配對遊戲」（杯配匙羹）；明天只重做錯題 2–3 題。</div>
+
+    <div class="meta-fields">
+      <span class="print-only">姓名：<span class="answer-line" style="min-width:6em"></span>
+         日期：<span class="answer-line" style="min-width:5em"></span></span>
+      <label class="screen-only">姓名 <input class="meta-input" type="text" autocomplete="name" /></label>
+      <label class="screen-only">日期 <input class="meta-input" type="text" /></label>
+    </div>
+
+    <h2>A. 多・少・一樣多</h2>
+    <ol class="questions k3-questions">
+      <li class="problem-card k3-card" data-unit="q1">
+        <div class="compare-row big-visual"><div class="compare-box"><div class="compare-label">A</div><p>🍎 🍎 🍎 🍎 🍎</p></div><div class="compare-box"><div class="compare-label">B</div><p>🍎 🍎 🍎 🍎 🍎 🍎 🍎</p></div></div>
+        <p class="k3-prompt">哪一邊比較多？</p>
+        <div class="screen-only">
+          <span class="choice-group choice-big" data-key="q1" role="group" aria-label="第1題">
+            <button type="button" class="choice-btn choice-lg" data-value="A">A</button>
+            <button type="button" class="choice-btn choice-lg" data-value="B">B</button>
+            <button type="button" class="choice-btn choice-lg" data-value="一樣多">一樣多</button>
+          </span>
+        </div>
+        <p class="print-only">圈起來：　A　／　B　／　一樣多</p>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn" data-check-unit="q1">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card k3-card" data-unit="q2">
+        <div class="compare-row big-visual"><div class="compare-box"><div class="compare-label">A</div><p>🐟 🐟 🐟 🐟 🐟 🐟</p></div><div class="compare-box"><div class="compare-label">B</div><p>🐟 🐟 🐟 🐟</p></div></div>
+        <p class="k3-prompt">哪一邊比較<strong>少</strong>？</p>
+        <div class="screen-only">
+          <span class="choice-group choice-big" data-key="q2" role="group" aria-label="第2題">
+            <button type="button" class="choice-btn choice-lg" data-value="A">A</button>
+            <button type="button" class="choice-btn choice-lg" data-value="B">B</button>
+            <button type="button" class="choice-btn choice-lg" data-value="一樣多">一樣多</button>
+          </span>
+        </div>
+        <p class="print-only">圈起來：　A　／　B　／　一樣多</p>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn" data-check-unit="q2">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card k3-card" data-unit="q3">
+        <div class="compare-row big-visual"><div class="compare-box"><div class="compare-label">兔子</div><p>🐰 🐰 🐰 🐰 🐰</p></div><div class="compare-box"><div class="compare-label">蘿蔔</div><p>🥕 🥕 🥕 🥕 🥕</p></div></div>
+        <p class="k3-prompt">兔子和蘿蔔，哪個比較多？</p>
+        <div class="screen-only">
+          <span class="choice-group choice-big" data-key="q3" role="group" aria-label="第3題">
+            <button type="button" class="choice-btn choice-lg" data-value="兔子多">兔子多</button>
+            <button type="button" class="choice-btn choice-lg" data-value="蘿蔔多">蘿蔔多</button>
+            <button type="button" class="choice-btn choice-lg" data-value="一樣多">一樣多</button>
+          </span>
+        </div>
+        <p class="print-only">圈起來：　兔子多　／　蘿蔔多　／　一樣多</p>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn" data-check-unit="q3">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+    </ol>
+
+    <h2>B. 多幾個？說一說</h2>
+    <ol class="questions k3-questions" start="4">
+      <li class="problem-card k3-card" data-unit="q4">
+        <div class="compare-row big-visual"><div class="compare-box"><div class="compare-label">A</div><p>⭐ ⭐ ⭐</p></div><div class="compare-box"><div class="compare-label">B</div><p>⭐ ⭐ ⭐ ⭐ ⭐</p></div></div>
+        <p class="k3-prompt">B 比 A 多幾個？</p>
+        <div class="screen-only">
+          <span class="choice-group choice-big" data-key="q4" role="group" aria-label="第4題">
+            <button type="button" class="choice-btn choice-lg" data-value="1">1</button>
+            <button type="button" class="choice-btn choice-lg" data-value="2">2</button>
+            <button type="button" class="choice-btn choice-lg" data-value="3">3</button>
+          </span>
+        </div>
+        <p class="print-only">圈起來：　1　／　2　／　3</p>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn" data-check-unit="q4">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card k3-card" data-unit="q5">
+        <div class="compare-row big-visual"><div class="compare-box"><div class="compare-label">汽車</div><p>🚗 🚗 🚗 🚗</p></div><div class="compare-box"><div class="compare-label">巴士</div><p>🚌 🚌</p></div></div>
+        <p class="k3-prompt">🗣️ 家長讀三句話：哪一句說得對？</p>
+        <div class="screen-only">
+          <span class="choice-group choice-big" data-key="q5" role="group" aria-label="第5題">
+            <button type="button" class="choice-btn choice-lg" data-value="汽車比巴士多">汽車比巴士多</button>
+            <button type="button" class="choice-btn choice-lg" data-value="汽車比巴士少">汽車比巴士少</button>
+            <button type="button" class="choice-btn choice-lg" data-value="一樣多">一樣多</button>
+          </span>
+        </div>
+        <p class="print-only">圈起來：　汽車比巴士多　／　汽車比巴士少　／　一樣多</p>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn" data-check-unit="q5">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+    </ol>
+
+    <h2>C. 溫故：前後是誰（穿插 1 題）</h2>
+    <ol class="questions k3-questions" start="6">
+      <li class="problem-card k3-card" data-unit="q6">
+        <div class="num-train" aria-label="數字火車"><span class="num-engine" aria-hidden="true">🚂</span><span class="num-car">14</span><span class="num-car">15</span><span class="num-car is-gap">？</span></div>
+        <p class="k3-prompt">15 後面是幾？</p>
+        <div class="screen-only">
+          <span class="choice-group choice-big" data-key="q6" role="group" aria-label="第6題">
+            <button type="button" class="choice-btn choice-lg" data-value="14">14</button>
+            <button type="button" class="choice-btn choice-lg" data-value="16">16</button>
+            <button type="button" class="choice-btn choice-lg" data-value="17">17</button>
+          </span>
+        </div>
+        <p class="print-only">圈起來：　14　／　16　／　17</p>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn" data-check-unit="q6">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+    </ol>
+
+    <div class="summary-panel screen-only" id="practice-summary">
+      <h2>練習結果</h2>
+      <p>得分：<strong id="final-score">—</strong></p>
+      <div class="verdict" id="practice-verdict" role="status"></div>
+      <p class="small"><strong>精熟建議：</strong>約 5／6 題以上正確再進小測；未達標就回教學再練，或只重做錯題（依技能標籤）。</p>
+      <h3>需要再練的題</h3>
+      <ul class="wrong-list" id="wrong-list"></ul>
+      <p class="small">錯題已進 <a href="../../../wrongbook.html?track=k3">錯題本（K3）</a>，記得去 <a href="../../../review.html?track=k3">重溫</a>。準備好可做 <a href="quiz.html">小測</a>。</p>
+    </div>
+
+    <div class="tip">
+      <strong>家長停損：</strong>孩子明顯煩躁就收工。明天只重做錯題 2–3 題即可，不要整份重刷。
+    </div>
+
+    <footer class="sheet-footer">
+      <span>雙孩教學庫・K3・第3週</span>
+      <span>練習・螢幕／可列印 A4</span>
+    </footer>
+  </article>
+
+  <script src="../../../js/track.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script>if(window.MathTrack)MathTrack.initFromPage("k3");</script>
+  <script src="../../../js/wrongbook.js"></script>
+  <script src="../../../js/explain-data.js"></script>
+  <script src="../../../js/explain.js"></script>
+  <script src="practice.js"></script>
+  <script src="../../../js/draw.js"></script>
+</body>
+</html>

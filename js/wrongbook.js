@@ -339,7 +339,8 @@
   function snapshotPrompt(cardEl) {
     if (!cardEl) return "";
     var clone = cardEl.cloneNode(true);
-    clone.querySelectorAll("input, button, .feedback, .q-actions, .print-only").forEach(function (el) {
+    /* 不擷取解法面板／「先看答案」標記，避免重溫時題幹洩露答案 */
+    clone.querySelectorAll("input, button, .feedback, .q-actions, .print-only, .sol-panel, .ans-viewed-note").forEach(function (el) {
       el.parentNode && el.parentNode.removeChild(el);
     });
     var text = (clone.textContent || "").replace(/\s+/g, " ").trim();

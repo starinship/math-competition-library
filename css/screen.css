@@ -1027,6 +1027,31 @@ body[data-track="p2"] .nav-bar { /* marker only */ }
 .sol-svg .sol-nl-tick { stroke: #333; stroke-width: 2; }
 .sol-svg .sol-nl-ans { fill: #e8f5ee; stroke: #1b6b3a; stroke-width: 3; }
 .sol-svg .sol-nl-known { fill: #e7f0fb; stroke: #1a4d8c; stroke-width: 2; }
+/* 第 3 週：數量變化流程、兩步題（第一步求得的數）、K3「再加幾個」虛線圈、多出來的編號 */
+.sol-svg .sol-box-mid { fill: #e8f5ee; stroke: #1b6b3a; stroke-width: 2; }
+.sol-svg .sol-seg-derived { fill: #e8f5ee; stroke: #1b6b3a; stroke-width: 2; }
+.sol-svg .sol-ghost { fill: #fff; stroke: #1b6b3a; stroke-width: 2.5; stroke-dasharray: 5 4; }
+.sol-svg .sol-t-count { font-size: 16px; font-weight: 800; fill: #b03a00; }
+.sol-twostep { display: flex; flex-direction: column; gap: 4px; }
+.sol-twostep-item .sol-fig-cap { margin: 4px 0 2px; color: #1a4d8c; }
+.sol-static .sol-twostep { flex-direction: row; flex-wrap: wrap; gap: 4px 14px; }
+.sol-static .sol-twostep-item { flex: 1 1 240px; min-width: 0; }
+.sol-static .sol-twostep-item .sol-svg { max-width: 100%; }
+
+/* 第 3 週教學：讀題畫重點（圈數字・劃問題・刪多餘） */
+.kw-num { display: inline-block; padding: 0 5px; border: 2px solid #1a4d8c; border-radius: 999px; font-weight: 800; line-height: 1.25; }
+.kw-q { text-decoration: underline wavy #b03a00; text-underline-offset: 4px; font-weight: 700; }
+.kw-extra { text-decoration: line-through; color: #777; }
+.read-steps { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 6px 0; padding: 0; list-style: none; }
+.read-steps li { padding: 4px 10px; border: 1.5px solid #c5d0dc; border-radius: 6px; background: #fff; font-weight: 700; }
+.flow-model { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 10px 0 12px; padding: 10px 12px; border: 1.5px dashed #9fb3c8; border-radius: 8px; background: #fbfcfe; font-weight: 700; }
+.flow-box { min-width: 3.2em; padding: 6px 10px; border: 2px solid #1a4d8c; border-radius: 6px; background: #fff; text-align: center; }
+.flow-box.is-unknown { border-style: dashed; border-color: #8a5a00; background: #fff6db; }
+.flow-op { color: #b03a00; white-space: nowrap; }
+@media print {
+  .kw-num { border-width: 1.5px; }
+  .flow-box, .flow-box.is-unknown { background: #fff !important; }
+}
 
 /* 答案頁（列印及闊螢幕）：文字在左、圖在右，A4 不會太長 */
 @media print, (min-width: 760px) {
@@ -1039,7 +1064,8 @@ body[data-track="p2"] .nav-bar { /* marker only */ }
   .answer-item:has(> .sol-static) > .ans,
   .answer-item:has(> .sol-static) > .explain { grid-column: 1; }
   .answer-item > .sol-static { grid-column: 2; grid-row: 1 / span 2; margin-top: 0; }
-  .answer-item > .sol-static:has(.sol-fig-item) { grid-column: 1 / -1; grid-row: auto; margin-top: 4px; }
+  .answer-item > .sol-static:has(.sol-fig-item),
+  .answer-item > .sol-static:has(.sol-twostep) { grid-column: 1 / -1; grid-row: auto; margin-top: 4px; }
   .answer-item > .sol-static .sol-svg { max-width: 100%; }
   li:has(> .sol-static) { margin-bottom: 6px; }
   li:has(> .sol-static)::after { content: ""; display: block; clear: both; }

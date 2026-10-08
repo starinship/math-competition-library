@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>第3週｜應用題入門・讀題畫重點（教學）</title>
+  <link rel="stylesheet" href="../../../css/print-a4.css" />
+  <link rel="stylesheet" href="../../../css/screen.css" />
+</head>
+<body data-track="p2">
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="../../../index.html">首頁</a>
+    <a href="practice.html">練習</a>
+    <a href="quiz.html">測驗</a>
+    <a href="answers.html">答案</a>
+    <a href="../../../wrongbook.html?track=p2">錯題本</a>
+    <a href="../../../review.html?track=p2">重溫</a>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印 A4</button>
+  </nav>
+
+  <article class="sheet">
+    <header class="sheet-header">
+      <div class="titles">
+        <h1>第3週｜應用題入門・讀題畫重點（教學）</h1>
+        <div class="meta">學界賽專軌・小二→小三橋接・家長／教師用・螢幕可逐步教學</div>
+      </div>
+      <span class="badge badge-parent">家長用・教學</span>
+    </header>
+
+    <div class="mode-banner screen-only">
+      <strong>螢幕模式：</strong>用「上一題／下一題」逐步講例題；需要時再按「顯示提示」。列印時會一次展開全部內容。
+    </div>
+
+    <div class="callout pedagogy-note">
+      <div class="callout-title">科學節奏・本週</div>
+      <ul class="mb-0">
+        <li><strong>先決條件：</strong>第 2 週練習約 ≥8/10、測驗約 ≥5/7，且錯題本「今日到期」已清完，才開始本週。</li>
+        <li><strong>序列：</strong>明確教學 → 引導 → 獨立練習 → 錯題提取重溫 → 測驗。</li>
+        <li><strong>精熟門檻：</strong>練習約 ≥8/10、測驗約 ≥5/7，且到期錯題清完，再進第 4 週。</li>
+        <li><strong>穿插溫故：</strong>練習混入 3 題第 1–2 週（比多比少陷阱、填方格、找規律），測驗混入 1 題。</li>
+        <li><strong>停損：</strong>連錯 2 題、哭泣或強烈抗拒 → 立刻停；明天只練錯題 2–3 題。</li>
+      </ul>
+    </div>
+
+    <section>
+      <h2>本週學什麼？</h2>
+      <p>第 2 週學會了「看關係」（總數與部分、誰大誰小）。本週把這些關係放進<strong>文字應用題</strong>：先讀懂題目，找出有用的數和要回答的問題，再畫圖、列式。學界賽的題目字多、有時有<strong>用不着的資料</strong>，也常要<strong>兩步</strong>才算到答案，所以「讀題」本身就是一項要練的技能。</p>
+      <div class="callout">
+        <div class="callout-title">學習目標</div>
+        <ul class="mb-0">
+          <li><strong>抓條件與問題：</strong>圈出有用的數（條件），在問題下面劃線，劃走用不着的資料。</li>
+          <li><strong>一至兩步加減應用題：</strong>知道「先求甚麼、再求甚麼」，一步一步寫算式。</li>
+          <li><strong>畫簡圖／線段圖：</strong>用線段圖或「變化箭咀圖」表示題意。</li>
+          <li><strong>單位意識：</strong>答句要寫單位（本、人、元、厘米……），而且要回答劃線的問題。</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <div class="callout-title">讀題三步（貼在書桌旁）</div>
+        <ul class="read-steps">
+          <li>① 圈數字：<span class="kw-num">42</span></li>
+          <li>② 劃問題：<span class="kw-q">還有多少張？</span></li>
+          <li>③ 劃走多餘：<span class="kw-extra">司機 45 歲</span></li>
+        </ul>
+        <p class="small mb-0">然後問自己：誰是總數？誰大誰小？數量是變多還是變少？要不要先求另一個數？</p>
+      </div>
+
+      <div class="tip">
+        <strong>四步作答格式（學界賽好習慣）：</strong>① 圖：畫線段圖或變化圖，標出已知和「？」　② 式：寫出算式（兩步題寫兩條）　③ 答：寫完整答句（要有單位）　④ 驗：用相反算法檢查。
+      </div>
+    </section>
+
+    <section>
+      <h2>例題講解（請和孩子一起做）</h2>
+
+      <div class="toolbar teach-controls screen-only" role="group" aria-label="例題控制">
+        <button type="button" class="btn btn-secondary" id="btn-prev">← 上一題</button>
+        <span class="step-indicator" id="step-indicator">例題 1 / 5</span>
+        <button type="button" class="btn" id="btn-next">下一題 →</button>
+        <button type="button" class="btn btn-warn btn-sm" id="btn-hint">顯示提示／怎麼想</button>
+      </div>
+
+      <div class="example example-slide" data-ex="1">
+        <div class="example-label">例題 1｜讀題三步：圈數字、劃問題</div>
+        <p>小明有 <span class="kw-num">42</span> 張貼紙，送了 <span class="kw-num">15</span> 張給弟弟。<span class="kw-q">小明還有多少張貼紙？</span></p>
+        <div class="bar-model" aria-label="線段圖：原有 42 張，送出 15 張，還有未知">
+          <div class="bar-row"><span class="bar-name"></span><div class="bar-track"><div class="bar-brace" style="flex:42">原有 42 張</div></div></div>
+          <div class="bar-row"><span class="bar-name">貼紙</span><div class="bar-track"><span class="bar-seg" style="flex:15">送出 15</span><span class="bar-seg bar-unknown" style="flex:27">還有 ？</span></div></div>
+        </div>
+        <p class="screen-only small">先請孩子用手指出：哪兩個數有用？問題問甚麼？</p>
+        <div class="hint-block">
+          <div class="hint-content">
+            <p><strong>怎麼想：</strong></p>
+            <ol class="steps">
+              <li>圖：原有 42 張是總數；送出 15 張和還有的是兩部分。</li>
+              <li>式：求部分用減 → 42 − 15 ＝ 27</li>
+              <li>答：小明還有 <strong>27</strong> 張貼紙。（答句跟着劃線的問題寫，要有「張」。）</li>
+              <li>驗：27 ＋ 15 ＝ 42 ✓</li>
+            </ol>
+            <p class="small">家長可問：「如果答案寫『27』，別人知道是 27 甚麼嗎？」讓孩子自己補上單位。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="example example-slide" data-ex="2">
+        <div class="example-label">例題 2｜小心多餘資料</div>
+        <p>校車上有 <span class="kw-num">23</span> 個男生和 <span class="kw-num">19</span> 個女生，<span class="kw-extra">司機叔叔今年 45 歲</span>。<span class="kw-q">校車上共有多少個學生？</span></p>
+        <div class="bar-model" aria-label="線段圖：男生 23，女生 19，共有未知">
+          <div class="bar-row"><span class="bar-name"></span><div class="bar-track"><div class="bar-brace" style="flex:42">學生共 ？</div></div></div>
+          <div class="bar-row"><span class="bar-name">學生</span><div class="bar-track"><span class="bar-seg" style="flex:23">男生 23</span><span class="bar-seg" style="flex:19">女生 19</span></div></div>
+        </div>
+        <p class="screen-only small">先問孩子：題目有三個數，三個都要用嗎？「45 歲」是學生的人數嗎？</p>
+        <div class="hint-block">
+          <div class="hint-content">
+            <p><strong>怎麼想：</strong></p>
+            <ol class="steps">
+              <li>問題問「學生」→ 只要男生和女生。司機的年齡和學生人數無關 → 劃走。</li>
+              <li>式：求總數用加 → 23 ＋ 19 ＝ 42</li>
+              <li>答：校車上共有 <strong>42</strong> 個學生。</li>
+              <li>驗：42 − 23 ＝ 19 ✓</li>
+            </ol>
+            <p class="small">學界賽常放「好像有用」的數。不要見數就用，要先問：「這個數和問題有關嗎？」</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="example example-slide" data-ex="3">
+        <div class="example-label">例題 3｜兩步題：數量變了兩次</div>
+        <p>樹上有 <span class="kw-num">30</span> 隻雀鳥，飛走了 <span class="kw-num">12</span> 隻，又飛來 <span class="kw-num">7</span> 隻。<span class="kw-q">樹上現在有多少隻雀鳥？</span></p>
+        <div class="flow-model" aria-label="變化圖：30 隻，飛走 12 隻，再飛來 7 隻，現在未知">
+          <span class="flow-box">30</span><span class="flow-op">飛走 −12 →</span><span class="flow-box is-unknown">？</span><span class="flow-op">飛來 ＋7 →</span><span class="flow-box is-unknown">現在 ？</span>
+        </div>
+        <p class="screen-only small">先問孩子：雀鳥的數量變了幾次？每次是變多還是變少？</p>
+        <div class="hint-block">
+          <div class="hint-content">
+            <p><strong>怎麼想：</strong></p>
+            <ol class="steps">
+              <li>圖：用箭咀畫出兩次變化：飛走（少了）→ 飛來（多了）。</li>
+              <li>式：第一步 30 − 12 ＝ 18；第二步 18 ＋ 7 ＝ 25</li>
+              <li>答：樹上現在有 <strong>25</strong> 隻雀鳥。</li>
+              <li>驗（倒推）：25 − 7 ＝ 18，18 ＋ 12 ＝ 30 ✓（回到原來的 30）</li>
+            </ol>
+            <p class="small">兩步題要寫兩條算式。中間的 18 是「第一步的答案」，第二步要用它。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="example example-slide" data-ex="4">
+        <div class="example-label">例題 4｜兩步題：先求另一個數，再求合共</div>
+        <p>紅球有 <span class="kw-num">16</span> 個，藍球比紅球多 <span class="kw-num">5</span> 個。<span class="kw-q">紅球和藍球共有多少個？</span></p>
+        <div class="bar-model" aria-label="線段圖：紅球 16，藍球比紅球多 5">
+          <div class="bar-row"><span class="bar-name">紅球</span><div class="bar-track"><span class="bar-seg" style="flex:16">16</span><span style="flex:5"></span></div></div>
+          <div class="bar-row"><span class="bar-name">藍球</span><div class="bar-track"><span class="bar-seg bar-unknown" style="flex:16">和紅球一樣 16</span><span class="bar-seg bar-diff" style="flex:5">多 5</span></div></div>
+          <p class="bar-caption">兩條線段合起來＝共有多少個（問題）。</p>
+        </div>
+        <p class="screen-only small">先問孩子：要算「共有」，我們知道藍球有多少嗎？那要先求甚麼？</p>
+        <div class="hint-block">
+          <div class="hint-content">
+            <p><strong>怎麼想：</strong></p>
+            <ol class="steps">
+              <li>先求甚麼？藍球未知 → 第一步先求藍球（藍球比紅球多 → 藍球是大數）。</li>
+              <li>式：第一步 16 ＋ 5 ＝ 21（藍球）；第二步 16 ＋ 21 ＝ 37（共有）</li>
+              <li>答：紅球和藍球共有 <strong>37</strong> 個。</li>
+              <li>驗：37 − 16 ＝ 21，21 − 16 ＝ 5 ✓</li>
+            </ol>
+            <p class="small">常見錯誤：直接算 16 ＋ 5 ＝ 21 就當答案。提醒孩子回看劃線的問題：「問的是共有，不是藍球。」</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="example example-slide" data-ex="5">
+        <div class="example-label">例題 5｜單位與答句（挑戰・可選）</div>
+        <p>一條繩長 <span class="kw-num">50</span> 厘米，第一次剪去 <span class="kw-num">18</span> 厘米，第二次剪去 <span class="kw-num">14</span> 厘米。<span class="kw-q">繩還剩多少？</span></p>
+        <div class="bar-model" aria-label="線段圖：全長 50 厘米，剪去 18 和 14，還剩未知">
+          <div class="bar-row"><span class="bar-name"></span><div class="bar-track"><div class="bar-brace" style="flex:50">全長 50 厘米</div></div></div>
+          <div class="bar-row"><span class="bar-name">繩</span><div class="bar-track"><span class="bar-seg" style="flex:18">剪 18</span><span class="bar-seg" style="flex:14">剪 14</span><span class="bar-seg bar-unknown" style="flex:18">還剩 ？</span></div></div>
+        </div>
+        <div class="hint-block">
+          <div class="hint-content">
+            <p><strong>怎麼想：</strong>總數分成三部分，從總數減去兩次剪去的部分。</p>
+            <ol class="steps">
+              <li>式：50 − 18 − 14 ＝ 18（也可先算 18 ＋ 14 ＝ 32，再算 50 − 32 ＝ 18）</li>
+              <li>答：繩還剩 <strong>18 厘米</strong>。（問題沒有寫單位，答句一定要自己補上「厘米」。）</li>
+              <li>驗：18 ＋ 18 ＋ 14 ＝ 50 ✓</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <details class="parent-guide-details parent-guide">
+      <summary>家長怎麼教（約 20–25 分鐘）</summary>
+      <div class="parent-guide-body">
+        <ol class="steps">
+          <li><strong>溫故 3 分鐘（第 1–2 週）：</strong>口頭問「哥哥有 20 張，哥哥比弟弟多 6 張，弟弟有幾張？」（14）及「8、13、18、？」（23）。</li>
+          <li><strong>讀題遊戲 3 分鐘：</strong>你讀一句題目，孩子拍手說出「有用的數」；再請他用手指出「問題在哪裏」。</li>
+          <li><strong>一起做例題 1–2：</strong>你示範圈數字、劃問題、劃走多餘資料，再按「圖 → 式 → 答 → 驗」寫出來。</li>
+          <li><strong>孩子主講例題 3–4：</strong>請他先說「先求甚麼、再求甚麼」，說對了才動筆。</li>
+          <li><strong>收束：</strong>請孩子自己說讀題三步，以及「答句要有單位」。</li>
+        </ol>
+        <div class="callout">
+          <div class="callout-title">常見卡關與溫柔回應</div>
+          <ul class="mb-0">
+            <li>見數就用（連多餘資料也加進去）→ 問「這個數和問題有關嗎？」請他把無關的劃走。</li>
+            <li>兩步題只做一步 → 指着劃線的問題再讀一次：「問的是共有／現在，你算出的是哪一個？」</li>
+            <li>見「多」就加、見「少」就減 → 回到圖，先畫兩條線段，問「哪一條比較長？要求的是長的還是短的？」</li>
+            <li>答句沒有單位或答非所問 → 讓他把劃線的問題改寫成答句：「還有多少張？」→「還有 27 張。」</li>
+            <li>字太多讀不下去 → 家長可先讀一次，孩子再自己讀一次並圈數字；目標是慢慢自己讀。</li>
+          </ul>
+        </div>
+        <p class="small">下一份：<strong>練習頁</strong>（螢幕可即時核對，右下角「✏️ 畫筆」可直接在題目上圈數字、劃問題；也可列印成空白卷）。測前請勿先看答案頁。</p>
+      </div>
+    </details>
+
+    <footer class="sheet-footer">
+      <span>澳門小二・學界賽預備教學庫・第3週</span>
+      <span>教學頁・螢幕互動／可列印 A4</span>
+    </footer>
+  </article>
+
+  <script src="../../../js/track.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script>if(window.MathTrack)MathTrack.initFromPage("p2");</script>
+  <script src="../../../js/teach.js"></script>
+</body>
+</html>

@@ -93,8 +93,10 @@
           "title": "多・少・一樣多（加深）",
           "skills": ["比較多少", "一一對應", "口頭說比較句"],
           "level": "K3 核心",
-          "status": "planned",
-          "sheets": []
+          "status": "ready",
+          "sheets": ["teach.html", "practice.html", "quiz.html", "answers.html"],
+          "sessionHint": "10–15 分・練習 6 題（含溫故 1 題）・小測 5 題",
+          "interleave": ["前後數"]
         },
         {
           "id": "k3-w04",
@@ -209,8 +211,10 @@
           "title": "應用題入門・讀題畫重點",
           "skills": ["抓條件與問題", "一至兩步加減應用題", "畫簡圖／線段圖", "單位意識"],
           "level": "小二→小三橋接",
-          "status": "planned",
-          "sheets": []
+          "status": "ready",
+          "sheets": ["teach.html", "practice.html", "quiz.html", "answers.html"],
+          "sessionHint": "20–25 分・練習 10 題（含第 1–2 週溫故 3 題）・測驗 7 題（含溫故 1 題）・限時 20 分",
+          "spiralReview": ["已知差求一部分", "和差關係口訣", "觀察數列規律"]
         },
         {
           "id": "w04",
