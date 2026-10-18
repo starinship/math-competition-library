@@ -26,8 +26,13 @@
   var MAX_DPR = 2; /* iPhone 為 3x；2x 已足夠清晰並省記憶體 */
   var MAX_PIXELS = 4000000; /* 每張畫布上限（約 16MB） */
   var STORE_KEY = "mcl-draw:v1:" + location.pathname;
+  var SCRATCH_KEY = "mcl-draw-scratch:v1";
+  var SCRATCH_SIZES = [
+    { h: 240, label: "加大草稿", short: "標準" },
+    { h: 360, label: "縮小草稿", short: "加大" }
+  ];
 
-  var state = { active: false, tool: "pen", color: COLORS[0].c, width: WIDTHS[0].w, penSeen: false };
+  var state = { active: false, tool: "pen", color: COLORS[0].c, width: WIDTHS[0].w, penSeen: false, scratchIdx: 0 };
   var hosts = [];
   var history = [];
   var seq = 0;
@@ -356,6 +361,45 @@
     history = all;
   }
 
+  /* ---------- 草稿區高度 ---------- */
+  function applyScratchSize(idx, keepView) {
+    if (idx < 0 || idx >= SCRATCH_SIZES.length) idx = 0;
+    state.scratchIdx = idx;
+    var px = SCRATCH_SIZES[idx].h + "px";
+    var run = function () {
+      document.documentElement.style.setProperty("--draw-scratch-h", px);
+      try { sessionStorage.setItem(SCRATCH_KEY, String(idx)); } catch (err) { /* ignore */ }
+      /* 題卡高度變了：ResizeObserver 會 sizeHost；手動再跑一次較穩 */
+      hosts.forEach(sizeHost);
+      if (ui.scratch) {
+        var next = SCRATCH_SIZES[idx];
+        ui.scratch.innerHTML = '<span aria-hidden="true">▭</span>' + next.label;
+        ui.scratch.setAttribute("aria-label", next.label);
+        ui.scratch.title = next.label + "（目前 " + next.short + " " + next.h + "px）";
+        ui.scratch.setAttribute("aria-pressed", idx === 1 ? "true" : "false");
+        ui.scratch.classList.toggle("is-on", idx === 1);
+      }
+    };
+    if (keepView) keepAnchor(run);
+    else run();
+  }
+
+  function cycleScratch() {
+    applyScratchSize((state.scratchIdx + 1) % SCRATCH_SIZES.length, true);
+  }
+
+  function loadScratchPref() {
+    var idx = 0;
+    try {
+      var v = sessionStorage.getItem(SCRATCH_KEY);
+      if (v !== null) {
+        var n = parseInt(v, 10);
+        if (!isNaN(n) && n >= 0 && n < SCRATCH_SIZES.length) idx = n;
+      }
+    } catch (err) { /* ignore */ }
+    applyScratchSize(idx, false);
+  }
+
   /* ---------- 工具列 ---------- */
   function btn(cls, html, label, onClick) {
     var b = document.createElement("button");
@@ -416,8 +460,9 @@
     });
     ui.undo = btn("draw-undo", '<span aria-hidden="true">↶</span>復原', "復原上一筆", undo);
     ui.clear = btn("draw-clear", '<span aria-hidden="true">🗑️</span>清除全部', "清除全部", clearAll);
+    ui.scratch = btn("draw-scratch-size", '<span aria-hidden="true">▭</span>加大草稿', "加大草稿", cycleScratch);
     ui.close = btn("draw-close", '<span aria-hidden="true">✕</span>關閉', "關閉畫筆", function () { setActive(false); });
-    [ui.eraser, ui.undo, ui.clear, ui.close].forEach(function (b) { row2.appendChild(b); });
+    [ui.eraser, ui.undo, ui.clear, ui.scratch, ui.close].forEach(function (b) { row2.appendChild(b); });
 
     var tip = document.createElement("div");
     tip.className = "draw-tip";
@@ -504,6 +549,7 @@
     setupHosts();
     load();
     buildUI();
+    loadScratchPref();
     hosts.forEach(sizeHost);
     document.addEventListener("keydown", onKey);
     window.addEventListener("pagehide", save);
@@ -512,7 +558,9 @@
       isActive: function () { return state.active; },
       undo: undo,
       clearAll: clearAll,
-      strokeCount: totalStrokes
+      strokeCount: totalStrokes,
+      scratchHeight: function () { return SCRATCH_SIZES[state.scratchIdx].h; },
+      cycleScratch: cycleScratch
     };
   }
 

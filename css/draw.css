@@ -40,10 +40,15 @@ body.draw-active .sheet {
   display: none;
 }
 
+/* 草稿區高度：預設 240px；工具列「加大／縮小」切換為 360px */
+:root {
+  --draw-scratch-h: 240px;
+}
+
 body.draw-active .draw-scratch,
 .draw-host.has-ink .draw-scratch {
   display: block;
-  height: 120px;
+  height: var(--draw-scratch-h, 240px);
   margin-top: 8px;
   padding: 4px 8px;
   border: 1.5px dashed #c5d0dc;
