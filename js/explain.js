@@ -296,7 +296,53 @@
     };
   }
 
-  function solve(spec) {
+
+  function pad2(n) { return (n < 10 ? "0" : "") + n; }
+  function minutesOf(h, m) { return h * 60 + m; }
+  function fmtTime(h, m) {
+    if (m === 0) return h + " 時整";
+    if (m === 30) return h + " 時半";
+    return h + " 時 " + m + " 分";
+  }
+  function solveClock(spec) {
+    var h = spec.hour, m = spec.minute || 0;
+    var label = fmtTime(h, m);
+    return {
+      kind: "clock", hour: h, minute: m, answer: label, answers: [label],
+      formula: "時針指 " + h + "，分針" + (m === 0 ? "指 12（整點）" : m === 30 ? "指 6（半點）" : "指約 " + Math.round(m / 5) + "（" + m + " 分）"),
+      check: "再讀一次：" + label
+    };
+  }
+  function solveElapsed(spec) {
+    var a = minutesOf(spec.start.hour, spec.start.minute || 0);
+    var b = minutesOf(spec.end.hour, spec.end.minute || 0);
+    var d = b - a;
+    if (d < 0) d += 24 * 60;
+    var ans = d;
+    var unit = spec.unit || "分鐘";
+    return {
+      kind: "elapsed", minutes: d, answer: ans, answers: [String(ans)],
+      formula: fmtTime(spec.end.hour, spec.end.minute || 0) + " − " + fmtTime(spec.start.hour, spec.start.minute || 0) + " ＝ " + d + " " + unit,
+      check: fmtTime(spec.start.hour, spec.start.minute || 0) + " 再過 " + d + " " + unit + " ＝ " + fmtTime(spec.end.hour, spec.end.minute || 0)
+    };
+  }
+  function solveShapeName(spec) {
+    var names = { circle: "圓形", square: "正方形", triangle: "三角形", rectangle: "長方形" };
+    var feat = {
+      circle: "圓滾滾，沒有角",
+      square: "四條邊一樣長，有 4 個角",
+      triangle: "有 3 條邊、3 個角",
+      rectangle: "對邊一樣長，有 4 個角"
+    };
+    var ans = spec.answer || names[spec.shape];
+    return {
+      kind: "shapeName", shape: spec.shape, answer: ans, answers: [ans],
+      formula: feat[spec.shape] || "",
+      check: "再認一次：這是「" + ans + "」" + (spec.life ? "（像 " + spec.life + "）" : "")
+    };
+  }
+
+    function solve(spec) {
     switch (spec.type) {
       case "steps": return solveSteps(spec);
       case "twoStep": return solveTwoStep(spec);
@@ -309,6 +355,9 @@
       case "match": return solveMatch(spec);
       case "numeral": return solveNumeral(spec);
       case "numberLine": return solveNumberLine(spec);
+      case "clock": return solveClock(spec);
+      case "elapsed": return solveElapsed(spec);
+      case "shapeName": return solveShapeName(spec);
       case "multi": {
         var subs = spec.parts.map(solve);
         var all = [];
@@ -542,7 +591,7 @@
   var ICON_COLORS = {
     "●": "#2d6a4f", "⭐": "#f2c94c", "🍎": "#e57373", "🌸": "#f4a7c0", "🍓": "#e57373",
     "🐱": "#f6c177", "🐶": "#c8a27a", "🔵": "#5b8def", "🔺": "#e57373", "⬛": "#555", "🟡": "#f2c94c", "🟢": "#5bbf7a",
-    "🐟": "#5b8def", "🐰": "#c9c9d6", "🥕": "#f39c4a", "🚗": "#e57373", "🚌": "#f2c94c", "🥣": "#8fb3d9", "🥄": "#b0b0b0", "🍌": "#f2d64c"
+    "🐟": "#5b8def", "🐰": "#c9c9d6", "🥕": "#f39c4a", "🚗": "#e57373", "🚌": "#f2c94c", "🥣": "#8fb3d9", "🥄": "#b0b0b0", "🍌": "#f2d64c", "🌙": "#c9c9d6"
   };
   function iconAt(icon, cx, cy, rr) {
     var col = ICON_COLORS[icon] || "#2d6a4f";
@@ -675,7 +724,77 @@
     return s;
   }
 
-  function figure(spec, r) {
+
+  function clockHands(cx, cy, r, hour, minute) {
+    var m = minute || 0;
+    var ma = (m / 60) * Math.PI * 2 - Math.PI / 2;
+    var ha = ((hour % 12) / 12) * Math.PI * 2 + (m / 60) * (Math.PI * 2 / 12) - Math.PI / 2;
+    var hx = cx + Math.cos(ha) * r * 0.5;
+    var hy = cy + Math.sin(ha) * r * 0.5;
+    var mx = cx + Math.cos(ma) * r * 0.72;
+    var my = cy + Math.sin(ma) * r * 0.72;
+    var s = "";
+    for (var i = 0; i < 12; i++) {
+      var a = (i / 12) * Math.PI * 2 - Math.PI / 2;
+      var x1 = cx + Math.cos(a) * r * 0.82;
+      var y1 = cy + Math.sin(a) * r * 0.82;
+      var x2 = cx + Math.cos(a) * r * 0.92;
+      var y2 = cy + Math.sin(a) * r * 0.92;
+      s += line(x1, y1, x2, y2, "sol-nl-tick");
+      if (i % 3 === 0) {
+        var tx = cx + Math.cos(a) * r * 0.68;
+        var ty = cy + Math.sin(a) * r * 0.68 + 4;
+        var lab = i === 0 ? "12" : String(i);
+        s += txt(tx, ty, lab, "sol-t-c sol-t-note");
+      }
+    }
+    s += line(cx, cy, hx, hy, "sol-nl-axis");
+    s += '<line x1="' + cx + '" y1="' + cy + '" x2="' + mx + '" y2="' + my + '" class="sol-nl-axis" stroke-width="2"/>';
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="3" fill="#24302c"/>';
+    return s;
+  }
+  function svgClock(spec, r) {
+    var W = 220, H = 200, cx = 110, cy = 100, rad = 70;
+    var s = svgOpen(W, H, "時鐘：" + r.answer, "sol-clock");
+    s += '<circle cx="' + cx + '" cy="' + cy + '" r="' + rad + '" fill="#fff" stroke="#3c6554" stroke-width="3"/>';
+    s += clockHands(cx, cy, rad, r.hour, r.minute);
+    s += txt(cx, H - 12, r.answer, "sol-t-c sol-t-ans");
+    s += "</svg>";
+    return s;
+  }
+  function svgElapsed(spec, r) {
+    var W = 420, H = 180;
+    var s = svgOpen(W, H, "經過 " + r.minutes + " 分鐘", "sol-elapsed");
+    // start clock
+    s += '<circle cx="90" cy="80" r="55" fill="#fff" stroke="#3c6554" stroke-width="3"/>';
+    s += clockHands(90, 80, 55, spec.start.hour, spec.start.minute || 0);
+    s += txt(90, 155, "開始 " + fmtTime(spec.start.hour, spec.start.minute || 0), "sol-t-c sol-t-note");
+    s += arcArrow(155, 250, 70, 28, "is-hot");
+    s += txt(202, 50, r.minutes + " 分鐘", "sol-t-c sol-t-step");
+    s += '<circle cx="330" cy="80" r="55" fill="#fff" stroke="#3c6554" stroke-width="3"/>';
+    s += clockHands(330, 80, 55, spec.end.hour, spec.end.minute || 0);
+    s += txt(330, 155, "結束 " + fmtTime(spec.end.hour, spec.end.minute || 0), "sol-t-c sol-t-note");
+    s += "</svg>";
+    return s;
+  }
+  function svgShapeName(spec, r) {
+    var W = 240, H = 160, cx = 120, cy = 70;
+    var s = svgOpen(W, H, r.answer, "sol-shapename sol-k3fig");
+    if (spec.shape === "circle") {
+      s += '<circle cx="' + cx + '" cy="' + cy + '" r="42" fill="#b7d4c4" stroke="#3c6554" stroke-width="3"/>';
+    } else if (spec.shape === "square") {
+      s += rect(cx - 40, cy - 40, 80, 80, "sol-box", 4);
+    } else if (spec.shape === "triangle") {
+      s += '<polygon points="' + cx + ',' + (cy - 42) + ' ' + (cx + 48) + ',' + (cy + 40) + ' ' + (cx - 48) + ',' + (cy + 40) + '" fill="#f0c2d0" stroke="#3c6554" stroke-width="3"/>';
+    } else if (spec.shape === "rectangle") {
+      s += rect(cx - 55, cy - 28, 110, 56, "sol-box", 4);
+    }
+    s += txt(cx, H - 18, r.answer + (spec.life ? "（像 " + spec.life + "）" : ""), "sol-t-c sol-t-ans");
+    s += "</svg>";
+    return s;
+  }
+
+    function figure(spec, r) {
     var k3 = trackOf(spec) === "k3";
     switch (spec.type) {
       case "partWhole": return svgPartWhole(spec, r);
@@ -689,6 +808,9 @@
       case "match": return svgMatch(spec, r);
       case "numeral": return svgNumeral(spec, r);
       case "numberLine": return svgNumberLine(spec, r);
+      case "clock": return svgClock(spec, r);
+      case "elapsed": return svgElapsed(spec, r);
+      case "shapeName": return svgShapeName(spec, r);
     }
     return "";
   }
@@ -757,6 +879,8 @@
         return spec.word + " → " + spec.n;
       case "shapes":
         return "一組：" + r.unit.join(" ") + "，再一組…";
+      case "shapeName":
+        return r.formula + " → " + r.answer;
     }
     return "";
   }
@@ -947,6 +1071,13 @@
       case "multi": spec.parts.forEach(function (p) { out = out.concat(knownNumbers(p)); }); break;
       case "steps": add(spec.start.v); spec.ops.forEach(function (o) { add(o.v); }); break;
       case "twoStep": spec.steps.forEach(function (p) { out = out.concat(knownNumbers(p)); }); break;
+      case "clock":
+      case "shapeName":
+        break; /* 鐘面／形狀圖在 SVG，不要求題幹重複數字 */
+      case "elapsed":
+        add(spec.start.hour);
+        add(spec.end.hour);
+        break; /* 「半」不寫 30，避免題幹無數字 */
     }
     return out;
   }

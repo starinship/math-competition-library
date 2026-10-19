@@ -281,5 +281,81 @@
       parent: "「一條香蕉配一個蘋果，全部配完，沒有多出來 → 香蕉和蘋果一樣多。」" }
   });
 
+
+  /* ================= 小二 第4週：時鐘與時間 ================= */
+  add("w04", "practice", {
+    q1: { type: "clock", hour: 3, minute: 0, answer: "3 時整", expect: { q1: "3時整" },
+      think: "短針（時針）指 3；長針（分針）指 12 → 整點。", say: "現在是 3 時整。" },
+    q2: { type: "clock", hour: 7, minute: 30, answer: "7 時半", expect: { q2: "7時半" },
+      think: "分針指 6 → 半點；時針在 7 與 8 之間。", say: "現在是 7 時半。" },
+    q3: { type: "clock", hour: 10, minute: 0, answer: "10 時整", expect: { q3: "10時整" },
+      think: "時針指 10，分針指 12。", say: "選 10 時整。" },
+    q4: { type: "elapsed", start: { hour: 2, minute: 0 }, end: { hour: 2, minute: 30 }, answer: "30 分鐘", expect: { q4: "30" },
+      think: "從 2 時整到 2 時半，分針走半圈。", say: "畫了 30 分鐘。", formula: "2 時半 − 2 時整 ＝ 30 分鐘", check: "2 時整 ＋ 30 分 ＝ 2 時半" },
+    q5: { type: "elapsed", start: { hour: 9, minute: 0 }, end: { hour: 10, minute: 0 }, answer: "60 分鐘", expect: { q5: "60" },
+      think: "從 9 時整到 10 時整，剛好 1 小時＝60 分鐘。", say: "走了 60 分鐘（1 小時）。", formula: "10 時整 − 9 時整 ＝ 60 分鐘", check: "9 時整 ＋ 60 分 ＝ 10 時整" },
+    q6: { type: "clock", hour: 5, minute: 0, answer: "5 時整", expect: { q6: "5時整" },
+      think: "4 時整再過 1 小時，時針往前一格。", say: "是 5 時整。", formula: "4 ＋ 1 ＝ 5", check: "5 − 1 ＝ 4" },
+    q7: { type: "clock", hour: 7, minute: 30, answer: "7 時半", expect: { q7: "7時半" },
+      think: "8 時整往回半小時 → 7 時半。", say: "半小時前是 7 時半。", formula: "8 時整 − 30 分 ＝ 7 時半", check: "7 時半 ＋ 30 分 ＝ 8 時整" },
+    q8: { type: "clock", hour: 4, minute: 0, answer: "4 時整", expect: { q8: "4時整" },
+      think: "開始 3 時整，上 1 小時。", say: "4 時整結束。", formula: "3 ＋ 1 ＝ 4", check: "4 − 1 ＝ 3" },
+    q9: { type: "compare", rows: [{ label: "哥哥", v: 45, role: "big" }, { label: "弟弟", v: null, role: "small" }], diff: { v: 27, word: "多" },
+      answer: "18 粒", expect: { q9: "18" },
+      think: "哥哥比弟弟多 → 哥哥是大數。小數 ＝ 大數 − 相差。", say: "弟弟有 18 粒。" },
+    q10: { type: "seq", terms: [6, 12, 18, null], step: 6, answer: "24", expect: { q10: "24" },
+      think: "6→12→18，每次多 6。", say: "空格是 24。" }
+  });
+
+  add("w04", "quiz", {
+    q1: { type: "clock", hour: 8, minute: 0, answer: "8 時整", expect: { q1: "8時整" },
+      think: "時針指 8，分針指 12。", say: "現在是 8 時整。" },
+    q2: { type: "clock", hour: 2, minute: 30, answer: "2 時半", expect: { q2: "2時半" },
+      think: "分針指 6；時針在 2 與 3 之間。", say: "現在是 2 時半。" },
+    q3: { type: "elapsed", start: { hour: 5, minute: 0 }, end: { hour: 5, minute: 30 }, answer: "30 分鐘", expect: { q3: "30" },
+      think: "5 時整到 5 時半。", say: "看了 30 分鐘。", formula: "5 時半 − 5 時整 ＝ 30 分鐘", check: "5 時整 ＋ 30 分 ＝ 5 時半" },
+    q4: { type: "clock", hour: 6, minute: 0, answer: "6 時整", expect: { q4: "6時整" },
+      think: "5 ＋ 1 ＝ 6。", say: "是 6 時整。", formula: "5 ＋ 1 ＝ 6", check: "6 − 1 ＝ 5" },
+    q5: { type: "clock", hour: 9, minute: 30, answer: "9 時半", expect: { q5: "9時半" },
+      think: "9 時整再過半小時。", say: "9 時半結束。", formula: "9 時整 ＋ 30 分 ＝ 9 時半", check: "9 時半 − 30 分 ＝ 9 時整" },
+    q6: { type: "partWhole", total: { label: "共", v: 72 }, parts: [{ label: "借出", v: 27 }, { label: "剩下", v: null }],
+      answer: "45 本", expect: { q6: "45" },
+      think: "共 72 是總數，借出和剩下是兩部分。", say: "還剩 45 本。" },
+    q7: { type: "seq", terms: [12, 18, 24, 30, null], step: 6, answer: "36", expect: { q7: "36" },
+      think: "每次多 6。", say: "下一個是 36。" }
+  });
+
+  /* ================= K3 第4週：認識形狀 ================= */
+  add("k3-w04", "practice", {
+    q1: { type: "shapeName", shape: "circle", answer: "圓形", expect: { q1: "圓形" },
+      parent: "「圓滾滾，沒有角 → 圓形。像皮球。」" },
+    q2: { type: "shapeName", shape: "square", answer: "正方形", expect: { q2: "正方形" },
+      parent: "「四條邊一樣長，有 4 個角 → 正方形。」" },
+    q3: { type: "shapeName", shape: "triangle", answer: "三角形", expect: { q3: "三角形" },
+      parent: "「數一數：3 個角、3 條邊 → 三角形。」" },
+    q4: { type: "shapeName", shape: "rectangle", answer: "長方形", expect: { q4: "長方形" },
+      parent: "「有 4 個角，但比較扁長 → 長方形。和正方形不一樣。」" },
+    q5: { type: "shapeName", shape: "circle", life: "時鐘", answer: "圓形", expect: { q5: "圓形" },
+      parent: "「鐘面圓滾滾 → 圓形。」" },
+    q6: { type: "match", left: { label: "星星", n: 3, icon: "⭐" }, right: { label: "月亮", n: 3, icon: "🌙" },
+      answerLabels: { left: "星星多", right: "月亮多", equal: "一樣多" }, answer: "一樣多", expect: { q6: "一樣多" },
+      parent: "「溫故：一個配一個，全部配完 → 一樣多。」" }
+  });
+
+  add("k3-w04", "quiz", {
+    q1: { type: "shapeName", shape: "triangle", answer: "三角形", expect: { q1: "三角形" },
+      parent: "「3 個角 → 三角形。」" },
+    q2: { type: "shapeName", shape: "square", answer: "正方形", expect: { q2: "正方形" },
+      parent: "「四邊一樣長 → 正方形。」" },
+    q3: { type: "shapeName", shape: "rectangle", answer: "長方形", expect: { q3: "長方形" },
+      parent: "「扁長、有 4 個角 → 長方形。」" },
+    q4: { type: "shapeName", shape: "circle", life: "皮球", answer: "圓形", expect: { q4: "圓形" },
+      parent: "「皮球圓滾滾 → 圓形。」" },
+    q5: { type: "match", ask: "diff", left: { label: "蘋果", n: 5, icon: "🍎" }, right: { label: "香蕉", n: 2, icon: "🍌" },
+      answer: "3", expect: { q5: "3" },
+      parent: "「溫故：一個配一個，蘋果多出 3 個。」" }
+  });
+
+
   global.MathExplainData = D;
 })(typeof window !== "undefined" ? window : this);

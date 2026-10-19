@@ -105,8 +105,10 @@
           "title": "認識形狀",
           "skills": ["圓方三角", "形狀特徵", "生活中的形狀"],
           "level": "K3 核心",
-          "status": "planned",
-          "sheets": []
+          "status": "ready",
+          "sheets": ["teach.html", "practice.html", "quiz.html", "answers.html"],
+          "sessionHint": "10–15 分・練習 6 題（含溫故 1 題）・小測 5 題",
+          "interleave": ["比較多少"]
         },
         {
           "id": "k3-w05",
@@ -223,8 +225,10 @@
           "title": "時鐘與時間",
           "skills": ["整點半點", "經過多久", "前後時刻", "日程簡單計算"],
           "level": "小二核心",
-          "status": "planned",
-          "sheets": []
+          "status": "ready",
+          "sheets": ["teach.html", "practice.html", "quiz.html", "answers.html"],
+          "sessionHint": "20–25 分・練習 10 題（含溫故 2 題）・測驗 7 題（含溫故 2 題）・限時 20 分",
+          "spiralReview": ["已知差求一部分", "觀察數列規律", "抓條件與問題"]
         },
         {
           "id": "w05",

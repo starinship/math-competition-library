@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>K3 第4週｜認識形狀（小測）</title>
+  <link rel="stylesheet" href="../../../css/print-a4.css" />
+  <link rel="stylesheet" href="../../../css/screen.css" />
+</head>
+<body data-track="k3" class="track-k3">
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="../../../index.html">首頁</a>
+    <a href="teach.html">教學</a>
+    <a href="practice.html">練習</a>
+    <a href="answers.html">答案</a>
+    <a href="../../../wrongbook.html?track=k3">錯題本</a>
+    <a href="../../../review.html?track=k3">重溫</a>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印 A4</button>
+  </nav>
+  <article class="sheet sheet-k3">
+    <header class="sheet-header">
+      <div class="titles"><h1>K3 第4週｜認識形狀（小測）</h1>
+      <div class="meta">5 題・精熟≈4/5・約 8–10 分</div></div>
+      <span class="badge badge-student">學生用・小測</span>
+    </header>
+    <div id="quiz-gate" class="quiz-gate screen-only">
+      <p>準備好再開始。可選計時或不計時。</p>
+      <button type="button" class="btn" id="btn-start-timed">開始（計時）</button>
+      <button type="button" class="btn btn-secondary" id="btn-start-free">開始（不計時）</button>
+    </div>
+    <div id="quiz-body" class="quiz-body is-locked-gate">
+      <div class="toolbar screen-only" id="quiz-toolbar" style="display:none">
+        <span id="timer-display" class="timer">08:00</span>
+        <button type="button" class="btn btn-warn" id="btn-submit">交卷</button>
+      </div>
+      <ol class="questions quiz-questions">
+        <li class="problem-card" data-unit="q1">
+          <p class="k3-prompt">這是甚麼形狀？</p>
+          <p class="big-visual"><svg viewBox="0 0 100 100" width="100" height="100"><polygon points="50,12 88,82 12,82" fill="#f0c2d0" stroke="#3c6554" stroke-width="3"/></svg></p>
+          <p class="screen-only"><span class="choice-group" data-key="q1" role="group">
+            <button type="button" class="choice-btn" data-value="圓形">圓形</button>
+            <button type="button" class="choice-btn" data-value="三角形">三角形</button>
+            <button type="button" class="choice-btn" data-value="正方形">正方形</button>
+          </span></p>
+        </li>
+        <li class="problem-card" data-unit="q2">
+          <p class="k3-prompt">四條邊一樣長的是？</p>
+          <p class="big-visual"><svg viewBox="0 0 100 100" width="100" height="100"><rect x="14" y="14" width="72" height="72" fill="#f0d15a" stroke="#3c6554" stroke-width="3"/></svg></p>
+          <p class="screen-only"><span class="choice-group" data-key="q2" role="group">
+            <button type="button" class="choice-btn" data-value="圓形">圓形</button>
+            <button type="button" class="choice-btn" data-value="正方形">正方形</button>
+            <button type="button" class="choice-btn" data-value="長方形">長方形</button>
+          </span></p>
+        </li>
+        <li class="problem-card" data-unit="q3">
+          <p class="k3-prompt">這是甚麼形狀？</p>
+          <p class="big-visual"><svg viewBox="0 0 100 100" width="100" height="100"><rect x="8" y="28" width="84" height="44" fill="#8eb6d4" stroke="#3c6554" stroke-width="3"/></svg></p>
+          <p class="screen-only"><span class="choice-group" data-key="q3" role="group">
+            <button type="button" class="choice-btn" data-value="正方形">正方形</button>
+            <button type="button" class="choice-btn" data-value="長方形">長方形</button>
+            <button type="button" class="choice-btn" data-value="三角形">三角形</button>
+          </span></p>
+        </li>
+        <li class="problem-card" data-unit="q4">
+          <p class="k3-prompt">皮球最像哪一種形狀？</p>
+          <p class="screen-only"><span class="choice-group" data-key="q4" role="group">
+            <button type="button" class="choice-btn" data-value="圓形">圓形</button>
+            <button type="button" class="choice-btn" data-value="正方形">正方形</button>
+            <button type="button" class="choice-btn" data-value="三角形">三角形</button>
+          </span></p>
+        </li>
+        <li class="problem-card" data-unit="q5">
+          <p class="k3-prompt">溫故：蘋果比香蕉多幾個？</p>
+          <div class="compare-row big-visual"><div class="compare-box"><div class="compare-label">蘋果</div><p>🍎 🍎 🍎 🍎 🍎</p></div><div class="compare-box"><div class="compare-label">香蕉</div><p>🍌 🍌</p></div></div>
+          <p class="screen-only"><span class="choice-group" data-key="q5" role="group">
+            <button type="button" class="choice-btn" data-value="1">1</button>
+            <button type="button" class="choice-btn" data-value="2">2</button>
+            <button type="button" class="choice-btn" data-value="3">3</button>
+          </span></p>
+        </li>
+      </ol>
+      <div id="quiz-summary" class="summary-box screen-only" hidden>
+        <h2>小測結果</h2>
+        <p id="quiz-score"></p>
+        <div id="quiz-tip"></div>
+      </div>
+    </div>
+    <footer class="sheet-footer"><span>K3 第4週・小測</span></footer>
+  </article>
+  <script src="../../../js/track.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script>if(window.MathTrack)MathTrack.initFromPage("k3");</script>
+  <script src="../../../js/wrongbook.js"></script>
+  <script src="../../../js/explain-data.js"></script>
+  <script src="../../../js/explain.js"></script>
+  <script src="quiz.js"></script>
+</body>
+</html>
