@@ -16,7 +16,7 @@
   var KEYS = {
     q1: ["17"],
     q2: ["42"],
-    q3: ["64"],
+    q3: ["47"],
     q4: ["37"],
     q5: ["63"],
     q6: ["B", "b", "B. 26 ＋ 9", "26＋9", "26+9"],
@@ -26,7 +26,7 @@
   var UNITS = [
     { id: "q1", keys: ["q1"], label: "第 1 題", skills: ["已知和求一部分", "驗算習慣"], answerType: "text" },
     { id: "q2", keys: ["q2"], label: "第 2 題", skills: ["已知差求一部分"], answerType: "text" },
-    { id: "q3", keys: ["q3"], label: "第 3 題", skills: ["已知差求一部分"], answerType: "text" },
+    { id: "q3", keys: ["q3"], label: "第 3 題", skills: ["已知差求一部分", "比較長短"], answerType: "text" },
     { id: "q4", keys: ["q4"], label: "第 4 題", skills: ["已知差求一部分", "和差關係口訣"], answerType: "text" },
     { id: "q5", keys: ["q5"], label: "第 5 題", skills: ["和差關係口訣", "驗算習慣"], answerType: "text" },
     { id: "q6", keys: ["q6"], label: "第 6 題", skills: ["和差關係口訣", "已知差求一部分"], answerType: "choice", choices: ["A. 26 − 9", "B. 26 ＋ 9", "C. 9 − 26"] },

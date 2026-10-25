@@ -23,7 +23,7 @@
     <header class="sheet-header">
       <div class="titles">
         <h1>K3 第2週｜數到 20・前後是誰（小測）</h1>
-        <div class="meta">幼稚園高班・共 5 題・約 8–10 分・可選輕量計時</div>
+        <div class="meta">幼稚園高班・共 6 題・約 8–10 分・可選輕量計時</div>
       </div>
       <span class="badge badge-student">學生用・小測</span>
     </header>
@@ -34,7 +34,7 @@
 
     <div class="quiz-gate screen-only" id="quiz-gate">
       <p><strong>準備好再開始</strong></p>
-      <p class="small">共 5 題。家長陪在旁邊，但不提示答案。煩躁就停。</p>
+      <p class="small">共 6 題。家長陪在旁邊，但不提示答案。煩躁就停。</p>
       <button type="button" class="btn" id="btn-start-timed">⏱ 輕量計時（8 分）</button>
       <button type="button" class="btn btn-secondary" id="btn-start-free">不計時開始</button>
     </div>
@@ -113,6 +113,18 @@
           </div>
           <p class="print-only">圈起來：　11　／　13　／　15</p>
         </li>
+        <li class="problem-card k3-card" data-unit="q6">
+          <div class="compare-row big-visual"><div class="compare-box"><div class="compare-label">A</div><p>⭐ ⭐ ⭐ ⭐ ⭐</p></div><div class="compare-box"><div class="compare-label">B</div><p>⭐ ⭐ ⭐</p></div></div>
+          <p class="k3-prompt">哪一邊比較多？</p>
+          <div class="screen-only">
+            <span class="choice-group choice-big" data-key="q6" role="group">
+              <button type="button" class="choice-btn choice-lg" data-value="A">A</button>
+              <button type="button" class="choice-btn choice-lg" data-value="B">B</button>
+              <button type="button" class="choice-btn choice-lg" data-value="一樣多">一樣多</button>
+            </span>
+          </div>
+          <p class="print-only">圈起來：　A　／　B　／　一樣多</p>
+        </li>
       </ol>
     </div>
 
@@ -120,7 +132,7 @@
       <h2>小測結果</h2>
       <p>得分：<strong id="quiz-score">—</strong>　用時：<span id="quiz-time-used">—</span></p>
       <div class="verdict" id="quiz-verdict" role="status"></div>
-      <p class="small"><strong>精熟門檻：</strong>約 4／5 以上，且錯題重溫到期清完，再進第 3 週。</p>
+      <p class="small"><strong>精熟門檻：</strong>約 5／6 以上，且錯題重溫到期清完，再進第 3 週。</p>
       <h3>需要再練</h3>
       <ul class="wrong-list" id="quiz-wrong-list"></ul>
       <p class="small">解析見 <a href="answers.html">答案頁</a>。錯題已進 <a href="../../../wrongbook.html?track=k3">錯題本</a>，請到 <a href="../../../review.html?track=k3">重溫</a>（必做）。</p>

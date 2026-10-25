@@ -24,7 +24,7 @@
     <header class="sheet-header">
       <div class="titles">
         <h1>第2週｜和與差・加減進階（練習）</h1>
-        <div class="meta">學界賽專軌・小二→小三橋接・學生用・共 10 題（含第 1 週溫故 2 題）</div>
+        <div class="meta">學界賽專軌・小二→小三橋接・學生用・共 14 題（加強長短／多少比較・含第 1 週溫故 2 題）</div>
       </div>
       <span class="badge badge-student">學生用・練習</span>
     </header>
@@ -35,7 +35,7 @@
 
     <div class="toolbar screen-only" role="group" aria-label="練習進度">
       <div class="progress-bar-wrap" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
-      <span class="progress-text" id="progress-text">已檢查 0 / 10　答對 0</span>
+      <span class="progress-text" id="progress-text">已檢查 0 / 14　答對 0</span>
       <button type="button" class="btn btn-success" id="btn-check-all">全部檢查</button>
     </div>
 
@@ -47,7 +47,7 @@
       <label class="screen-only">姓名 <input class="meta-input" type="text" autocomplete="name" /></label>
       <label class="screen-only">日期 <input class="meta-input" type="text" /></label>
     </div>
-    <p class="small">每題照「① 圖 → ② 式 → ③ 答 → ④ 驗」來做。答案要寫單位。先想：誰是總數？誰大誰小？</p>
+    <p class="small">每題照「① 圖 → ② 式 → ③ 答 → ④ 驗」來做。答案要寫單位。先想：誰是總數？誰大誰小？誰長誰短？</p>
 
     <h2>A. 已知總數，求一部分</h2>
     <ol class="questions">
@@ -88,10 +88,14 @@
       </li>
     </ol>
 
-    <h2>B. 比多・比少（先找誰大誰小）</h2>
+    <h2>B. 比多・比少・比長短（先找誰大誰小／誰長誰短）</h2>
     <ol class="questions" start="4">
       <li class="problem-card" data-unit="q4">
         <p>小明有 38 粒波子，小強比小明多 7 粒。小強有多少粒波子？</p>
+        <div class="bar-model" aria-label="線段圖提示">
+          <div class="bar-row"><span class="bar-name">小明</span><div class="bar-track"><span class="bar-seg" style="flex:38">38</span><span style="flex:7"></span></div></div>
+          <div class="bar-row"><span class="bar-name">小強</span><div class="bar-track"><span class="bar-seg" style="flex:38">？</span><span class="bar-seg bar-diff" style="flex:7">多 7</span></div></div>
+        </div>
         <p>答：小強有 <input type="text" class="ans-input screen-only" data-key="q4" inputmode="numeric" aria-label="第4題答案" /><span class="answer-box print-only inline-block"></span> 粒波子。</p>
         <p class="q-actions screen-only small">算式（寫給家長看，不計分）：<input type="text" class="ans-input wide" style="width:12em" aria-label="第4題算式（不計分）" autocomplete="off" /></p>
         <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
@@ -102,6 +106,10 @@
       </li>
       <li class="problem-card" data-unit="q5">
         <p>紅繩長 52 厘米，藍繩比紅繩短 15 厘米。藍繩長多少厘米？</p>
+        <div class="bar-model" aria-label="線段圖：紅繩 52，藍繩短 15">
+          <div class="bar-row"><span class="bar-name">紅繩</span><div class="bar-track"><span class="bar-seg" style="flex:52">52</span></div></div>
+          <div class="bar-row"><span class="bar-name">藍繩</span><div class="bar-track"><span class="bar-seg bar-unknown" style="flex:37">？</span><span class="bar-seg bar-diff" style="flex:15">短 15</span></div></div>
+        </div>
         <p>答：藍繩長 <input type="text" class="ans-input screen-only" data-key="q5" inputmode="numeric" aria-label="第5題答案" /><span class="answer-box print-only inline-block"></span> 厘米。</p>
         <p class="q-actions screen-only small">算式（寫給家長看，不計分）：<input type="text" class="ans-input wide" style="width:12em" aria-label="第5題算式（不計分）" autocomplete="off" /></p>
         <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
@@ -139,43 +147,96 @@
         </div>
         <div class="feedback" role="status"></div>
       </li>
-    </ol>
-
-    <h2>C. 和差關係・填方格</h2>
-    <ol class="questions" start="8">
       <li class="problem-card" data-unit="q8">
-        <p>在方格內填上正確的數，並用相反的算法驗算。</p>
-        <p class="seq">（1）<input type="text" class="ans-input screen-only" data-key="q8a" inputmode="numeric" aria-label="第8題(1)方格" /><span class="answer-box print-only inline-block"></span> ＋ 27 ＝ 64</p>
-        <p class="seq">（2）81 − <input type="text" class="ans-input screen-only" data-key="q8b" inputmode="numeric" aria-label="第8題(2)方格" /><span class="answer-box print-only inline-block"></span> ＝ 35</p>
-        <div class="blank-area print-only block">驗算（1）：　　　　　　　驗算（2）：</div>
+        <p>黃尺長 48 厘米，紅尺比黃尺短 12 厘米。紅尺長多少厘米？</p>
+        <div class="bar-model" aria-label="線段圖：黃尺 48，紅尺短 12">
+          <div class="bar-row"><span class="bar-name">黃尺</span><div class="bar-track"><span class="bar-seg" style="flex:48">48</span></div></div>
+          <div class="bar-row"><span class="bar-name">紅尺</span><div class="bar-track"><span class="bar-seg bar-unknown" style="flex:36">？</span><span class="bar-seg bar-diff" style="flex:12">短 12</span></div></div>
+        </div>
+        <p>答：紅尺長 <input type="text" class="ans-input screen-only" data-key="q8" inputmode="numeric" aria-label="第8題答案" /><span class="answer-box print-only inline-block"></span> 厘米。</p>
+        <p class="q-actions screen-only small">算式（寫給家長看，不計分）：<input type="text" class="ans-input wide" style="width:12em" aria-label="第8題算式（不計分）" autocomplete="off" /></p>
+        <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
         <div class="q-actions screen-only">
           <button type="button" class="btn btn-sm" data-check-unit="q8">檢查</button>
         </div>
         <div class="feedback" role="status"></div>
       </li>
-    </ol>
-
-    <h2>D. 溫故：第 1 週找規律（穿插複習）</h2>
-    <ol class="questions" start="9">
       <li class="problem-card" data-unit="q9">
-        <p class="seq">6、11、16、21、
-          <input type="text" class="ans-input screen-only" data-key="q9" inputmode="numeric" aria-label="第9題答案" />
-          <span class="gap print-only inline-block"></span>
-        </p>
-        <div class="blank-area print-only block">規律：</div>
+        <p>鉛筆長 15 厘米，尺比鉛筆長 9 厘米。尺長多少厘米？</p>
+        <div class="bar-model" aria-label="線段圖：鉛筆 15，尺長 9">
+          <div class="bar-row"><span class="bar-name">鉛筆</span><div class="bar-track"><span class="bar-seg" style="flex:15">15</span><span style="flex:9"></span></div></div>
+          <div class="bar-row"><span class="bar-name">尺</span><div class="bar-track"><span class="bar-seg" style="flex:15">15</span><span class="bar-seg bar-diff" style="flex:9">長 9</span></div></div>
+        </div>
+        <p>答：尺長 <input type="text" class="ans-input screen-only" data-key="q9" inputmode="numeric" aria-label="第9題答案" /><span class="answer-box print-only inline-block"></span> 厘米。</p>
+        <p class="q-actions screen-only small">算式（寫給家長看，不計分）：<input type="text" class="ans-input wide" style="width:12em" aria-label="第9題算式（不計分）" autocomplete="off" /></p>
+        <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
         <div class="q-actions screen-only">
           <button type="button" class="btn btn-sm" data-check-unit="q9">檢查</button>
         </div>
         <div class="feedback" role="status"></div>
       </li>
       <li class="problem-card" data-unit="q10">
+        <p>妹妹有 28 元，妹妹比姐姐少 14 元。姐姐有多少元？</p>
+        <p class="small">（小心：題目有「少」字，先想想誰比較多。）</p>
+        <p>答：姐姐有 <input type="text" class="ans-input screen-only" data-key="q10" inputmode="numeric" aria-label="第10題答案" /><span class="answer-box print-only inline-block"></span> 元。</p>
+        <p class="q-actions screen-only small">算式（寫給家長看，不計分）：<input type="text" class="ans-input wide" style="width:12em" aria-label="第10題算式（不計分）" autocomplete="off" /></p>
+        <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q10">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q11">
+        <p>哥哥身高 132 厘米，弟弟身高 119 厘米。哥哥比弟弟高多少厘米？</p>
+        <div class="bar-model" aria-label="線段圖：哥哥 132，弟弟 119">
+          <div class="bar-row"><span class="bar-name">哥哥</span><div class="bar-track"><span class="bar-seg" style="flex:132">132</span></div></div>
+          <div class="bar-row"><span class="bar-name">弟弟</span><div class="bar-track"><span class="bar-seg" style="flex:119">119</span><span class="bar-seg bar-diff" style="flex:13">高 ？</span></div></div>
+        </div>
+        <p>答：哥哥比弟弟高 <input type="text" class="ans-input screen-only" data-key="q11" inputmode="numeric" aria-label="第11題答案" /><span class="answer-box print-only inline-block"></span> 厘米。</p>
+        <p class="q-actions screen-only small">算式（寫給家長看，不計分）：<input type="text" class="ans-input wide" style="width:12em" aria-label="第11題算式（不計分）" autocomplete="off" /></p>
+        <div class="work-space print-only block">① 圖：<br /><br />② 式：　　　　　　　　③ 答：<br /><br />④ 驗：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q11">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+    </ol>
+
+    <h2>C. 和差關係・填方格</h2>
+    <ol class="questions" start="12">
+      <li class="problem-card" data-unit="q12">
+        <p>在方格內填上正確的數，並用相反的算法驗算。</p>
+        <p class="seq">（1）<input type="text" class="ans-input screen-only" data-key="q12a" inputmode="numeric" aria-label="第12題(1)方格" /><span class="answer-box print-only inline-block"></span> ＋ 27 ＝ 64</p>
+        <p class="seq">（2）81 − <input type="text" class="ans-input screen-only" data-key="q12b" inputmode="numeric" aria-label="第12題(2)方格" /><span class="answer-box print-only inline-block"></span> ＝ 35</p>
+        <div class="blank-area print-only block">驗算（1）：　　　　　　　驗算（2）：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q12">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+    </ol>
+
+    <h2>D. 溫故：第 1 週找規律（穿插複習）</h2>
+    <ol class="questions" start="13">
+      <li class="problem-card" data-unit="q13">
+        <p class="seq">6、11、16、21、
+          <input type="text" class="ans-input screen-only" data-key="q13" inputmode="numeric" aria-label="第13題答案" />
+          <span class="gap print-only inline-block"></span>
+        </p>
+        <div class="blank-area print-only block">規律：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q13">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q14">
         <p class="seq">40、36、32、
-          <input type="text" class="ans-input screen-only" data-key="q10" inputmode="numeric" aria-label="第10題答案" />
+          <input type="text" class="ans-input screen-only" data-key="q14" inputmode="numeric" aria-label="第14題答案" />
           <span class="gap print-only inline-block"></span>、24
         </p>
         <div class="blank-area print-only block">規律：</div>
         <div class="q-actions screen-only">
-          <button type="button" class="btn btn-sm" data-check-unit="q10">檢查</button>
+          <button type="button" class="btn btn-sm" data-check-unit="q14">檢查</button>
         </div>
         <div class="feedback" role="status"></div>
       </li>
@@ -185,7 +246,7 @@
       <h2>練習結果</h2>
       <p>得分：<strong id="final-score">—</strong></p>
       <div class="verdict" id="practice-verdict" role="status"></div>
-      <p class="small"><strong>精熟門檻：</strong>約 8／10 以上正確，且每題能說出「誰是總數／誰大誰小」；到期錯題清完再進下一週。</p>
+      <p class="small"><strong>精熟門檻：</strong>約 11／14 以上正確，且每題能說出「誰是總數／誰大誰小／誰長誰短」；到期錯題清完再進下一週。</p>
       <h3>需要再練的題</h3>
       <ul class="wrong-list" id="wrong-list"></ul>
       <p class="small">詳細解析請看 <a href="answers.html">答案頁</a>。錯題已進 <a href="../../../wrongbook.html?track=p2">錯題本</a>，記得去 <a href="../../../review.html?track=p2">重溫</a>。準備好了可以做 <a href="quiz.html">測驗</a>。</p>
@@ -200,7 +261,7 @@
 
     <footer class="sheet-footer">
       <span>澳門小二・學界賽預備教學庫・第2週</span>
-      <span>練習頁・螢幕互動／可列印 A4</span>
+      <span>練習・螢幕／可列印 A4・14 題</span>
     </footer>
   </article>
 

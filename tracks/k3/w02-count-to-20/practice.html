@@ -24,18 +24,18 @@
     <header class="sheet-header">
       <div class="titles">
         <h1>K3 第2週｜數到 20・前後是誰（練習）</h1>
-        <div class="meta">幼稚園高班・共 6 題・約 10–15 分・大圖大字・可觸控</div>
+        <div class="meta">幼稚園高班・共 9 題・約 12–18 分・含多少／長短比較・大圖大字・可觸控</div>
       </div>
       <span class="badge badge-student">學生用・練習</span>
     </header>
 
     <div class="mode-banner screen-only">
-      <strong>怎麼做：</strong>看圖 → 點選答案 → 按「檢查」。第 3 題請家長讀出數字名稱。連錯 2 題就休息。列印時變成空白卷，可塗圈作答。
+      <strong>怎麼做：</strong>看圖 → 點選答案 → 按「檢查」。第 3 題請家長讀出數字名稱。連錯 2 題就休息。
     </div>
 
     <div class="toolbar screen-only" role="group" aria-label="練習進度">
       <div class="progress-bar-wrap" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
-      <span class="progress-text" id="progress-text">已檢查 0 / 6　答對 0</span>
+      <span class="progress-text" id="progress-text">已檢查 0 / 9　答對 0</span>
       <button type="button" class="btn btn-success" id="btn-check-all">全部檢查</button>
     </div>
 
@@ -61,9 +61,7 @@
           </span>
         </div>
         <p class="print-only">圈起來：　11　／　12　／　13</p>
-        <div class="q-actions screen-only">
-          <button type="button" class="btn" data-check-unit="q1">檢查</button>
-        </div>
+        <div class="q-actions screen-only"><button type="button" class="btn" data-check-unit="q1">檢查</button></div>
         <div class="feedback" role="status"></div>
       </li>
       <li class="problem-card k3-card" data-unit="q2">
@@ -77,9 +75,7 @@
           </span>
         </div>
         <p class="print-only">圈起來：　15　／　16　／　17</p>
-        <div class="q-actions screen-only">
-          <button type="button" class="btn" data-check-unit="q2">檢查</button>
-        </div>
+        <div class="q-actions screen-only"><button type="button" class="btn" data-check-unit="q2">檢查</button></div>
         <div class="feedback" role="status"></div>
       </li>
       <li class="problem-card k3-card" data-unit="q3">
@@ -93,9 +89,7 @@
           </span>
         </div>
         <p class="print-only">圈起來：　41　／　14　／　4</p>
-        <div class="q-actions screen-only">
-          <button type="button" class="btn" data-check-unit="q3">檢查</button>
-        </div>
+        <div class="q-actions screen-only"><button type="button" class="btn" data-check-unit="q3">檢查</button></div>
         <div class="feedback" role="status"></div>
       </li>
     </ol>
@@ -113,9 +107,7 @@
           </span>
         </div>
         <p class="print-only">圈起來：　8　／　11　／　12</p>
-        <div class="q-actions screen-only">
-          <button type="button" class="btn" data-check-unit="q4">檢查</button>
-        </div>
+        <div class="q-actions screen-only"><button type="button" class="btn" data-check-unit="q4">檢查</button></div>
         <div class="feedback" role="status"></div>
       </li>
       <li class="problem-card k3-card" data-unit="q5">
@@ -129,14 +121,12 @@
           </span>
         </div>
         <p class="print-only">圈起來：　16　／　17　／　19</p>
-        <div class="q-actions screen-only">
-          <button type="button" class="btn" data-check-unit="q5">檢查</button>
-        </div>
+        <div class="q-actions screen-only"><button type="button" class="btn" data-check-unit="q5">檢查</button></div>
         <div class="feedback" role="status"></div>
       </li>
     </ol>
 
-    <h2>C. 溫故：比多少（穿插 1 題）</h2>
+    <h2>C. 多少比較・長短比較</h2>
     <ol class="questions k3-questions" start="6">
       <li class="problem-card k3-card" data-unit="q6">
         <div class="compare-row big-visual"><div class="compare-box"><div class="compare-label">A</div><p>🍓 🍓 🍓 🍓 🍓 🍓</p></div><div class="compare-box"><div class="compare-label">B</div><p>🍓 🍓 🍓 🍓 🍓 🍓 🍓 🍓</p></div></div>
@@ -149,9 +139,50 @@
           </span>
         </div>
         <p class="print-only">圈起來：　A　／　B　／　一樣多</p>
-        <div class="q-actions screen-only">
-          <button type="button" class="btn" data-check-unit="q6">檢查</button>
+        <div class="q-actions screen-only"><button type="button" class="btn" data-check-unit="q6">檢查</button></div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card k3-card" data-unit="q7">
+        <div class="compare-row big-visual"><div class="compare-box"><div class="compare-label">A</div><p>🐟 🐟 🐟 🐟 🐟 🐟 🐟</p></div><div class="compare-box"><div class="compare-label">B</div><p>🐟 🐟 🐟 🐟</p></div></div>
+        <p class="k3-prompt">哪一邊比較<strong>少</strong>？</p>
+        <div class="screen-only">
+          <span class="choice-group choice-big" data-key="q7" role="group" aria-label="第7題">
+            <button type="button" class="choice-btn choice-lg" data-value="A">A</button>
+            <button type="button" class="choice-btn choice-lg" data-value="B">B</button>
+            <button type="button" class="choice-btn choice-lg" data-value="一樣多">一樣多</button>
+          </span>
         </div>
+        <p class="print-only">圈起來：　A　／　B　／　一樣多</p>
+        <div class="q-actions screen-only"><button type="button" class="btn" data-check-unit="q7">檢查</button></div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card k3-card" data-unit="q8">
+        <div class="compare-row big-visual"><div class="compare-box"><div class="compare-label">鞋</div><p>👟 👟 👟 👟 👟</p></div><div class="compare-box"><div class="compare-label">襪</div><p>🧦 🧦 🧦 🧦 🧦</p></div></div>
+        <p class="k3-prompt">鞋和襪，哪個比較多？</p>
+        <div class="screen-only">
+          <span class="choice-group choice-big" data-key="q8" role="group" aria-label="第8題">
+            <button type="button" class="choice-btn choice-lg" data-value="鞋">鞋</button>
+            <button type="button" class="choice-btn choice-lg" data-value="襪">襪</button>
+            <button type="button" class="choice-btn choice-lg" data-value="一樣多">一樣多</button>
+          </span>
+        </div>
+        <p class="print-only">圈起來：　鞋　／　襪　／　一樣多</p>
+        <div class="q-actions screen-only"><button type="button" class="btn" data-check-unit="q8">檢查</button></div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card k3-card" data-unit="q9">
+        <div class="compare-row big-visual" aria-label="兩支筆長短"><div class="compare-box"><div class="compare-label">紅筆</div><p>▬ ▬ ▬</p></div><div class="compare-box"><div class="compare-label">藍筆</div><p>▬ ▬ ▬ ▬ ▬</p></div></div>
+        <p class="small" style="text-align:center">格數越多＝越長（左端對齊想）。</p>
+        <p class="k3-prompt">哪一支筆比較長？</p>
+        <div class="screen-only">
+          <span class="choice-group choice-big" data-key="q9" role="group" aria-label="第9題">
+            <button type="button" class="choice-btn choice-lg" data-value="紅筆">紅筆</button>
+            <button type="button" class="choice-btn choice-lg" data-value="藍筆">藍筆</button>
+            <button type="button" class="choice-btn choice-lg" data-value="一樣長">一樣長</button>
+          </span>
+        </div>
+        <p class="print-only">圈起來：　紅筆　／　藍筆　／　一樣長</p>
+        <div class="q-actions screen-only"><button type="button" class="btn" data-check-unit="q9">檢查</button></div>
         <div class="feedback" role="status"></div>
       </li>
     </ol>
@@ -160,7 +191,7 @@
       <h2>練習結果</h2>
       <p>得分：<strong id="final-score">—</strong></p>
       <div class="verdict" id="practice-verdict" role="status"></div>
-      <p class="small"><strong>精熟建議：</strong>約 5／6 題以上正確再進小測；未達標就回教學再練，或只重做錯題（依技能標籤）。</p>
+      <p class="small"><strong>精熟建議：</strong>約 7／9 題以上正確再進小測；未達標就回教學再練，或只重做錯題。</p>
       <h3>需要再練的題</h3>
       <ul class="wrong-list" id="wrong-list"></ul>
       <p class="small">錯題已進 <a href="../../../wrongbook.html?track=k3">錯題本（K3）</a>，記得去 <a href="../../../review.html?track=k3">重溫</a>。準備好可做 <a href="quiz.html">小測</a>。</p>
@@ -172,7 +203,7 @@
 
     <footer class="sheet-footer">
       <span>雙孩教學庫・K3・第2週</span>
-      <span>練習・螢幕／可列印 A4</span>
+      <span>練習・螢幕／可列印 A4・9 題</span>
     </footer>
   </article>
 

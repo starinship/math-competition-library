@@ -23,35 +23,36 @@
     <header class="sheet-header">
       <div class="titles">
         <h1>K3 第2週｜數到 20・前後是誰（教學）</h1>
-        <div class="meta">幼稚園高班・數感預備・約 10–15 分・圖點＋數字火車為主</div>
+        <div class="meta">幼稚園高班・數感預備・約 12–18 分・加強「多少／長短」比較・共 10 道例題</div>
       </div>
       <span class="badge badge-parent">家長用・教學</span>
     </header>
 
     <div class="mode-banner screen-only">
-      <strong>教學流程（直接教學 → 引導練習）：</strong>先一起數到 20，再玩「數字火車」：後面一個是多 1，前面一個是少 1。本週不做應用題文字長句。
+      <strong>教學流程：</strong>先一起數到 20、玩數字火車，再加「誰多／誰少／誰長／誰短」圖例。題少、圖大、步驟短。
     </div>
 
     <div class="callout pedagogy-note">
       <div class="callout-title">科學設計・本週為什麼這樣教？</div>
       <ul class="mb-0">
         <li><strong>先決條件</strong>：第 1 週練習約 5/6、小測約 4/5，且錯題本「今日到期」已清完。</li>
-        <li><strong>認知負荷</strong>：一次只練「數到 20」和「前一個／後一個」，題少、圖大、步驟短（約 10–15 分）。</li>
-        <li><strong>具體→半具體→數字</strong>：先數點點，再看數字火車，最後只看數字。</li>
-        <li><strong>輕度穿插</strong>：練習只混入 1 題第 1 週「比多少」，不連刷。</li>
-        <li><strong>家長怎麼停</strong>：皺眉／連錯 2 題／不想碰 → 立刻停，改玩「拍手數數」，明天再來。</li>
+        <li><strong>本週新增</strong>：在「數到 20」之外，加強<strong>多少比較</strong>和<strong>長短比較</strong>（圖大、口語少）。</li>
+        <li><strong>認知負荷</strong>：每題只問一件事，約 12–18 分。</li>
+        <li><strong>家長怎麼停</strong>：皺眉／連錯 2 題／不想碰 → 立刻停，改玩拍手數數，明天再來。</li>
       </ul>
     </div>
 
     <section>
       <h2>本週學什麼？</h2>
-      <p>會<strong>數到 20</strong>（10 個一排，再接著數 11、12……）；會<strong>認讀 11–20 的數字</strong>（例如 12 不是 21）；會說出一個數的<strong>後一個</strong>和<strong>前一個</strong>。</p>
+      <p>會<strong>數到 20</strong>；會<strong>認讀 11–20</strong>；會說<strong>前一個／後一個</strong>；會用圖比較<strong>誰多／誰少／一樣多</strong>，以及<strong>誰比較長／短</strong>。</p>
       <div class="callout">
         <div class="callout-title">學習目標（K3）</div>
         <ul class="mb-0">
-          <li>數 11–20 個物件：先數滿一排 10，再接著數，不重新由 1 開始也可以。</li>
-          <li>認得 11–20 的數字寫法，讀得出、指得出。</li>
-          <li>後一個＝多 1（往後數一下）；前一個＝少 1（往前數一下）。</li>
+          <li>數 11–20 個物件：先數滿一排 10，再接着數。</li>
+          <li>認得 11–20 的數字寫法。</li>
+          <li>後一個＝多 1；前一個＝少 1。</li>
+          <li>一個配一個，找出哪邊多、哪邊少、還是一樣多。</li>
+          <li>看兩條線（左端對齊），說出誰比較長、誰比較短。</li>
         </ul>
       </div>
     </section>
@@ -61,74 +62,114 @@
 
       <div class="toolbar teach-controls screen-only" role="group" aria-label="例題控制">
         <button type="button" class="btn btn-secondary" id="btn-prev">← 上一題</button>
-        <span class="step-indicator" id="step-indicator">例題 1 / 5</span>
+        <span class="step-indicator" id="step-indicator">例題 1 / 10</span>
         <button type="button" class="btn" id="btn-next">下一題 →</button>
         <button type="button" class="btn btn-warn btn-sm" id="btn-hint">顯示提示／怎麼想</button>
       </div>
 
       <div class="example example-slide" data-ex="1">
         <div class="example-label">例題 1｜數到十幾</div>
-        <p class="big-visual dot-rows" aria-label="13 個圓點：一排 10 個，一排 3 個"><span class="dot-row">● ● ● ● ● ● ● ● ● ●</span><span class="dot-row">● ● ●</span></p>
+        <p class="big-visual dot-rows" aria-label="13 個圓點"><span class="dot-row">● ● ● ● ● ● ● ● ● ●</span><span class="dot-row">● ● ●</span></p>
         <p class="k3-prompt">一共有幾個點？</p>
-        <div class="hint-block">
-          <div class="hint-content">
-            <p><strong>怎麼想：</strong></p>
-            <ol class="steps">
-              <li>第一排用手指一個一個數：1、2、3……10。</li>
-              <li>第二排接著數：11、12、13。</li>
-              <li>最後說到的數是 13，答案是 <strong>13</strong>。</li>
-            </ol>
-            <p class="small">家長可說：「第一排剛好 10 個，我們記住 10，再接著數。」不要催，慢慢指。</p>
-          </div>
-        </div>
+        <div class="hint-block"><div class="hint-content">
+          <ol class="steps">
+            <li>第一排數：1…10。</li>
+            <li>第二排接着數：11、12、13。</li>
+            <li>答案是 <strong>13</strong>。</li>
+          </ol>
+        </div></div>
       </div>
 
       <div class="example example-slide" data-ex="2">
         <div class="example-label">例題 2｜認數字：十五</div>
         <p class="big-visual"><span class="num-card-big">15</span></p>
         <p class="k3-prompt">這個數字怎樣讀？</p>
-        <div class="hint-block">
-          <div class="hint-content">
-            <p><strong>怎麼想：</strong>前面的「1」代表一個十，後面的「5」代表五，合起來讀 <strong>十五</strong>。</p>
-            <p class="small">常見混淆：15 和 51、12 和 21。可拿 15 粒積木：10 粒排一排，再放 5 粒，指著說「十……五」。</p>
-          </div>
-        </div>
+        <div class="hint-block"><div class="hint-content">
+          <p><strong>怎麼想：</strong>前面的「1」是一個十，後面的「5」是五，合起來讀 <strong>十五</strong>。</p>
+        </div></div>
       </div>
 
       <div class="example example-slide" data-ex="3">
         <div class="example-label">例題 3｜後面是誰？（多 1）</div>
         <div class="num-train" aria-label="數字火車"><span class="num-engine" aria-hidden="true">🚂</span><span class="num-car">8</span><span class="num-car">9</span><span class="num-car">10</span><span class="num-car is-gap">？</span></div>
         <p class="k3-prompt">10 後面的車卡是幾號？</p>
-        <div class="hint-block">
-          <div class="hint-content">
-            <p><strong>怎麼想：</strong>火車往後走，每一卡多 1：8、9、10、<strong>11</strong>。</p>
-            <p class="small">家長可說：「10 再數一下，是幾？」讓孩子自己說出 11。</p>
-          </div>
-        </div>
+        <div class="hint-block"><div class="hint-content">
+          <p><strong>怎麼想：</strong>往後走多 1：8、9、10、<strong>11</strong>。</p>
+        </div></div>
       </div>
 
       <div class="example example-slide" data-ex="4">
         <div class="example-label">例題 4｜前面是誰？（少 1）</div>
         <div class="num-train" aria-label="數字火車"><span class="num-engine" aria-hidden="true">🚂</span><span class="num-car is-gap">？</span><span class="num-car">15</span></div>
         <p class="k3-prompt">15 前面的車卡是幾號？</p>
-        <div class="hint-block">
-          <div class="hint-content">
-            <p><strong>怎麼想：</strong>前面一個是少 1。由 1 數到 15，15 之前剛剛說的數是 <strong>14</strong>。</p>
-            <p class="small">也可倒數：15、14——「倒退一步」就是前一個。</p>
-          </div>
-        </div>
+        <div class="hint-block"><div class="hint-content">
+          <p><strong>怎麼想：</strong>前面一個少 1 → <strong>14</strong>。</p>
+        </div></div>
       </div>
 
       <div class="example example-slide" data-ex="5">
-        <div class="example-label">例題 5｜中間是誰？（可選・孩子還有精神才做）</div>
+        <div class="example-label">例題 5｜中間是誰？（可選）</div>
         <div class="num-train" aria-label="數字火車"><span class="num-engine" aria-hidden="true">🚂</span><span class="num-car">17</span><span class="num-car is-gap">？</span><span class="num-car">19</span></div>
         <p class="k3-prompt">17 和 19 中間是幾？</p>
-        <div class="hint-block">
-          <div class="hint-content">
-            <p><strong>怎麼想：</strong>17 的後一個是 18，18 的後一個是 19，所以中間是 <strong>18</strong>。</p>
-            <p class="small">孩子累了就跳過這題，下次再做。</p>
-          </div>
+        <div class="hint-block"><div class="hint-content">
+          <p><strong>怎麼想：</strong>17 後面是 18，18 後面是 19 → 中間是 <strong>18</strong>。</p>
+        </div></div>
+      </div>
+
+      <div class="example example-slide" data-ex="6">
+        <div class="example-label">例題 6｜誰比較多？（一個配一個）</div>
+        <div class="compare-row big-visual"><div class="compare-box"><div class="compare-label">小雞</div><p>🐥 🐥 🐥 🐥</p></div><div class="compare-box"><div class="compare-label">小蟲</div><p>🐛 🐛 🐛 🐛 🐛 🐛</p></div></div>
+        <p class="k3-prompt">每隻小雞吃一條小蟲。小雞多還是小蟲多？</p>
+        <div class="hint-block"><div class="hint-content">
+          <ol class="steps">
+            <li>一隻小雞配一條小蟲。</li>
+            <li>小雞配完了，還有小蟲多出來 → <strong>小蟲比較多</strong>。</li>
+          </ol>
+        </div></div>
+      </div>
+
+      <div class="example example-slide" data-ex="7">
+        <div class="example-label">例題 7｜誰比較少？</div>
+        <div class="compare-row big-visual"><div class="compare-box"><div class="compare-label">A</div><p>🎈 🎈 🎈 🎈 🎈</p></div><div class="compare-box"><div class="compare-label">B</div><p>🎈 🎈 🎈</p></div></div>
+        <p class="k3-prompt">哪一邊比較<strong>少</strong>？</p>
+        <div class="hint-block"><div class="hint-content">
+          <p><strong>怎麼想：</strong>一個配一個，B 先配完 → <strong>B 比較少</strong>。</p>
+        </div></div>
+      </div>
+
+      <div class="example example-slide" data-ex="8">
+        <div class="example-label">例題 8｜一樣多</div>
+        <div class="compare-row big-visual"><div class="compare-box"><div class="compare-label">鞋</div><p>👟 👟 👟 👟</p></div><div class="compare-box"><div class="compare-label">襪</div><p>🧦 🧦 🧦 🧦</p></div></div>
+        <p class="k3-prompt">每隻鞋配一隻襪。哪個比較多？</p>
+        <div class="hint-block"><div class="hint-content">
+          <p><strong>怎麼想：</strong>全部配完，沒有多出來 → <strong>一樣多</strong>。</p>
+        </div></div>
+      </div>
+
+      <div class="example example-slide" data-ex="9">
+        <div class="example-label">例題 9｜誰比較長？</div>
+        <div class="bar-model" aria-label="兩支筆長短比較">
+          <div class="bar-row"><span class="bar-name">紅筆</span><div class="bar-track"><span class="bar-seg" style="flex:3">短</span><span style="flex:2"></span></div></div>
+          <div class="bar-row"><span class="bar-name">藍筆</span><div class="bar-track"><span class="bar-seg" style="flex:5">長</span></div></div>
+          <p class="bar-caption">左端對齊，看哪一條多出來。</p>
         </div>
+        <p class="k3-prompt">哪一支筆比較長？</p>
+        <div class="hint-block"><div class="hint-content">
+          <p><strong>怎麼想：</strong>左端對齊後，藍筆多出來一截 → <strong>藍筆比較長</strong>。</p>
+        </div></div>
+      </div>
+
+      <div class="example example-slide" data-ex="10">
+        <div class="example-label">例題 10｜誰比較短？</div>
+        <div class="bar-model" aria-label="兩條繩長短比較">
+          <div class="bar-row"><span class="bar-name">黃繩</span><div class="bar-track"><span class="bar-seg" style="flex:6">長</span></div></div>
+          <div class="bar-row"><span class="bar-name">綠繩</span><div class="bar-track"><span class="bar-seg" style="flex:4">短</span><span style="flex:2"></span></div></div>
+        </div>
+        <p class="k3-prompt">哪一條繩比較短？</p>
+        <div class="hint-block"><div class="hint-content">
+          <p><strong>怎麼想：</strong>左端對齊，綠繩比較短 → <strong>綠繩</strong>。</p>
+          <p class="small">孩子累了就到此為止，長短題明天再玩一次也很好。</p>
+        </div></div>
       </div>
     </section>
 
@@ -136,23 +177,22 @@
       <summary>家長怎麼教（請讀）</summary>
       <div class="parent-guide">
         <ol>
-          <li><strong>暖身（2 分）</strong>：一起拍手大聲數 1 到 20；再走樓梯／跳格子數。</li>
-          <li><strong>直接示範</strong>：你先指著點點數一遍，數滿 10 停一停，再接著數。</li>
-          <li><strong>引導練習</strong>：玩「數字火車」——你說一個數，孩子說「後一個」；再換成「前一個」。</li>
-          <li><strong>獨立小試</strong>：練習頁讓孩子自己點選；認數字題由家長讀出數字名稱（例如「十四」）。</li>
-          <li><strong>何時停止</strong>：連錯 2 題、哭泣、扭動不想做 → 立刻結束，說「我們明天再玩數字火車」。挫折時不要硬撐。</li>
-          <li><strong>口頭獎勵</strong>：「你數滿 10 有停一停，再接著數，真細心」——稱讚過程。</li>
+          <li><strong>暖身（2 分）</strong>：一起拍手數 1 到 20。</li>
+          <li><strong>數字火車</strong>：你說一個數，孩子說後一個／前一個。</li>
+          <li><strong>多少比較</strong>：用實物（杯和匙）一個配一個，再說「誰多／誰少」。</li>
+          <li><strong>長短比較</strong>：拿兩支筆／兩條帶子，左端對齊，問「誰長？誰短？」</li>
+          <li><strong>何時停止</strong>：連錯 2 題、哭泣、扭動 → 立刻結束。</li>
         </ol>
       </div>
     </details>
 
     <div class="tip">
-      <strong>精熟門檻：</strong>練習約 5/6 題以上正確，小測約 4/5，且錯題本「今日到期」清完，再進第 3 週。不必趕進度。
+      <strong>精熟門檻：</strong>練習約 7/9 題以上正確，小測約 5/6，且錯題本「今日到期」清完，再進第 3 週。不必趕進度。
     </div>
 
     <footer class="sheet-footer">
       <span>雙孩教學庫・K3 數感・第2週</span>
-      <span>教學頁・螢幕／可列印 A4</span>
+      <span>教學頁・螢幕／可列印 A4・10 道例題</span>
     </footer>
   </article>
 

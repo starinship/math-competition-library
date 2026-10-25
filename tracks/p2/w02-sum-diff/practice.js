@@ -10,8 +10,8 @@
     href: "tracks/p2/w02-sum-diff/practice.html"
   };
 
-  /* 及格門檻（精熟）：10 題約 8 題 */
-  var PASS = 8;
+  /* 及格門檻（精熟）：14 題約 11 題 */
+  var PASS = 11;
 
   /* 正確答案：字串或字串陣列（多種寫法） */
   var KEYS = {
@@ -24,10 +24,14 @@
     q6a: ["減法", "減", "减法", "减", "-", "−"],
     q6b: ["27"],
     q7: ["16"],
-    q8a: ["37"],
-    q8b: ["46"],
-    q9: ["26"],
-    q10: ["28"]
+    q8: ["36"],
+    q9: ["24"],
+    q10: ["42"],
+    q11: ["13"],
+    q12a: ["37"],
+    q12b: ["46"],
+    q13: ["26"],
+    q14: ["28"]
   };
 
   /* 計分單元：一題一單位（多空共用一單位） */
@@ -35,13 +39,17 @@
     { id: "q1", keys: ["q1"], label: "第 1 題", skills: ["已知和求一部分", "驗算習慣"], answerType: "text" },
     { id: "q2", keys: ["q2a", "q2b"], label: "第 2 題", skills: ["已知和求一部分", "驗算習慣"], answerType: "text" },
     { id: "q3", keys: ["q3"], label: "第 3 題", skills: ["已知和求一部分"], answerType: "text" },
-    { id: "q4", keys: ["q4"], label: "第 4 題", skills: ["已知差求一部分"], answerType: "text" },
-    { id: "q5", keys: ["q5"], label: "第 5 題", skills: ["已知差求一部分"], answerType: "text" },
+    { id: "q4", keys: ["q4"], label: "第 4 題", skills: ["已知差求一部分", "比較多少"], answerType: "text" },
+    { id: "q5", keys: ["q5"], label: "第 5 題", skills: ["已知差求一部分", "比較長短"], answerType: "text" },
     { id: "q6", keys: ["q6a", "q6b"], label: "第 6 題", skills: ["已知差求一部分", "和差關係口訣"], answerType: "mixed" },
-    { id: "q7", keys: ["q7"], label: "第 7 題", skills: ["已知差求一部分", "和差關係口訣"], answerType: "text" },
-    { id: "q8", keys: ["q8a", "q8b"], label: "第 8 題", skills: ["和差關係口訣", "驗算習慣"], answerType: "text" },
-    { id: "q9", keys: ["q9"], label: "第 9 題（溫故）", skills: ["觀察數列規律", "奇偶／加減規律"], answerType: "text" },
-    { id: "q10", keys: ["q10"], label: "第 10 題（溫故）", skills: ["觀察數列規律", "填空推理"], answerType: "text" }
+    { id: "q7", keys: ["q7"], label: "第 7 題", skills: ["已知差求一部分", "比較多少"], answerType: "text" },
+    { id: "q8", keys: ["q8"], label: "第 8 題", skills: ["已知差求一部分", "比較長短"], answerType: "text" },
+    { id: "q9", keys: ["q9"], label: "第 9 題", skills: ["已知差求一部分", "比較長短"], answerType: "text" },
+    { id: "q10", keys: ["q10"], label: "第 10 題", skills: ["已知差求一部分", "和差關係口訣"], answerType: "text" },
+    { id: "q11", keys: ["q11"], label: "第 11 題", skills: ["已知差求一部分", "比較長短"], answerType: "text" },
+    { id: "q12", keys: ["q12a", "q12b"], label: "第 12 題", skills: ["和差關係口訣", "驗算習慣"], answerType: "text" },
+    { id: "q13", keys: ["q13"], label: "第 13 題（溫故）", skills: ["觀察數列規律", "奇偶／加減規律"], answerType: "text" },
+    { id: "q14", keys: ["q14"], label: "第 14 題（溫故）", skills: ["觀察數列規律", "填空推理"], answerType: "text" }
   ];
 
   /* 家長停損：連錯 2 題提示 */
@@ -289,13 +297,13 @@
       if (correct >= PASS) {
         verdict.classList.add("pass");
         verdict.innerHTML =
-          "✅ 達標（" + correct + "/" + UNITS.length + "，門檻約 " + PASS + "/10）" +
+          "✅ 達標（" + correct + "/" + UNITS.length + "，門檻約 " + PASS + "/14）" +
           "<ul><li>下一步：隔天先做<a href=\"../../../review.html?track=p2\">錯題重溫</a>（到期題清完），再做<a href=\"quiz.html\">測驗</a>。</li>" +
           "<li>請孩子挑一題，口頭講「圖 → 式 → 答 → 驗」四步。</li></ul>";
       } else {
         verdict.classList.add("notyet");
         verdict.innerHTML =
-          "⏸ 未達標（" + correct + "/" + UNITS.length + "，門檻約 " + PASS + "/10）—— 沒關係，精熟再前進。" +
+          "⏸ 未達標（" + correct + "/" + UNITS.length + "，門檻約 " + PASS + "/14）—— 沒關係，精熟再前進。" +
           "<ul><li>下一步：回<a href=\"teach.html\">教學頁</a>重講錯題相關的例題（看下面的技能標籤）。</li>" +
           "<li>明天到<a href=\"../../../review.html?track=p2\">錯題重溫</a>只做錯題 2–3 題，達標前先不做測驗、不進第 3 週。</li></ul>";
       }

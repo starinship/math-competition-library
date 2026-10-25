@@ -1,4 +1,4 @@
-/* K3 第2週小測：數到 20・前後是誰・5 題・可選 8 分鐘・過關判定 */
+/* K3 第2週小測：數到 20・前後是誰・6 題・可選 8 分鐘・過關判定 */
 (function () {
   "use strict";
 
@@ -11,15 +11,16 @@
     track: "k3"
   };
 
-  /* 精熟門檻：5 題約 4 題 */
-  var PASS = 4;
+  /* 精熟門檻：6 題約 5 題 */
+  var PASS = 5;
 
   var KEYS = {
     q1: ["14"],
     q2: ["19", "十九"],
     q3: ["17", "十七"],
     q4: ["19", "十九"],
-    q5: ["13", "十三"]
+    q5: ["13", "十三"],
+    q6: ["A", "a"]
   };
 
   var UNITS = [
@@ -27,7 +28,8 @@
     { id: "q2", keys: ["q2"], label: "第 2 題", skills: ["數字認讀"], answerType: "choice", choices: ["9", "19", "91"] },
     { id: "q3", keys: ["q3"], label: "第 3 題", skills: ["前後數"], answerType: "choice", choices: ["14", "17", "18"] },
     { id: "q4", keys: ["q4"], label: "第 4 題", skills: ["前後數"], answerType: "choice", choices: ["10", "19", "21"] },
-    { id: "q5", keys: ["q5"], label: "第 5 題", skills: ["前後數", "數數1-20"], answerType: "choice", choices: ["11", "13", "15"] }
+    { id: "q5", keys: ["q5"], label: "第 5 題", skills: ["前後數", "數數1-20"], answerType: "choice", choices: ["11", "13", "15"] },
+    { id: "q6", keys: ["q6"], label: "第 6 題", skills: ["比較多少"], answerType: "choice", choices: ["A", "B", "一樣多"] }
   ];
 
   var DURATION_SEC = 8 * 60;
@@ -196,12 +198,12 @@
         if (correct >= PASS) {
           verdict.classList.add("pass");
           verdict.innerHTML =
-            "✅ 過關（" + correct + "/" + UNITS.length + "，門檻約 " + PASS + "/5）" +
+            "✅ 過關（" + correct + "/" + UNITS.length + "，門檻約 " + PASS + "/6）" +
             "<ul><li>下一步：之後幾天按<a href=\"../../../review.html?track=k3\">重溫頁</a>做到期題（1→3→7 天）；清完即可進第 3 週。</li></ul>";
         } else {
           verdict.classList.add("notyet");
           verdict.innerHTML =
-            "⏸ 未過關（" + correct + "/" + UNITS.length + "，門檻約 " + PASS + "/5）—— 先不進第 3 週。" +
+            "⏸ 未過關（" + correct + "/" + UNITS.length + "，門檻約 " + PASS + "/6）—— 先不進第 3 週。" +
             "<ul><li>下一步：回<a href=\"teach.html\">教學頁</a>玩數字火車，明天到<a href=\"../../../review.html?track=k3\">錯題重溫</a>只做錯題 2–3 題，過兩三天再小測。</li></ul>";
         }
       }

@@ -84,15 +84,27 @@
     q7: { type: "compare", rows: [{ label: "甲隊", v: 61, role: "big" }, { label: "乙隊", v: 45, role: "small" }], diff: { v: null, word: "多" },
       answer: "16 分", expect: { q7: "16" },
       think: "求「多多少」就是求相差：大數 − 小數。", say: "甲隊比乙隊多得 16 分。" },
-    q8: { type: "multi", answer: "（1）37（2）46", expect: { q8a: "37", q8b: "46" }, parts: [
+    q8: { type: "compare", rows: [{ label: "黃尺", v: 48, role: "big" }, { label: "紅尺", v: null, role: "small" }], diff: { v: 12, word: "短" },
+      answer: "36 厘米", expect: { q8: "36" },
+      think: "紅尺比黃尺短 → 紅尺是較短（小數）。小數 ＝ 大數 − 相差。", say: "紅尺長 36 厘米。" },
+    q9: { type: "compare", rows: [{ label: "鉛筆", v: 15, role: "small" }, { label: "尺", v: null, role: "big" }], diff: { v: 9, word: "長" },
+      answer: "24 厘米", expect: { q9: "24" },
+      think: "尺比鉛筆長 → 尺是較長（大數）。大數 ＝ 小數 ＋ 相差。", say: "尺長 24 厘米。" },
+    q10: { type: "compare", rows: [{ label: "妹妹", v: 28, role: "small" }, { label: "姐姐", v: null, role: "big" }], diff: { v: 14, word: "少" },
+      answer: "42 元", expect: { q10: "42" },
+      think: "陷阱：題目有「少」字，但妹妹比姐姐少 → 姐姐是大數 → 用加法。", say: "姐姐有 42 元。" },
+    q11: { type: "compare", rows: [{ label: "哥哥", v: 132, role: "big" }, { label: "弟弟", v: 119, role: "small" }], diff: { v: null, word: "高" },
+      answer: "13 厘米", expect: { q11: "13" },
+      think: "求「高多少」就是求相差：大數 − 小數。", say: "哥哥比弟弟高 13 厘米。" },
+    q12: { type: "multi", answer: "（1）37（2）46", expect: { q12a: "37", q12b: "46" }, parts: [
         { type: "partWhole", sub: "（1）□ ＋ 27 ＝ 64", total: { label: "總數", v: 64 }, parts: [{ label: "□", v: null }, { label: "", v: 27 }],
           think: "64 是總數，□ 和 27 是兩部分 → 總數 − 一部分。", say: "□ ＝ 37" },
         { type: "partWhole", sub: "（2）81 − □ ＝ 35", total: { label: "總數", v: 81 }, parts: [{ label: "□", v: null }, { label: "", v: 35 }],
           think: "81 是總數，拿走 □ 剩 35 → □ 和 35 是兩部分。", say: "□ ＝ 46" }
       ] },
-    q9: { type: "seq", terms: [6, 11, 16, 21, null], step: 5, answer: "26", expect: { q9: "26" },
+    q13: { type: "seq", terms: [6, 11, 16, 21, null], step: 5, answer: "26", expect: { q13: "26" },
       think: "溫故第 1 週：6→11→16→21，每次多 5。", say: "下一個數是 26。" },
-    q10: { type: "seq", terms: [40, 36, 32, null, 24], step: -4, answer: "28", expect: { q10: "28" },
+    q14: { type: "seq", terms: [40, 36, 32, null, 24], step: -4, answer: "28", expect: { q14: "28" },
       think: "溫故第 1 週：40→36→32，每次少 4；空格後面是 24。", say: "空格是 28。" }
   });
 
@@ -103,9 +115,9 @@
     q2: { type: "compare", rows: [{ label: "小華", v: 29, role: "small" }, { label: "小芳", v: null, role: "big" }], diff: { v: 13, word: "多" },
       answer: "42 本", expect: { q2: "42" },
       think: "小芳比小華多 → 小芳是大數。大數 ＝ 小數 ＋ 相差。", say: "小芳有 42 本圖書。" },
-    q3: { type: "compare", rows: [{ label: "爺爺", v: 70, role: "big" }, { label: "嫲嫲", v: null, role: "small" }], diff: { v: 6, word: "小" },
-      answer: "64 歲", expect: { q3: "64" },
-      think: "嫲嫲比爺爺小 → 嫲嫲是小數。小數 ＝ 大數 − 相差。", say: "嫲嫲今年 64 歲。" },
+    q3: { type: "compare", rows: [{ label: "紅絲帶", v: 65, role: "big" }, { label: "藍絲帶", v: null, role: "small" }], diff: { v: 18, word: "短" },
+      answer: "47 厘米", expect: { q3: "47" },
+      think: "藍絲帶比紅絲帶短 → 藍絲帶是較短（小數）。小數 ＝ 大數 − 相差。", say: "藍絲帶長 47 厘米。" },
     q4: { type: "compare", rows: [{ label: "上層", v: 55, role: "big" }, { label: "下層", v: null, role: "small" }], diff: { v: 18, word: "多" },
       answer: "37 本", expect: { q4: "37" },
       think: "陷阱：上層比下層多 → 上層 55 是大數，下層是小數 → 用減法。", say: "下層有 37 本書。" },
@@ -233,7 +245,13 @@
     q5: { type: "numberLine", known: [18], ref: 18, dir: "before", answer: "17", expect: { q5: "17" },
       parent: "「前面的數少 1：18 前面向左走一格是 17。」" },
     q6: { type: "match", left: { label: "A", n: 6, icon: "🍓" }, right: { label: "B", n: 8, icon: "🍓" }, answer: "B", expect: { q6: "B" },
-      parent: "「上下一個配一個。A 配完了，B 還多 2 個 → B 比較多。」" }
+      parent: "「上下一個配一個。A 配完了，B 還多 2 個 → B 比較多。」" },
+    q7: { type: "match", ask: "less", left: { label: "A", n: 7, icon: "🐟" }, right: { label: "B", n: 4, icon: "🐟" }, answer: "B", expect: { q7: "B" },
+      parent: "「一個配一個。B 先配完，A 還有多出來 → B 比較少。一起說：『B 比 A 少』。」" },
+    q8: { type: "match", left: { label: "鞋", n: 5, icon: "👟" }, right: { label: "襪", n: 5, icon: "🧦" }, answer: "一樣多", expect: { q8: "一樣多" },
+      parent: "「每隻鞋配一隻襪，全部配完，沒有多出來 → 一樣多。」" },
+    q9: { type: "match", left: { label: "紅筆", n: 3, icon: "▬" }, right: { label: "藍筆", n: 5, icon: "▬" }, answer: "藍筆", expect: { q9: "藍筆" },
+      parent: "「兩支筆左端對齊：紅筆短一截，藍筆比較長。選藍筆。」" }
   });
 
   add("k3-w02", "quiz", {
@@ -246,7 +264,9 @@
     q4: { type: "numberLine", known: [20], ref: 20, dir: "before", answer: "19", expect: { q4: "19" },
       parent: "「前面少 1：20 向左走一格是 19。」" },
     q5: { type: "numberLine", known: [12, 14], dir: "between", answer: "13", expect: { q5: "13" },
-      parent: "「12 後面一格是 13，13 後面一格是 14 → 中間是 13。」" }
+      parent: "「12 後面一格是 13，13 後面一格是 14 → 中間是 13。」" },
+    q6: { type: "match", left: { label: "A", n: 5, icon: "⭐" }, right: { label: "B", n: 3, icon: "⭐" }, answer: "A", expect: { q6: "A" },
+      parent: "「一個配一個。B 配完了，A 還多 2 個 → A 比較多。」" }
   });
 
   /* ================= K3 第3週：多・少・一樣多（加深） ================= */

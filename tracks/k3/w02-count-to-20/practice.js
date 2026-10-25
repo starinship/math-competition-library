@@ -11,8 +11,8 @@
     track: "k3"
   };
 
-  /* 精熟門檻：6 題約 5 題 */
-  var PASS = 5;
+  /* 精熟門檻：9 題約 7 題 */
+  var PASS = 7;
 
   var KEYS = {
     q1: ["12"],
@@ -20,7 +20,10 @@
     q3: ["14", "十四"],
     q4: ["11", "十一"],
     q5: ["17", "十七"],
-    q6: ["B", "b"]
+    q6: ["B", "b"],
+    q7: ["B", "b"],
+    q8: ["一樣多"],
+    q9: ["藍筆"]
   };
 
   var UNITS = [
@@ -29,7 +32,10 @@
     { id: "q3", keys: ["q3"], label: "第 3 題", skills: ["數字認讀"], answerType: "choice", choices: ["41", "14", "4"] },
     { id: "q4", keys: ["q4"], label: "第 4 題", skills: ["前後數"], answerType: "choice", choices: ["8", "11", "12"] },
     { id: "q5", keys: ["q5"], label: "第 5 題", skills: ["前後數"], answerType: "choice", choices: ["16", "17", "19"] },
-    { id: "q6", keys: ["q6"], label: "第 6 題（溫故）", skills: ["比較多少"], answerType: "choice", choices: ["A", "B", "一樣多"] }
+    { id: "q6", keys: ["q6"], label: "第 6 題", skills: ["比較多少"], answerType: "choice", choices: ["A", "B", "一樣多"] },
+    { id: "q7", keys: ["q7"], label: "第 7 題", skills: ["比較多少"], answerType: "choice", choices: ["A", "B", "一樣多"] },
+    { id: "q8", keys: ["q8"], label: "第 8 題", skills: ["比較多少"], answerType: "choice", choices: ["鞋", "襪", "一樣多"] },
+    { id: "q9", keys: ["q9"], label: "第 9 題", skills: ["比較長短"], answerType: "choice", choices: ["紅筆", "藍筆", "一樣長"] }
   ];
 
   /* 家長停損：連錯 2 題提示 */
@@ -258,12 +264,12 @@
       if (correct >= PASS) {
         verdict.classList.add("pass");
         verdict.innerHTML =
-          "✅ 過關（" + correct + "/" + UNITS.length + "，門檻約 " + PASS + "/6）" +
+          "✅ 過關（" + correct + "/" + UNITS.length + "，門檻約 " + PASS + "/9）" +
           "<ul><li>下一步：今天到此為止，休息一下。隔天先做<a href=\"../../../review.html?track=k3\">錯題重溫</a>，再做<a href=\"quiz.html\">小測</a>。</li></ul>";
       } else {
         verdict.classList.add("notyet");
         verdict.innerHTML =
-          "⏸ 未過關（" + correct + "/" + UNITS.length + "，門檻約 " + PASS + "/6）—— 沒關係，慢慢來。" +
+          "⏸ 未過關（" + correct + "/" + UNITS.length + "，門檻約 " + PASS + "/9）—— 沒關係，慢慢來。" +
           "<ul><li>下一步：明天和家長玩「數字火車」或拍手數數 5 分鐘，再到<a href=\"../../../review.html?track=k3\">錯題重溫</a>只做錯題。</li>" +
           "<li>過關前先不做小測、不進第 3 週。</li></ul>";
       }
