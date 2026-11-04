@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>科學記憶法 · 3 個月週曆</title>
+<title>科學記憶法 · 生詞背默 3 個月週曆</title>
 <style>
   :root {
     --ink: #1a2332;
@@ -37,7 +37,7 @@
     margin-bottom: 20px;
     box-shadow: 0 10px 30px rgba(37,99,235,.25);
   }
-  header h1 { margin: 0 0 8px; font-size: 1.55rem; letter-spacing: .02em; }
+  header h1 { margin: 0 0 8px; font-size: 1.5rem; letter-spacing: .02em; }
   header p { margin: 0; opacity: .92; font-size: .95rem; }
   .badge-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
   .badge {
@@ -72,22 +72,14 @@
     font-size: .85rem;
   }
   .lead { color: var(--muted); margin: 0 0 12px; font-size: .92rem; }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: .9rem;
-  }
+  table { width: 100%; border-collapse: collapse; font-size: .9rem; }
   th, td {
     border: 1px solid var(--line);
     padding: 10px 12px;
     text-align: left;
     vertical-align: top;
   }
-  th {
-    background: #eef3f9;
-    font-weight: 600;
-    white-space: nowrap;
-  }
+  th { background: #eef3f9; font-weight: 600; white-space: nowrap; }
   tr:nth-child(even) td { background: #fafcfe; }
   .tag {
     display: inline-block;
@@ -107,9 +99,7 @@
     grid-template-columns: 1fr 1fr;
     gap: 10px;
   }
-  @media (max-width: 640px) {
-    .rules { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 640px) { .rules { grid-template-columns: 1fr; } }
   .rule {
     background: var(--bg);
     border-radius: 12px;
@@ -144,6 +134,7 @@
     background: var(--accent-soft);
     border-radius: 999px;
     padding: 2px 8px;
+    white-space: nowrap;
   }
   .week .phase.rev { color: var(--green); background: var(--green-soft); }
   .week .phase.exam { color: var(--amber); background: var(--amber-soft); }
@@ -157,6 +148,28 @@
   }
   .day-sample ol { margin: 8px 0 0; padding-left: 20px; }
   .day-sample li { margin: 6px 0; }
+  .steps { counter-reset: step; list-style: none; padding: 0; margin: 0; }
+  .steps li {
+    counter-increment: step;
+    position: relative;
+    padding: 12px 12px 12px 48px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    margin-bottom: 8px;
+    background: #fff;
+  }
+  .steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 12px; top: 12px;
+    width: 26px; height: 26px;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: .85rem;
+    display: flex; align-items: center; justify-content: center;
+  }
   .footer-note {
     text-align: center;
     color: var(--muted);
@@ -164,12 +177,9 @@
     margin-top: 8px;
   }
   .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 12px 0 4px;
+    display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 4px;
   }
-  button, .btn {
+  button {
     appearance: none;
     border: 1px solid var(--line);
     background: #fff;
@@ -190,21 +200,20 @@
     .wrap { max-width: none; padding: 0; }
     header { box-shadow: none; break-inside: avoid; }
     .actions { display: none !important; }
-    .card { box-shadow: none; break-inside: avoid; }
-    .week { break-inside: avoid; }
+    .card, .week, .steps li { box-shadow: none; break-inside: avoid; }
   }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <h1>科學記憶法 · 3 個月週曆</h1>
-    <p>學界賽準備｜小二／K3 雙軌｜每天約 15–25 分鐘｜精熟再前進</p>
+    <h1>科學記憶法 · 生詞背默 3 個月週曆</h1>
+    <p>英文／中文默寫適用｜例子：一次約 20 個生詞｜每天約 10–20 分鐘</p>
     <div class="badge-row">
-      <span class="badge">間隔重複 1 → 3 → 7 天</span>
-      <span class="badge">主動回想先於重看</span>
-      <span class="badge">交錯混練</span>
-      <span class="badge">錯題到期必清</span>
+      <span class="badge">間隔重複 1→3→7 天</span>
+      <span class="badge">先默寫、再對答案</span>
+      <span class="badge">只練不會的</span>
+      <span class="badge">精熟後 2 週→4–6 週抽測</span>
     </div>
   </header>
 
@@ -213,15 +222,73 @@
   </div>
 
   <section class="card">
-    <h2><span class="n">1</span>口訣（先記這句）</h2>
+    <h2><span class="n">1</span>口訣</h2>
     <p class="lead" style="font-size:1.05rem;color:var(--ink);margin:0;">
-      <strong>新知 → 自己先答 → 隔日再想 → 混在一起練 → 精熟才往前</strong>
+      <strong>先自己默 → 對答案 → 只記錯的 → 隔天再默 → 混舊詞再默 → 識了才拉長間隔</strong>
     </p>
   </section>
 
   <section class="card">
-    <h2><span class="n">2</span>每週固定節奏（週一至週日）</h2>
-    <p class="lead">一週學 1 個新單元；未達標不要硬開下一週。</p>
+    <h2><span class="n">2</span>一次背 20 個生詞：怎麼做</h2>
+    <p class="lead">英文詞或中文詞都同一套；中文可改成「聽寫／看拼音寫字／看解釋寫詞」。</p>
+    <ol class="steps">
+      <li>
+        <strong>分堆，不要一次硬啃 20 個</strong><br>
+        先分成 4 組，每組 5 個。一次只學 1 組（約 5–8 分鐘）。
+      </li>
+      <li>
+        <strong>學的時候：看 → 遮 → 默</strong><br>
+        英文：看詞＋中文意思 → 遮住英文 → 自己拼／默寫 → 對答案。<br>
+        中文：看詞＋解釋（或拼音）→ 遮住 → 默寫字形 → 對筆劃／錯字。
+      </li>
+      <li>
+        <strong>第一次默寫（主動提取）</strong><br>
+        20 個全部遮起來默一遍（可分兩次，每次 10 個）。對的剔走；錯的／不會寫的進「今日錯詞表」。
+      </li>
+      <li>
+        <strong>只重練錯的</strong><br>
+        錯詞再默 1–2 次即可，不要把已對的再抄十遍。
+      </li>
+      <li>
+        <strong>當晚或隔天再默整課一次</strong><br>
+        這一步最關鍵：剛要忘的時候再提取，記得最久。
+      </li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">3</span>單個生詞的間隔（含「約兩個月會忘」）</h2>
+    <table>
+      <thead>
+        <tr><th>階段</th><th>何時再默</th><th>怎樣算過</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>剛學／剛錯</td>
+          <td><strong>隔 1 天 → 3 天 → 7 天</strong></td>
+          <td>這三次都默對 → 標「已精熟」</td>
+        </tr>
+        <tr>
+          <td>已精熟之後</td>
+          <td><strong>約 2 週</strong>抽測 → 仍對再隔 <strong>4–6 週</strong></td>
+          <td>不要等足 2 個月才翻；你較易在兩個月後忘</td>
+        </tr>
+        <tr>
+          <td>抽測又忘了</td>
+          <td>立刻回到 <strong>1 → 3 → 7 天</strong></td>
+          <td>重新連續 3 次對，才再拉長</td>
+        </tr>
+        <tr>
+          <td>考試／默書前</td>
+          <td>前 <strong>7–10 天</strong>混默已精熟詞一輪</td>
+          <td>每天短、準；勿熬夜狂背</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">4</span>每週節奏（以「每週一課 ≈ 20 詞」為例）</h2>
     <table>
       <thead>
         <tr><th>日子</th><th>做什麼</th><th>標記</th></tr>
@@ -229,37 +296,37 @@
       <tbody>
         <tr>
           <td>一</td>
-          <td><strong>新課教學</strong>：例題＋家長帶做 2–3 題</td>
-          <td><span class="tag new">新課</span></td>
+          <td><strong>學新課</strong>：20 詞分 4×5；每組看→遮→默；完成首次全默</td>
+          <td><span class="tag new">新詞</span></td>
         </tr>
         <tr>
           <td>二</td>
-          <td><strong>新課練習</strong>：達標才算過；未達標隔天補同型</td>
-          <td><span class="tag new">新課</span></td>
+          <td><strong>隔日重默</strong>：整課 20 詞再默；只精練錯詞；錯詞進錯詞本</td>
+          <td><span class="tag review">重溫</span></td>
         </tr>
         <tr>
           <td>三</td>
-          <td><strong>間隔重溫 A</strong>：到期錯題＋上週同主題 3–5 題</td>
+          <td><strong>到期錯詞</strong>：默昨天／上週到期的；可加舊課 5–8 個混默</td>
           <td><span class="tag review">重溫</span></td>
         </tr>
         <tr>
           <td>四</td>
-          <td><strong>新課小測</strong>：達標才開下一週；只補錯因，不整份重刷</td>
+          <td><strong>小默書</strong>：抽本週 20 詞（可打亂次序）；達標≈16／20 或以上</td>
           <td><span class="tag new">小測</span></td>
         </tr>
         <tr>
           <td>五</td>
-          <td><strong>間隔重溫 B</strong>：本週錯題（約隔 1 天再想一次）</td>
+          <td><strong>錯詞再默</strong>（約隔 1–3 天那一檔）；對的剔走</td>
           <td><span class="tag review">重溫</span></td>
         </tr>
         <tr>
           <td>六</td>
-          <td><strong>交錯混練</strong>：本週＋上週＋再上週各抽幾題</td>
+          <td><strong>交錯混默</strong>：本週＋上週＋再上週各抽約 8–10 詞</td>
           <td><span class="tag mix">混練</span></td>
         </tr>
         <tr>
           <td>日</td>
-          <td><strong>休息或輕複習</strong>：只有到期錯題才做；沒有就停</td>
+          <td><strong>休息或輕默</strong>：只有「今日到期」才做；沒有就停</td>
           <td><span class="tag rest">休息</span></td>
         </tr>
       </tbody>
@@ -267,198 +334,206 @@
   </section>
 
   <section class="card">
-    <h2><span class="n">3</span>單題間隔怎麼卡</h2>
+    <h2><span class="n">5</span>達標與停損</h2>
     <div class="rules">
       <div class="rule">
-        <strong>錯了之後</strong>
-        <span>隔 1 天 → 隔 3 天 → 隔 7 天再練同一題／同型。</span>
+        <strong>小默書達標（例子）</strong>
+        <span>20 詞約對 16 個（八成）。未達標：只重練錯的，隔天再默，暫不開下一課 20 詞。</span>
       </div>
       <div class="rule">
-        <strong>怎樣叫精熟</strong>
-        <span>間隔重溫連續對 3 次，才標「已精熟」，可暫時放下。</span>
+        <strong>怎樣叫「識了」</strong>
+        <span>遮住提示能正確默出；英文還要意思對得上。連續 3 個間隔日都對 → 已精熟。</span>
       </div>
       <div class="rule">
-        <strong>連續 2 題同型錯</strong>
-        <span>當天停，改看圖解步驟；隔日再練同型，不要硬刷。</span>
+        <strong>停損</strong>
+        <span>連續默錯同一詞 2–3 次或孩子煩躁 → 當天停；改看例句／字形重點，明天再默。</span>
       </div>
       <div class="rule">
         <strong>時間上限</strong>
-        <span>每天封頂約 25 分鐘；寧可短而準，不要一次做很多頁。</span>
+        <span>每天約 10–20 分鐘。寧可短而準，不要一次默很多課。</span>
       </div>
     </div>
   </section>
 
   <section class="card">
-    <h2><span class="n">4</span>達標門檻（例子）</h2>
-    <table>
-      <thead>
-        <tr><th>軌</th><th>練習</th><th>小測</th><th>額外規則</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>小二</td>
-          <td>約 11／14</td>
-          <td>5／7</td>
-          <td>「見多／少」陷阱題若錯，即使總分達標也要先清完再進下一週</td>
-        </tr>
-        <tr>
-          <td>K3</td>
-          <td>約 7／9</td>
-          <td>5／6</td>
-          <td>錯在「較少／長短」時，到期錯題清完再進第 3 週</td>
-        </tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section class="card">
-    <h2><span class="n">5</span>12 週大綱（約 3 個月）</h2>
-    <p class="lead">第 1–4 週對準現有數學庫；第 5–8 週繼續開新單元；第 9–12 週總複習與查漏。</p>
+    <h2><span class="n">6</span>12 週大綱（約 3 個月 · 累積生詞）</h2>
+    <p class="lead">假設每週新課約 20 詞：前 8 週約累積 160 詞；後 4 週以混默、查漏為主。英文／中文可各走一條表，或隔週輪流。</p>
     <div class="week-grid">
       <div class="week">
         <div class="w-title">第 1 週 <span class="phase">新課</span></div>
         <ul>
-          <li>小二：規律／位值</li>
-          <li>K3：數到 10</li>
-          <li>尚無舊錯題</li>
+          <li>新詞約 20 個</li>
+          <li>建立錯詞本</li>
+          <li>尚無舊課</li>
         </ul>
       </div>
       <div class="week">
         <div class="w-title">第 2 週 <span class="phase">新課</span></div>
         <ul>
-          <li>加減／數到 20</li>
-          <li>加強：長短、多少</li>
-          <li>重溫第 1 週（約隔 7 天）</li>
+          <li>新 20 詞</li>
+          <li>重默第 1 週（約隔 7 天）</li>
+          <li>混默兩邊錯詞</li>
         </ul>
       </div>
       <div class="week">
         <div class="w-title">第 3 週 <span class="phase">新課</span></div>
         <ul>
-          <li>進位／加一減一</li>
-          <li>第 2 週錯題：1、3 天</li>
+          <li>新 20 詞</li>
+          <li>第 2 週：1／3 天檔</li>
           <li>抽測第 1 週</li>
         </ul>
       </div>
       <div class="week">
         <div class="w-title">第 4 週 <span class="phase">新課</span></div>
         <ul>
-          <li>應用／比較加深</li>
-          <li>重溫第 2–3 週</li>
-          <li>長短、多少各抽 2 題</li>
+          <li>新 20 詞</li>
+          <li>第 1 週進入「約 2–4 週抽測」</li>
+          <li>週六三課混默</li>
         </ul>
       </div>
       <div class="week">
         <div class="w-title">第 5 週 <span class="phase">新課</span></div>
         <ul>
-          <li>新單元 A（例：圖表）</li>
-          <li>到期錯題必做</li>
-          <li>週六：三週混練</li>
+          <li>新 20 詞</li>
+          <li>到期錯詞必默</li>
+          <li>舊課各抽 5–8 詞</li>
         </ul>
       </div>
       <div class="week">
         <div class="w-title">第 6 週 <span class="phase">新課</span></div>
         <ul>
-          <li>新單元 B（例：時間）</li>
-          <li>前 3 週到期錯題</li>
-          <li>週六混練</li>
+          <li>新 20 詞</li>
+          <li>第 1–2 週做 4–6 週檔抽測</li>
+          <li>忘了的拉回 1→3→7</li>
         </ul>
       </div>
       <div class="week">
         <div class="w-title">第 7 週 <span class="phase">新課</span></div>
         <ul>
-          <li>新單元 C</li>
-          <li>弱項專練 10 分</li>
-          <li>週六混練</li>
+          <li>新 20 詞</li>
+          <li>弱項詞專默 10 分</li>
+          <li>週六大混默</li>
         </ul>
       </div>
       <div class="week">
         <div class="w-title">第 8 週 <span class="phase">新課</span></div>
         <ul>
-          <li>新單元 D</li>
-          <li>清完高頻錯題</li>
-          <li>準備進入綜合週</li>
+          <li>新 20 詞（累積≈160）</li>
+          <li>清高頻錯詞</li>
+          <li>準備綜合週</li>
         </ul>
       </div>
       <div class="week">
         <div class="w-title">第 9 週 <span class="phase rev">綜合</span></div>
         <ul>
-          <li>少開新知</li>
-          <li>第 1–8 週交錯考</li>
-          <li>專打弱項題型</li>
+          <li>少開或暫停新詞</li>
+          <li>第 1–8 週交錯默</li>
+          <li>專打常錯詞</li>
         </ul>
       </div>
       <div class="week">
         <div class="w-title">第 10 週 <span class="phase rev">綜合</span></div>
         <ul>
-          <li>續綜合＋查漏</li>
-          <li>只練未精熟題</li>
+          <li>只默未精熟＋到期</li>
           <li>維持短時高頻</li>
+          <li>可選加少量新詞</li>
         </ul>
       </div>
       <div class="week">
         <div class="w-title">第 11 週 <span class="phase exam">模擬</span></div>
         <ul>
-          <li>模擬小測 1 次</li>
-          <li>錯題本＋相近題型</li>
+          <li>模擬默書 1 次（打亂）</li>
+          <li>錯詞當天／隔日清</li>
           <li>每天 ≤ 20 分鐘</li>
         </ul>
       </div>
       <div class="week">
         <div class="w-title">第 12 週 <span class="phase exam">查漏</span></div>
         <ul>
-          <li>模擬小測 2／輕量</li>
+          <li>再模擬或輕量抽默</li>
           <li>只清最後缺口</li>
-          <li>睡眠優先，勿熬夜刷</li>
+          <li>睡眠優先</li>
         </ul>
       </div>
     </div>
   </section>
 
   <section class="card">
-    <h2><span class="n">6</span>一天長怎樣（例子）</h2>
-    <p class="lead">第 3 週 · 星期三 · 間隔重溫 A（約 15–20 分鐘）</p>
+    <h2><span class="n">7</span>一天長怎樣（例子）</h2>
+    <p class="lead">剛學完「第 3 課 20 個英文生詞」的隔天（約 15 分鐘）</p>
     <div class="day-sample">
       <ol>
-        <li>打開<strong>錯題本</strong>：到期 3 題（含第 2 週「多少」陷阱）→ <strong>先自己答</strong>，再對答案。</li>
-        <li>錯了：按圖解步驟重做 1 次（不要只看答案）。</li>
-        <li>再抽<strong>上週長短</strong> 2 題（交錯，防只會當週）。</li>
-        <li>到時間就停；<span class="tag warn">不要加新課</span>。</li>
+        <li>遮住英文，只看中文意思（或聽讀），<strong>默寫全部 20 個</strong>。</li>
+        <li>對答案：對的打勾；錯的／空白的抄進<strong>錯詞表</strong>（詞＋正確拼法＋一句例）。</li>
+        <li>只把錯詞再默 1–2 次；已對的<strong>不要再抄十遍</strong>。</li>
+        <li>若有「上週到期」舊詞 5 個，再混默一遍就收工。<span class="tag warn">不加新課</span></li>
       </ol>
     </div>
   </section>
 
   <section class="card">
-    <h2><span class="n">7</span>家長一眼檢查表</h2>
+    <h2><span class="n">8</span>英文 vs 中文：小差別</h2>
+    <table>
+      <thead>
+        <tr><th></th><th>英文生詞</th><th>中文生詞／默書</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>默什麼</td>
+          <td>拼寫＋中文意思（必要時加詞性）</td>
+          <td>字形＋讀音／解釋（看情況）</td>
+        </tr>
+        <tr>
+          <td>常見錯</td>
+          <td>字母順序、雙寫、詞尾</td>
+          <td>形近字、漏筆、同音異字</td>
+        </tr>
+        <tr>
+          <td>加強一招</td>
+          <td>用錯詞造一句極短英文</td>
+          <td>用手指出筆順／組詞再默一次</td>
+        </tr>
+        <tr>
+          <td>檢查</td>
+          <td>能默出且知道意思才算對</td>
+          <td>能正確寫出（默書要求）才算對</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="card">
+    <h2><span class="n">9</span>家長一眼檢查表</h2>
     <table>
       <thead>
         <tr><th>問自己</th><th>是 →</th><th>否 →</th></tr>
       </thead>
       <tbody>
         <tr>
-          <td>今天有「自己先答」嗎？</td>
+          <td>今天有「遮住再默」嗎？</td>
           <td>繼續</td>
-          <td>先合上材料再做 3 題</td>
+          <td>先不要只看、只讀；改成默寫</td>
         </tr>
         <tr>
-          <td>有到期錯題未清嗎？</td>
-          <td>先清錯題</td>
-          <td>才做新課／混練</td>
+          <td>有到期錯詞未清嗎？</td>
+          <td>先默錯詞</td>
+          <td>才學新的 5／20 詞</td>
         </tr>
         <tr>
-          <td>本週練習／小測達標嗎？</td>
-          <td>可排下一週</td>
-          <td>只補錯因，暫不開新單元</td>
+          <td>本週小默書達標嗎？</td>
+          <td>可開下一課 20 詞</td>
+          <td>只補錯詞，暫不開新課</td>
         </tr>
         <tr>
-          <td>已超過 25 分鐘？</td>
+          <td>已超過約 20 分鐘？</td>
           <td>收工</td>
-          <td>可做完當下那一小段</td>
+          <td>可做完當下那一小組</td>
         </tr>
       </tbody>
     </table>
   </section>
 
-  <p class="footer-note">配合數學庫：教學 → 練習 → 小測 → 錯題本／間隔重溫。列印時可選「較少邊界」。</p>
+  <p class="footer-note">適用英文／中文生詞背默。可與「電子默寫」等工具一起用：新課在工具裡默，錯詞按本表間隔再默。</p>
 </div>
 </body>
 </html>
