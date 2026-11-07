@@ -1,0 +1,2597 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#13283f">
+<meta name="description" content="生詞第 1 課。20 詞分 A–D 四組。每一組先看、手寫一次，再遮住英文默寫。四組完成後才做整課遮默。">
+<title>生詞第 1 課 · 看、手寫、再遮默</title>
+<script>
+(function () {
+  var ids = ["guide", "a", "b", "c", "d", "recall", "answers", "misses", "redo", "spacing"];
+  var id = (location.hash || "").replace(/^#/, "");
+  if (ids.indexOf(id) < 0) id = "guide";
+  document.documentElement.setAttribute("data-start", id);
+})();
+</script>
+<style>
+
+  :root {
+    --ink: #1a2332;
+    --muted: #526173;
+    --line: #7e90a4;
+    --line-soft: #d3dce6;
+    --bg: #e7edf4;
+    --paper: #fff;
+    --accent: #1a4f8b;
+    --accent-soft: #eef4fb;
+    --sidebar: #13283f;
+    --sidebar-ink: #e8eef6;
+    --sidebar-muted: #b7c6d8;
+    --write: #8a4b08;
+    --write-soft: #fff6ea;
+    --ok: #0d6b52;
+    --ok-soft: #e8f6f1;
+    --bad: #9f1239;
+    --bad-soft: #fff1f3;
+    --side-w: 280px;
+    --topbar-h: 52px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    font-family: "PingFang TC", "Noto Sans TC", "Noto Sans CJK TC", "Microsoft JhengHei", "Heiti TC", "Source Han Sans TC", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.55;
+    font-variant-numeric: tabular-nums;
+  }
+  button, a { font: inherit; }
+  a { color: var(--accent); }
+  :focus-visible { outline: 2px solid #f0c27a; outline-offset: 2px; }
+  .stage :focus-visible { outline-color: var(--accent); }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    height: var(--topbar-h);
+    padding: 0 max(10px, env(safe-area-inset-right)) 0 max(10px, env(safe-area-inset-left));
+    background: var(--sidebar);
+    color: var(--sidebar-ink);
+  }
+  .topbar-title {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .top-btn {
+    appearance: none;
+    flex: none;
+    min-height: 36px;
+    padding: 6px 12px;
+    border-radius: 9px;
+    border: 1px solid rgba(255,255,255,.28);
+    background: transparent;
+    color: #fff;
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .top-btn.primary { background: #fff; color: var(--sidebar); border-color: #fff; }
+
+  .backdrop { display: none; }
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    z-index: 35;
+    top: var(--topbar-h);
+    left: 0;
+    bottom: 0;
+    width: min(20rem, 88vw);
+    background: var(--sidebar);
+    color: var(--sidebar-ink);
+    transform: translateX(-105%);
+    visibility: hidden;
+    overflow: hidden;
+  }
+  .sidebar.is-open { transform: none; visibility: visible; }
+  body.menu-open { overflow: hidden; }
+  body.menu-open .backdrop {
+    display: block;
+    position: fixed;
+    z-index: 30;
+    inset: var(--topbar-h) 0 0 0;
+    background: rgba(10, 18, 32, .48);
+  }
+  .side-head, .side-actions, .side-foot { flex: none; padding: 14px 14px 10px; }
+  .side-actions { padding-top: 0; display: grid; gap: 8px; }
+  .side-kicker {
+    margin: 0 0 2px;
+    color: #f0c27a;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+  }
+  .side-title { margin: 0; font-size: 1.28rem; line-height: 1.25; font-weight: 800; }
+  .side-sub { margin: 4px 0 0; color: var(--sidebar-muted); font-size: 0.82rem; }
+  .side-btn, .side-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 40px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,.28);
+    background: transparent;
+    color: #fff;
+    font-weight: 800;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .side-btn.primary { background: #fff; color: var(--sidebar); border-color: #fff; }
+  .side-btn:hover, .side-link:hover { background: rgba(255,255,255,.08); }
+  .side-btn.primary:hover { background: #f4f7fb; }
+  .side-hint { margin: 0; color: var(--sidebar-muted); font-size: 0.75rem; line-height: 1.45; }
+  .side-label {
+    margin: 10px 8px 6px;
+    color: var(--sidebar-muted);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+  .side-nav {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    padding: 0 8px 12px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin: 0 0 2px;
+    padding: 8px 10px;
+    border: 0;
+    border-radius: 10px;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,.08); }
+  .nav-no {
+    flex: none;
+    width: 1.35rem;
+    color: var(--sidebar-muted);
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-align: center;
+  }
+  .nav-btn[aria-current="page"] { background: #fff; color: var(--sidebar); }
+  .nav-btn[aria-current="page"]:hover { background: #fff; }
+  .nav-btn[aria-current="page"] .nav-no { color: var(--accent); }
+  .side-foot { border-top: 1px solid rgba(255,255,255,.12); display: grid; gap: 8px; }
+
+  .stage { min-width: 0; }
+  .stage-inner { max-width: 1040px; margin: 0 auto; padding: 16px 14px 40px; }
+  .panel { display: none; }
+  html[data-start="guide"] #guide,
+  html[data-start="a"] #a,
+  html[data-start="b"] #b,
+  html[data-start="c"] #c,
+  html[data-start="d"] #d,
+  html[data-start="recall"] #recall,
+  html[data-start="answers"] #answers,
+  html[data-start="misses"] #misses,
+  html[data-start="redo"] #redo,
+  html[data-start="spacing"] #spacing { display: block; }
+  html:not([data-start]):not(.js-ready) .panel { display: block; margin-bottom: 14px; }
+  html.js-ready .panel { display: none !important; }
+  html.js-ready .panel.is-on { display: block !important; }
+
+  .print-only { display: none; }
+  .noscript-note {
+    margin: 0 0 12px;
+    padding: 10px 12px;
+    border: 1px solid #b9cbe0;
+    border-radius: 10px;
+    background: var(--paper);
+  }
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line-soft);
+    border-radius: 16px;
+    padding: 18px 16px 16px;
+  }
+  .eyebrow {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 0 0 6px;
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 10px;
+    font-size: 1.28rem;
+    line-height: 1.35;
+  }
+  h3 { margin: 16px 0 8px; font-size: 1rem; line-height: 1.4; }
+  .n, .g-id {
+    flex: none;
+    width: 1.7rem;
+    height: 1.7rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid var(--accent);
+    border-radius: 7px;
+    color: var(--accent);
+    font-size: 0.85rem;
+    font-weight: 800;
+  }
+  .tone-b .n, .tone-b .g-id { color: var(--ok); border-color: var(--ok); }
+  .tone-c .n, .tone-c .g-id { color: var(--write); border-color: var(--write); }
+  .tone-d .n, .tone-d .g-id { color: var(--bad); border-color: var(--bad); }
+  .lead { margin: 0 0 12px; color: var(--muted); }
+  .motto { margin: 0 0 14px; padding: 2px 2px 0; }
+  .motto p { margin: 0; }
+  .motto .big {
+    font-size: 1.32rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    margin-bottom: 8px;
+  }
+  .callout {
+    margin: 0 0 12px;
+    padding: 10px 12px;
+    border: 1px solid #b9cbe0;
+    border-left: 4px solid var(--accent);
+    border-radius: 8px;
+    background: var(--accent-soft);
+  }
+  .callout.write { border-color: #efd3ae; border-left-color: var(--write); background: var(--write-soft); }
+  .callout.warn { border-color: #f3c3cf; border-left-color: var(--bad); background: var(--bad-soft); }
+  .callout p { margin: 0; }
+  .callout p + p { margin-top: 6px; }
+
+  .sheet-meta, .score {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+    margin: 0 0 12px;
+    font-weight: 700;
+  }
+  .blank {
+    display: inline-block;
+    min-width: 8.5rem;
+    border-bottom: 1.5px solid var(--ink);
+    height: 1.15em;
+    margin: 0 0.35rem;
+    vertical-align: baseline;
+  }
+  .blank.short { min-width: 3.2rem; }
+  .blank.date { min-width: 9.5rem; }
+
+  .flow, .checks { list-style: none; margin: 0 0 12px; padding: 0; }
+  .flow { display: flex; flex-wrap: wrap; gap: 8px; }
+  .flow li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--line-soft);
+    border-radius: 999px;
+    background: #fff;
+    padding: 3px 10px 3px 3px;
+    font-weight: 700;
+    font-size: 0.88rem;
+  }
+  .flow b, .step-no {
+    flex: none;
+    width: 1.6rem;
+    height: 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1.5px solid var(--accent);
+    color: var(--accent);
+    font-weight: 800;
+    font-size: 0.8rem;
+  }
+  .flow li.later b { border-color: var(--ok); color: var(--ok); }
+  .start-steps { list-style: none; margin: 0 0 12px; padding: 0; display: grid; gap: 8px; }
+  .start-steps li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
+    padding: 10px 12px;
+    background: #fff;
+  }
+  .start-steps strong { display: block; }
+  .start-steps p { margin: 2px 0 0; color: var(--muted); }
+  .checks li { display: flex; gap: 8px; align-items: flex-start; margin: 6px 0; font-weight: 700; }
+  .checks .box { margin-top: 0.2rem; }
+
+  .tool-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 10px; }
+  .tool, .say {
+    appearance: none;
+    border-radius: 999px;
+    border: 1px solid #b7c6d8;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .tool { min-height: 36px; padding: 4px 12px; font-size: 0.86rem; }
+  .tool:hover, .say:hover { background: #e2ebf6; }
+  .tool[aria-pressed="true"] { background: var(--sidebar); color: #fff; border-color: var(--sidebar); }
+  .say { flex: none; min-height: 28px; padding: 2px 8px; font-size: 0.75rem; }
+  .en-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; min-width: 0; }
+  .cover-note {
+    margin: 0 0 10px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: #243044;
+    color: #fff;
+    font-weight: 700;
+  }
+  .is-covered .en {
+    color: transparent;
+    background: #243044;
+    border-radius: 4px;
+    user-select: none;
+  }
+  .is-covered .en::selection { color: transparent; background: #243044; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 0.92rem;
+    margin: 0 0 4px;
+  }
+  caption {
+    caption-side: top;
+    text-align: left;
+    font-weight: 800;
+    padding: 8px 10px;
+    border: 1px solid var(--line);
+    border-bottom: none;
+    background: #f3f7fb;
+  }
+  th, td {
+    border: 1px solid var(--line);
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+  th { background: #eef3f8; font-weight: 700; }
+  .sub { display: block; margin-top: 2px; font-weight: 500; color: var(--muted); font-size: 0.75rem; }
+  td.mid, th.mid { text-align: center; vertical-align: middle; }
+  .en { font-weight: 800; letter-spacing: 0.01em; white-space: nowrap; }
+  td.write { vertical-align: bottom; }
+  .line { display: block; min-height: 1.9rem; border-bottom: 1.5px solid var(--ink); }
+  .box {
+    display: inline-block;
+    width: 0.95rem;
+    height: 0.95rem;
+    border: 1.5px solid var(--ink);
+    border-radius: 2px;
+    vertical-align: middle;
+    background: #fff;
+  }
+  .marks { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 4px; font-size: 0.82rem; font-weight: 700; }
+  td.mid .marks { justify-content: center; margin-top: 0; }
+  .mark { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+  tr.pause td {
+    text-align: center;
+    font-weight: 700;
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    border: 0;
+  }
+
+  .vocab-mini { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 0 0 12px; }
+  .vocab-mini article {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 8px 10px 10px;
+    background: #fff;
+  }
+  .vocab-mini h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 6px; font-size: 0.95rem; }
+  .vocab-mini ol { margin: 0; padding-left: 1.25rem; }
+  .vocab-mini li { margin: 2px 0; }
+  .day-sheet { margin: 0 0 8px; }
+  .day-sheet h3 { margin-top: 0; }
+
+  .pager { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .pager button {
+    appearance: none;
+    flex: 1 1 0;
+    max-width: calc(50% - 4px);
+    min-height: 42px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--ink);
+    font-weight: 800;
+    cursor: pointer;
+    text-align: center;
+  }
+  .pager .next { margin-left: auto; }
+  .colophon { text-align: center; color: var(--muted); font-size: 0.82rem; margin: 14px 0 0; }
+
+  @media (min-width: 900px) {
+    body { height: 100vh; height: 100dvh; overflow: hidden; }
+    .topbar { display: none; }
+    .backdrop { display: none !important; }
+    .app { display: flex; height: 100vh; height: 100dvh; }
+    .sidebar {
+      position: relative;
+      top: auto; bottom: auto; left: auto;
+      flex: 0 0 var(--side-w);
+      width: var(--side-w);
+      height: 100vh;
+      height: 100dvh;
+      transform: none;
+      visibility: visible;
+    }
+    .stage { flex: 1; height: 100vh; height: 100dvh; overflow: auto; -webkit-overflow-scrolling: touch; }
+    .stage-inner { padding: 28px 28px 48px; }
+    .card { padding: 22px 22px 18px; }
+  }
+  @media (max-width: 899px) {
+    .sidebar { transition: transform .18s ease; }
+    .side-head { padding: 10px 12px 6px; }
+    .side-title { font-size: 1.12rem; }
+    .side-actions { gap: 6px; }
+    .side-btn, .side-link { min-height: 36px; }
+    .side-label { margin: 6px 8px 2px; }
+    .nav-btn { padding: 6px 8px; }
+    .side-foot {
+      padding: 8px 12px 10px;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sidebar { transition: none; }
+  }
+
+  .stage { container-type: inline-size; container-name: stage; }
+  @media screen {
+    @container stage (max-width: 860px) {
+      .vocab-mini { grid-template-columns: 1fr 1fr; }
+    }
+    @container stage (max-width: 640px) {
+      .vocab-mini { grid-template-columns: 1fr; }
+      h2 { font-size: 1.16rem; }
+      table.sheet thead { display: none; }
+      table.sheet, table.sheet tbody, table.sheet tr, table.sheet td { display: block; width: auto; }
+      table.sheet { border: 0; }
+      table.sheet tr {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        margin: 0 0 10px;
+        padding: 8px 12px 10px;
+        background: #fff;
+      }
+      table.sheet td {
+        display: grid;
+        grid-template-columns: 5.8rem minmax(0, 1fr);
+        gap: 6px;
+        align-items: center;
+        border: 0;
+        padding: 4px 0;
+      }
+      table.sheet td.mid { text-align: left; }
+      table.sheet td.mid .marks { justify-content: flex-start; }
+      table.sheet td::before {
+        content: attr(data-label);
+        color: var(--muted);
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+      .en { white-space: normal; }
+      table.sheet tr.pause { padding: 8px 12px; background: var(--accent-soft); }
+      table.sheet tr.pause td {
+        display: block;
+        text-align: center;
+        padding: 2px 0;
+        background: transparent;
+      }
+      table.sheet tr.pause td::before { content: none; }
+      table.sheet caption { border: 1px solid var(--line); border-radius: 10px 10px 0 0; }
+    }
+  }
+
+  @media print {
+    @page { size: A4 portrait; margin: 12mm 11mm 13mm 11mm; }
+    html, body {
+      height: auto !important;
+      overflow: visible !important;
+      background: #fff;
+      color: #000;
+      font-size: 10.5pt;
+      line-height: 1.4;
+    }
+    .no-print { display: none !important; }
+    .print-only { display: block; }
+    .app, .stage, .stage-inner {
+      display: block !important;
+      height: auto !important;
+      overflow: visible !important;
+      max-width: none;
+      margin: 0;
+      padding: 0;
+    }
+    .doc-mast { font-weight: 800; font-size: 13pt; margin: 0 0 8pt; }
+    html.js-ready body.print-all .panel { display: block !important; }
+    html.js-ready body.print-all .panel.answers { display: none !important; }
+    body.print-all .panel + .panel { break-before: page; page-break-before: always; }
+    .day-sheet + .day-sheet { break-before: page; page-break-before: always; }
+    .card {
+      box-shadow: none;
+      background: #fff;
+      border-color: #5d6e82;
+      overflow: visible;
+      border-radius: 0;
+      padding: 0 0 8pt;
+      margin: 0 0 8pt;
+    }
+    h2, h3, caption, .lead { break-after: avoid; page-break-after: avoid; }
+    h2 { font-size: 14pt; }
+    .motto .big { font-size: 13pt; }
+    tr, .callout, .start-steps li, .vocab-mini article { break-inside: avoid; page-break-inside: avoid; }
+    .vocab-mini { grid-template-columns: repeat(4, 1fr); gap: 6pt; }
+    table, thead, tbody, tr, th, td { display: revert; }
+    table { display: table !important; width: 100%; font-size: 10pt; }
+    thead { display: table-header-group !important; }
+    tbody { display: table-row-group !important; }
+    tr { display: table-row !important; }
+    th, td { display: table-cell !important; padding: 4pt 5pt; }
+    td::before { content: none !important; }
+    caption, th { background: #fff; }
+    tr.pause td { background: #fff; }
+    .line { min-height: 7.5mm; }
+    .is-covered .en, .is-covered .en::selection {
+      color: #000 !important;
+      background: transparent !important;
+      user-select: auto;
+    }
+    a { color: inherit; text-decoration: none; }
+  }
+
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar no-print">
+    <button type="button" class="top-btn" id="menu-btn" aria-expanded="false" aria-controls="sidebar">章節</button>
+    <p class="topbar-title" id="current-label">本課說明</p>
+    <button type="button" class="top-btn primary" data-print="one">列印</button>
+  </header>
+
+  <aside class="sidebar no-print" id="sidebar" aria-label="操作與章節">
+    <div class="side-head">
+      <p class="side-kicker">看 → 手寫 → 遮默</p>
+      <p class="side-title">生詞第 1 課</p>
+      <p class="side-sub">20 詞 · 四組各 5 詞<br>第 1 天學習，不是默書</p>
+    </div>
+    <div class="side-actions">
+      <button type="button" class="side-btn primary" data-print="one">列印這一節</button>
+      <button type="button" class="side-btn" data-print="all">列印全部</button>
+      <p class="side-hint">側欄不列印。只印目前這一節。「列印全部」不含答案。</p>
+    </div>
+    <nav class="side-nav" id="section-nav" aria-label="章節">
+      <p class="side-label">開始</p>
+      <button type="button" class="nav-btn" data-open="guide" data-label="本課說明"><span class="nav-no">1</span><span>本課說明</span></button>
+      <p class="side-label">第 1 天 · 先學再默</p>
+      <button type="button" class="nav-btn" data-open="a" data-label="A 組"><span class="nav-no">2</span><span>A 組</span></button>
+      <button type="button" class="nav-btn" data-open="b" data-label="B 組"><span class="nav-no">3</span><span>B 組</span></button>
+      <button type="button" class="nav-btn" data-open="c" data-label="C 組"><span class="nav-no">4</span><span>C 組</span></button>
+      <button type="button" class="nav-btn" data-open="d" data-label="D 組"><span class="nav-no">5</span><span>D 組</span></button>
+      <button type="button" class="nav-btn" data-open="recall" data-label="整課遮默"><span class="nav-no">6</span><span>整課遮默</span></button>
+      <p class="side-label">對答案與日後</p>
+      <button type="button" class="nav-btn" data-open="answers" data-label="答案"><span class="nav-no">7</span><span>答案（家長）</span></button>
+      <button type="button" class="nav-btn" data-open="misses" data-label="錯詞表"><span class="nav-no">8</span><span>錯詞表</span></button>
+      <button type="button" class="nav-btn" data-open="redo" data-label="隔日與小默"><span class="nav-no">9</span><span>隔日與小默</span></button>
+      <button type="button" class="nav-btn" data-open="spacing" data-label="間隔提醒"><span class="nav-no">10</span><span>間隔提醒</span></button>
+    </nav>
+    <div class="side-foot">
+      <a class="side-link" href="schedule-3months.html#sample">回週曆第 8 節</a>
+      <a class="side-link" href="index.html">回首頁</a>
+    </div>
+  </aside>
+  <div class="backdrop no-print" id="backdrop"></div>
+
+  <main class="stage" id="stage">
+    <div class="stage-inner">
+      <p class="doc-mast print-only">生詞第 1 課 · 看、手寫、再遮默 · 20 詞</p>
+      <noscript>
+        <p class="noscript-note">瀏覽器未啟用 JavaScript，因此一次列出全部章節。啟用後，可從左側或頂端選單逐節學習、列印。</p>
+      </noscript>
+
+      <section class="panel card" id="guide" aria-labelledby="h-guide">
+        <p class="eyebrow"><span>第 1 節</span><span>共 10 節</span></p>
+        <h2 id="h-guide"><span class="n">1</span>本課說明與口訣</h2>
+        <p class="sheet-meta"><span>姓名<span class="blank"></span></span><span>第 1 天日期<span class="blank date"></span></span></p>
+        <blockquote class="motto">
+          <p class="big">起手不是默書。先看意思，手寫一遍；遮住英文，才來默寫。</p>
+          <p>錯的才再寫。四組學完，才整課遮默。隔日重默；達標之後，才把間隔拉長。</p>
+        </blockquote>
+        <p class="lead">這一頁是第 1 課的學習紙，可單獨使用。20 詞分成 A–D 四組，每組 5 詞。意思沿用週曆第 8 節，不改詞義。一次只做一組，約 5–8 分鐘；整天宜在 15–20 分鐘內，不要一開始就把 20 詞拿來默書。</p>
+
+        <h3>每一組都照這四步</h3>
+        <ol class="start-steps">
+          <li>
+            <span class="step-no">1</span>
+            <div>
+              <strong>看</strong>
+              <p>同時看英文與中文意思。可以朗讀一次，或按「讀」聽一次。此步只負責認得，不評分，也不默書。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-no">2</span>
+            <div>
+              <strong>手寫 1 次</strong>
+              <p>看著詞彙，在手寫欄抄一遍，邊寫邊記住意思。這是抄寫練習，不是考試。手寫欄在遮默欄之前。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-no">3</span>
+            <div>
+              <strong>遮默，再對答案</strong>
+              <p>用紙條蓋住英文欄，或在螢幕按「遮住英文」。只留中文意思，在遮默欄默出拼寫，再對答案。</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-no">4</span>
+            <div>
+              <strong>錯的才再手寫</strong>
+              <p>默對的停止。默錯或寫不出的，看著正確拼法再手寫 1–2 次。不必抄十遍。</p>
+            </div>
+          </li>
+        </ol>
+
+        <h3>四組都完成之後</h3>
+        <ol class="flow" aria-label="四組之後的次序">
+          <li class="later"><b>5</b>整課遮默</li>
+          <li class="later"><b>6</b>隔日重默</li>
+          <li class="later"><b>7</b>第 4 天小默書</li>
+          <li class="later"><b>8</b>間隔 1→3→7</li>
+          <li class="later"><b>9</b>2 週 → 4–6 週</li>
+        </ol>
+        <p class="lead">整課遮默只給中文、留空寫英文，可分兩次，每次 10 詞。第 2 天與第 4 天的次序都已打亂。小默書達標約 16／20；未達標只補錯詞，暫不開下一課。錯詞按隔 1 天、3 天、7 天再默，連續三次都對，視為已精熟；其後約 2 週抽測，仍對再隔 4–6 週。抽測又忘，立刻回到 1→3→7。</p>
+
+        <h3>本課七日</h3>
+        <p class="lead">第 1 天不必是星期一。若第 1 天恰好是星期一，第 4 天就是星期四。超過約 20 分鐘，或孩子煩躁、抗拒，當天就停，未完成的留到明天，仍然先看再手寫。</p>
+        <table class="sheet">
+          <caption>這一課怎麼排</caption>
+          <colgroup>
+            <col style="width:16%">
+            <col style="width:30%">
+            <col style="width:54%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col">日次</th>
+              <th scope="col">打開哪一節</th>
+              <th scope="col">做什麼</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="日次">第 1 天</td>
+              <td data-label="打開哪一節">A–D 組，然後整課遮默</td>
+              <td data-label="做什麼"><strong>學習日。</strong>每一組先看、手寫 1 次，再遮默。四組都完成，才做整課遮默。錯詞記入錯詞表。</td>
+            </tr>
+            <tr>
+              <td data-label="日次">第 2 天</td>
+              <td data-label="打開哪一節">隔日與小默（上半）</td>
+              <td data-label="做什麼"><strong>隔日重默。</strong>不先看英文。次序已打亂。只精練錯詞。</td>
+            </tr>
+            <tr>
+              <td data-label="日次">第 3 天</td>
+              <td data-label="打開哪一節">錯詞表</td>
+              <td data-label="做什麼"><strong>只練錯詞。</strong>默昨天寫錯、尚未會的詞。對的剔除。</td>
+            </tr>
+            <tr>
+              <td data-label="日次">第 4 天</td>
+              <td data-label="打開哪一節">隔日與小默（下半）</td>
+              <td data-label="做什麼"><strong>小默書。</strong>次序已打亂，只給中文。達標約 16／20。</td>
+            </tr>
+            <tr>
+              <td data-label="日次">第 5 天</td>
+              <td data-label="打開哪一節">錯詞表</td>
+              <td data-label="做什麼"><strong>錯詞再默</strong>（約隔 1–3 天那一檔）。對的不必再抄。</td>
+            </tr>
+            <tr>
+              <td data-label="日次">第 6 天</td>
+              <td data-label="打開哪一節">間隔提醒</td>
+              <td data-label="做什麼">短時複習仍未精熟的詞。不加新課也可以。</td>
+            </tr>
+            <tr>
+              <td data-label="日次">第 7 天</td>
+              <td data-label="打開哪一節">休息</td>
+              <td data-label="做什麼">休息。睡眠優先於加長練習。</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>本課 20 詞</h3>
+        <p class="lead">學習前可先瀏覽。默寫時請用後面的遮默紙，不要對著這一覽默。</p>
+        <div class="vocab-mini">
+          <article class="tone-a">
+            <h3><span class="g-id">A</span>第 1–5 詞</h3>
+            <ol>
+              <li><span class="en" lang="en">brave</span> 勇敢的</li>
+              <li><span class="en" lang="en">quietly</span> 安靜地</li>
+              <li><span class="en" lang="en">decide</span> 決定</li>
+              <li><span class="en" lang="en">hungry</span> 肚子餓的</li>
+              <li><span class="en" lang="en">promise</span> 承諾；答應</li>
+            </ol>
+          </article>
+          <article class="tone-b">
+            <h3><span class="g-id">B</span>第 6–10 詞</h3>
+            <ol>
+              <li><span class="en" lang="en">collect</span> 收集</li>
+              <li><span class="en" lang="en">famous</span> 出名的</li>
+              <li><span class="en" lang="en">suddenly</span> 突然地</li>
+              <li><span class="en" lang="en">protect</span> 保護</li>
+              <li><span class="en" lang="en">empty</span> 空的</li>
+            </ol>
+          </article>
+          <article class="tone-c">
+            <h3><span class="g-id">C</span>第 11–15 詞</h3>
+            <ol>
+              <li><span class="en" lang="en">invite</span> 邀請</li>
+              <li><span class="en" lang="en">careful</span> 小心的</li>
+              <li><span class="en" lang="en">journey</span> 旅程</li>
+              <li><span class="en" lang="en">whisper</span> 低聲說</li>
+              <li><span class="en" lang="en">ancient</span> 古代的</li>
+            </ol>
+          </article>
+          <article class="tone-d">
+            <h3><span class="g-id">D</span>第 16–20 詞</h3>
+            <ol>
+              <li><span class="en" lang="en">refuse</span> 拒絕</li>
+              <li><span class="en" lang="en">polite</span> 有禮貌的</li>
+              <li><span class="en" lang="en">discover</span> 發現</li>
+              <li><span class="en" lang="en">lonely</span> 寂寞的</li>
+              <li><span class="en" lang="en">enough</span> 足夠的</li>
+            </ol>
+          </article>
+        </div>
+
+        <h3>家長當日檢查</h3>
+        <ul class="checks">
+          <li><span class="box" role="img" aria-label="核對"></span><span>這一組是否先看、先手寫，才遮默？</span></li>
+          <li><span class="box" role="img" aria-label="核對"></span><span>四組是否都完成，才做整課遮默？</span></li>
+          <li><span class="box" role="img" aria-label="核對"></span><span>錯詞是否只再寫 1–2 次，而不是抄十遍？</span></li>
+          <li><span class="box" role="img" aria-label="核對"></span><span>今天是否已超過約 20 分鐘？超過就停。</span></li>
+        </ul>
+        <div class="callout">
+          <p><strong>示範，不必照著錯。</strong>週曆第 8 節曾用一組假設成績說明記法：整課遮默 15 對、5 錯（quietly、suddenly、journey、whisper、enough），只再寫這 5 個；第 4 天小默書以 16／20 為達標。那是記法示範，不是這一課的規定答案。日常填寫請用本頁的空白學習紙。對照仍見<a href="schedule-3months.html#sample">週曆第 8 節</a>。</p>
+        </div>
+        <nav class="pager no-print" aria-label="前後節">
+          <button type="button" class="next" data-open="a">下一節：A 組</button>
+        </nav>
+      </section>
+
+      <section class="panel card tone-a" id="a" aria-labelledby="h-a">
+        <p class="eyebrow"><span>第 2 節 · 第 1 天</span><span>共 10 節</span></p>
+        <h2 id="h-a"><span class="n">A</span>A 組 · 第 1–5 詞</h2>
+        <p class="sheet-meta"><span>姓名<span class="blank"></span></span><span>日期<span class="blank"></span></span><span>約 5–8 分鐘</span></p>
+        <p class="lead">這一組先做完，才換下一組。起手不是默書。手寫欄在遮默欄之前。</p>
+        <ol class="flow" aria-label="A 組的次序">
+          <li><b>1</b>看</li>
+          <li><b>2</b>手寫 1 次</li>
+          <li><b>3</b>遮默對答案</li>
+          <li><b>4</b>錯的再寫 1–2 次</li>
+        </ol>
+        <div class="callout write">
+          <p>先看英文與中文，可朗讀或按「讀」聽一次，並在手寫欄抄一遍、邊寫邊記意思。遮默時用紙條蓋住英文欄；用螢幕則按「遮住英文」。只留中文，在遮默欄默出拼寫，再對答案。默對打「對」；默錯才填下面的再寫表。</p>
+        </div>
+        <div class="tool-row no-print">
+          <button type="button" class="tool" data-say-all="brave quietly decide hungry promise">讀這一組</button>
+          <button type="button" class="tool" data-cover="a" aria-pressed="false">遮住英文</button>
+        </div>
+        <p class="cover-note no-print" hidden>英文已遮住。請只看中文，在遮默欄默寫；對完答案後再按「顯示英文」。</p>
+        <table class="sheet words">
+          <caption class="sr">A 組。先看英文與中文，手寫一次，再遮默。</caption>
+          <colgroup>
+            <col style="width:7%">
+            <col style="width:17%">
+            <col style="width:18%">
+            <col style="width:29%">
+            <col style="width:29%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+              <th scope="col">手寫 1 次<span class="sub">看著抄一遍，邊記意思</span></th>
+              <th scope="col">遮默<span class="sub">蓋住英文再寫，對答案後勾</span></th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="mid" data-label="序">1</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">brave</span><button type="button" class="say no-print" data-say="brave">讀</button></span></td>
+                <td data-label="中文意思">勇敢的</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">2</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">quietly</span><button type="button" class="say no-print" data-say="quietly">讀</button></span></td>
+                <td data-label="中文意思">安靜地</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">3</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">decide</span><button type="button" class="say no-print" data-say="decide">讀</button></span></td>
+                <td data-label="中文意思">決定</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">4</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">hungry</span><button type="button" class="say no-print" data-say="hungry">讀</button></span></td>
+                <td data-label="中文意思">肚子餓的</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">5</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">promise</span><button type="button" class="say no-print" data-say="promise">讀</button></span></td>
+                <td data-label="中文意思">承諾；答應</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+          </tbody>
+        </table>
+        <h3>這組錯詞再手寫</h3>
+        <p class="lead">只填默錯或寫不出的詞。看著正確拼法再抄 1–2 次。默對的不必再抄。</p>
+        <table class="sheet retry">
+          <caption class="sr">A 組錯詞再手寫</caption>
+          <colgroup>
+            <col style="width:10%">
+            <col style="width:30%">
+            <col style="width:30%">
+            <col style="width:30%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">正確拼法</th>
+              <th scope="col">再寫 1</th>
+              <th scope="col">再寫 2</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="mid" data-label="序">1</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 1"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 2"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">2</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 1"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 2"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">3</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 1"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 2"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+          </tbody>
+        </table>
+        <nav class="pager no-print" aria-label="前後節">
+          <button type="button" data-open="guide">上一節：本課說明</button>
+          <button type="button" class="next" data-open="b">下一節：B 組</button>
+        </nav>
+      </section>
+      <section class="panel card tone-b" id="b" aria-labelledby="h-b">
+        <p class="eyebrow"><span>第 3 節 · 第 1 天</span><span>共 10 節</span></p>
+        <h2 id="h-b"><span class="n">B</span>B 組 · 第 6–10 詞</h2>
+        <p class="sheet-meta"><span>姓名<span class="blank"></span></span><span>日期<span class="blank"></span></span><span>約 5–8 分鐘</span></p>
+        <p class="lead">這一組先做完，才換下一組。起手不是默書。手寫欄在遮默欄之前。</p>
+        <ol class="flow" aria-label="B 組的次序">
+          <li><b>1</b>看</li>
+          <li><b>2</b>手寫 1 次</li>
+          <li><b>3</b>遮默對答案</li>
+          <li><b>4</b>錯的再寫 1–2 次</li>
+        </ol>
+        <div class="callout write">
+          <p>先看英文與中文，可朗讀或按「讀」聽一次，並在手寫欄抄一遍、邊寫邊記意思。遮默時用紙條蓋住英文欄；用螢幕則按「遮住英文」。只留中文，在遮默欄默出拼寫，再對答案。默對打「對」；默錯才填下面的再寫表。</p>
+        </div>
+        <div class="tool-row no-print">
+          <button type="button" class="tool" data-say-all="collect famous suddenly protect empty">讀這一組</button>
+          <button type="button" class="tool" data-cover="b" aria-pressed="false">遮住英文</button>
+        </div>
+        <p class="cover-note no-print" hidden>英文已遮住。請只看中文，在遮默欄默寫；對完答案後再按「顯示英文」。</p>
+        <table class="sheet words">
+          <caption class="sr">B 組。先看英文與中文，手寫一次，再遮默。</caption>
+          <colgroup>
+            <col style="width:7%">
+            <col style="width:17%">
+            <col style="width:18%">
+            <col style="width:29%">
+            <col style="width:29%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+              <th scope="col">手寫 1 次<span class="sub">看著抄一遍，邊記意思</span></th>
+              <th scope="col">遮默<span class="sub">蓋住英文再寫，對答案後勾</span></th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="mid" data-label="序">6</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">collect</span><button type="button" class="say no-print" data-say="collect">讀</button></span></td>
+                <td data-label="中文意思">收集</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">7</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">famous</span><button type="button" class="say no-print" data-say="famous">讀</button></span></td>
+                <td data-label="中文意思">出名的</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">8</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">suddenly</span><button type="button" class="say no-print" data-say="suddenly">讀</button></span></td>
+                <td data-label="中文意思">突然地</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">9</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">protect</span><button type="button" class="say no-print" data-say="protect">讀</button></span></td>
+                <td data-label="中文意思">保護</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">10</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">empty</span><button type="button" class="say no-print" data-say="empty">讀</button></span></td>
+                <td data-label="中文意思">空的</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+          </tbody>
+        </table>
+        <h3>這組錯詞再手寫</h3>
+        <p class="lead">只填默錯或寫不出的詞。看著正確拼法再抄 1–2 次。默對的不必再抄。</p>
+        <table class="sheet retry">
+          <caption class="sr">B 組錯詞再手寫</caption>
+          <colgroup>
+            <col style="width:10%">
+            <col style="width:30%">
+            <col style="width:30%">
+            <col style="width:30%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">正確拼法</th>
+              <th scope="col">再寫 1</th>
+              <th scope="col">再寫 2</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="mid" data-label="序">1</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 1"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 2"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">2</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 1"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 2"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">3</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 1"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 2"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+          </tbody>
+        </table>
+        <nav class="pager no-print" aria-label="前後節">
+          <button type="button" data-open="a">上一節：A 組</button>
+          <button type="button" class="next" data-open="c">下一節：C 組</button>
+        </nav>
+      </section>
+      <section class="panel card tone-c" id="c" aria-labelledby="h-c">
+        <p class="eyebrow"><span>第 4 節 · 第 1 天</span><span>共 10 節</span></p>
+        <h2 id="h-c"><span class="n">C</span>C 組 · 第 11–15 詞</h2>
+        <p class="sheet-meta"><span>姓名<span class="blank"></span></span><span>日期<span class="blank"></span></span><span>約 5–8 分鐘</span></p>
+        <p class="lead">這一組先做完，才換下一組。起手不是默書。手寫欄在遮默欄之前。</p>
+        <ol class="flow" aria-label="C 組的次序">
+          <li><b>1</b>看</li>
+          <li><b>2</b>手寫 1 次</li>
+          <li><b>3</b>遮默對答案</li>
+          <li><b>4</b>錯的再寫 1–2 次</li>
+        </ol>
+        <div class="callout write">
+          <p>先看英文與中文，可朗讀或按「讀」聽一次，並在手寫欄抄一遍、邊寫邊記意思。遮默時用紙條蓋住英文欄；用螢幕則按「遮住英文」。只留中文，在遮默欄默出拼寫，再對答案。默對打「對」；默錯才填下面的再寫表。</p>
+        </div>
+        <div class="tool-row no-print">
+          <button type="button" class="tool" data-say-all="invite careful journey whisper ancient">讀這一組</button>
+          <button type="button" class="tool" data-cover="c" aria-pressed="false">遮住英文</button>
+        </div>
+        <p class="cover-note no-print" hidden>英文已遮住。請只看中文，在遮默欄默寫；對完答案後再按「顯示英文」。</p>
+        <table class="sheet words">
+          <caption class="sr">C 組。先看英文與中文，手寫一次，再遮默。</caption>
+          <colgroup>
+            <col style="width:7%">
+            <col style="width:17%">
+            <col style="width:18%">
+            <col style="width:29%">
+            <col style="width:29%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+              <th scope="col">手寫 1 次<span class="sub">看著抄一遍，邊記意思</span></th>
+              <th scope="col">遮默<span class="sub">蓋住英文再寫，對答案後勾</span></th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="mid" data-label="序">11</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">invite</span><button type="button" class="say no-print" data-say="invite">讀</button></span></td>
+                <td data-label="中文意思">邀請</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">12</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">careful</span><button type="button" class="say no-print" data-say="careful">讀</button></span></td>
+                <td data-label="中文意思">小心的</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">13</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">journey</span><button type="button" class="say no-print" data-say="journey">讀</button></span></td>
+                <td data-label="中文意思">旅程</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">14</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">whisper</span><button type="button" class="say no-print" data-say="whisper">讀</button></span></td>
+                <td data-label="中文意思">低聲說</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">15</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">ancient</span><button type="button" class="say no-print" data-say="ancient">讀</button></span></td>
+                <td data-label="中文意思">古代的</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+          </tbody>
+        </table>
+        <h3>這組錯詞再手寫</h3>
+        <p class="lead">只填默錯或寫不出的詞。看著正確拼法再抄 1–2 次。默對的不必再抄。</p>
+        <table class="sheet retry">
+          <caption class="sr">C 組錯詞再手寫</caption>
+          <colgroup>
+            <col style="width:10%">
+            <col style="width:30%">
+            <col style="width:30%">
+            <col style="width:30%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">正確拼法</th>
+              <th scope="col">再寫 1</th>
+              <th scope="col">再寫 2</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="mid" data-label="序">1</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 1"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 2"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">2</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 1"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 2"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">3</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 1"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 2"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+          </tbody>
+        </table>
+        <nav class="pager no-print" aria-label="前後節">
+          <button type="button" data-open="b">上一節：B 組</button>
+          <button type="button" class="next" data-open="d">下一節：D 組</button>
+        </nav>
+      </section>
+      <section class="panel card tone-d" id="d" aria-labelledby="h-d">
+        <p class="eyebrow"><span>第 5 節 · 第 1 天</span><span>共 10 節</span></p>
+        <h2 id="h-d"><span class="n">D</span>D 組 · 第 16–20 詞</h2>
+        <p class="sheet-meta"><span>姓名<span class="blank"></span></span><span>日期<span class="blank"></span></span><span>約 5–8 分鐘</span></p>
+        <p class="lead">這一組先做完，才換下一組。起手不是默書。手寫欄在遮默欄之前。</p>
+        <ol class="flow" aria-label="D 組的次序">
+          <li><b>1</b>看</li>
+          <li><b>2</b>手寫 1 次</li>
+          <li><b>3</b>遮默對答案</li>
+          <li><b>4</b>錯的再寫 1–2 次</li>
+        </ol>
+        <div class="callout write">
+          <p>先看英文與中文，可朗讀或按「讀」聽一次，並在手寫欄抄一遍、邊寫邊記意思。遮默時用紙條蓋住英文欄；用螢幕則按「遮住英文」。只留中文，在遮默欄默出拼寫，再對答案。默對打「對」；默錯才填下面的再寫表。</p>
+        </div>
+        <div class="tool-row no-print">
+          <button type="button" class="tool" data-say-all="refuse polite discover lonely enough">讀這一組</button>
+          <button type="button" class="tool" data-cover="d" aria-pressed="false">遮住英文</button>
+        </div>
+        <p class="cover-note no-print" hidden>英文已遮住。請只看中文，在遮默欄默寫；對完答案後再按「顯示英文」。</p>
+        <table class="sheet words">
+          <caption class="sr">D 組。先看英文與中文，手寫一次，再遮默。</caption>
+          <colgroup>
+            <col style="width:7%">
+            <col style="width:17%">
+            <col style="width:18%">
+            <col style="width:29%">
+            <col style="width:29%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+              <th scope="col">手寫 1 次<span class="sub">看著抄一遍，邊記意思</span></th>
+              <th scope="col">遮默<span class="sub">蓋住英文再寫，對答案後勾</span></th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="mid" data-label="序">16</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">refuse</span><button type="button" class="say no-print" data-say="refuse">讀</button></span></td>
+                <td data-label="中文意思">拒絕</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">17</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">polite</span><button type="button" class="say no-print" data-say="polite">讀</button></span></td>
+                <td data-label="中文意思">有禮貌的</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">18</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">discover</span><button type="button" class="say no-print" data-say="discover">讀</button></span></td>
+                <td data-label="中文意思">發現</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">19</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">lonely</span><button type="button" class="say no-print" data-say="lonely">讀</button></span></td>
+                <td data-label="中文意思">寂寞的</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">20</td>
+                <td data-label="英文"><span class="en-row"><span class="en" lang="en">enough</span><button type="button" class="say no-print" data-say="enough">讀</button></span></td>
+                <td data-label="中文意思">足夠的</td>
+                <td class="write" data-label="手寫 1 次"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="遮默"><span class="line" aria-hidden="true"></span><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+          </tbody>
+        </table>
+        <h3>這組錯詞再手寫</h3>
+        <p class="lead">只填默錯或寫不出的詞。看著正確拼法再抄 1–2 次。默對的不必再抄。</p>
+        <table class="sheet retry">
+          <caption class="sr">D 組錯詞再手寫</caption>
+          <colgroup>
+            <col style="width:10%">
+            <col style="width:30%">
+            <col style="width:30%">
+            <col style="width:30%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">正確拼法</th>
+              <th scope="col">再寫 1</th>
+              <th scope="col">再寫 2</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="mid" data-label="序">1</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 1"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 2"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">2</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 1"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 2"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">3</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 1"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再寫 2"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+          </tbody>
+        </table>
+        <nav class="pager no-print" aria-label="前後節">
+          <button type="button" data-open="c">上一節：C 組</button>
+          <button type="button" class="next" data-open="recall">下一節：整課遮默</button>
+        </nav>
+      </section>
+
+      <section class="panel card" id="recall" aria-labelledby="h-recall">
+        <p class="eyebrow"><span>第 6 節 · 第 1 天</span><span>共 10 節</span></p>
+        <h2 id="h-recall"><span class="n">6</span>整課遮默</h2>
+        <p class="sheet-meta"><span>姓名<span class="blank"></span></span><span>日期<span class="blank"></span></span></p>
+        <p class="lead">四組都學完、手寫過，才做這一次。下面只給中文意思，請在橫線上默寫英文。可先做第 1–10 詞，休息後再做第 11–20 詞。對的無須再練；錯的記入錯詞表，並只把錯詞再手寫 1–2 次。</p>
+        <div class="callout warn">
+          <p>默寫完成之前，不要打開「答案」。紙上不附英文。</p>
+        </div>
+        <p class="score"><span>對<span class="blank short"></span>個</span><span>錯<span class="blank short"></span>個</span><span>共 20 詞</span></p>
+        <div class="day-sheet">
+        <table class="sheet quiz">
+          <caption>第 1 天 · 整課遮默（只給中文）</caption>
+          <colgroup>
+            <col style="width:8%">
+            <col style="width:30%">
+            <col style="width:42%">
+            <col style="width:20%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">中文意思</th>
+              <th scope="col">默寫英文</th>
+              <th scope="col" class="mid">對錯</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="mid" data-label="序">1</td>
+                <td data-label="中文">勇敢的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">2</td>
+                <td data-label="中文">安靜地</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">3</td>
+                <td data-label="中文">決定</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">4</td>
+                <td data-label="中文">肚子餓的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">5</td>
+                <td data-label="中文">承諾；答應</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">6</td>
+                <td data-label="中文">收集</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">7</td>
+                <td data-label="中文">出名的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">8</td>
+                <td data-label="中文">突然地</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">9</td>
+                <td data-label="中文">保護</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">10</td>
+                <td data-label="中文">空的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr class="pause">
+                <td colspan="4">可在此暫停。休息後再默第 11–20 詞。</td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">11</td>
+                <td data-label="中文">邀請</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">12</td>
+                <td data-label="中文">小心的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">13</td>
+                <td data-label="中文">旅程</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">14</td>
+                <td data-label="中文">低聲說</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">15</td>
+                <td data-label="中文">古代的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">16</td>
+                <td data-label="中文">拒絕</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">17</td>
+                <td data-label="中文">有禮貌的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">18</td>
+                <td data-label="中文">發現</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">19</td>
+                <td data-label="中文">寂寞的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">20</td>
+                <td data-label="中文">足夠的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+          </tbody>
+        </table>
+        </div>
+        <p class="no-print"><button type="button" class="tool" data-open="answers">家長對答案（孩子默完才打開）</button></p>
+        <nav class="pager no-print" aria-label="前後節">
+          <button type="button" data-open="d">上一節：D 組</button>
+          <button type="button" class="next" data-open="answers">下一節：答案</button>
+        </nav>
+      </section>
+
+      <section class="panel card answers" id="answers" aria-labelledby="h-answers">
+        <p class="eyebrow"><span>第 7 節 · 家長</span><span>共 10 節</span></p>
+        <h2 id="h-answers"><span class="n">7</span>答案（家長用）</h2>
+        <div class="callout warn">
+          <p>請與默寫紙分開。孩子遮默、隔日重默、小默書之前，不要把這一節留在桌上，也不要讓孩子先看。列印全部時不含本節；要印答案，請在本節按「列印這一節」。</p>
+        </div>
+        <p class="lead">三份答案的次序，分別對應「整課遮默」「第 2 天隔日重默」「第 4 天小默書」。組別方便對回 A–D。</p>
+        <table class="sheet key">
+          <caption>整課遮默答案（與第 6 節同序）</caption>
+          <colgroup>
+            <col style="width:10%">
+            <col style="width:12%">
+            <col style="width:40%">
+            <col style="width:38%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col" class="mid">組</th>
+              <th scope="col">中文意思</th>
+              <th scope="col">英文</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="mid" data-label="序">1</td>
+                <td class="mid" data-label="組">A</td>
+                <td data-label="中文">勇敢的</td>
+                <td data-label="英文"><span class="en" lang="en">brave</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">2</td>
+                <td class="mid" data-label="組">A</td>
+                <td data-label="中文">安靜地</td>
+                <td data-label="英文"><span class="en" lang="en">quietly</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">3</td>
+                <td class="mid" data-label="組">A</td>
+                <td data-label="中文">決定</td>
+                <td data-label="英文"><span class="en" lang="en">decide</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">4</td>
+                <td class="mid" data-label="組">A</td>
+                <td data-label="中文">肚子餓的</td>
+                <td data-label="英文"><span class="en" lang="en">hungry</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">5</td>
+                <td class="mid" data-label="組">A</td>
+                <td data-label="中文">承諾；答應</td>
+                <td data-label="英文"><span class="en" lang="en">promise</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">6</td>
+                <td class="mid" data-label="組">B</td>
+                <td data-label="中文">收集</td>
+                <td data-label="英文"><span class="en" lang="en">collect</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">7</td>
+                <td class="mid" data-label="組">B</td>
+                <td data-label="中文">出名的</td>
+                <td data-label="英文"><span class="en" lang="en">famous</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">8</td>
+                <td class="mid" data-label="組">B</td>
+                <td data-label="中文">突然地</td>
+                <td data-label="英文"><span class="en" lang="en">suddenly</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">9</td>
+                <td class="mid" data-label="組">B</td>
+                <td data-label="中文">保護</td>
+                <td data-label="英文"><span class="en" lang="en">protect</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">10</td>
+                <td class="mid" data-label="組">B</td>
+                <td data-label="中文">空的</td>
+                <td data-label="英文"><span class="en" lang="en">empty</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">11</td>
+                <td class="mid" data-label="組">C</td>
+                <td data-label="中文">邀請</td>
+                <td data-label="英文"><span class="en" lang="en">invite</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">12</td>
+                <td class="mid" data-label="組">C</td>
+                <td data-label="中文">小心的</td>
+                <td data-label="英文"><span class="en" lang="en">careful</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">13</td>
+                <td class="mid" data-label="組">C</td>
+                <td data-label="中文">旅程</td>
+                <td data-label="英文"><span class="en" lang="en">journey</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">14</td>
+                <td class="mid" data-label="組">C</td>
+                <td data-label="中文">低聲說</td>
+                <td data-label="英文"><span class="en" lang="en">whisper</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">15</td>
+                <td class="mid" data-label="組">C</td>
+                <td data-label="中文">古代的</td>
+                <td data-label="英文"><span class="en" lang="en">ancient</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">16</td>
+                <td class="mid" data-label="組">D</td>
+                <td data-label="中文">拒絕</td>
+                <td data-label="英文"><span class="en" lang="en">refuse</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">17</td>
+                <td class="mid" data-label="組">D</td>
+                <td data-label="中文">有禮貌的</td>
+                <td data-label="英文"><span class="en" lang="en">polite</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">18</td>
+                <td class="mid" data-label="組">D</td>
+                <td data-label="中文">發現</td>
+                <td data-label="英文"><span class="en" lang="en">discover</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">19</td>
+                <td class="mid" data-label="組">D</td>
+                <td data-label="中文">寂寞的</td>
+                <td data-label="英文"><span class="en" lang="en">lonely</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">20</td>
+                <td class="mid" data-label="組">D</td>
+                <td data-label="中文">足夠的</td>
+                <td data-label="英文"><span class="en" lang="en">enough</span></td>
+              </tr>
+          </tbody>
+        </table>
+        <table class="sheet key">
+          <caption>第 2 天答案（與隔日重默同序）</caption>
+          <colgroup>
+            <col style="width:10%">
+            <col style="width:12%">
+            <col style="width:40%">
+            <col style="width:38%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col" class="mid">組</th>
+              <th scope="col">中文意思</th>
+              <th scope="col">英文</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="mid" data-label="序">1</td>
+                <td class="mid" data-label="組">D</td>
+                <td data-label="中文">拒絕</td>
+                <td data-label="英文"><span class="en" lang="en">refuse</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">2</td>
+                <td class="mid" data-label="組">A</td>
+                <td data-label="中文">勇敢的</td>
+                <td data-label="英文"><span class="en" lang="en">brave</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">3</td>
+                <td class="mid" data-label="組">C</td>
+                <td data-label="中文">旅程</td>
+                <td data-label="英文"><span class="en" lang="en">journey</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">4</td>
+                <td class="mid" data-label="組">B</td>
+                <td data-label="中文">收集</td>
+                <td data-label="英文"><span class="en" lang="en">collect</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">5</td>
+                <td class="mid" data-label="組">D</td>
+                <td data-label="中文">有禮貌的</td>
+                <td data-label="英文"><span class="en" lang="en">polite</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">6</td>
+                <td class="mid" data-label="組">A</td>
+                <td data-label="中文">安靜地</td>
+                <td data-label="英文"><span class="en" lang="en">quietly</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">7</td>
+                <td class="mid" data-label="組">C</td>
+                <td data-label="中文">低聲說</td>
+                <td data-label="英文"><span class="en" lang="en">whisper</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">8</td>
+                <td class="mid" data-label="組">B</td>
+                <td data-label="中文">出名的</td>
+                <td data-label="英文"><span class="en" lang="en">famous</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">9</td>
+                <td class="mid" data-label="組">D</td>
+                <td data-label="中文">發現</td>
+                <td data-label="英文"><span class="en" lang="en">discover</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">10</td>
+                <td class="mid" data-label="組">A</td>
+                <td data-label="中文">決定</td>
+                <td data-label="英文"><span class="en" lang="en">decide</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">11</td>
+                <td class="mid" data-label="組">C</td>
+                <td data-label="中文">古代的</td>
+                <td data-label="英文"><span class="en" lang="en">ancient</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">12</td>
+                <td class="mid" data-label="組">B</td>
+                <td data-label="中文">突然地</td>
+                <td data-label="英文"><span class="en" lang="en">suddenly</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">13</td>
+                <td class="mid" data-label="組">D</td>
+                <td data-label="中文">寂寞的</td>
+                <td data-label="英文"><span class="en" lang="en">lonely</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">14</td>
+                <td class="mid" data-label="組">A</td>
+                <td data-label="中文">肚子餓的</td>
+                <td data-label="英文"><span class="en" lang="en">hungry</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">15</td>
+                <td class="mid" data-label="組">C</td>
+                <td data-label="中文">邀請</td>
+                <td data-label="英文"><span class="en" lang="en">invite</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">16</td>
+                <td class="mid" data-label="組">B</td>
+                <td data-label="中文">保護</td>
+                <td data-label="英文"><span class="en" lang="en">protect</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">17</td>
+                <td class="mid" data-label="組">D</td>
+                <td data-label="中文">足夠的</td>
+                <td data-label="英文"><span class="en" lang="en">enough</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">18</td>
+                <td class="mid" data-label="組">A</td>
+                <td data-label="中文">承諾；答應</td>
+                <td data-label="英文"><span class="en" lang="en">promise</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">19</td>
+                <td class="mid" data-label="組">C</td>
+                <td data-label="中文">小心的</td>
+                <td data-label="英文"><span class="en" lang="en">careful</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">20</td>
+                <td class="mid" data-label="組">B</td>
+                <td data-label="中文">空的</td>
+                <td data-label="英文"><span class="en" lang="en">empty</span></td>
+              </tr>
+          </tbody>
+        </table>
+        <table class="sheet key">
+          <caption>第 4 天答案（與小默書同序）</caption>
+          <colgroup>
+            <col style="width:10%">
+            <col style="width:12%">
+            <col style="width:40%">
+            <col style="width:38%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col" class="mid">組</th>
+              <th scope="col">中文意思</th>
+              <th scope="col">英文</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="mid" data-label="序">1</td>
+                <td class="mid" data-label="組">D</td>
+                <td data-label="中文">足夠的</td>
+                <td data-label="英文"><span class="en" lang="en">enough</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">2</td>
+                <td class="mid" data-label="組">B</td>
+                <td data-label="中文">出名的</td>
+                <td data-label="英文"><span class="en" lang="en">famous</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">3</td>
+                <td class="mid" data-label="組">C</td>
+                <td data-label="中文">小心的</td>
+                <td data-label="英文"><span class="en" lang="en">careful</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">4</td>
+                <td class="mid" data-label="組">A</td>
+                <td data-label="中文">肚子餓的</td>
+                <td data-label="英文"><span class="en" lang="en">hungry</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">5</td>
+                <td class="mid" data-label="組">D</td>
+                <td data-label="中文">寂寞的</td>
+                <td data-label="英文"><span class="en" lang="en">lonely</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">6</td>
+                <td class="mid" data-label="組">B</td>
+                <td data-label="中文">空的</td>
+                <td data-label="英文"><span class="en" lang="en">empty</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">7</td>
+                <td class="mid" data-label="組">C</td>
+                <td data-label="中文">古代的</td>
+                <td data-label="英文"><span class="en" lang="en">ancient</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">8</td>
+                <td class="mid" data-label="組">A</td>
+                <td data-label="中文">承諾；答應</td>
+                <td data-label="英文"><span class="en" lang="en">promise</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">9</td>
+                <td class="mid" data-label="組">D</td>
+                <td data-label="中文">拒絕</td>
+                <td data-label="英文"><span class="en" lang="en">refuse</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">10</td>
+                <td class="mid" data-label="組">B</td>
+                <td data-label="中文">收集</td>
+                <td data-label="英文"><span class="en" lang="en">collect</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">11</td>
+                <td class="mid" data-label="組">C</td>
+                <td data-label="中文">低聲說</td>
+                <td data-label="英文"><span class="en" lang="en">whisper</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">12</td>
+                <td class="mid" data-label="組">A</td>
+                <td data-label="中文">決定</td>
+                <td data-label="英文"><span class="en" lang="en">decide</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">13</td>
+                <td class="mid" data-label="組">D</td>
+                <td data-label="中文">有禮貌的</td>
+                <td data-label="英文"><span class="en" lang="en">polite</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">14</td>
+                <td class="mid" data-label="組">B</td>
+                <td data-label="中文">突然地</td>
+                <td data-label="英文"><span class="en" lang="en">suddenly</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">15</td>
+                <td class="mid" data-label="組">C</td>
+                <td data-label="中文">邀請</td>
+                <td data-label="英文"><span class="en" lang="en">invite</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">16</td>
+                <td class="mid" data-label="組">A</td>
+                <td data-label="中文">安靜地</td>
+                <td data-label="英文"><span class="en" lang="en">quietly</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">17</td>
+                <td class="mid" data-label="組">D</td>
+                <td data-label="中文">發現</td>
+                <td data-label="英文"><span class="en" lang="en">discover</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">18</td>
+                <td class="mid" data-label="組">B</td>
+                <td data-label="中文">保護</td>
+                <td data-label="英文"><span class="en" lang="en">protect</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">19</td>
+                <td class="mid" data-label="組">C</td>
+                <td data-label="中文">旅程</td>
+                <td data-label="英文"><span class="en" lang="en">journey</span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">20</td>
+                <td class="mid" data-label="組">A</td>
+                <td data-label="中文">勇敢的</td>
+                <td data-label="英文"><span class="en" lang="en">brave</span></td>
+              </tr>
+          </tbody>
+        </table>
+        <h3>常見易錯提醒</h3>
+        <p class="lead">沿用週曆第 8 節的示範誤寫，供對答案時提醒。不是孩子一定會錯的詞，也不必預先抄給孩子。</p>
+        <table class="sheet">
+          <caption>家長提醒</caption>
+          <colgroup>
+            <col style="width:22%">
+            <col style="width:28%">
+            <col style="width:50%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col">生詞</th>
+              <th scope="col">示範誤寫</th>
+              <th scope="col">怎麼記</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="生詞"><span class="en" lang="en">quietly</span></td>
+              <td data-label="示範誤寫" lang="en">quietely</td>
+              <td data-label="怎麼記">quiet 之後加 ly</td>
+            </tr>
+            <tr>
+              <td data-label="生詞"><span class="en" lang="en">suddenly</span></td>
+              <td data-label="示範誤寫" lang="en">sudenly</td>
+              <td data-label="怎麼記">中間兩個 d，詞尾 ly</td>
+            </tr>
+            <tr>
+              <td data-label="生詞"><span class="en" lang="en">journey</span></td>
+              <td data-label="示範誤寫" lang="en">jorney</td>
+              <td data-label="怎麼記">中間是 our，不是 or</td>
+            </tr>
+            <tr>
+              <td data-label="生詞"><span class="en" lang="en">whisper</span></td>
+              <td data-label="示範誤寫" lang="en">whicper</td>
+              <td data-label="怎麼記">wh 起首；中間是 s</td>
+            </tr>
+            <tr>
+              <td data-label="生詞"><span class="en" lang="en">enough</span></td>
+              <td data-label="示範誤寫" lang="en">enouf</td>
+              <td data-label="怎麼記">gh 不發音，讀作 f</td>
+            </tr>
+          </tbody>
+        </table>
+        <nav class="pager no-print" aria-label="前後節">
+          <button type="button" data-open="recall">上一節：整課遮默</button>
+          <button type="button" class="next" data-open="misses">下一節：錯詞表</button>
+        </nav>
+      </section>
+
+      <section class="panel card" id="misses" aria-labelledby="h-misses">
+        <p class="eyebrow"><span>第 8 節</span><span>共 10 節</span></p>
+        <h2 id="h-misses"><span class="n">8</span>錯詞表</h2>
+        <p class="sheet-meta"><span>姓名<span class="blank"></span></span><span>日期<span class="blank"></span></span></p>
+        <p class="lead">只收默錯或寫不出的詞。默對的不記入，也不必再抄。看著正確拼法再手寫 1–2 次。下次默請填「隔 1 天」「隔 3 天」或「隔 7 天」。例如把 quietly 寫成 quietely，提醒可寫「quiet 之後加 ly」，下次默填隔 1 天。</p>
+        <table class="sheet">
+          <caption>只練錯詞</caption>
+          <colgroup>
+            <col style="width:8%">
+            <col style="width:20%">
+            <col style="width:20%">
+            <col style="width:24%">
+            <col style="width:16%">
+            <col style="width:12%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">正確拼法</th>
+              <th scope="col">我寫成的</th>
+              <th scope="col">一句提醒</th>
+              <th scope="col">再手寫</th>
+              <th scope="col">下次默</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="mid" data-label="序">1</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="我寫成的"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="一句提醒"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再手寫"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="下次默"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">2</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="我寫成的"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="一句提醒"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再手寫"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="下次默"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">3</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="我寫成的"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="一句提醒"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再手寫"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="下次默"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">4</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="我寫成的"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="一句提醒"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再手寫"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="下次默"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">5</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="我寫成的"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="一句提醒"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再手寫"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="下次默"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">6</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="我寫成的"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="一句提醒"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再手寫"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="下次默"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">7</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="我寫成的"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="一句提醒"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再手寫"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="下次默"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">8</td>
+                <td class="write" data-label="正確拼法"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="我寫成的"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="一句提醒"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="再手寫"><span class="line" aria-hidden="true"></span></td>
+                <td class="write" data-label="下次默"><span class="line" aria-hidden="true"></span></td>
+              </tr>
+          </tbody>
+        </table>
+        <div class="callout">
+          <p>第 2 天的整課重默，可同時當作錯詞的「隔 1 天」。其後仍錯的詞，再按隔 3 天、隔 7 天各默一次。連續三次都對，在間隔提醒裡標為已精熟。</p>
+        </div>
+        <nav class="pager no-print" aria-label="前後節">
+          <button type="button" data-open="answers">上一節：答案</button>
+          <button type="button" class="next" data-open="redo">下一節：隔日與小默</button>
+        </nav>
+      </section>
+
+      <section class="panel card" id="redo" aria-labelledby="h-redo">
+        <p class="eyebrow"><span>第 9 節</span><span>共 10 節</span></p>
+        <h2 id="h-redo"><span class="n">9</span>隔日重默與第 4 天小默書</h2>
+        <p class="lead">兩份都只給中文，次序已打亂，而且彼此不同。第 2 天用上半；第 4 天用下半。不要在第 1 天提前默這兩份。答案在「答案」一節，次序與這裡相同。</p>
+
+        <div class="day-sheet">
+          <h3>第 2 天 · 隔日重默</h3>
+          <p class="sheet-meta"><span>姓名<span class="blank"></span></span><span>日期<span class="blank"></span></span></p>
+          <p class="lead">不先看英文。默完再對答案。對的作記號；錯的記入錯詞表，只再手寫 1–2 次。約 10–15 分鐘。</p>
+          <p class="score"><span>對<span class="blank short"></span>個</span><span>錯<span class="blank short"></span>個</span></p>
+        <table class="sheet quiz">
+          <caption>第 2 天 · 隔日重默（次序已打亂）</caption>
+          <colgroup>
+            <col style="width:8%">
+            <col style="width:30%">
+            <col style="width:42%">
+            <col style="width:20%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">中文意思</th>
+              <th scope="col">默寫英文</th>
+              <th scope="col" class="mid">對錯</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="mid" data-label="序">1</td>
+                <td data-label="中文">拒絕</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">2</td>
+                <td data-label="中文">勇敢的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">3</td>
+                <td data-label="中文">旅程</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">4</td>
+                <td data-label="中文">收集</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">5</td>
+                <td data-label="中文">有禮貌的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">6</td>
+                <td data-label="中文">安靜地</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">7</td>
+                <td data-label="中文">低聲說</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">8</td>
+                <td data-label="中文">出名的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">9</td>
+                <td data-label="中文">發現</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">10</td>
+                <td data-label="中文">決定</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr class="pause">
+                <td colspan="4">可在此暫停。休息後再默第 11–20 詞。</td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">11</td>
+                <td data-label="中文">古代的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">12</td>
+                <td data-label="中文">突然地</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">13</td>
+                <td data-label="中文">寂寞的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">14</td>
+                <td data-label="中文">肚子餓的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">15</td>
+                <td data-label="中文">邀請</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">16</td>
+                <td data-label="中文">保護</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">17</td>
+                <td data-label="中文">足夠的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">18</td>
+                <td data-label="中文">承諾；答應</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">19</td>
+                <td data-label="中文">小心的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">20</td>
+                <td data-label="中文">空的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+          </tbody>
+        </table>
+        </div>
+
+        <div class="day-sheet">
+          <h3>第 4 天 · 小默書</h3>
+          <p class="sheet-meta"><span>姓名<span class="blank"></span></span><span>日期<span class="blank"></span></span></p>
+          <p class="lead">只給中文，次序再打亂一次。達標約 16／20。未達標：只補錯詞，暫不開下一課 20 詞。</p>
+          <p class="score"><span>成績<span class="blank short"></span>／ 20</span><span>達標線 16／20</span></p>
+        <table class="sheet quiz">
+          <caption>第 4 天 · 小默書（次序已打亂）</caption>
+          <colgroup>
+            <col style="width:8%">
+            <col style="width:30%">
+            <col style="width:42%">
+            <col style="width:20%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">中文意思</th>
+              <th scope="col">默寫英文</th>
+              <th scope="col" class="mid">對錯</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td class="mid" data-label="序">1</td>
+                <td data-label="中文">足夠的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">2</td>
+                <td data-label="中文">出名的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">3</td>
+                <td data-label="中文">小心的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">4</td>
+                <td data-label="中文">肚子餓的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">5</td>
+                <td data-label="中文">寂寞的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">6</td>
+                <td data-label="中文">空的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">7</td>
+                <td data-label="中文">古代的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">8</td>
+                <td data-label="中文">承諾；答應</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">9</td>
+                <td data-label="中文">拒絕</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">10</td>
+                <td data-label="中文">收集</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr class="pause">
+                <td colspan="4">可在此暫停。休息後再默第 11–20 詞。</td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">11</td>
+                <td data-label="中文">低聲說</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">12</td>
+                <td data-label="中文">決定</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">13</td>
+                <td data-label="中文">有禮貌的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">14</td>
+                <td data-label="中文">突然地</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">15</td>
+                <td data-label="中文">邀請</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">16</td>
+                <td data-label="中文">安靜地</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">17</td>
+                <td data-label="中文">發現</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">18</td>
+                <td data-label="中文">保護</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">19</td>
+                <td data-label="中文">旅程</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+              <tr>
+                <td class="mid" data-label="序">20</td>
+                <td data-label="中文">勇敢的</td>
+                <td class="write" data-label="默寫英文"><span class="line" aria-hidden="true"></span></td>
+                <td class="mid" data-label="對錯"><span class="marks"><span class="mark"><span class="box" role="img" aria-label="對"></span>對</span><span class="mark"><span class="box" role="img" aria-label="錯"></span>錯</span></span></td>
+              </tr>
+          </tbody>
+        </table>
+          <ul class="checks">
+            <li><span class="box" role="img" aria-label="已達標"></span><span>已達標（約 16／20 或以上）。錯詞進入間隔。</span></li>
+            <li><span class="box" role="img" aria-label="未達標"></span><span>未達標。只補錯詞，暫不開下一課。</span></li>
+          </ul>
+        </div>
+        <nav class="pager no-print" aria-label="前後節">
+          <button type="button" data-open="misses">上一節：錯詞表</button>
+          <button type="button" class="next" data-open="spacing">下一節：間隔提醒</button>
+        </nav>
+      </section>
+
+      <section class="panel card" id="spacing" aria-labelledby="h-spacing">
+        <p class="eyebrow"><span>第 10 節</span><span>共 10 節</span></p>
+        <h2 id="h-spacing"><span class="n">10</span>間隔提醒</h2>
+        <p class="sheet-meta"><span>姓名<span class="blank"></span></span><span>本課第 1 天<span class="blank date"></span></span></p>
+        <p class="lead">單個錯詞這樣排期。精熟之後提前抽測，不等足兩個月。抽測又忘，立刻回到隔 1 天 → 3 天 → 7 天。默書或考試前 7–10 天，可把已精熟的詞再混默一輪。</p>
+        <table class="sheet">
+          <caption>本課之後何時再默</caption>
+          <colgroup>
+            <col style="width:24%">
+            <col style="width:40%">
+            <col style="width:24%">
+            <col style="width:12%">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col">何時</th>
+              <th scope="col">做什麼</th>
+              <th scope="col">預定日期</th>
+              <th scope="col" class="mid">完成</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="何時">第 1 天</td>
+              <td data-label="做什麼">四組先看、手寫，再遮默；然後整課遮默。</td>
+              <td class="write" data-label="預定日期"><span class="line" aria-hidden="true"></span></td>
+              <td class="mid" data-label="完成"><span class="box" role="img" aria-label="完成"></span></td>
+            </tr>
+            <tr>
+              <td data-label="何時">第 2 天（隔日）</td>
+              <td data-label="做什麼">整課再遮默，次序已打亂。只練錯詞。可同時當作錯詞的隔 1 天。</td>
+              <td class="write" data-label="預定日期"><span class="line" aria-hidden="true"></span></td>
+              <td class="mid" data-label="完成"><span class="box" role="img" aria-label="完成"></span></td>
+            </tr>
+            <tr>
+              <td data-label="何時">第 4 天</td>
+              <td data-label="做什麼">小默書。達標約 16／20。未達標只補錯詞，暫不開下一課。</td>
+              <td class="write" data-label="預定日期"><span class="line" aria-hidden="true"></span></td>
+              <td class="mid" data-label="完成"><span class="box" role="img" aria-label="完成"></span></td>
+            </tr>
+            <tr>
+              <td data-label="何時">錯詞隔 3 天</td>
+              <td data-label="做什麼">只默仍錯的詞。對的剔除，不再重抄。</td>
+              <td class="write" data-label="預定日期"><span class="line" aria-hidden="true"></span></td>
+              <td class="mid" data-label="完成"><span class="box" role="img" aria-label="完成"></span></td>
+            </tr>
+            <tr>
+              <td data-label="何時">錯詞隔 7 天</td>
+              <td data-label="做什麼">再默一次。若隔 1 天、3 天、7 天都對，標為已精熟。</td>
+              <td class="write" data-label="預定日期"><span class="line" aria-hidden="true"></span></td>
+              <td class="mid" data-label="完成"><span class="box" role="img" aria-label="完成"></span></td>
+            </tr>
+            <tr>
+              <td data-label="何時">精熟後約 2 週</td>
+              <td data-label="做什麼">抽測本課。不要等足兩個月才翻查。</td>
+              <td class="write" data-label="預定日期"><span class="line" aria-hidden="true"></span></td>
+              <td class="mid" data-label="完成"><span class="box" role="img" aria-label="完成"></span></td>
+            </tr>
+            <tr>
+              <td data-label="何時">仍對，再隔 4–6 週</td>
+              <td data-label="做什麼">再抽測。又忘了就回到隔 1 天 → 3 天 → 7 天。</td>
+              <td class="write" data-label="預定日期"><span class="line" aria-hidden="true"></span></td>
+              <td class="mid" data-label="完成"><span class="box" role="img" aria-label="完成"></span></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout write">
+          <p>已精熟的詞不必每天重抄。剛錯的詞才加密。每天短而準，不宜熬夜強記。</p>
+        </div>
+        <nav class="pager no-print" aria-label="前後節">
+          <button type="button" data-open="redo">上一節：隔日與小默</button>
+        </nav>
+      </section>
+
+      <p class="colophon">生詞第 1 課 · 與週曆同一套次序 · 列印請用 A4 直向 · 側欄不列印</p>
+    </div>
+  </main>
+</div>
+<script>
+
+(function () {
+  var order = ["guide", "a", "b", "c", "d", "recall", "answers", "misses", "redo", "spacing"];
+  var stage = document.getElementById("stage");
+  var sidebar = document.getElementById("sidebar");
+  var menuBtn = document.getElementById("menu-btn");
+  var backdrop = document.getElementById("backdrop");
+  var currentLabel = document.getElementById("current-label");
+  var navButtons = document.querySelectorAll("#section-nav [data-open]");
+  var panels = order.map(function (id) { return document.getElementById(id); });
+  var printingAll = false;
+
+  if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
+  function idFromHash() {
+    var id = (location.hash || "").replace(/^#/, "");
+    return order.indexOf(id) >= 0 ? id : "guide";
+  }
+
+  var desktop = window.matchMedia("(min-width: 900px)");
+
+  function syncSidebar() {
+    var hidden = !desktop.matches && !sidebar.classList.contains("is-open");
+    if (hidden) {
+      sidebar.setAttribute("inert", "");
+      sidebar.setAttribute("aria-hidden", "true");
+    } else {
+      sidebar.removeAttribute("inert");
+      sidebar.removeAttribute("aria-hidden");
+    }
+  }
+
+  function closeMenu() {
+    sidebar.classList.remove("is-open");
+    menuBtn.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("menu-open");
+    syncSidebar();
+  }
+
+  function openMenu() {
+    sidebar.classList.add("is-open");
+    menuBtn.setAttribute("aria-expanded", "true");
+    document.body.classList.add("menu-open");
+    syncSidebar();
+  }
+
+  function stopSpeech() {
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+  }
+
+  function speakWords(list) {
+    if (!window.speechSynthesis || !window.SpeechSynthesisUtterance) return;
+    stopSpeech();
+    list.forEach(function (text) {
+      if (!text) return;
+      var u = new SpeechSynthesisUtterance(text);
+      u.lang = "en-US";
+      u.rate = 0.88;
+      window.speechSynthesis.speak(u);
+    });
+  }
+
+  function setCover(panel, button, on) {
+    panel.classList.toggle("is-covered", on);
+    button.setAttribute("aria-pressed", on ? "true" : "false");
+    button.textContent = on ? "顯示英文" : "遮住英文";
+    var note = panel.querySelector(".cover-note");
+    if (note) note.hidden = !on;
+    panel.querySelectorAll(".en").forEach(function (el) {
+      if (on) el.setAttribute("aria-hidden", "true");
+      else el.removeAttribute("aria-hidden");
+    });
+  }
+
+  function setOpen(id, focusHeading) {
+    stopSpeech();
+    panels.forEach(function (panel) {
+      var on = panel.id === id;
+      panel.classList.toggle("is-on", on);
+      if (on) panel.removeAttribute("inert");
+      else panel.setAttribute("inert", "");
+    });
+    navButtons.forEach(function (btn) {
+      var on = btn.getAttribute("data-open") === id;
+      if (on) btn.setAttribute("aria-current", "page");
+      else btn.removeAttribute("aria-current");
+    });
+    var active = document.querySelector('#section-nav [data-open="' + id + '"]');
+    if (active && currentLabel) currentLabel.textContent = active.getAttribute("data-label");
+    document.documentElement.classList.add("js-ready");
+    closeMenu();
+    stage.scrollTop = 0;
+    window.scrollTo(0, 0);
+    if (focusHeading) {
+      var heading = document.getElementById(id).querySelector("h2");
+      if (heading) {
+        heading.setAttribute("tabindex", "-1");
+        heading.focus({ preventScroll: true });
+      }
+    }
+  }
+
+  document.addEventListener("click", function (event) {
+    var say = event.target.closest("[data-say], [data-say-all]");
+    if (say) {
+      var all = say.getAttribute("data-say-all");
+      var one = say.getAttribute("data-say");
+      speakWords(all ? all.split(/\s+/) : [one]);
+      return;
+    }
+    var cover = event.target.closest("[data-cover]");
+    if (cover) {
+      var panel = document.getElementById(cover.getAttribute("data-cover"));
+      if (!panel) return;
+      setCover(panel, cover, !panel.classList.contains("is-covered"));
+      return;
+    }
+    var openBtn = event.target.closest("[data-open]");
+    if (openBtn) {
+      var id = openBtn.getAttribute("data-open");
+      if (order.indexOf(id) < 0) return;
+      if (location.hash !== "#" + id) history.pushState({ id: id }, "", "#" + id);
+      setOpen(id, true);
+      return;
+    }
+    var printBtn = event.target.closest("[data-print]");
+    if (printBtn) {
+      printingAll = printBtn.getAttribute("data-print") === "all";
+      document.body.classList.toggle("print-all", printingAll);
+      if (printingAll) {
+        panels.forEach(function (panel) {
+          if (!panel.classList.contains("answers")) panel.removeAttribute("inert");
+        });
+      }
+      closeMenu();
+      window.print();
+      if (!window.matchMedia("print").matches) restoreAfterPrint();
+    }
+  });
+
+  function restoreAfterPrint() {
+    if (!printingAll) return;
+    printingAll = false;
+    document.body.classList.remove("print-all");
+    setOpen(idFromHash(), false);
+  }
+  window.addEventListener("afterprint", restoreAfterPrint);
+  if (window.matchMedia) {
+    window.matchMedia("print").addEventListener("change", function (mq) {
+      if (!mq.matches) restoreAfterPrint();
+    });
+  }
+
+  menuBtn.addEventListener("click", function () {
+    if (sidebar.classList.contains("is-open")) closeMenu();
+    else openMenu();
+  });
+  backdrop.addEventListener("click", closeMenu);
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") closeMenu();
+  });
+  window.addEventListener("popstate", function () { setOpen(idFromHash(), false); });
+
+  if (desktop.addEventListener) {
+    desktop.addEventListener("change", function (mq) {
+      if (mq.matches) closeMenu();
+      else syncSidebar();
+    });
+  }
+
+  var start = idFromHash();
+  if ((location.hash || "").replace(/^#/, "") !== start) {
+    history.replaceState({ id: start }, "", "#" + start);
+  }
+  setOpen(start, false);
+})();
+
+</script>
+</body>
+</html>
