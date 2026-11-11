@@ -2,7 +2,10 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="生詞默寫">
 <meta name="theme-color" content="#13283f">
 <meta name="description" content="第 1 課生詞電子默寫。先看英文與中文，抄打一次，再遮默。四組完成後才整課遮默。進度存在這部機的瀏覽器。">
 <title>生詞電子默寫</title>
@@ -31,7 +34,10 @@
     --radius: 16px;
   }
   * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
+  html {
+    -webkit-text-size-adjust: 100%;
+    overflow-x: clip;
+  }
   [hidden] { display: none !important; }
   body {
     margin: 0;
@@ -41,6 +47,11 @@
     font-size: 18px;
     line-height: 1.55;
     min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
   }
   button, input, select { font: inherit; color: inherit; }
   button { cursor: pointer; }
@@ -55,6 +66,9 @@
     z-index: 20;
     min-height: 52px;
     padding: 8px 14px;
+    padding-top: max(8px, env(safe-area-inset-top, 0px));
+    padding-left: max(14px, env(safe-area-inset-left, 0px));
+    padding-right: max(14px, env(safe-area-inset-right, 0px));
     background: var(--accent-dark);
     color: #e8eef6;
   }
@@ -73,7 +87,7 @@
     border-radius: 8px;
   }
   .topbar a:hover { background: rgba(255,255,255,.08); }
-  .app { max-width: 920px; margin: 0 auto; padding: 16px 14px 48px; }
+  .app { max-width: 920px; margin: 0 auto; padding: 16px 14px max(48px, calc(24px + env(safe-area-inset-bottom, 0px))); }
   .card {
     background: var(--paper);
     border: 1px solid var(--line-soft);
@@ -368,13 +382,99 @@
   }
   @media (max-width: 560px) {
     body { font-size: 17px; }
-    .actions, .cue-grid { grid-template-columns: 1fr; }
+    .actions { grid-template-columns: 1fr; }
     .word-row { grid-template-columns: 28px 1fr auto; }
     .word-row .zh, .word-row .syl { grid-column: 2 / 3; }
     .cue-zh, .en-box { min-height: 64px; }
     .progress-bar { display: grid; gap: 2px; }
-    .key { min-height: 44px; font-size: 1rem; }
-    .key.fn, .key.check { font-size: 0.82rem; }
+    .key { min-height: 46px; font-size: 1.05rem; }
+    .key.fn, .key.check { font-size: 0.86rem; }
+  }
+  /* iPhone 14 Pro Max 直向約 430px：練習時中英並排，鍵盤貼底，抄打不必把正確拼法捲走 */
+  @media (max-width: 480px) {
+    .topbar { gap: 4px; min-height: 48px; }
+    .topbar a { padding: 6px 4px; font-size: 0.84rem; white-space: nowrap; }
+    .topbar h1 { font-size: 0.95rem; }
+    .app { padding: 10px 10px max(16px, env(safe-area-inset-bottom, 0px)); }
+    html:has(body[data-screen="practice"]),
+    body[data-screen="practice"] {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      height: 100dvh;
+      max-height: 100dvh;
+      overflow: hidden;
+    }
+    body[data-screen="practice"] .app {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      padding: 8px 10px 0;
+    }
+    #screen-practice {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    #screen-practice .practice-card,
+    #screen-practice .card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      margin-bottom: 0;
+      padding: 10px 10px 0;
+    }
+    .practice-scroll {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    #type-area { flex: 0 0 auto; }
+    #screen-practice .pips { gap: 6px; margin-bottom: 8px; }
+    #screen-practice .pips li { padding: 6px 3px; font-size: 0.86rem; }
+    #screen-practice .kicker { font-size: 0.78rem; margin-bottom: 2px; }
+    #screen-practice .purpose { display: none; }
+    #screen-practice > .card > .note { display: none; }
+    #screen-practice .btn-row { margin-top: 8px; }
+    #screen-practice .speak-row {
+      margin-top: 6px;
+      flex-wrap: nowrap;
+    }
+    #screen-practice .speak-row .btn {
+      flex: 1 1 0;
+      min-width: 0;
+      min-height: 40px;
+    }
+    /* 螢幕鍵盤已有「檢查」，窄屏只留暫停／繼續，避免底部按鈕被 Safari 工具列裁掉 */
+    .practice-dock #btn-check { display: none; }
+    .cue-grid { gap: 8px; }
+    .cue-zh, .en-box { min-height: 58px; padding: 8px; font-size: clamp(1.3rem, 5.6vw, 1.7rem); }
+    .syl-box { margin-top: 6px; }
+    .syl-chip { padding: 5px 8px; min-width: 1.8em; font-size: clamp(1.05rem, 4.2vw, 1.35rem); }
+    .syl-cap { margin-top: 4px; font-size: 0.8rem; }
+    .answer-display { min-height: 52px; padding: 8px 12px; font-size: clamp(1.4rem, 6vw, 1.85rem); }
+    .hint-line { margin: 2px 0 4px; min-height: 0; font-size: 0.88rem; }
+    .hint-line:empty { display: none; }
+    .feedback { margin: 4px 0; padding: 8px 10px; }
+    .key { min-height: 40px; }
+    .practice-dock {
+      position: relative;
+      flex: 0 0 auto;
+      z-index: 15;
+      background: var(--paper);
+      padding: 4px 0 calc(6px + env(safe-area-inset-bottom, 0px));
+      margin-left: -10px;
+      margin-right: -10px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    .practice-dock .osk { margin-top: 0; border-radius: 14px; padding: 6px 4px; }
+    .practice-dock .btn-row { margin-top: 4px; flex-wrap: nowrap; }
+    .practice-dock .btn { min-height: 40px; }
   }
 </style>
 </head>
@@ -508,7 +608,8 @@
   </section>
 
   <section id="screen-practice" hidden>
-    <div class="card">
+    <div class="card practice-card">
+      <div class="practice-scroll">
       <div class="progress-bar">
         <span id="prog-text">第 1 詞</span>
         <span id="prog-score"></span>
@@ -532,7 +633,7 @@
         </div>
       </div>
       <p class="purpose" id="cue-purpose"></p>
-      <div class="btn-row">
+      <div class="btn-row speak-row">
         <button type="button" class="btn" id="btn-speak-zh">聽中文</button>
         <button type="button" class="btn" id="btn-speak-en">聽英文</button>
       </div>
@@ -541,21 +642,24 @@
           <button type="button" class="btn primary large" id="btn-look">認得了，去抄打</button>
         </div>
       </div>
+      </div>
       <div id="type-area">
         <div class="answer-display" id="answer-display" tabindex="0" role="textbox" aria-label="拼出的英文"></div>
         <p class="hint-line" id="hint-line"></p>
         <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
       </div>
-      <div class="osk" id="osk" aria-label="英文鍵盤">
-        <div class="osk-row" id="osk-0"></div>
-        <div class="osk-row" id="osk-1"></div>
-        <div class="osk-row" id="osk-2"></div>
-        <div class="osk-row" id="osk-3"></div>
-      </div>
-      <div class="btn-row">
-        <button type="button" class="btn primary" id="btn-check">檢查</button>
-        <button type="button" class="btn primary" id="btn-next" hidden>繼續</button>
-        <button type="button" class="btn ghost" id="btn-quit">暫停並保留</button>
+      <div class="practice-dock">
+        <div class="osk" id="osk" aria-label="英文鍵盤">
+          <div class="osk-row" id="osk-0"></div>
+          <div class="osk-row" id="osk-1"></div>
+          <div class="osk-row" id="osk-2"></div>
+          <div class="osk-row" id="osk-3"></div>
+        </div>
+        <div class="btn-row">
+          <button type="button" class="btn primary" id="btn-check">檢查</button>
+          <button type="button" class="btn primary" id="btn-next" hidden>繼續</button>
+          <button type="button" class="btn ghost" id="btn-quit">暫停並保留</button>
+        </div>
       </div>
       <p class="note">可用螢幕鍵盤或實體鍵盤。Enter 檢查。抄打時英文保持可見；遮默時只留中文。</p>
     </div>
