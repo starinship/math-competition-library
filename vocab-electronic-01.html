@@ -58,7 +58,8 @@
   a { color: var(--accent); }
   :focus-visible { outline: 3px solid #f0c27a; outline-offset: 2px; }
   .topbar {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
     gap: 10px;
     position: sticky;
@@ -73,7 +74,6 @@
     color: #e8eef6;
   }
   .topbar h1 {
-    flex: 1;
     margin: 0;
     font-size: 1.05rem;
     font-weight: 800;
@@ -85,7 +85,10 @@
     font-weight: 700;
     padding: 6px 8px;
     border-radius: 8px;
+    white-space: nowrap;
   }
+  .topbar a:first-of-type { justify-self: start; }
+  .topbar a:last-of-type { justify-self: end; }
   .topbar a:hover { background: rgba(255,255,255,.08); }
   .app { max-width: 920px; margin: 0 auto; padding: 16px 14px max(48px, calc(24px + env(safe-area-inset-bottom, 0px))); }
   .card {
@@ -225,7 +228,8 @@
   .pips li.is-now { background: var(--accent); color: #fff; }
   .pips li.is-done { background: var(--ok-soft); color: var(--ok); }
   .pips li.is-skip { opacity: 0.4; }
-  .cue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .cue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: stretch; }
+  .cue-col { display: flex; flex-direction: column; min-width: 0; }
   .kicker { display: block; color: var(--muted); font-size: 0.85rem; font-weight: 800; margin-bottom: 4px; }
   .cue-zh, .en-box {
     min-height: 76px;
@@ -239,6 +243,7 @@
     font-size: clamp(1.45rem, 5vw, 2rem);
     font-weight: 800;
     line-height: 1.3;
+    flex: 1 1 auto;
   }
   .en-box { background: #fff; border: 2px solid var(--line-soft); letter-spacing: 0.03em; position: relative; }
   .en-box.masked { color: transparent; background: #d5deea; border-style: dashed; user-select: none; }
@@ -253,7 +258,7 @@
     letter-spacing: 0;
     font-size: 1.1rem;
   }
-  .syl-box { margin-top: 8px; text-align: center; }
+  .syl-box { grid-column: 1 / -1; margin-top: 0; text-align: center; }
   .syl-parts {
     display: flex;
     flex-wrap: wrap;
@@ -329,21 +334,27 @@
   .osk-row { display: flex; justify-content: center; gap: 4px; margin-bottom: 4px; }
   .osk-row:last-child { margin-bottom: 0; }
   .key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     flex: 1 1 0;
     min-width: 0;
     min-height: 48px;
+    padding: 0 2px;
     border: 1px solid var(--key-edge);
     border-radius: 10px;
     background: var(--key);
     font-size: 1.15rem;
     font-weight: 800;
+    line-height: 1.15;
+    white-space: nowrap;
     box-shadow: 0 2px 0 var(--key-edge);
     touch-action: manipulation;
   }
   .key:active, .key.pressed { background: var(--ok-soft); transform: translateY(1px); }
-  .key.fn { flex: 1.4 1 0; background: var(--key-fn); font-size: 0.95rem; }
-  .key.space { flex: 3.2 1 0; color: var(--muted); font-size: 0.95rem; }
-  .key.check { flex: 1.5 1 0; background: var(--accent); border-color: var(--accent-dark); color: #fff; box-shadow: 0 2px 0 var(--accent-dark); }
+  .key.fn { flex: 1.45 1 0; background: var(--key-fn); font-size: 0.95rem; }
+  .key.space { flex: 2.7 1 0; color: var(--muted); font-size: 0.95rem; }
+  .key.check { flex: 1.45 1 0; background: var(--accent); border-color: var(--accent-dark); color: #fff; box-shadow: 0 2px 0 var(--accent-dark); }
   .key:disabled { opacity: 0.4; }
   .btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
   .btn-row .btn { flex: 1 1 140px; }
@@ -405,10 +416,14 @@
       max-height: 100dvh;
       overflow: hidden;
     }
+    /* margin:auto 在直向 flex 裡會把練習區縮成內容寬，卡片比頂欄窄，鍵盤也被擠到折行 */
     body[data-screen="practice"] .app {
       flex: 1;
       display: flex;
       flex-direction: column;
+      align-self: stretch;
+      width: 100%;
+      min-width: 0;
       min-height: 0;
       padding: 8px 10px 0;
     }
@@ -451,9 +466,9 @@
     }
     /* 螢幕鍵盤已有「檢查」，窄屏只留暫停／繼續，避免底部按鈕被 Safari 工具列裁掉 */
     .practice-dock #btn-check { display: none; }
-    .cue-grid { gap: 8px; }
+    .cue-grid { gap: 8px 8px; }
     .cue-zh, .en-box { min-height: 58px; padding: 8px; font-size: clamp(1.3rem, 5.6vw, 1.7rem); }
-    .syl-box { margin-top: 6px; }
+    .syl-box { margin-top: 0; }
     .syl-chip { padding: 5px 8px; min-width: 1.8em; font-size: clamp(1.05rem, 4.2vw, 1.35rem); }
     .syl-cap { margin-top: 4px; font-size: 0.8rem; }
     .answer-display { min-height: 52px; padding: 8px 12px; font-size: clamp(1.4rem, 6vw, 1.85rem); }
@@ -622,15 +637,15 @@
       </ol>
       <p class="kicker" id="phase-kicker"></p>
       <div class="cue-grid">
-        <div>
+        <div class="cue-col">
           <span class="kicker">中文</span>
           <div class="cue-zh" id="cue-zh"></div>
         </div>
-        <div>
+        <div class="cue-col">
           <span class="kicker">英文</span>
           <div class="en-box" id="cue-en"></div>
-          <div class="syl-box" id="cue-syl" hidden></div>
         </div>
+        <div class="syl-box" id="cue-syl" hidden></div>
       </div>
       <p class="purpose" id="cue-purpose"></p>
       <div class="btn-row speak-row">
@@ -2301,7 +2316,7 @@
       });
     });
     var last = document.getElementById("osk-3");
-    [["backspace", "⌫ 刪除", "fn"], [" ", "空白", "space"], ["clear", "清空", "fn"], ["check", "檢查", "check"]].forEach(function (spec) {
+    [["backspace", "刪除", "fn"], [" ", "空白", "space"], ["clear", "清空", "fn"], ["check", "檢查", "check"]].forEach(function (spec) {
       var btn = document.createElement("button");
       btn.type = "button";
       btn.className = "key " + spec[2];
