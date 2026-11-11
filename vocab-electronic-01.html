@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="生詞默寫">
 <meta name="theme-color" content="#13283f">
-<meta name="description" content="第 1 課生詞電子默寫。先看英文與中文，抄打一次，再遮默。四組完成後才整課遮默。進度存在這部機的瀏覽器。">
+<meta name="description" content="日常生活與護理英語生詞電子默寫。先看英文與中文，抄打一次，再遮默。四組完成後才整課遮默。進度存在這部機的瀏覽器。">
 <title>生詞電子默寫</title>
 <style>
   :root {
@@ -497,7 +497,7 @@
 <header class="topbar">
   <a href="schedule-3months.html">週曆說明</a>
   <h1>生詞電子默寫</h1>
-  <a href="schedule-3months.html#sample">第 1 課詞表</a>
+  <a href="schedule-3months.html#sample">詞表</a>
 </header>
 <main class="app">
   <section id="screen-setup">
@@ -572,7 +572,7 @@
           <label><input type="checkbox" id="opt-sfx"> 答對時播放短音效</label>
         </div>
         <div class="tts-row">
-          <button type="button" class="btn" id="btn-preview">試聽 brave／勇敢的</button>
+          <button type="button" class="btn" id="btn-preview">試聽 cash／現金</button>
         </div>
       </div>
       <p class="note" id="tts-note" hidden>這部裝置未能朗讀。仍可看中文、用鍵盤抄打與遮默。</p>
@@ -612,7 +612,7 @@
           <button type="button" class="btn" id="btn-add-word">加一個詞</button>
           <button type="button" class="btn primary" id="btn-save-lesson">儲存題庫</button>
           <button type="button" class="btn" id="btn-new-lesson">新增一課</button>
-          <button type="button" class="btn" id="btn-restore">還原第 1 課預設</button>
+          <button type="button" class="btn" id="btn-restore">還原此課預設</button>
           <button type="button" class="btn warn" id="btn-delete-lesson">刪除此課</button>
           <button type="button" class="btn" id="btn-export">匯出 JSON</button>
           <button type="button" class="btn" id="btn-import">匯入 JSON</button>
@@ -722,32 +722,70 @@
     wrongs: "錯詞再練",
     due: "今日到期"
   };
-  var PRESET = {
-    id: "lesson-01",
-    title: "第 1 課",
-    words: [
-      { en: "brave", zh: "勇敢的", syl: "brave" },
-      { en: "quietly", zh: "安靜地", syl: "qui-et-ly" },
-      { en: "decide", zh: "決定", syl: "de-cide" },
-      { en: "hungry", zh: "肚子餓的", syl: "hun-gry" },
-      { en: "promise", zh: "承諾；答應", syl: "prom-ise" },
-      { en: "collect", zh: "收集", syl: "col-lect" },
-      { en: "famous", zh: "出名的", syl: "fa-mous" },
-      { en: "suddenly", zh: "突然地", syl: "sud-den-ly" },
-      { en: "protect", zh: "保護", syl: "pro-tect" },
-      { en: "empty", zh: "空的", syl: "emp-ty" },
-      { en: "invite", zh: "邀請", syl: "in-vite" },
-      { en: "careful", zh: "小心的", syl: "care-ful" },
-      { en: "journey", zh: "旅程", syl: "jour-ney" },
-      { en: "whisper", zh: "低聲說", syl: "whis-per" },
-      { en: "ancient", zh: "古代的", syl: "an-cient" },
-      { en: "refuse", zh: "拒絕", syl: "re-fuse" },
-      { en: "polite", zh: "有禮貌的", syl: "po-lite" },
-      { en: "discover", zh: "發現", syl: "dis-cov-er" },
-      { en: "lonely", zh: "寂寞的", syl: "lone-ly" },
-      { en: "enough", zh: "足夠的", syl: "e-nough" }
-    ]
-  };
+  var PRESETS = [
+    {
+      id: "lesson-01",
+      title: "日常生活",
+      words: [
+        { en: "cash", zh: "現金", syl: "cash" },
+        { en: "appointment", zh: "預約", syl: "ap-point-ment" },
+        { en: "receipt", zh: "收據", syl: "re-ceipt" },
+        { en: "refund", zh: "退款", syl: "re-fund" },
+        { en: "queue", zh: "排隊", syl: "queue" },
+        { en: "laundry", zh: "洗衣", syl: "laun-dry" },
+        { en: "grocery", zh: "雜貨", syl: "gro-cer-y" },
+        { en: "leftover", zh: "剩餘食物", syl: "left-o-ver" },
+        { en: "charger", zh: "充電器", syl: "char-ger" },
+        { en: "upstairs", zh: "樓上", syl: "up-stairs" },
+        { en: "traffic", zh: "交通；塞車", syl: "traf-fic" },
+        { en: "elevator", zh: "升降機", syl: "el-e-va-tor" },
+        { en: "pedestrian", zh: "行人", syl: "ped-es-tri-an" },
+        { en: "luggage", zh: "行李", syl: "lug-gage" },
+        { en: "delayed", zh: "延誤的", syl: "de-layed" },
+        { en: "allergy", zh: "過敏", syl: "al-ler-gy" },
+        { en: "password", zh: "密碼", syl: "pass-word" },
+        { en: "delivery", zh: "送貨", syl: "de-liv-er-y" },
+        { en: "expired", zh: "過期的", syl: "ex-pired" },
+        { en: "emergency", zh: "緊急情況", syl: "e-mer-gen-cy" }
+      ]
+    },
+    {
+      id: "lesson-02",
+      title: "護理英語",
+      words: [
+        { en: "pulse", zh: "脈搏", syl: "pulse" },
+        { en: "fever", zh: "發燒", syl: "fe-ver" },
+        { en: "oxygen", zh: "氧氣", syl: "ox-y-gen" },
+        { en: "nausea", zh: "噁心", syl: "nau-sea" },
+        { en: "swelling", zh: "腫脹", syl: "swell-ing" },
+        { en: "injection", zh: "注射", syl: "in-jec-tion" },
+        { en: "dressing", zh: "敷料", syl: "dress-ing" },
+        { en: "catheter", zh: "導管", syl: "cath-e-ter" },
+        { en: "specimen", zh: "標本", syl: "spec-i-men" },
+        { en: "intravenous", zh: "靜脈的", syl: "in-tra-ve-nous" },
+        { en: "symptom", zh: "症狀", syl: "symp-tom" },
+        { en: "diagnosis", zh: "診斷", syl: "di-ag-no-sis" },
+        { en: "conscious", zh: "清醒的", syl: "con-scious" },
+        { en: "discharge", zh: "出院", syl: "dis-charge" },
+        { en: "observation", zh: "觀察", syl: "ob-ser-va-tion" },
+        { en: "dialysis", zh: "透析", syl: "di-al-y-sis" },
+        { en: "fistula", zh: "瘻管", syl: "fis-tu-la" },
+        { en: "heparin", zh: "肝素", syl: "hep-a-rin" },
+        { en: "fluid", zh: "體液", syl: "flu-id" },
+        { en: "transplant", zh: "移植", syl: "trans-plant" }
+      ]
+    }
+  ];
+
+  function isPresetId(id) {
+    return PRESETS.some(function (lesson) { return lesson.id === id; });
+  }
+
+  function presetById(id) {
+    var found = null;
+    PRESETS.forEach(function (lesson) { if (lesson.id === id) found = lesson; });
+    return found;
+  }
 
   var state = null;
   var session = null;
@@ -844,8 +882,10 @@
   function presetSylOf(en) {
     var key = normalizeAnswer(en);
     var found = "";
-    (PRESET.words || []).forEach(function (w) {
-      if (!found && normalizeAnswer(w.en) === key && w.syl) found = String(w.syl);
+    PRESETS.forEach(function (lesson) {
+      (lesson.words || []).forEach(function (w) {
+        if (!found && normalizeAnswer(w.en) === key && w.syl) found = String(w.syl);
+      });
     });
     return found;
   }
@@ -1023,13 +1063,15 @@
 
   function allLessons() {
     var map = {};
-    map[PRESET.id] = cloneLesson(PRESET);
+    PRESETS.forEach(function (lesson) { map[lesson.id] = cloneLesson(lesson); });
     (state.customLessons || []).forEach(function (lesson) {
       if (lesson && lesson.id) map[lesson.id] = cloneLesson(lesson);
     });
     return Object.keys(map).map(function (id) { return map[id]; }).sort(function (a, b) {
-      if (a.id === "lesson-01") return -1;
-      if (b.id === "lesson-01") return 1;
+      var order = { "lesson-01": 0, "lesson-02": 1 };
+      var aa = order.hasOwnProperty(a.id) ? order[a.id] : 50;
+      var bb = order.hasOwnProperty(b.id) ? order[b.id] : 50;
+      if (aa !== bb) return aa - bb;
       return String(a.title).localeCompare(String(b.title), "zh-Hant");
     });
   }
@@ -2203,8 +2245,8 @@
       row.appendChild(del);
       list.appendChild(row);
     });
-    document.getElementById("btn-restore").hidden = lesson.id !== "lesson-01";
-    document.getElementById("btn-delete-lesson").hidden = lesson.id === "lesson-01";
+    document.getElementById("btn-restore").hidden = !isPresetId(lesson.id);
+    document.getElementById("btn-delete-lesson").hidden = isPresetId(lesson.id);
   }
 
   function readEditorWords() {
@@ -2385,8 +2427,8 @@
       readSettingsFromDom();
       save();
       cancelTts();
-      speakOnce("brave", "en", function () {
-        setTimeout(function () { speakOnce("勇敢的", "zh", null); }, 280);
+      speakOnce("cash", "en", function () {
+        setTimeout(function () { speakOnce("現金", "zh", null); }, 280);
       });
     });
     document.getElementById("btn-clear").addEventListener("click", function () {
@@ -2461,16 +2503,18 @@
       setMgrMsg("已新增空白的一課。填好後按儲存題庫。", true);
     });
     document.getElementById("btn-restore").addEventListener("click", function () {
-      state.customLessons = state.customLessons.filter(function (l) { return l.id !== "lesson-01"; });
-      state.settings.lessonId = "lesson-01";
-      editorLessonId = "lesson-01";
+      var id = editorLessonId || state.settings.lessonId;
+      if (!isPresetId(id)) id = "lesson-01";
+      state.customLessons = state.customLessons.filter(function (l) { return l.id !== id; });
+      state.settings.lessonId = id;
+      editorLessonId = id;
       save();
       renderSetup();
-      setMgrMsg("第 1 課已回到預設 20 詞。", true);
+      setMgrMsg((presetById(id) && presetById(id).title || "此課") + "已回到預設 20 詞。", true);
     });
     document.getElementById("btn-delete-lesson").addEventListener("click", function () {
       var id = editorLessonId || state.settings.lessonId;
-      if (id === "lesson-01") return;
+      if (isPresetId(id)) return;
       state.customLessons = state.customLessons.filter(function (l) { return l.id !== id; });
       state.settings.lessonId = "lesson-01";
       editorLessonId = "lesson-01";
@@ -2591,85 +2635,85 @@
     todayOverride = "2026-11-07";
     assert(passMark(20) === 16, "20 詞達標線是 16");
     assert(normalizeAnswer("  Brave! ") === "brave", "比對時忽略大小寫與標點");
-    assert(syllableParts({ en: "quietly" }).join("-") === "qui-et-ly", "quietly 拆成 qui-et-ly");
-    assert(syllableParts({ en: "discover" }).join("-") === "dis-cov-er", "discover 拆成 dis-cov-er");
-    assert(syllableParts({ en: "enough" }).join("-") === "e-nough", "enough 拆成 e-nough");
-    assert(syllableParts({ en: "brave" }).length === 1, "brave 是單音節");
+    assert(syllableParts({ en: "appointment" }).join("-") === "ap-point-ment", "appointment 拆成 ap-point-ment");
+    assert(syllableParts({ en: "elevator" }).join("-") === "el-e-va-tor", "elevator 拆成 el-e-va-tor");
+    assert(syllableParts({ en: "emergency" }).join("-") === "e-mer-gen-cy", "emergency 拆成 e-mer-gen-cy");
+    assert(syllableParts({ en: "cash" }).length === 1, "cash 是單音節");
     startSession("learn", { groupId: "A" });
     assert(session.items.length === 5, "A 組是 5 詞，沒有把每個詞拆成兩次");
     assert(session.phase === "look", "起手是看，不是遮默");
     assert(document.getElementById("osk").hidden, "看的時候不做默寫鍵盤");
     assert(!document.getElementById("cue-syl").hidden, "看的時候顯示音節");
-    assert(document.getElementById("cue-syl").textContent.indexOf("brave") >= 0, "brave 的音節可見");
+    assert(document.getElementById("cue-syl").textContent.indexOf("cash") >= 0, "cash 的音節可見");
     assert(lockReason("full", currentLesson()).length > 0, "未完成四組時不能整課遮默");
     continueFromLook();
     assert(session.phase === "copy" && session.copyNeed === 1, "新詞只抄打 1 次");
-    assert(document.getElementById("cue-en").textContent === "brave", "抄打時英文可見");
-    session.answer = "brav";
+    assert(document.getElementById("cue-en").textContent === "cash", "抄打時英文可見");
+    session.answer = "cas";
     checkAnswer();
     assert(session.phase === "copy" && !session.locked, "抄錯仍留在抄打，不進入遮默");
-    session.answer = "brave";
+    session.answer = "cash";
     checkAnswer();
     assert(session.pendingPhase === "mask", "抄對了才前往遮默");
     assert(session.firstCorrect === 0, "抄打不計入遮默分數");
     advance();
     assert(session.phase === "mask", "進入遮默");
-    assert(document.getElementById("cue-en").textContent.indexOf("brave") < 0, "遮默不顯示英文");
+    assert(document.getElementById("cue-en").textContent.indexOf("cash") < 0, "遮默不顯示英文");
     assert(document.getElementById("cue-en").classList.contains("masked"), "英文格標成已遮住");
     assert(document.getElementById("cue-syl").hidden, "遮默時不顯示音節");
-    session.answer = "brave";
+    session.answer = "cash";
     checkAnswer();
     assert(session.pendingPhase === "next", "默對後這個詞停止");
-    var brave = state.words[wordKey("lesson-01", "brave")];
-    assert(brave && brave.stage === "d1" && brave.nextReview === "2026-11-08" && !brave.inWrongBook, "第一次默對：隔 1 天，不進錯詞本");
-    var early = brave.nextReview;
-    applySuccess({ en: "brave", zh: "勇敢的", key: wordKey("lesson-01", "brave") }, true);
-    brave = state.words[wordKey("lesson-01", "brave")];
-    assert(brave.stage === "d1" && brave.nextReview === early, "未到期答對，不提前跳級");
+    var cashWord = state.words[wordKey("lesson-01", "cash")];
+    assert(cashWord && cashWord.stage === "d1" && cashWord.nextReview === "2026-11-08" && !cashWord.inWrongBook, "第一次默對：隔 1 天，不進錯詞本");
+    var early = cashWord.nextReview;
+    applySuccess({ en: "cash", zh: "現金", key: wordKey("lesson-01", "cash") }, true);
+    cashWord = state.words[wordKey("lesson-01", "cash")];
+    assert(cashWord.stage === "d1" && cashWord.nextReview === early, "未到期答對，不提前跳級");
     advance();
 
-    assert(currentItem().en === "quietly", "第二詞是 quietly");
-    assert(document.getElementById("cue-syl").textContent.indexOf("qui") >= 0, "quietly 顯示 qui-et-ly");
+    assert(currentItem().en === "appointment", "第二詞是 appointment");
+    assert(document.getElementById("cue-syl").textContent.indexOf("ap") >= 0, "appointment 顯示 ap-point-ment");
     continueFromLook();
     assert(!document.getElementById("cue-syl").hidden, "抄打時音節仍可見");
-    session.answer = "quietly";
+    session.answer = "appointment";
     checkAnswer();
     advance();
-    session.answer = "quiet";
+    session.answer = "appoint";
     checkAnswer();
     assert(session.pendingPhase === "recopy" && session.revealEn, "默錯後顯示拼法並進入再抄");
     assert(session.copyNeed === 1 || session.pendingPhase === "recopy", "再抄尚未開始計次");
     advance();
     assert(session.phase === "recopy" && session.copyNeed === 2, "默錯後看著再抄 2 次");
-    session.answer = "quietly";
+    session.answer = "appointment";
     checkAnswer();
     assert(session.phase === "recopy" && session.copyDone === 1 && !session.locked, "再抄滿 2 次才遮默");
-    session.answer = "quietly";
+    session.answer = "appointment";
     checkAnswer();
     advance();
     assert(session.phase === "remask", "再遮默一次");
     assert(document.getElementById("cue-en").classList.contains("masked"), "再遮默時英文再次遮住");
-    session.answer = "quietly";
+    session.answer = "appointment";
     checkAnswer();
-    assert(!state.words[wordKey("lesson-01", "quietly")].inWrongBook, "再遮默對了，不留在錯詞本");
+    assert(!state.words[wordKey("lesson-01", "appointment")].inWrongBook, "再遮默對了，不留在錯詞本");
     advance();
 
     continueFromLook();
-    session.answer = "decide";
+    session.answer = "receipt";
     checkAnswer();
     advance();
     session.answer = "xxx";
     checkAnswer();
     advance();
-    session.answer = "decide";
+    session.answer = "receipt";
     checkAnswer();
-    session.answer = "decide";
+    session.answer = "receipt";
     checkAnswer();
     advance();
     session.answer = "nope";
     checkAnswer();
     assert(session.pendingPhase === "next", "再遮默仍錯就結束這個詞");
-    assert(state.words[wordKey("lesson-01", "decide")].inWrongBook, "再遮默仍錯，進入錯詞本");
+    assert(state.words[wordKey("lesson-01", "receipt")].inWrongBook, "再遮默仍錯，進入錯詞本");
     advance();
     var used = pump();
     assert(used < 800, "其餘詞能走完");
@@ -2710,23 +2754,23 @@
     assert(quiz && quiz.passed && quiz.score === 20 && quiz.threshold === 16, "全對的小默書達標，門檻 16");
 
     todayOverride = "2026-11-08";
-    applySuccess({ en: "brave", zh: "勇敢的", key: wordKey("lesson-01", "brave") }, true);
-    brave = state.words[wordKey("lesson-01", "brave")];
-    assert(brave.stage === "d3" && brave.nextReview === "2026-11-11", "隔 1 天答對後改為隔 3 天");
+    applySuccess({ en: "cash", zh: "現金", key: wordKey("lesson-01", "cash") }, true);
+    cashWord = state.words[wordKey("lesson-01", "cash")];
+    assert(cashWord.stage === "d3" && cashWord.nextReview === "2026-11-11", "隔 1 天答對後改為隔 3 天");
     todayOverride = "2026-11-11";
-    applySuccess({ en: "brave", zh: "勇敢的", key: wordKey("lesson-01", "brave") }, true);
+    applySuccess({ en: "cash", zh: "現金", key: wordKey("lesson-01", "cash") }, true);
     todayOverride = "2026-11-18";
-    applySuccess({ en: "brave", zh: "勇敢的", key: wordKey("lesson-01", "brave") }, true);
-    brave = state.words[wordKey("lesson-01", "brave")];
-    assert(brave.stage === "w2" && brave.streak === 3, "1→3→7 連續三次對，標為精熟");
+    applySuccess({ en: "cash", zh: "現金", key: wordKey("lesson-01", "cash") }, true);
+    cashWord = state.words[wordKey("lesson-01", "cash")];
+    assert(cashWord.stage === "w2" && cashWord.streak === 3, "1→3→7 連續三次對，標為精熟");
     todayOverride = "2026-12-02";
-    applySuccess({ en: "brave", zh: "勇敢的", key: wordKey("lesson-01", "brave") }, true);
-    brave = state.words[wordKey("lesson-01", "brave")];
-    assert(brave.stage === "w6" && brave.nextReview === addDays("2026-12-02", 35), "精熟後再隔約 4–6 週");
-    todayOverride = brave.nextReview;
-    applyFail({ en: "brave", zh: "勇敢的", key: wordKey("lesson-01", "brave") });
-    brave = state.words[wordKey("lesson-01", "brave")];
-    assert(brave.stage === "d1" && brave.inWrongBook && brave.streak === 0, "抽測又錯，回到隔 1 天並進錯詞本");
+    applySuccess({ en: "cash", zh: "現金", key: wordKey("lesson-01", "cash") }, true);
+    cashWord = state.words[wordKey("lesson-01", "cash")];
+    assert(cashWord.stage === "w6" && cashWord.nextReview === addDays("2026-12-02", 35), "精熟後再隔約 4–6 週");
+    todayOverride = cashWord.nextReview;
+    applyFail({ en: "cash", zh: "現金", key: wordKey("lesson-01", "cash") });
+    cashWord = state.words[wordKey("lesson-01", "cash")];
+    assert(cashWord.stage === "d1" && cashWord.inWrongBook && cashWord.streak === 0, "抽測又錯，回到隔 1 天並進錯詞本");
 
     save();
     var raw = localStorage.getItem(LS_KEY);
@@ -2735,7 +2779,7 @@
     assert(parsed.progress["lesson-01"].groups.A.completedAt, "A 組完成時間在 localStorage");
     assert(parsed.progress["lesson-01"].lastPracticeDate, "上次練習日已存");
     assert(parsed.progress["lesson-01"].nextSuggestedDate, "下次建議複習日已存");
-    assert(parsed.words["lesson-01|brave"].inWrongBook, "抽測錯詞仍在 localStorage");
+    assert(parsed.words["lesson-01|cash"].inWrongBook, "抽測錯詞仍在 localStorage");
     var again = load();
     assert(again.progress["lesson-01"].groups.D.completedOn, "重新讀取後 D 組仍在");
 
