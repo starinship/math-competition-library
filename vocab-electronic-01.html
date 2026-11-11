@@ -184,7 +184,7 @@
   summary { cursor: pointer; font-weight: 800; min-height: 44px; display: flex; align-items: center; }
   .word-row {
     display: grid;
-    grid-template-columns: 36px 1fr 1fr 52px;
+    grid-template-columns: 36px 1fr 1fr 1fr 52px;
     gap: 6px;
     align-items: center;
     margin-bottom: 6px;
@@ -239,6 +239,33 @@
     letter-spacing: 0;
     font-size: 1.1rem;
   }
+  .syl-box { margin-top: 8px; text-align: center; }
+  .syl-parts {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch;
+    gap: 6px;
+  }
+  .syl-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.2em;
+    padding: 8px 12px;
+    border-radius: 12px;
+    font-size: clamp(1.25rem, 4.5vw, 1.7rem);
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    border: 2px solid transparent;
+  }
+  .syl-chip.c0 { background: #d9ebff; color: #0f3d73; border-color: #9cc3ee; }
+  .syl-chip.c1 { background: #ffe7c2; color: #7a3e00; border-color: #f0c078; }
+  .syl-chip.c2 { background: #d8f3e0; color: #145c32; border-color: #8fd0a6; }
+  .syl-chip.c3 { background: #f0e1ff; color: #5b2a86; border-color: #c9a6e8; }
+  .syl-chip.c4 { background: #ffe0e6; color: #8a1f3a; border-color: #f0a0b0; }
+  .syl-cap { margin: 6px 0 0; color: var(--muted); font-size: 0.88rem; font-weight: 700; }
   .purpose { margin: 10px 0; color: var(--ink); }
   .answer-display {
     width: 100%;
@@ -343,7 +370,7 @@
     body { font-size: 17px; }
     .actions, .cue-grid { grid-template-columns: 1fr; }
     .word-row { grid-template-columns: 28px 1fr auto; }
-    .word-row .zh { grid-column: 2 / 3; }
+    .word-row .zh, .word-row .syl { grid-column: 2 / 3; }
     .cue-zh, .en-box { min-height: 64px; }
     .progress-bar { display: grid; gap: 2px; }
     .key { min-height: 44px; font-size: 1rem; }
@@ -353,10 +380,9 @@
 </head>
 <body>
 <header class="topbar">
-  <a href="index.html">首頁</a>
+  <a href="schedule-3months.html">週曆說明</a>
   <h1>生詞電子默寫</h1>
-  <a href="vocab-lesson-01.html">列印紙</a>
-  <a href="schedule-3months.html#sample">週曆</a>
+  <a href="schedule-3months.html#sample">第 1 課詞表</a>
 </header>
 <main class="app">
   <section id="screen-setup">
@@ -368,10 +394,10 @@
     <div class="card">
       <blockquote class="motto">
         <strong>起手不是默書。</strong>
-        <p>每一組先同時看英文與中文，再看著抄打一遍，然後才遮住英文默寫。默對的停止；默錯的才再抄，並再遮默一次。四組都完成，才做整課遮默。</p>
+        <p>每一組先同時看英文、中文與音節拆解，再看著抄打一遍，然後才遮住英文默寫。默對的停止；默錯的才再抄，並再遮默一次。四組都完成，才做整課遮默。</p>
       </blockquote>
       <ol class="steps" aria-label="每一組的次序">
-        <li><b>1　看</b><span>英文與中文同時出現。只認得，不評分。</span></li>
+        <li><b>1　看</b><span>英文、中文與音節同時出現。只認得，不評分。</span></li>
         <li><b>2　抄打 1 次</b><span>英文仍可見。抄對了才進入下一步。</span></li>
         <li><b>3　遮默</b><span>只留中文，可聽讀音。默出拼法。</span></li>
         <li><b>4　錯了才再練</b><span>看正確拼法，再抄 2 次，並再遮默一次。</span></li>
@@ -502,6 +528,7 @@
         <div>
           <span class="kicker">英文</span>
           <div class="en-box" id="cue-en"></div>
+          <div class="syl-box" id="cue-syl" hidden></div>
         </div>
       </div>
       <p class="purpose" id="cue-purpose"></p>
@@ -580,26 +607,26 @@
     id: "lesson-01",
     title: "第 1 課",
     words: [
-      { en: "brave", zh: "勇敢的" },
-      { en: "quietly", zh: "安靜地" },
-      { en: "decide", zh: "決定" },
-      { en: "hungry", zh: "肚子餓的" },
-      { en: "promise", zh: "承諾；答應" },
-      { en: "collect", zh: "收集" },
-      { en: "famous", zh: "出名的" },
-      { en: "suddenly", zh: "突然地" },
-      { en: "protect", zh: "保護" },
-      { en: "empty", zh: "空的" },
-      { en: "invite", zh: "邀請" },
-      { en: "careful", zh: "小心的" },
-      { en: "journey", zh: "旅程" },
-      { en: "whisper", zh: "低聲說" },
-      { en: "ancient", zh: "古代的" },
-      { en: "refuse", zh: "拒絕" },
-      { en: "polite", zh: "有禮貌的" },
-      { en: "discover", zh: "發現" },
-      { en: "lonely", zh: "寂寞的" },
-      { en: "enough", zh: "足夠的" }
+      { en: "brave", zh: "勇敢的", syl: "brave" },
+      { en: "quietly", zh: "安靜地", syl: "qui-et-ly" },
+      { en: "decide", zh: "決定", syl: "de-cide" },
+      { en: "hungry", zh: "肚子餓的", syl: "hun-gry" },
+      { en: "promise", zh: "承諾；答應", syl: "prom-ise" },
+      { en: "collect", zh: "收集", syl: "col-lect" },
+      { en: "famous", zh: "出名的", syl: "fa-mous" },
+      { en: "suddenly", zh: "突然地", syl: "sud-den-ly" },
+      { en: "protect", zh: "保護", syl: "pro-tect" },
+      { en: "empty", zh: "空的", syl: "emp-ty" },
+      { en: "invite", zh: "邀請", syl: "in-vite" },
+      { en: "careful", zh: "小心的", syl: "care-ful" },
+      { en: "journey", zh: "旅程", syl: "jour-ney" },
+      { en: "whisper", zh: "低聲說", syl: "whis-per" },
+      { en: "ancient", zh: "古代的", syl: "an-cient" },
+      { en: "refuse", zh: "拒絕", syl: "re-fuse" },
+      { en: "polite", zh: "有禮貌的", syl: "po-lite" },
+      { en: "discover", zh: "發現", syl: "dis-cov-er" },
+      { en: "lonely", zh: "寂寞的", syl: "lone-ly" },
+      { en: "enough", zh: "足夠的", syl: "e-nough" }
     ]
   };
 
@@ -690,6 +717,171 @@
     return t.toLowerCase().replace(/[’‘]/g, "'").replace(/[^a-z'\-\s]/g, "").replace(/\s+/g, " ").trim();
   }
 
+
+  function lettersOnly(s) {
+    return String(s || "").replace(/[^a-zA-Z]/g, "");
+  }
+
+  function presetSylOf(en) {
+    var key = normalizeAnswer(en);
+    var found = "";
+    (PRESET.words || []).forEach(function (w) {
+      if (!found && normalizeAnswer(w.en) === key && w.syl) found = String(w.syl);
+    });
+    return found;
+  }
+
+  function partsFromSyl(en, syl) {
+    var word = String(en || "").trim();
+    var target = lettersOnly(word).toLowerCase();
+    if (!target) return null;
+    var rawParts = String(syl || "").split(/[-·•．.\s\/]+/).filter(function (p) {
+      return lettersOnly(p);
+    });
+    if (!rawParts.length) return null;
+    if (rawParts.map(function (p) { return lettersOnly(p).toLowerCase(); }).join("") !== target) return null;
+    var out = [];
+    var idx = 0;
+    rawParts.forEach(function (p) {
+      var need = lettersOnly(p).length;
+      var chunk = "";
+      var got = 0;
+      while (idx < word.length && got < need) {
+        var ch = word.charAt(idx);
+        chunk += ch;
+        idx += 1;
+        if (/[a-zA-Z]/.test(ch)) got += 1;
+      }
+      out.push(chunk);
+    });
+    if (idx < word.length && out.length) out[out.length - 1] += word.slice(idx);
+    return out;
+  }
+
+  function autoSyllables(en) {
+    var word = String(en || "").trim();
+    var core = lettersOnly(word);
+    var lower = core.toLowerCase();
+    if (lower.length <= 3) return partsFromSyl(word, lower) || [word];
+    function isV(i) {
+      var c = lower.charAt(i);
+      if (c === "u" && i > 0 && lower.charAt(i - 1) === "q") return false;
+      if ("aeiou".indexOf(c) >= 0) return true;
+      return c === "y" && i > 0;
+    }
+    var work = lower;
+    var cuts = [0];
+    function peel(suffixes) {
+      var i, sfx, peeled = false;
+      for (i = 0; i < suffixes.length; i++) {
+        sfx = suffixes[i];
+        if (work.length > sfx.length + 2 && work.slice(-sfx.length) === sfx) {
+          cuts.push(work.length - sfx.length);
+          work = work.slice(0, -sfx.length);
+          peeled = true;
+          break;
+        }
+      }
+      return peeled;
+    }
+    var suffixList = ["tion", "sion", "cious", "tious", "tial", "cial", "ious", "ment", "ness", "less", "ful", "ous", "ing", "ity", "ive", "ure", "age", "ize", "ise", "ly"];
+    while (peel(suffixList)) {}
+    var bodyEnd = work.length;
+    var i = 0;
+    function consAt(j) {
+      if (lower.slice(j, j + 2) === "qu") return 2;
+      return 1;
+    }
+    var digraphs = { th: 1, ch: 1, sh: 1, ph: 1, wh: 1, ck: 1 };
+    while (i < bodyEnd && !isV(i)) i += 1;
+    while (i < bodyEnd) {
+      while (i < bodyEnd && isV(i)) i += 1;
+      if (i >= bodyEnd) break;
+      var consStart = i;
+      while (i < bodyEnd && !isV(i)) i += 1;
+      if (i >= bodyEnd) break;
+      var consCount = i - consStart;
+      var pair = lower.slice(consStart, consStart + 2);
+      if (consCount === 1 || (consCount === 2 && digraphs[pair]) || lower.slice(consStart, consStart + 2) === "qu") {
+        cuts.push(consStart);
+      } else {
+        cuts.push(consStart + 1);
+      }
+    }
+    if (lower.charAt(bodyEnd - 1) === "e") {
+      var last = cuts.filter(function (c) { return c < bodyEnd; }).pop();
+      if (last && last > 0) {
+        var slice = lower.slice(last, bodyEnd);
+        if (/^[^aeiouy]*e$/.test(slice)) {
+          cuts = cuts.filter(function (c) { return c !== last; });
+        }
+      }
+    }
+    cuts = cuts.filter(function (c, n, arr) {
+      return c >= 0 && c < lower.length && arr.indexOf(c) === n;
+    }).sort(function (a, b) { return a - b; });
+    if (cuts[0] !== 0) cuts.unshift(0);
+    var hyphen = cuts.map(function (c, n) {
+      var end = cuts[n + 1] || lower.length;
+      return lower.slice(c, end);
+    }).filter(Boolean).join("-");
+    return partsFromSyl(word, hyphen) || [word];
+  }
+
+  function syllableParts(word) {
+    var en = String((word && word.en) || "").trim();
+    if (!en) return [];
+    var given = partsFromSyl(en, word && word.syl);
+    if (given) return given;
+    given = partsFromSyl(en, presetSylOf(en));
+    if (given) return given;
+    return autoSyllables(en);
+  }
+
+  function syllableLabel(parts) {
+    if (!parts || !parts.length) return "";
+    if (parts.length === 1) return "1 個音節，不用再拆";
+    return parts.length + " 個音節";
+  }
+
+  function copyWord(w) {
+    var item = { en: String((w && w.en) || "").trim(), zh: String((w && w.zh) || "").trim() };
+    var parts = syllableParts(item.en ? Object.assign({ en: item.en }, w || {}) : { en: item.en, syl: w && w.syl });
+    if (item.en && parts && parts.length) item.syl = parts.join("-");
+    return item;
+  }
+
+  function renderSylBox(item, visible) {
+    var box = document.getElementById("cue-syl");
+    if (!box) return;
+    box.innerHTML = "";
+    if (!visible || !item) {
+      box.hidden = true;
+      return;
+    }
+    var parts = syllableParts(item);
+    if (!parts.length) {
+      box.hidden = true;
+      return;
+    }
+    var row = document.createElement("div");
+    row.className = "syl-parts";
+    parts.forEach(function (part, i) {
+      var chip = document.createElement("span");
+      chip.className = "syl-chip c" + (i % 5);
+      chip.lang = "en";
+      chip.textContent = part;
+      row.appendChild(chip);
+    });
+    var cap = document.createElement("p");
+    cap.className = "syl-cap";
+    cap.textContent = syllableLabel(parts);
+    box.appendChild(row);
+    box.appendChild(cap);
+    box.hidden = false;
+  }
+
+
   function wordKey(lessonId, en) {
     return lessonId + "|" + normalizeAnswer(en);
   }
@@ -705,7 +897,7 @@
       id: lesson.id,
       title: lesson.title,
       words: (lesson.words || []).map(function (w) {
-        return { en: String(w.en || "").trim(), zh: String(w.zh || "").trim() };
+        return copyWord(w);
       })
     };
   }
@@ -791,7 +983,9 @@
   }
 
   function toItem(lessonId, w) {
-    return { en: String(w.en).trim(), zh: String(w.zh).trim(), key: w.key || wordKey(lessonId, w.en) };
+    var item = copyWord(w);
+    item.key = w.key || wordKey(lessonId, item.en);
+    return item;
   }
 
   function wrongItems(lesson) {
@@ -1095,7 +1289,7 @@
     var table = document.createElement("table");
     table.className = "plain";
     var head = document.createElement("tr");
-    ["組", "英文", "中文", "間隔", "下次", "錯詞"].forEach(function (name) {
+    ["組", "英文", "音節", "中文", "間隔", "下次", "錯詞"].forEach(function (name) {
       var th = document.createElement("th");
       th.textContent = name;
       head.appendChild(th);
@@ -1105,10 +1299,11 @@
       g.words.forEach(function (w) {
         var rec = state.words[wordKey(lesson.id, w.en)];
         var tr = document.createElement("tr");
-        [g.id, w.en, w.zh, stageLabel(rec), rec && rec.nextReview ? formatDate(rec.nextReview) : "—", rec && rec.inWrongBook ? "是" : ""].forEach(function (val, idx) {
+        var sylText = syllableParts(w).join("·");
+        [g.id, w.en, sylText, w.zh, stageLabel(rec), rec && rec.nextReview ? formatDate(rec.nextReview) : "—", rec && rec.inWrongBook ? "是" : ""].forEach(function (val, idx) {
           var td = document.createElement("td");
           td.textContent = val;
-          if (idx === 1) td.lang = "en";
+          if (idx === 1 || idx === 2) td.lang = "en";
           tr.appendChild(td);
         });
         table.appendChild(tr);
@@ -1306,7 +1501,8 @@
 
     document.getElementById("cue-zh").textContent = item.zh;
     var en = document.getElementById("cue-en");
-    if (englishVisible()) {
+    var showEn = englishVisible();
+    if (showEn) {
       en.textContent = item.en;
       en.classList.remove("masked");
       en.lang = "en";
@@ -1317,14 +1513,15 @@
       en.removeAttribute("lang");
       en.setAttribute("aria-label", "英文已遮住");
     }
+    renderSylBox(item, showEn);
 
     var purpose = document.getElementById("cue-purpose");
     if (session.locked && session.pendingPhase === "recopy") {
       purpose.textContent = "正確拼法已經顯示。請看著再抄 2 次，然後再遮默一次。";
     } else if (session.phase === "look" && session.mode === "wrongs") {
-      purpose.textContent = "這是錯詞。先看正確拼法與中文，再抄打。此步不評分。";
+      purpose.textContent = "這是錯詞。先看正確拼法、音節與中文，再抄打。此步不評分。";
     } else if (session.phase === "look") {
-      purpose.textContent = "同時看英文與中文。可以聽一次。此步只負責認得，不評分，也不是默書。";
+      purpose.textContent = "同時看英文、中文與音節。依色塊把詞拆開來記。可以聽一次。此步只負責認得，不評分，也不是默書。";
     } else if (session.phase === "copy" && session.copyNeed > 1) {
       purpose.textContent = "看著正確拼法抄打。這個詞要抄對 2 次，然後才遮默。";
     } else if (session.phase === "copy") {
@@ -1671,6 +1868,8 @@
       en.lang = "en";
       en.textContent = o.en;
       left.appendChild(en);
+      var syl = syllableParts(o).join("·");
+      if (syl && syl !== o.en) left.appendChild(document.createTextNode("  " + syl));
       left.appendChild(document.createTextNode("　" + o.zh));
       var tag = document.createElement("span");
       var info = resultTag(o.result, session.mode);
@@ -1864,6 +2063,15 @@
       zh.className = "zh";
       zh.placeholder = "中文意思";
       zh.value = w.zh;
+      var syl = document.createElement("input");
+      syl.type = "text";
+      syl.className = "syl";
+      syl.lang = "en";
+      syl.setAttribute("spellcheck", "false");
+      syl.setAttribute("autocapitalize", "off");
+      syl.setAttribute("autocomplete", "off");
+      syl.placeholder = "音節，如 qui-et-ly";
+      syl.value = (w.syl || syllableParts(w).join("-"));
       var del = document.createElement("button");
       del.type = "button";
       del.className = "btn";
@@ -1872,6 +2080,7 @@
       row.appendChild(gid);
       row.appendChild(en);
       row.appendChild(zh);
+      row.appendChild(syl);
       row.appendChild(del);
       list.appendChild(row);
     });
@@ -1884,7 +2093,8 @@
     document.querySelectorAll("#mgr-list .word-row").forEach(function (row) {
       words.push({
         en: row.querySelector(".en").value.trim(),
-        zh: row.querySelector(".zh").value.trim()
+        zh: row.querySelector(".zh").value.trim(),
+        syl: row.querySelector(".syl") ? row.querySelector(".syl").value.trim() : ""
       });
     });
     return words;
@@ -1904,7 +2114,11 @@
       var key = normalizeAnswer(raw[i].en);
       if (seen[key]) { setMgrMsg("英文重複：" + raw[i].en, false); return; }
       seen[key] = true;
-      words.push(raw[i]);
+      if (raw[i].syl && !partsFromSyl(raw[i].en, raw[i].syl)) {
+        setMgrMsg("第 " + (i + 1) + " 列的音節要由這個英文詞拆出，例如 quietly → qui-et-ly。", false);
+        return;
+      }
+      words.push(copyWord(raw[i]));
     }
     if (!words.length) { setMgrMsg("至少要有一個生詞。", false); return; }
     var id = editorLessonId || state.settings.lessonId;
@@ -1947,7 +2161,7 @@
         if (!w) return;
         var en = String(w.en || "").trim();
         var zh = String(w.zh || "").trim();
-        if (en && zh) words.push({ en: en, zh: zh });
+        if (en && zh) words.push(copyWord({ en: en, zh: zh, syl: String(w.syl || "").trim() }));
       });
       if (!words.length) return;
       var next = { id: id, title: String(lesson.title || "未命名").slice(0, 40), words: words };
@@ -2258,10 +2472,16 @@
     todayOverride = "2026-11-07";
     assert(passMark(20) === 16, "20 詞達標線是 16");
     assert(normalizeAnswer("  Brave! ") === "brave", "比對時忽略大小寫與標點");
+    assert(syllableParts({ en: "quietly" }).join("-") === "qui-et-ly", "quietly 拆成 qui-et-ly");
+    assert(syllableParts({ en: "discover" }).join("-") === "dis-cov-er", "discover 拆成 dis-cov-er");
+    assert(syllableParts({ en: "enough" }).join("-") === "e-nough", "enough 拆成 e-nough");
+    assert(syllableParts({ en: "brave" }).length === 1, "brave 是單音節");
     startSession("learn", { groupId: "A" });
     assert(session.items.length === 5, "A 組是 5 詞，沒有把每個詞拆成兩次");
     assert(session.phase === "look", "起手是看，不是遮默");
     assert(document.getElementById("osk").hidden, "看的時候不做默寫鍵盤");
+    assert(!document.getElementById("cue-syl").hidden, "看的時候顯示音節");
+    assert(document.getElementById("cue-syl").textContent.indexOf("brave") >= 0, "brave 的音節可見");
     assert(lockReason("full", currentLesson()).length > 0, "未完成四組時不能整課遮默");
     continueFromLook();
     assert(session.phase === "copy" && session.copyNeed === 1, "新詞只抄打 1 次");
@@ -2277,6 +2497,7 @@
     assert(session.phase === "mask", "進入遮默");
     assert(document.getElementById("cue-en").textContent.indexOf("brave") < 0, "遮默不顯示英文");
     assert(document.getElementById("cue-en").classList.contains("masked"), "英文格標成已遮住");
+    assert(document.getElementById("cue-syl").hidden, "遮默時不顯示音節");
     session.answer = "brave";
     checkAnswer();
     assert(session.pendingPhase === "next", "默對後這個詞停止");
@@ -2289,7 +2510,9 @@
     advance();
 
     assert(currentItem().en === "quietly", "第二詞是 quietly");
+    assert(document.getElementById("cue-syl").textContent.indexOf("qui") >= 0, "quietly 顯示 qui-et-ly");
     continueFromLook();
+    assert(!document.getElementById("cue-syl").hidden, "抄打時音節仍可見");
     session.answer = "quietly";
     checkAnswer();
     advance();
@@ -2351,6 +2574,7 @@
     startSession("full");
     assert(session.phase === "mask" && session.items.length === 20, "整課遮默 20 詞，一開始就遮住");
     assert(document.getElementById("cue-en").textContent === "", "整課不顯示英文");
+    assert(document.getElementById("cue-syl").hidden, "整課遮默不顯示音節");
     var victim = currentItem();
     session.answer = "zzz";
     checkAnswer();
