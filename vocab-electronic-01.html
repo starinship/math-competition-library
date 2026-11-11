@@ -275,12 +275,22 @@
     min-width: 2.2em;
     padding: 8px 12px;
     border-radius: 12px;
+    font-family: inherit;
     font-size: clamp(1.25rem, 4.5vw, 1.7rem);
     font-weight: 800;
     letter-spacing: 0.02em;
     line-height: 1.2;
     border: 2px solid transparent;
+    margin: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
   }
+  .syl-chip:focus { outline: none; }
+  .syl-chip:focus-visible { outline: 2px solid #0f3d73; outline-offset: 1px; }
   .syl-chip.c0 { background: #d9ebff; color: #0f3d73; border-color: #9cc3ee; }
   .syl-chip.c1 { background: #ffe7c2; color: #7a3e00; border-color: #f0c078; }
   .syl-chip.c2 { background: #d8f3e0; color: #145c32; border-color: #8fd0a6; }
@@ -561,6 +571,11 @@
           <label><input type="radio" name="accent" value="us"> 美式</label>
         </div>
         <div class="tts-row">
+          <span class="tts-label">聲線</span>
+          <label><input type="radio" name="voice" value="male"> 男聲</label>
+          <label><input type="radio" name="voice" value="female"> 女聲</label>
+        </div>
+        <div class="tts-row">
           <span class="tts-label">速度</span>
           <label><input type="radio" name="rate" value="slow"> 慢</label>
           <label><input type="radio" name="rate" value="kid"> 小朋友</label>
@@ -577,6 +592,7 @@
           <button type="button" class="btn" id="btn-preview">試聽 cash／現金</button>
         </div>
       </div>
+      <p class="note" id="tts-voice-hint">實際聲線視這部手機已安裝的聲音而定。若沒有所選的口音或男女聲，會改用最接近的英語聲線。可在 iOS「輔助使用 → 朗讀內容 → 聲音」下載更多。</p>
       <p class="note" id="tts-note" hidden>這部裝置未能朗讀。仍可看中文、用鍵盤抄打與遮默。</p>
     </div>
 
@@ -1475,7 +1491,7 @@
   var audioCtx = null;
 
   function defaultSettings() {
-    return { lessonId: "lesson-01", group: "A", accent: "gb", rate: "kid", autoSpeak: true, sfx: true };
+    return { lessonId: "lesson-01", group: "A", accent: "gb", voice: "female", rate: "kid", autoSpeak: true, sfx: true };
   }
 
   function blank() {
@@ -1489,6 +1505,7 @@
       var data = JSON.parse(raw);
       if (!data || typeof data !== "object" || data.version !== 1) return blank();
       data.settings = Object.assign(defaultSettings(), data.settings || {});
+      if (data.settings.voice !== "male" && data.settings.voice !== "female") data.settings.voice = "female";
       data.customLessons = Array.isArray(data.customLessons) ? data.customLessons : [];
       data.progress = data.progress && typeof data.progress === "object" ? data.progress : {};
       data.words = data.words && typeof data.words === "object" ? data.words : {};
@@ -1677,8 +1694,8 @@
 
   function syllableLabel(parts) {
     if (!parts || !parts.length) return "";
-    if (parts.length === 1) return "1 個音節，不用再拆";
-    return parts.length + " 個音節";
+    if (parts.length === 1) return "1 個音節，可點擊聽讀音";
+    return parts.length + " 個音節，可點各個聽讀音";
   }
 
   function copyWord(w) {
@@ -1704,10 +1721,17 @@
     var row = document.createElement("div");
     row.className = "syl-parts";
     parts.forEach(function (part, i) {
-      var chip = document.createElement("span");
+      var chip = document.createElement("button");
+      chip.type = "button";
       chip.className = "syl-chip c" + (i % 5);
       chip.lang = "en";
       chip.textContent = part;
+      chip.setAttribute("aria-label", "朗讀音節 " + part);
+      chip.addEventListener("click", function (ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        speak(part, "en");
+      });
       row.appendChild(chip);
     });
     var cap = document.createElement("p");
@@ -2099,6 +2123,9 @@
     document.querySelectorAll('input[name="accent"]').forEach(function (el) {
       el.checked = el.value === state.settings.accent;
     });
+    document.querySelectorAll('input[name="voice"]').forEach(function (el) {
+      el.checked = el.value === state.settings.voice;
+    });
     document.querySelectorAll('input[name="rate"]').forEach(function (el) {
       el.checked = el.value === state.settings.rate;
     });
@@ -2159,8 +2186,10 @@
 
   function readSettingsFromDom() {
     var accent = document.querySelector('input[name="accent"]:checked');
+    var voice = document.querySelector('input[name="voice"]:checked');
     var rate = document.querySelector('input[name="rate"]:checked');
     if (accent) state.settings.accent = accent.value;
+    if (voice && (voice.value === "male" || voice.value === "female")) state.settings.voice = voice.value;
     if (rate) state.settings.rate = rate.value;
     state.settings.autoSpeak = document.getElementById("opt-auto").checked;
     state.settings.sfx = document.getElementById("opt-sfx").checked;
@@ -2778,6 +2807,78 @@
     return null;
   }
 
+  var FEMALE_VOICE_NAMES = [
+    "samantha", "karen", "moira", "tessa", "fiona", "kate", "serena", "martha",
+    "victoria", "susan", "allison", "ava", "zoe", "zoey", "nicky", "salli", "sally",
+    "ivy", "joanna", "kendra", "kimberly", "emily", "linda", "hazel", "zira",
+    "veena", "raveena", "sonia", "aria", "jenny", "eva", "kathy", "vicki", "vicky",
+    "catherine", "alice", "anna", "amelie", "helena", "natasha", "emma", "sara",
+    "michelle"
+  ];
+  var MALE_VOICE_NAMES = [
+    "daniel", "arthur", "fred", "aaron", "alex", "tom", "oliver", "gordon",
+    "nathan", "james", "brian", "matthew", "justin", "joey", "russell", "rishi",
+    "ravi", "david", "george", "ryan", "mark", "guy", "albert", "bruce", "ralph",
+    "reed", "thomas", "christopher", "eric", "steffan", "andrew"
+  ];
+
+  function voiceLangKey(voice) {
+    return String((voice && voice.lang) || "").toLowerCase().replace(/_/g, "-");
+  }
+
+  function isEnglishVoice(voice) {
+    var lang = voiceLangKey(voice);
+    return lang === "en" || lang.indexOf("en-") === 0;
+  }
+
+  function nameHasToken(blob, names) {
+    var i, re;
+    for (i = 0; i < names.length; i++) {
+      re = new RegExp("(^|[^a-z0-9])" + names[i] + "([^a-z0-9]|$)", "i");
+      if (re.test(blob)) return true;
+    }
+    return false;
+  }
+
+  function detectVoiceGender(voice) {
+    if (!voice) return null;
+    var field = String(voice.gender || "").toLowerCase();
+    if (field === "female" || field === "male") return field;
+    var name = String(voice.name || "").trim();
+    var blob = (name + " " + String(voice.voiceURI || "")).toLowerCase();
+    if (/\bfemale\b|\bwoman\b|\bgirl\b/.test(blob)) return "female";
+    if (/\bmale\b|\bman\b|\bboy\b/.test(blob)) return "male";
+    if (/^google us english$/i.test(name)) return "female";
+    if (nameHasToken(blob, FEMALE_VOICE_NAMES)) return "female";
+    if (nameHasToken(blob, MALE_VOICE_NAMES)) return "male";
+    return null;
+  }
+
+  function pickEnglishVoice(voices, accent, gender) {
+    var wantLang = accent === "us" ? "en-us" : "en-gb";
+    var wantGender = gender === "male" ? "male" : "female";
+    var found = null;
+    function first(pred) {
+      var i, v;
+      for (i = 0; i < voices.length; i++) {
+        v = voices[i];
+        if (pred(v)) return v;
+      }
+      return null;
+    }
+    found = first(function (v) {
+      return voiceLangKey(v) === wantLang && detectVoiceGender(v) === wantGender;
+    });
+    if (found) return found;
+    found = first(function (v) { return voiceLangKey(v) === wantLang; });
+    if (found) return found;
+    found = first(function (v) {
+      return isEnglishVoice(v) && detectVoiceGender(v) === wantGender;
+    });
+    if (found) return found;
+    return first(function (v) { return isEnglishVoice(v); });
+  }
+
   function noteTtsUnavailable() {
     if (ttsNoteShown) return;
     ttsNoteShown = true;
@@ -2785,7 +2886,14 @@
     if (n) n.hidden = false;
   }
 
+  var speakTimer = null;
+  var SPEAK_DELAY_MS = 70;
+
   function cancelTts() {
+    if (speakTimer) {
+      clearTimeout(speakTimer);
+      speakTimer = null;
+    }
     if (window.speechSynthesis) {
       try { window.speechSynthesis.cancel(); } catch (e) { /* ignore */ }
     }
@@ -2803,9 +2911,10 @@
         u.voice = pickVoice(voices, ["zh-HK", "zh-TW", "zh-CN", "zh"]);
       } else {
         var us = state.settings.accent === "us";
+        var gender = state.settings.voice === "male" ? "male" : "female";
         u.lang = us ? "en-US" : "en-GB";
         u.rate = EN_RATE[state.settings.rate] || EN_RATE.kid;
-        u.voice = pickVoice(voices, us ? ["en-US", "en-GB", "en"] : ["en-GB", "en-US", "en"]);
+        u.voice = pickEnglishVoice(voices, us ? "us" : "gb", gender);
       }
       var done = false;
       function finish() { if (done) return; done = true; if (onEnd) onEnd(); }
@@ -2818,9 +2927,16 @@
     }
   }
 
-  function speak(text, kind) {
+  function speakAfterCancel(text, kind, onEnd) {
     cancelTts();
-    speakOnce(text, kind, null);
+    speakTimer = setTimeout(function () {
+      speakTimer = null;
+      speakOnce(text, kind, onEnd);
+    }, SPEAK_DELAY_MS);
+  }
+
+  function speak(text, kind) {
+    speakAfterCancel(text, kind, null);
   }
 
   function maybeAutoSpeak() {
@@ -3098,14 +3214,13 @@
       pendingStart = null;
       document.getElementById("start-confirm").hidden = true;
     });
-    document.querySelectorAll('input[name="accent"], input[name="rate"], #opt-auto, #opt-sfx').forEach(function (el) {
+    document.querySelectorAll('input[name="accent"], input[name="voice"], input[name="rate"], #opt-auto, #opt-sfx').forEach(function (el) {
       el.addEventListener("change", function () { readSettingsFromDom(); save(); });
     });
     document.getElementById("btn-preview").addEventListener("click", function () {
       readSettingsFromDom();
       save();
-      cancelTts();
-      speakOnce("cash", "en", function () {
+      speakAfterCancel("cash", "en", function () {
         setTimeout(function () { speakOnce("現金", "zh", null); }, 280);
       });
     });
@@ -3323,6 +3438,8 @@
     assert(document.getElementById("osk").hidden, "看的時候不做默寫鍵盤");
     assert(!document.getElementById("cue-syl").hidden, "看的時候顯示音節");
     assert(document.getElementById("cue-syl").textContent.indexOf("cash") >= 0, "cash 的音節可見");
+    var cashChip = document.querySelector("#cue-syl button.syl-chip");
+    assert(cashChip && cashChip.textContent.indexOf("cash") >= 0, "可見音節是可點的按鈕");
     assert(lockReason("full", currentLesson()).length > 0, "未完成四組時不能整課遮默");
     continueFromLook();
     assert(session.phase === "copy" && session.copyNeed === 1, "新詞只抄打 1 次");
