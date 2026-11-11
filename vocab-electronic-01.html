@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="生詞默寫">
 <meta name="theme-color" content="#13283f">
-<meta name="description" content="日常生活與護理英語生詞電子默寫，共八課、160 詞。先看英文與中文，抄打一次，再遮默。四組完成後才整課遮默。進度存在這部機的瀏覽器。">
+<meta name="description" content="日常生活與護理英語生詞電子默寫，共 28 課、560 詞（日常 16 課、護理 12 課）。先看英文與中文，抄打一次，再遮默。四組完成後才整課遮默。進度存在這部機的瀏覽器。">
 <title>生詞電子默寫</title>
 <style>
   :root {
@@ -135,6 +135,8 @@
     min-height: 44px;
   }
   select { max-width: 100%; }
+  .row label { max-width: 100%; }
+  #lesson-select { flex: 1 1 auto; min-width: 0; max-width: 100%; }
   .group-box { display: flex; flex-wrap: wrap; gap: 8px; }
   .group-box label {
     display: flex;
@@ -930,6 +932,526 @@
         { en: "hypertension", zh: "高血壓", syl: "hy-per-ten-sion" },
         { en: "nephrology", zh: "腎科", syl: "neph-rol-o-gy" }
       ]
+    },
+    {
+      id: "lesson-09",
+      title: "日常生活：食肆點餐",
+      words: [
+        { en: "menu", zh: "菜單", syl: "men-u" },
+        { en: "waiter", zh: "侍應", syl: "wait-er" },
+        { en: "takeaway", zh: "外帶", syl: "take-a-way" },
+        { en: "spicy", zh: "辣的", syl: "spic-y" },
+        { en: "bill", zh: "帳單", syl: "bill" },
+        { en: "starter", zh: "前菜", syl: "start-er" },
+        { en: "dessert", zh: "甜品", syl: "des-sert" },
+        { en: "soup", zh: "湯", syl: "soup" },
+        { en: "noodle", zh: "麵條", syl: "noo-dle" },
+        { en: "seafood", zh: "海鮮", syl: "sea-food" },
+        { en: "salty", zh: "鹹的", syl: "salt-y" },
+        { en: "sour", zh: "酸的", syl: "sour" },
+        { en: "beverage", zh: "飲品", syl: "bev-er-age" },
+        { en: "coffee", zh: "咖啡", syl: "cof-fee" },
+        { en: "lemonade", zh: "檸檬水", syl: "lem-on-ade" },
+        { en: "reserved", zh: "已預訂的", syl: "re-served" },
+        { en: "portion", zh: "份量", syl: "por-tion" },
+        { en: "vegetarian", zh: "素食的", syl: "veg-e-tar-i-an" },
+        { en: "tip", zh: "小費", syl: "tip" },
+        { en: "refill", zh: "續杯", syl: "re-fill" }
+      ]
+    },
+    {
+      id: "lesson-10",
+      title: "日常生活：銀行郵局",
+      words: [
+        { en: "withdraw", zh: "提款", syl: "with-draw" },
+        { en: "cheque", zh: "支票", syl: "cheque" },
+        { en: "statement", zh: "結單", syl: "state-ment" },
+        { en: "savings", zh: "儲蓄", syl: "sav-ings" },
+        { en: "balance", zh: "餘額", syl: "bal-ance" },
+        { en: "account", zh: "帳戶", syl: "ac-count" },
+        { en: "interest", zh: "利息", syl: "in-ter-est" },
+        { en: "counter", zh: "櫃檯", syl: "coun-ter" },
+        { en: "signature", zh: "簽名", syl: "sig-na-ture" },
+        { en: "passbook", zh: "存摺", syl: "pass-book" },
+        { en: "parcel", zh: "包裹", syl: "par-cel" },
+        { en: "postage", zh: "郵資", syl: "post-age" },
+        { en: "envelope", zh: "信封", syl: "en-ve-lope" },
+        { en: "stamp", zh: "郵票", syl: "stamp" },
+        { en: "registered", zh: "掛號的", syl: "reg-is-tered" },
+        { en: "remittance", zh: "匯款", syl: "re-mit-tance" },
+        { en: "branch", zh: "分行", syl: "branch" },
+        { en: "currency", zh: "貨幣", syl: "cur-ren-cy" },
+        { en: "identity", zh: "身分", syl: "i-den-ti-ty" },
+        { en: "bank", zh: "銀行", syl: "bank" }
+      ]
+    },
+    {
+      id: "lesson-11",
+      title: "日常生活：住屋維修",
+      words: [
+        { en: "landlord", zh: "業主；房東", syl: "land-lord" },
+        { en: "tenant", zh: "租客", syl: "ten-ant" },
+        { en: "rent", zh: "租金", syl: "rent" },
+        { en: "lease", zh: "租約", syl: "lease" },
+        { en: "furniture", zh: "傢俬", syl: "fur-ni-ture" },
+        { en: "plumber", zh: "水喉匠", syl: "plum-ber" },
+        { en: "electrician", zh: "電工", syl: "e-lec-tri-cian" },
+        { en: "carpenter", zh: "木匠", syl: "car-pen-ter" },
+        { en: "repair", zh: "維修", syl: "re-pair" },
+        { en: "caretaker", zh: "管理員", syl: "care-tak-er" },
+        { en: "leak", zh: "漏水", syl: "leak" },
+        { en: "socket", zh: "插座", syl: "sock-et" },
+        { en: "blockage", zh: "堵塞", syl: "block-age" },
+        { en: "flood", zh: "水浸", syl: "flood" },
+        { en: "fuse", zh: "保險絲", syl: "fuse" },
+        { en: "ceiling", zh: "天花", syl: "ceil-ing" },
+        { en: "balcony", zh: "露台", syl: "bal-co-ny" },
+        { en: "corridor", zh: "走廊", syl: "cor-ri-dor" },
+        { en: "intercom", zh: "對講機", syl: "in-ter-com" },
+        { en: "tap", zh: "水龍頭", syl: "tap" }
+      ]
+    },
+    {
+      id: "lesson-12",
+      title: "日常生活：衣著天氣",
+      words: [
+        { en: "typhoon", zh: "颱風", syl: "ty-phoon" },
+        { en: "humid", zh: "潮濕的", syl: "hu-mid" },
+        { en: "forecast", zh: "預報", syl: "fore-cast" },
+        { en: "drizzle", zh: "毛毛雨", syl: "driz-zle" },
+        { en: "lightning", zh: "閃電", syl: "light-ning" },
+        { en: "jacket", zh: "外套", syl: "jack-et" },
+        { en: "trousers", zh: "褲子", syl: "trou-sers" },
+        { en: "raincoat", zh: "雨衣", syl: "rain-coat" },
+        { en: "socks", zh: "襪子", syl: "socks" },
+        { en: "uniform", zh: "制服", syl: "u-ni-form" },
+        { en: "scarf", zh: "圍巾", syl: "scarf" },
+        { en: "gloves", zh: "手套", syl: "gloves" },
+        { en: "slippers", zh: "拖鞋", syl: "slip-pers" },
+        { en: "pyjamas", zh: "睡衣", syl: "py-ja-mas" },
+        { en: "underwear", zh: "內衣", syl: "un-der-wear" },
+        { en: "climate", zh: "氣候", syl: "cli-mate" },
+        { en: "cloudy", zh: "多雲的", syl: "cloud-y" },
+        { en: "sunshine", zh: "陽光", syl: "sun-shine" },
+        { en: "windy", zh: "有風的", syl: "wind-y" },
+        { en: "season", zh: "季節", syl: "sea-son" }
+      ]
+    },
+    {
+      id: "lesson-13",
+      title: "日常生活：時間約會",
+      words: [
+        { en: "tomorrow", zh: "明天", syl: "to-mor-row" },
+        { en: "yesterday", zh: "昨天", syl: "yes-ter-day" },
+        { en: "tonight", zh: "今晚", syl: "to-night" },
+        { en: "weekend", zh: "週末", syl: "week-end" },
+        { en: "fortnight", zh: "兩週", syl: "fort-night" },
+        { en: "postpone", zh: "延期", syl: "post-pone" },
+        { en: "punctual", zh: "準時的", syl: "punc-tu-al" },
+        { en: "schedule", zh: "時間表", syl: "sched-ule" },
+        { en: "calendar", zh: "日曆", syl: "cal-en-dar" },
+        { en: "deadline", zh: "限期", syl: "dead-line" },
+        { en: "morning", zh: "早上", syl: "morn-ing" },
+        { en: "afternoon", zh: "下午", syl: "af-ter-noon" },
+        { en: "evening", zh: "晚上", syl: "eve-ning" },
+        { en: "midnight", zh: "午夜", syl: "mid-night" },
+        { en: "noon", zh: "正午", syl: "noon" },
+        { en: "earlier", zh: "較早", syl: "ear-li-er" },
+        { en: "later", zh: "較遲；稍後", syl: "la-ter" },
+        { en: "immediately", zh: "立刻", syl: "im-me-di-ate-ly" },
+        { en: "urgent", zh: "緊急的", syl: "ur-gent" },
+        { en: "convenient", zh: "方便的", syl: "con-ven-ient" }
+      ]
+    },
+    {
+      id: "lesson-14",
+      title: "日常生活：家庭人際",
+      words: [
+        { en: "relative", zh: "親戚", syl: "rel-a-tive" },
+        { en: "elderly", zh: "年長的", syl: "el-der-ly" },
+        { en: "cousin", zh: "堂／表親", syl: "cous-in" },
+        { en: "spouse", zh: "配偶", syl: "spouse" },
+        { en: "sibling", zh: "兄弟姐妹", syl: "sib-ling" },
+        { en: "visit", zh: "探訪", syl: "vis-it" },
+        { en: "apology", zh: "道歉", syl: "a-pol-o-gy" },
+        { en: "invitation", zh: "邀請", syl: "in-vi-ta-tion" },
+        { en: "gathering", zh: "聚會", syl: "gath-er-ing" },
+        { en: "greeting", zh: "問候", syl: "greet-ing" },
+        { en: "polite", zh: "有禮貌的", syl: "po-lite" },
+        { en: "grateful", zh: "感激的", syl: "grate-ful" },
+        { en: "sincere", zh: "誠懇的", syl: "sin-cere" },
+        { en: "patience", zh: "忍耐；耐性", syl: "pa-tience" },
+        { en: "respect", zh: "尊重", syl: "re-spect" },
+        { en: "friendship", zh: "友誼", syl: "friend-ship" },
+        { en: "quarrel", zh: "吵架", syl: "quar-rel" },
+        { en: "forgive", zh: "原諒", syl: "for-give" },
+        { en: "birthday", zh: "生日", syl: "birth-day" },
+        { en: "wedding", zh: "婚禮", syl: "wed-ding" }
+      ]
+    },
+    {
+      id: "lesson-15",
+      title: "日常生活：工作學習",
+      words: [
+        { en: "colleague", zh: "同事", syl: "col-league" },
+        { en: "overtime", zh: "加班", syl: "o-ver-time" },
+        { en: "interview", zh: "面試", syl: "in-ter-view" },
+        { en: "salary", zh: "薪酬", syl: "sal-a-ry" },
+        { en: "employer", zh: "僱主", syl: "em-ploy-er" },
+        { en: "meeting", zh: "會議", syl: "meet-ing" },
+        { en: "promotion", zh: "晉升", syl: "pro-mo-tion" },
+        { en: "resign", zh: "辭職", syl: "re-sign" },
+        { en: "trainee", zh: "實習生", syl: "train-ee" },
+        { en: "duty", zh: "職責", syl: "du-ty" },
+        { en: "revise", zh: "溫習", syl: "re-vise" },
+        { en: "homework", zh: "功課", syl: "home-work" },
+        { en: "textbook", zh: "課本", syl: "text-book" },
+        { en: "dictionary", zh: "詞典", syl: "dic-tion-ar-y" },
+        { en: "assignment", zh: "習作", syl: "as-sign-ment" },
+        { en: "certificate", zh: "證書", syl: "cer-tif-i-cate" },
+        { en: "qualification", zh: "資歷", syl: "qual-i-fi-ca-tion" },
+        { en: "practise", zh: "練習（動詞）", syl: "prac-tise" },
+        { en: "lecture", zh: "講座；講課", syl: "lec-ture" },
+        { en: "course", zh: "課程", syl: "course" }
+      ]
+    },
+    {
+      id: "lesson-16",
+      title: "日常生活：康樂休閒",
+      words: [
+        { en: "cinema", zh: "電影院", syl: "cin-e-ma" },
+        { en: "museum", zh: "博物館", syl: "mu-se-um" },
+        { en: "theatre", zh: "劇院", syl: "the-a-tre" },
+        { en: "playground", zh: "遊樂場", syl: "play-ground" },
+        { en: "gallery", zh: "藝廊", syl: "gal-ler-y" },
+        { en: "hiking", zh: "遠足", syl: "hik-ing" },
+        { en: "swimming", zh: "游泳", syl: "swim-ming" },
+        { en: "picnic", zh: "野餐", syl: "pic-nic" },
+        { en: "concert", zh: "音樂會", syl: "con-cert" },
+        { en: "gardening", zh: "園藝", syl: "gar-den-ing" },
+        { en: "bicycle", zh: "腳踏車", syl: "bi-cy-cle" },
+        { en: "camera", zh: "相機", syl: "cam-er-a" },
+        { en: "souvenir", zh: "紀念品", syl: "sou-ve-nir" },
+        { en: "hobby", zh: "嗜好", syl: "hob-by" },
+        { en: "exercise", zh: "運動", syl: "ex-er-cise" },
+        { en: "holiday", zh: "假期", syl: "hol-i-day" },
+        { en: "festival", zh: "節日；盛事", syl: "fes-ti-val" },
+        { en: "relaxation", zh: "放鬆", syl: "re-lax-a-tion" },
+        { en: "sightseeing", zh: "觀光", syl: "sight-see-ing" },
+        { en: "jogging", zh: "慢跑", syl: "jog-ging" }
+      ]
+    },
+    {
+      id: "lesson-17",
+      title: "日常生活：就醫看病",
+      words: [
+        { en: "clinic", zh: "診所", syl: "clin-ic" },
+        { en: "dentist", zh: "牙醫", syl: "den-tist" },
+        { en: "referral", zh: "轉介", syl: "re-fer-ral" },
+        { en: "register", zh: "登記", syl: "reg-is-ter" },
+        { en: "outpatient", zh: "門診病人", syl: "out-pa-tient" },
+        { en: "vaccination", zh: "疫苗接種", syl: "vac-ci-na-tion" },
+        { en: "wheelchair", zh: "輪椅", syl: "wheel-chair" },
+        { en: "ward", zh: "病房", syl: "ward" },
+        { en: "physician", zh: "醫生；內科醫生", syl: "phy-si-cian" },
+        { en: "nurse", zh: "護士", syl: "nurse" },
+        { en: "scan", zh: "掃描", syl: "scan" },
+        { en: "surgery", zh: "手術", syl: "sur-ger-y" },
+        { en: "physiotherapy", zh: "物理治療", syl: "phys-i-o-ther-a-py" },
+        { en: "consultation", zh: "診症", syl: "con-sul-ta-tion" },
+        { en: "specialist", zh: "專科醫生", syl: "spe-cial-ist" },
+        { en: "pharmacist", zh: "藥劑師", syl: "phar-ma-cist" },
+        { en: "ointment", zh: "藥膏", syl: "oint-ment" },
+        { en: "hospital", zh: "醫院", syl: "hos-pi-tal" },
+        { en: "paediatric", zh: "小兒科的", syl: "pae-di-at-ric" },
+        { en: "spectacles", zh: "眼鏡", syl: "spec-ta-cles" }
+      ]
+    },
+    {
+      id: "lesson-18",
+      title: "日常生活：政府辦事",
+      words: [
+        { en: "application", zh: "申請", syl: "ap-pli-ca-tion" },
+        { en: "photocopy", zh: "影印本", syl: "pho-to-cop-y" },
+        { en: "residence", zh: "居留；住所", syl: "res-i-dence" },
+        { en: "permit", zh: "許可證", syl: "per-mit" },
+        { en: "document", zh: "文件", syl: "doc-u-ment" },
+        { en: "form", zh: "表格", syl: "form" },
+        { en: "original", zh: "正本", syl: "o-rig-i-nal" },
+        { en: "submit", zh: "提交", syl: "sub-mit" },
+        { en: "approval", zh: "批准", syl: "ap-prov-al" },
+        { en: "department", zh: "部門", syl: "de-part-ment" },
+        { en: "officer", zh: "人員；官員", syl: "of-fi-cer" },
+        { en: "enquiry", zh: "查詢", syl: "en-quir-y" },
+        { en: "official", zh: "正式的；官方的", syl: "of-fi-cial" },
+        { en: "procedure", zh: "程序", syl: "pro-ce-dure" },
+        { en: "renewal", zh: "續期", syl: "re-new-al" },
+        { en: "permanent", zh: "永久的", syl: "per-ma-nent" },
+        { en: "tax", zh: "稅", syl: "tax" },
+        { en: "declare", zh: "申報", syl: "de-clare" },
+        { en: "resident", zh: "居民", syl: "res-i-dent" },
+        { en: "welfare", zh: "福利", syl: "wel-fare" }
+      ]
+    },
+    {
+      id: "lesson-19",
+      title: "日常生活：電子通訊",
+      words: [
+        { en: "email", zh: "電郵", syl: "e-mail" },
+        { en: "wifi", zh: "無線網絡", syl: "wi-fi" },
+        { en: "download", zh: "下載", syl: "down-load" },
+        { en: "attachment", zh: "附件", syl: "at-tach-ment" },
+        { en: "website", zh: "網站", syl: "web-site" },
+        { en: "upload", zh: "上傳", syl: "up-load" },
+        { en: "username", zh: "用戶名稱", syl: "u-ser-name" },
+        { en: "browser", zh: "瀏覽器", syl: "brows-er" },
+        { en: "software", zh: "軟件", syl: "soft-ware" },
+        { en: "profile", zh: "個人檔案", syl: "pro-file" },
+        { en: "online", zh: "上網的；線上的", syl: "on-line" },
+        { en: "network", zh: "網絡", syl: "net-work" },
+        { en: "update", zh: "更新", syl: "up-date" },
+        { en: "restart", zh: "重新啟動", syl: "re-start" },
+        { en: "screenshot", zh: "螢幕截圖", syl: "screen-shot" },
+        { en: "bluetooth", zh: "藍牙", syl: "blue-tooth" },
+        { en: "scam", zh: "詐騙", syl: "scam" },
+        { en: "privacy", zh: "私隱", syl: "pri-va-cy" },
+        { en: "forward", zh: "轉發", syl: "for-ward" },
+        { en: "settings", zh: "設定", syl: "set-tings" }
+      ]
+    },
+    {
+      id: "lesson-20",
+      title: "日常生活：社區生活",
+      words: [
+        { en: "supermarket", zh: "超級市場", syl: "su-per-mar-ket" },
+        { en: "library", zh: "圖書館", syl: "li-bra-ry" },
+        { en: "market", zh: "街市；市場", syl: "mar-ket" },
+        { en: "community", zh: "社區", syl: "com-mu-ni-ty" },
+        { en: "school", zh: "學校", syl: "school" },
+        { en: "recycle", zh: "回收", syl: "re-cy-cle" },
+        { en: "crowded", zh: "擠擁的", syl: "crowd-ed" },
+        { en: "bin", zh: "垃圾桶", syl: "bin" },
+        { en: "noise", zh: "噪音", syl: "noise" },
+        { en: "volunteer", zh: "義工", syl: "vol-un-teer" },
+        { en: "postbox", zh: "郵箱", syl: "post-box" },
+        { en: "junction", zh: "路口", syl: "junc-tion" },
+        { en: "escalator", zh: "電動扶梯", syl: "es-ca-la-tor" },
+        { en: "entrance", zh: "入口", syl: "en-trance" },
+        { en: "exit", zh: "出口", syl: "ex-it" },
+        { en: "announcement", zh: "公告", syl: "an-nounce-ment" },
+        { en: "neighbourhood", zh: "鄰里", syl: "neigh-bour-hood" },
+        { en: "public", zh: "公眾的", syl: "pub-lic" },
+        { en: "facility", zh: "設施", syl: "fa-cil-i-ty" },
+        { en: "district", zh: "地區", syl: "dis-trict" }
+      ]
+    },
+    {
+      id: "lesson-21",
+      title: "護理英語：交更溝通",
+      words: [
+        { en: "handover", zh: "交更", syl: "hand-o-ver" },
+        { en: "shift", zh: "更期", syl: "shift" },
+        { en: "escalate", zh: "上報；升級處理", syl: "es-ca-late" },
+        { en: "stable", zh: "穩定的", syl: "sta-ble" },
+        { en: "outstanding", zh: "未完成的", syl: "out-stand-ing" },
+        { en: "condition", zh: "病情；狀況", syl: "con-di-tion" },
+        { en: "alert", zh: "警覺的；警報", syl: "a-lert" },
+        { en: "deteriorate", zh: "惡化", syl: "de-te-ri-o-rate" },
+        { en: "improve", zh: "改善", syl: "im-prove" },
+        { en: "review", zh: "覆核；檢視", syl: "re-view" },
+        { en: "priority", zh: "優先次序", syl: "pri-or-i-ty" },
+        { en: "verbal", zh: "口頭的", syl: "ver-bal" },
+        { en: "confirm", zh: "確認", syl: "con-firm" },
+        { en: "inform", zh: "告知", syl: "in-form" },
+        { en: "assign", zh: "指派", syl: "as-sign" },
+        { en: "relief", zh: "替更", syl: "re-lief" },
+        { en: "absent", zh: "缺勤的", syl: "ab-sent" },
+        { en: "clarify", zh: "澄清", syl: "clar-i-fy" },
+        { en: "concern", zh: "關注點", syl: "con-cern" },
+        { en: "workload", zh: "工作量", syl: "work-load" }
+      ]
+    },
+    {
+      id: "lesson-22",
+      title: "護理英語：病人教育",
+      words: [
+        { en: "consent", zh: "同意", syl: "con-sent" },
+        { en: "advise", zh: "勸告；指導", syl: "ad-vise" },
+        { en: "demonstrate", zh: "示範", syl: "dem-on-strate" },
+        { en: "lifestyle", zh: "生活方式", syl: "life-style" },
+        { en: "education", zh: "教育", syl: "ed-u-ca-tion" },
+        { en: "explain", zh: "解釋", syl: "ex-plain" },
+        { en: "understand", zh: "明白", syl: "un-der-stand" },
+        { en: "leaflet", zh: "單張", syl: "leaf-let" },
+        { en: "handbook", zh: "手冊", syl: "hand-book" },
+        { en: "compliance", zh: "依從", syl: "com-pli-ance" },
+        { en: "independence", zh: "自理能力；獨立", syl: "in-de-pend-ence" },
+        { en: "mobility", zh: "活動能力", syl: "mo-bil-i-ty" },
+        { en: "nutrition", zh: "營養", syl: "nu-tri-tion" },
+        { en: "rehabilitation", zh: "康復", syl: "re-ha-bil-i-ta-tion" },
+        { en: "activity", zh: "活動", syl: "ac-tiv-i-ty" },
+        { en: "risk", zh: "風險", syl: "risk" },
+        { en: "benefit", zh: "益處", syl: "ben-e-fit" },
+        { en: "refusal", zh: "拒絕", syl: "re-fus-al" },
+        { en: "anxiety", zh: "焦慮", syl: "anx-i-e-ty" },
+        { en: "counselling", zh: "輔導", syl: "coun-sel-ling" }
+      ]
+    },
+    {
+      id: "lesson-23",
+      title: "護理英語：感染控制",
+      words: [
+        { en: "antiseptic", zh: "消毒藥；防腐劑", syl: "an-ti-sep-tic" },
+        { en: "disposable", zh: "即棄的", syl: "dis-pos-a-ble" },
+        { en: "sharps", zh: "利器", syl: "sharps" },
+        { en: "aseptic", zh: "無菌操作的", syl: "a-sep-tic" },
+        { en: "sanitiser", zh: "消毒搓手液", syl: "san-i-tis-er" },
+        { en: "gown", zh: "防護衣；袍", syl: "gown" },
+        { en: "mask", zh: "口罩", syl: "mask" },
+        { en: "apron", zh: "保護圍裙", syl: "a-pron" },
+        { en: "precaution", zh: "預防措施", syl: "pre-cau-tion" },
+        { en: "barrier", zh: "屏障", syl: "bar-ri-er" },
+        { en: "sterilise", zh: "滅菌", syl: "ster-i-lise" },
+        { en: "disinfect", zh: "消毒", syl: "dis-in-fect" },
+        { en: "contaminate", zh: "污染", syl: "con-tam-i-nate" },
+        { en: "outbreak", zh: "爆發", syl: "out-break" },
+        { en: "pathogen", zh: "病原體", syl: "path-o-gen" },
+        { en: "quarantine", zh: "檢疫", syl: "quar-an-tine" },
+        { en: "waste", zh: "廢物", syl: "waste" },
+        { en: "needlestick", zh: "針刺", syl: "nee-dle-stick" },
+        { en: "exposure", zh: "暴露", syl: "ex-po-sure" },
+        { en: "transmission", zh: "傳播", syl: "trans-mis-sion" }
+      ]
+    },
+    {
+      id: "lesson-24",
+      title: "護理英語：急救應變",
+      words: [
+        { en: "resuscitation", zh: "復甦", syl: "re-sus-ci-ta-tion" },
+        { en: "haemorrhage", zh: "出血", syl: "haem-or-rhage" },
+        { en: "seizure", zh: "抽搐；癲癇發作", syl: "sei-zure" },
+        { en: "defibrillator", zh: "除顫器", syl: "de-fib-ril-la-tor" },
+        { en: "collapse", zh: "昏倒；倒下", syl: "col-lapse" },
+        { en: "airway", zh: "氣道", syl: "air-way" },
+        { en: "choking", zh: "哽塞", syl: "chok-ing" },
+        { en: "cardiac", zh: "心臟的", syl: "car-di-ac" },
+        { en: "compression", zh: "按壓", syl: "com-pres-sion" },
+        { en: "shock", zh: "休克", syl: "shock" },
+        { en: "stroke", zh: "中風", syl: "stroke" },
+        { en: "unconscious", zh: "不省人事的", syl: "un-con-scious" },
+        { en: "fracture", zh: "骨折", syl: "frac-ture" },
+        { en: "burn", zh: "燒傷", syl: "burn" },
+        { en: "poisoning", zh: "中毒", syl: "poi-son-ing" },
+        { en: "triage", zh: "分流；檢傷分類", syl: "tri-age" },
+        { en: "evacuate", zh: "疏散", syl: "e-vac-u-ate" },
+        { en: "stretcher", zh: "擔架", syl: "stretch-er" },
+        { en: "intubation", zh: "插管", syl: "in-tu-ba-tion" },
+        { en: "anaphylaxis", zh: "過敏性休克", syl: "an-a-phy-lax-is" }
+      ]
+    },
+    {
+      id: "lesson-25",
+      title: "護理英語：觀察紀錄",
+      words: [
+        { en: "chart", zh: "圖表；紀錄表", syl: "chart" },
+        { en: "cyanosis", zh: "紫紺", syl: "cy-a-no-sis" },
+        { en: "intake", zh: "攝入量", syl: "in-take" },
+        { en: "output", zh: "排出量", syl: "out-put" },
+        { en: "baseline", zh: "基線", syl: "base-line" },
+        { en: "pallor", zh: "蒼白", syl: "pal-lor" },
+        { en: "jaundice", zh: "黃疸", syl: "jaun-dice" },
+        { en: "clammy", zh: "濕冷的", syl: "clam-my" },
+        { en: "drowsy", zh: "昏昏欲睡的", syl: "drows-y" },
+        { en: "restless", zh: "煩躁的", syl: "rest-less" },
+        { en: "reading", zh: "讀數", syl: "read-ing" },
+        { en: "trend", zh: "趨勢", syl: "trend" },
+        { en: "irregular", zh: "不規則的", syl: "ir-reg-u-lar" },
+        { en: "frequent", zh: "頻密的", syl: "fre-quent" },
+        { en: "chronic", zh: "慢性的", syl: "chron-ic" },
+        { en: "severe", zh: "嚴重的", syl: "se-vere" },
+        { en: "record", zh: "紀錄", syl: "rec-ord" },
+        { en: "entry", zh: "記入；記錄項目", syl: "en-try" },
+        { en: "accurate", zh: "準確的", syl: "ac-cu-rate" },
+        { en: "legible", zh: "字跡清楚的", syl: "leg-i-ble" }
+      ]
+    },
+    {
+      id: "lesson-26",
+      title: "護理英語：化驗報告",
+      words: [
+        { en: "platelet", zh: "血小板", syl: "plate-let" },
+        { en: "bilirubin", zh: "膽紅素", syl: "bil-i-ru-bin" },
+        { en: "abnormal", zh: "異常的", syl: "ab-nor-mal" },
+        { en: "elevated", zh: "升高的", syl: "el-e-vat-ed" },
+        { en: "arterial", zh: "動脈的", syl: "ar-te-ri-al" },
+        { en: "albumin", zh: "白蛋白", syl: "al-bu-min" },
+        { en: "haematocrit", zh: "血細胞壓積", syl: "hae-mat-o-crit" },
+        { en: "leucocyte", zh: "白血球", syl: "leu-co-cyte" },
+        { en: "ferritin", zh: "鐵蛋白", syl: "fer-ri-tin" },
+        { en: "bicarbonate", zh: "碳酸氫鹽", syl: "bi-car-bon-ate" },
+        { en: "reduced", zh: "降低的", syl: "re-duced" },
+        { en: "reference", zh: "參考", syl: "ref-er-ence" },
+        { en: "positive", zh: "陽性的", syl: "pos-i-tive" },
+        { en: "negative", zh: "陰性的", syl: "neg-a-tive" },
+        { en: "critical", zh: "危急的；臨界的", syl: "crit-i-cal" },
+        { en: "venous", zh: "靜脈的", syl: "ve-nous" },
+        { en: "sample", zh: "樣本", syl: "sam-ple" },
+        { en: "coagulation", zh: "凝固", syl: "co-ag-u-la-tion" },
+        { en: "urinalysis", zh: "尿液分析", syl: "u-ri-nal-y-sis" },
+        { en: "serum", zh: "血清", syl: "se-rum" }
+      ]
+    },
+    {
+      id: "lesson-27",
+      title: "護理英語：透析進階",
+      words: [
+        { en: "ultrafiltration", zh: "超濾", syl: "ul-tra-fil-tra-tion" },
+        { en: "dialysate", zh: "透析液", syl: "di-al-y-sate" },
+        { en: "priming", zh: "預沖", syl: "prim-ing" },
+        { en: "rinseback", zh: "回血", syl: "rinse-back" },
+        { en: "graft", zh: "人工血管；移植物", syl: "graft" },
+        { en: "recirculation", zh: "再循環", syl: "re-cir-cu-la-tion" },
+        { en: "conductivity", zh: "導電度", syl: "con-duc-tiv-i-ty" },
+        { en: "concentrate", zh: "濃縮液", syl: "con-cen-trate" },
+        { en: "transmembrane", zh: "跨膜的", syl: "trans-mem-brane" },
+        { en: "needling", zh: "穿刺", syl: "nee-dling" },
+        { en: "alarm", zh: "警報", syl: "a-larm" },
+        { en: "bolus", zh: "推注", syl: "bo-lus" },
+        { en: "infusion", zh: "輸注", syl: "in-fu-sion" },
+        { en: "volume", zh: "容量", syl: "vol-ume" },
+        { en: "target", zh: "目標值", syl: "tar-get" },
+        { en: "infiltration", zh: "滲出；外滲", syl: "in-fil-tra-tion" },
+        { en: "stenosis", zh: "狹窄", syl: "ste-no-sis" },
+        { en: "aneurysm", zh: "動脈瘤", syl: "an-eu-rysm" },
+        { en: "ischaemia", zh: "缺血", syl: "is-chae-mi-a" },
+        { en: "anticoagulant", zh: "抗凝藥", syl: "an-ti-co-ag-u-lant" }
+      ]
+    },
+    {
+      id: "lesson-28",
+      title: "護理英語：腎科飲食",
+      words: [
+        { en: "protein", zh: "蛋白質", syl: "pro-tein" },
+        { en: "binder", zh: "結合劑", syl: "bind-er" },
+        { en: "dietician", zh: "營養師", syl: "di-e-ti-cian" },
+        { en: "salt", zh: "鹽", syl: "salt" },
+        { en: "homemade", zh: "家製的", syl: "home-made" },
+        { en: "snack", zh: "小食", syl: "snack" },
+        { en: "processed", zh: "加工的", syl: "proc-essed" },
+        { en: "tinned", zh: "罐頭的", syl: "tinned" },
+        { en: "dairy", zh: "奶類", syl: "dair-y" },
+        { en: "meat", zh: "肉類", syl: "meat" },
+        { en: "serving", zh: "一份；一客", syl: "serv-ing" },
+        { en: "limit", zh: "上限；限制", syl: "lim-it" },
+        { en: "avoid", zh: "避免", syl: "a-void" },
+        { en: "substitute", zh: "替代", syl: "sub-sti-tute" },
+        { en: "seasoning", zh: "調味料", syl: "sea-son-ing" },
+        { en: "malnutrition", zh: "營養不良", syl: "mal-nu-tri-tion" },
+        { en: "appetite", zh: "胃口", syl: "ap-pe-tite" },
+        { en: "calorie", zh: "卡路里", syl: "cal-o-rie" },
+        { en: "supplement", zh: "補充劑", syl: "sup-ple-ment" },
+        { en: "thirst", zh: "口渴", syl: "thirst" }
+      ]
     }
   ];
 
@@ -1224,7 +1746,7 @@
       if (lesson && lesson.id) map[lesson.id] = cloneLesson(lesson);
     });
     return Object.keys(map).map(function (id) { return map[id]; }).sort(function (a, b) {
-      var order = { "lesson-01": 0, "lesson-03": 1, "lesson-04": 2, "lesson-05": 3, "lesson-02": 10, "lesson-06": 11, "lesson-07": 12, "lesson-08": 13 };
+      var order = { "lesson-01": 0, "lesson-03": 1, "lesson-04": 2, "lesson-05": 3, "lesson-09": 4, "lesson-10": 5, "lesson-11": 6, "lesson-12": 7, "lesson-13": 8, "lesson-14": 9, "lesson-15": 10, "lesson-16": 11, "lesson-17": 12, "lesson-18": 13, "lesson-19": 14, "lesson-20": 15, "lesson-02": 20, "lesson-06": 21, "lesson-07": 22, "lesson-08": 23, "lesson-21": 24, "lesson-22": 25, "lesson-23": 26, "lesson-24": 27, "lesson-25": 28, "lesson-26": 29, "lesson-27": 30, "lesson-28": 31 };
       var aa = order.hasOwnProperty(a.id) ? order[a.id] : 50;
       var bb = order.hasOwnProperty(b.id) ? order[b.id] : 50;
       if (aa !== bb) return aa - bb;

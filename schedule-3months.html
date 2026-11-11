@@ -618,12 +618,23 @@
       table.cards tbody, table.words tbody, table.quiz tbody,
       table.cards tr, table.words tr, table.quiz tr,
       table.cards td, table.words td, table.quiz td { display: block; width: auto; }
+      table.cards caption, table.words caption, table.quiz caption {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      table.cards th, table.words th, table.quiz th,
+      table.cards tr.group-row, table.words tr.group-row, table.quiz tr.group-row {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+      }
       table.cards, table.words, table.quiz { border: 0; }
       table.cards tr, table.words tr, table.quiz tr {
         border-bottom: 1px solid var(--line);
         padding: 8px 12px 10px;
       }
-      table.cards td, table.words td, table.quiz td {
+      table.cards td, table.quiz td {
         display: grid;
         grid-template-columns: 5.2rem minmax(0, 1fr);
         gap: 6px;
@@ -631,12 +642,46 @@
         border: 0;
         padding: 3px 0;
       }
-      table.words td.mid, table.quiz td.mid { text-align: left; }
-      table.cards td::before, table.words td::before, table.quiz td::before {
+      table.quiz td.mid { text-align: left; }
+      table.cards td::before, table.quiz td::before {
         content: attr(data-label);
         color: var(--muted);
         font-size: 0.75rem;
         font-weight: 700;
+      }
+      table.words tr.group-row {
+        border-bottom: 0;
+        padding: 10px 0 4px;
+      }
+      table.words tr.group-row th {
+        background: #eef3f8;
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        font-weight: 700;
+        box-sizing: border-box;
+      }
+      table.words td,
+      table.words td.mid {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        border: 0;
+        padding: 2px 0;
+        text-align: left;
+        grid-template-columns: none;
+      }
+      table.words td::before {
+        content: none;
+        display: none;
+      }
+      table.words td.mid {
+        color: var(--muted);
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+      table.words td:nth-child(2) {
+        font-weight: 800;
+        letter-spacing: 0.01em;
       }
       .en { white-space: normal; }
     }
@@ -685,8 +730,9 @@
     .week-grid { grid-template-columns: repeat(3, 1fr); gap: 6pt; }
     .rules, .days, .split2 { grid-template-columns: 1fr 1fr; gap: 6pt; }
     .stats { grid-template-columns: repeat(3, 1fr); }
-    table, thead, tbody, tr, th, td { display: revert; }
+    table, caption, thead, tbody, tr, th, td { display: revert; }
     table { display: table !important; width: 100%; font-size: 10pt; }
+    caption { display: table-caption !important; caption-side: top; }
     thead { display: table-header-group !important; }
     tbody { display: table-row-group !important; }
     tr { display: table-row !important; }
@@ -1035,7 +1081,7 @@
       <section class="panel card" id="weeks" aria-labelledby="h-weeks">
         <p class="eyebrow"><span>第 6 節</span><span>共 10 節</span></p>
         <h2 id="h-weeks"><span class="n">6</span>12 週大綱</h2>
-        <p class="lead">約 3 個月。假設每週新課約 20 詞：前 8 週累積約 160 詞；後 4 週以混默、查漏為主。英文與中文可各用一張表，或隔週輪流。</p>
+        <p class="lead">約 3 個月。方法仍是一次（或一週）新學一課 20 詞，這是較舒適的節奏。內建詞庫現為 28 課、合共 560 詞（日常 16 課、護理 12 課）。按此節奏，前 8 週約累積 160 詞；其後既可繼續開後面的課，亦可按原計劃以混默、查漏為主。英文與中文可各用一張表，或隔週輪流。</p>
         <div class="week-grid">
           <article class="week">
             <div class="w-title">第 1 週 <span class="phase">新課</span></div>
@@ -1177,10 +1223,11 @@
       <section class="panel card" id="sample" aria-labelledby="h-sample">
         <p class="eyebrow"><span>第 8 節</span><span>共 10 節</span></p>
         <h2 id="h-sample"><span class="n">8</span>日常生活與護理英語詞表</h2>
-        <p class="lead">內建八課（日常四課、護理四課），每課 A–D 四組、共 20 詞，合共 160 詞。實際看、抄打、遮默請用電子默寫頁，這裏只供對照，不再放可填手寫表。</p>
+        <p class="lead">內建 28 課（日常 16 課、護理 12 課），每課 A–D 四組、共 20 詞，合共 560 詞。實際看、抄打、遮默請用電子默寫頁，這裏只供對照，不再放可填手寫表。</p>
         <div class="callout write no-print">
           <p><strong>練習入口：</strong>打開同資料夾的 <a href="vocab-electronic-01.html">生詞電子默寫</a>。流程仍是看 → 抄打 1 次 → 遮默；四組完成才整課遮默。進度只存在這部機這個瀏覽器。</p>
         </div>
+        <h3>日常生活</h3>
         <table class="words compact">
           <caption>日常生活：辦事購物 · 20 詞（只供對照，不填寫）</caption>
           <thead>
@@ -1326,6 +1373,439 @@
           </tbody>
         </table>
         <table class="words compact">
+          <caption>日常生活：食肆點餐 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 點餐</th></tr>
+            <tr><td class="mid">1</td><td>menu</td><td>菜單</td></tr>
+            <tr><td class="mid">2</td><td>waiter</td><td>侍應</td></tr>
+            <tr><td class="mid">3</td><td>takeaway</td><td>外帶</td></tr>
+            <tr><td class="mid">4</td><td>spicy</td><td>辣的</td></tr>
+            <tr><td class="mid">5</td><td>bill</td><td>帳單</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 食物</th></tr>
+            <tr><td class="mid">6</td><td>starter</td><td>前菜</td></tr>
+            <tr><td class="mid">7</td><td>dessert</td><td>甜品</td></tr>
+            <tr><td class="mid">8</td><td>soup</td><td>湯</td></tr>
+            <tr><td class="mid">9</td><td>noodle</td><td>麵條</td></tr>
+            <tr><td class="mid">10</td><td>seafood</td><td>海鮮</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 口味飲品</th></tr>
+            <tr><td class="mid">11</td><td>salty</td><td>鹹的</td></tr>
+            <tr><td class="mid">12</td><td>sour</td><td>酸的</td></tr>
+            <tr><td class="mid">13</td><td>beverage</td><td>飲品</td></tr>
+            <tr><td class="mid">14</td><td>coffee</td><td>咖啡</td></tr>
+            <tr><td class="mid">15</td><td>lemonade</td><td>檸檬水</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 食肆用語</th></tr>
+            <tr><td class="mid">16</td><td>reserved</td><td>已預訂的</td></tr>
+            <tr><td class="mid">17</td><td>portion</td><td>份量</td></tr>
+            <tr><td class="mid">18</td><td>vegetarian</td><td>素食的</td></tr>
+            <tr><td class="mid">19</td><td>tip</td><td>小費</td></tr>
+            <tr><td class="mid">20</td><td>refill</td><td>續杯</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>日常生活：銀行郵局 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 銀行</th></tr>
+            <tr><td class="mid">1</td><td>withdraw</td><td>提款</td></tr>
+            <tr><td class="mid">2</td><td>cheque</td><td>支票</td></tr>
+            <tr><td class="mid">3</td><td>statement</td><td>結單</td></tr>
+            <tr><td class="mid">4</td><td>savings</td><td>儲蓄</td></tr>
+            <tr><td class="mid">5</td><td>balance</td><td>餘額</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 手續</th></tr>
+            <tr><td class="mid">6</td><td>account</td><td>帳戶</td></tr>
+            <tr><td class="mid">7</td><td>interest</td><td>利息</td></tr>
+            <tr><td class="mid">8</td><td>counter</td><td>櫃檯</td></tr>
+            <tr><td class="mid">9</td><td>signature</td><td>簽名</td></tr>
+            <tr><td class="mid">10</td><td>passbook</td><td>存摺</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 郵局</th></tr>
+            <tr><td class="mid">11</td><td>parcel</td><td>包裹</td></tr>
+            <tr><td class="mid">12</td><td>postage</td><td>郵資</td></tr>
+            <tr><td class="mid">13</td><td>envelope</td><td>信封</td></tr>
+            <tr><td class="mid">14</td><td>stamp</td><td>郵票</td></tr>
+            <tr><td class="mid">15</td><td>registered</td><td>掛號的</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 匯款證件</th></tr>
+            <tr><td class="mid">16</td><td>remittance</td><td>匯款</td></tr>
+            <tr><td class="mid">17</td><td>branch</td><td>分行</td></tr>
+            <tr><td class="mid">18</td><td>currency</td><td>貨幣</td></tr>
+            <tr><td class="mid">19</td><td>identity</td><td>身分</td></tr>
+            <tr><td class="mid">20</td><td>bank</td><td>銀行</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>日常生活：住屋維修 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 住屋</th></tr>
+            <tr><td class="mid">1</td><td>landlord</td><td>業主；房東</td></tr>
+            <tr><td class="mid">2</td><td>tenant</td><td>租客</td></tr>
+            <tr><td class="mid">3</td><td>rent</td><td>租金</td></tr>
+            <tr><td class="mid">4</td><td>lease</td><td>租約</td></tr>
+            <tr><td class="mid">5</td><td>furniture</td><td>傢俬</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 維修人員</th></tr>
+            <tr><td class="mid">6</td><td>plumber</td><td>水喉匠</td></tr>
+            <tr><td class="mid">7</td><td>electrician</td><td>電工</td></tr>
+            <tr><td class="mid">8</td><td>carpenter</td><td>木匠</td></tr>
+            <tr><td class="mid">9</td><td>repair</td><td>維修</td></tr>
+            <tr><td class="mid">10</td><td>caretaker</td><td>管理員</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 故障</th></tr>
+            <tr><td class="mid">11</td><td>leak</td><td>漏水</td></tr>
+            <tr><td class="mid">12</td><td>socket</td><td>插座</td></tr>
+            <tr><td class="mid">13</td><td>blockage</td><td>堵塞</td></tr>
+            <tr><td class="mid">14</td><td>flood</td><td>水浸</td></tr>
+            <tr><td class="mid">15</td><td>fuse</td><td>保險絲</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 設施</th></tr>
+            <tr><td class="mid">16</td><td>ceiling</td><td>天花</td></tr>
+            <tr><td class="mid">17</td><td>balcony</td><td>露台</td></tr>
+            <tr><td class="mid">18</td><td>corridor</td><td>走廊</td></tr>
+            <tr><td class="mid">19</td><td>intercom</td><td>對講機</td></tr>
+            <tr><td class="mid">20</td><td>tap</td><td>水龍頭</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>日常生活：衣著天氣 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 天氣</th></tr>
+            <tr><td class="mid">1</td><td>typhoon</td><td>颱風</td></tr>
+            <tr><td class="mid">2</td><td>humid</td><td>潮濕的</td></tr>
+            <tr><td class="mid">3</td><td>forecast</td><td>預報</td></tr>
+            <tr><td class="mid">4</td><td>drizzle</td><td>毛毛雨</td></tr>
+            <tr><td class="mid">5</td><td>lightning</td><td>閃電</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 衣著</th></tr>
+            <tr><td class="mid">6</td><td>jacket</td><td>外套</td></tr>
+            <tr><td class="mid">7</td><td>trousers</td><td>褲子</td></tr>
+            <tr><td class="mid">8</td><td>raincoat</td><td>雨衣</td></tr>
+            <tr><td class="mid">9</td><td>socks</td><td>襪子</td></tr>
+            <tr><td class="mid">10</td><td>uniform</td><td>制服</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 穿著</th></tr>
+            <tr><td class="mid">11</td><td>scarf</td><td>圍巾</td></tr>
+            <tr><td class="mid">12</td><td>gloves</td><td>手套</td></tr>
+            <tr><td class="mid">13</td><td>slippers</td><td>拖鞋</td></tr>
+            <tr><td class="mid">14</td><td>pyjamas</td><td>睡衣</td></tr>
+            <tr><td class="mid">15</td><td>underwear</td><td>內衣</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 氣候</th></tr>
+            <tr><td class="mid">16</td><td>climate</td><td>氣候</td></tr>
+            <tr><td class="mid">17</td><td>cloudy</td><td>多雲的</td></tr>
+            <tr><td class="mid">18</td><td>sunshine</td><td>陽光</td></tr>
+            <tr><td class="mid">19</td><td>windy</td><td>有風的</td></tr>
+            <tr><td class="mid">20</td><td>season</td><td>季節</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>日常生活：時間約會 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 時間</th></tr>
+            <tr><td class="mid">1</td><td>tomorrow</td><td>明天</td></tr>
+            <tr><td class="mid">2</td><td>yesterday</td><td>昨天</td></tr>
+            <tr><td class="mid">3</td><td>tonight</td><td>今晚</td></tr>
+            <tr><td class="mid">4</td><td>weekend</td><td>週末</td></tr>
+            <tr><td class="mid">5</td><td>fortnight</td><td>兩週</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 安排</th></tr>
+            <tr><td class="mid">6</td><td>postpone</td><td>延期</td></tr>
+            <tr><td class="mid">7</td><td>punctual</td><td>準時的</td></tr>
+            <tr><td class="mid">8</td><td>schedule</td><td>時間表</td></tr>
+            <tr><td class="mid">9</td><td>calendar</td><td>日曆</td></tr>
+            <tr><td class="mid">10</td><td>deadline</td><td>限期</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 時段</th></tr>
+            <tr><td class="mid">11</td><td>morning</td><td>早上</td></tr>
+            <tr><td class="mid">12</td><td>afternoon</td><td>下午</td></tr>
+            <tr><td class="mid">13</td><td>evening</td><td>晚上</td></tr>
+            <tr><td class="mid">14</td><td>midnight</td><td>午夜</td></tr>
+            <tr><td class="mid">15</td><td>noon</td><td>正午</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 先後</th></tr>
+            <tr><td class="mid">16</td><td>earlier</td><td>較早</td></tr>
+            <tr><td class="mid">17</td><td>later</td><td>較遲；稍後</td></tr>
+            <tr><td class="mid">18</td><td>immediately</td><td>立刻</td></tr>
+            <tr><td class="mid">19</td><td>urgent</td><td>緊急的</td></tr>
+            <tr><td class="mid">20</td><td>convenient</td><td>方便的</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>日常生活：家庭人際 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 家人</th></tr>
+            <tr><td class="mid">1</td><td>relative</td><td>親戚</td></tr>
+            <tr><td class="mid">2</td><td>elderly</td><td>年長的</td></tr>
+            <tr><td class="mid">3</td><td>cousin</td><td>堂／表親</td></tr>
+            <tr><td class="mid">4</td><td>spouse</td><td>配偶</td></tr>
+            <tr><td class="mid">5</td><td>sibling</td><td>兄弟姐妹</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 往來</th></tr>
+            <tr><td class="mid">6</td><td>visit</td><td>探訪</td></tr>
+            <tr><td class="mid">7</td><td>apology</td><td>道歉</td></tr>
+            <tr><td class="mid">8</td><td>invitation</td><td>邀請</td></tr>
+            <tr><td class="mid">9</td><td>gathering</td><td>聚會</td></tr>
+            <tr><td class="mid">10</td><td>greeting</td><td>問候</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 態度</th></tr>
+            <tr><td class="mid">11</td><td>polite</td><td>有禮貌的</td></tr>
+            <tr><td class="mid">12</td><td>grateful</td><td>感激的</td></tr>
+            <tr><td class="mid">13</td><td>sincere</td><td>誠懇的</td></tr>
+            <tr><td class="mid">14</td><td>patience</td><td>忍耐；耐性</td></tr>
+            <tr><td class="mid">15</td><td>respect</td><td>尊重</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 關係</th></tr>
+            <tr><td class="mid">16</td><td>friendship</td><td>友誼</td></tr>
+            <tr><td class="mid">17</td><td>quarrel</td><td>吵架</td></tr>
+            <tr><td class="mid">18</td><td>forgive</td><td>原諒</td></tr>
+            <tr><td class="mid">19</td><td>birthday</td><td>生日</td></tr>
+            <tr><td class="mid">20</td><td>wedding</td><td>婚禮</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>日常生活：工作學習 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 工作</th></tr>
+            <tr><td class="mid">1</td><td>colleague</td><td>同事</td></tr>
+            <tr><td class="mid">2</td><td>overtime</td><td>加班</td></tr>
+            <tr><td class="mid">3</td><td>interview</td><td>面試</td></tr>
+            <tr><td class="mid">4</td><td>salary</td><td>薪酬</td></tr>
+            <tr><td class="mid">5</td><td>employer</td><td>僱主</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 職務</th></tr>
+            <tr><td class="mid">6</td><td>meeting</td><td>會議</td></tr>
+            <tr><td class="mid">7</td><td>promotion</td><td>晉升</td></tr>
+            <tr><td class="mid">8</td><td>resign</td><td>辭職</td></tr>
+            <tr><td class="mid">9</td><td>trainee</td><td>實習生</td></tr>
+            <tr><td class="mid">10</td><td>duty</td><td>職責</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 學習</th></tr>
+            <tr><td class="mid">11</td><td>revise</td><td>溫習</td></tr>
+            <tr><td class="mid">12</td><td>homework</td><td>功課</td></tr>
+            <tr><td class="mid">13</td><td>textbook</td><td>課本</td></tr>
+            <tr><td class="mid">14</td><td>dictionary</td><td>詞典</td></tr>
+            <tr><td class="mid">15</td><td>assignment</td><td>習作</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 進修</th></tr>
+            <tr><td class="mid">16</td><td>certificate</td><td>證書</td></tr>
+            <tr><td class="mid">17</td><td>qualification</td><td>資歷</td></tr>
+            <tr><td class="mid">18</td><td>practise</td><td>練習（動詞）</td></tr>
+            <tr><td class="mid">19</td><td>lecture</td><td>講座；講課</td></tr>
+            <tr><td class="mid">20</td><td>course</td><td>課程</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>日常生活：康樂休閒 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 去處</th></tr>
+            <tr><td class="mid">1</td><td>cinema</td><td>電影院</td></tr>
+            <tr><td class="mid">2</td><td>museum</td><td>博物館</td></tr>
+            <tr><td class="mid">3</td><td>theatre</td><td>劇院</td></tr>
+            <tr><td class="mid">4</td><td>playground</td><td>遊樂場</td></tr>
+            <tr><td class="mid">5</td><td>gallery</td><td>藝廊</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 活動</th></tr>
+            <tr><td class="mid">6</td><td>hiking</td><td>遠足</td></tr>
+            <tr><td class="mid">7</td><td>swimming</td><td>游泳</td></tr>
+            <tr><td class="mid">8</td><td>picnic</td><td>野餐</td></tr>
+            <tr><td class="mid">9</td><td>concert</td><td>音樂會</td></tr>
+            <tr><td class="mid">10</td><td>gardening</td><td>園藝</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 用品</th></tr>
+            <tr><td class="mid">11</td><td>bicycle</td><td>腳踏車</td></tr>
+            <tr><td class="mid">12</td><td>camera</td><td>相機</td></tr>
+            <tr><td class="mid">13</td><td>souvenir</td><td>紀念品</td></tr>
+            <tr><td class="mid">14</td><td>hobby</td><td>嗜好</td></tr>
+            <tr><td class="mid">15</td><td>exercise</td><td>運動</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 娛樂</th></tr>
+            <tr><td class="mid">16</td><td>holiday</td><td>假期</td></tr>
+            <tr><td class="mid">17</td><td>festival</td><td>節日；盛事</td></tr>
+            <tr><td class="mid">18</td><td>relaxation</td><td>放鬆</td></tr>
+            <tr><td class="mid">19</td><td>sightseeing</td><td>觀光</td></tr>
+            <tr><td class="mid">20</td><td>jogging</td><td>慢跑</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>日常生活：就醫看病 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 求醫</th></tr>
+            <tr><td class="mid">1</td><td>clinic</td><td>診所</td></tr>
+            <tr><td class="mid">2</td><td>dentist</td><td>牙醫</td></tr>
+            <tr><td class="mid">3</td><td>referral</td><td>轉介</td></tr>
+            <tr><td class="mid">4</td><td>register</td><td>登記</td></tr>
+            <tr><td class="mid">5</td><td>outpatient</td><td>門診病人</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 服務</th></tr>
+            <tr><td class="mid">6</td><td>vaccination</td><td>疫苗接種</td></tr>
+            <tr><td class="mid">7</td><td>wheelchair</td><td>輪椅</td></tr>
+            <tr><td class="mid">8</td><td>ward</td><td>病房</td></tr>
+            <tr><td class="mid">9</td><td>physician</td><td>醫生；內科醫生</td></tr>
+            <tr><td class="mid">10</td><td>nurse</td><td>護士</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 診治</th></tr>
+            <tr><td class="mid">11</td><td>scan</td><td>掃描</td></tr>
+            <tr><td class="mid">12</td><td>surgery</td><td>手術</td></tr>
+            <tr><td class="mid">13</td><td>physiotherapy</td><td>物理治療</td></tr>
+            <tr><td class="mid">14</td><td>consultation</td><td>診症</td></tr>
+            <tr><td class="mid">15</td><td>specialist</td><td>專科醫生</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 配藥</th></tr>
+            <tr><td class="mid">16</td><td>pharmacist</td><td>藥劑師</td></tr>
+            <tr><td class="mid">17</td><td>ointment</td><td>藥膏</td></tr>
+            <tr><td class="mid">18</td><td>hospital</td><td>醫院</td></tr>
+            <tr><td class="mid">19</td><td>paediatric</td><td>小兒科的</td></tr>
+            <tr><td class="mid">20</td><td>spectacles</td><td>眼鏡</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>日常生活：政府辦事 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 申請</th></tr>
+            <tr><td class="mid">1</td><td>application</td><td>申請</td></tr>
+            <tr><td class="mid">2</td><td>photocopy</td><td>影印本</td></tr>
+            <tr><td class="mid">3</td><td>residence</td><td>居留；住所</td></tr>
+            <tr><td class="mid">4</td><td>permit</td><td>許可證</td></tr>
+            <tr><td class="mid">5</td><td>document</td><td>文件</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 手續</th></tr>
+            <tr><td class="mid">6</td><td>form</td><td>表格</td></tr>
+            <tr><td class="mid">7</td><td>original</td><td>正本</td></tr>
+            <tr><td class="mid">8</td><td>submit</td><td>提交</td></tr>
+            <tr><td class="mid">9</td><td>approval</td><td>批准</td></tr>
+            <tr><td class="mid">10</td><td>department</td><td>部門</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 窗口</th></tr>
+            <tr><td class="mid">11</td><td>officer</td><td>人員；官員</td></tr>
+            <tr><td class="mid">12</td><td>enquiry</td><td>查詢</td></tr>
+            <tr><td class="mid">13</td><td>official</td><td>正式的；官方的</td></tr>
+            <tr><td class="mid">14</td><td>procedure</td><td>程序</td></tr>
+            <tr><td class="mid">15</td><td>renewal</td><td>續期</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 居民</th></tr>
+            <tr><td class="mid">16</td><td>permanent</td><td>永久的</td></tr>
+            <tr><td class="mid">17</td><td>tax</td><td>稅</td></tr>
+            <tr><td class="mid">18</td><td>declare</td><td>申報</td></tr>
+            <tr><td class="mid">19</td><td>resident</td><td>居民</td></tr>
+            <tr><td class="mid">20</td><td>welfare</td><td>福利</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>日常生活：電子通訊 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 工具</th></tr>
+            <tr><td class="mid">1</td><td>email</td><td>電郵</td></tr>
+            <tr><td class="mid">2</td><td>wifi</td><td>無線網絡</td></tr>
+            <tr><td class="mid">3</td><td>download</td><td>下載</td></tr>
+            <tr><td class="mid">4</td><td>attachment</td><td>附件</td></tr>
+            <tr><td class="mid">5</td><td>website</td><td>網站</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 操作</th></tr>
+            <tr><td class="mid">6</td><td>upload</td><td>上傳</td></tr>
+            <tr><td class="mid">7</td><td>username</td><td>用戶名稱</td></tr>
+            <tr><td class="mid">8</td><td>browser</td><td>瀏覽器</td></tr>
+            <tr><td class="mid">9</td><td>software</td><td>軟件</td></tr>
+            <tr><td class="mid">10</td><td>profile</td><td>個人檔案</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 網絡</th></tr>
+            <tr><td class="mid">11</td><td>online</td><td>上網的；線上的</td></tr>
+            <tr><td class="mid">12</td><td>network</td><td>網絡</td></tr>
+            <tr><td class="mid">13</td><td>update</td><td>更新</td></tr>
+            <tr><td class="mid">14</td><td>restart</td><td>重新啟動</td></tr>
+            <tr><td class="mid">15</td><td>screenshot</td><td>螢幕截圖</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 安全</th></tr>
+            <tr><td class="mid">16</td><td>bluetooth</td><td>藍牙</td></tr>
+            <tr><td class="mid">17</td><td>scam</td><td>詐騙</td></tr>
+            <tr><td class="mid">18</td><td>privacy</td><td>私隱</td></tr>
+            <tr><td class="mid">19</td><td>forward</td><td>轉發</td></tr>
+            <tr><td class="mid">20</td><td>settings</td><td>設定</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>日常生活：社區生活 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 場所</th></tr>
+            <tr><td class="mid">1</td><td>supermarket</td><td>超級市場</td></tr>
+            <tr><td class="mid">2</td><td>library</td><td>圖書館</td></tr>
+            <tr><td class="mid">3</td><td>market</td><td>街市；市場</td></tr>
+            <tr><td class="mid">4</td><td>community</td><td>社區</td></tr>
+            <tr><td class="mid">5</td><td>school</td><td>學校</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 秩序</th></tr>
+            <tr><td class="mid">6</td><td>recycle</td><td>回收</td></tr>
+            <tr><td class="mid">7</td><td>crowded</td><td>擠擁的</td></tr>
+            <tr><td class="mid">8</td><td>bin</td><td>垃圾桶</td></tr>
+            <tr><td class="mid">9</td><td>noise</td><td>噪音</td></tr>
+            <tr><td class="mid">10</td><td>volunteer</td><td>義工</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 設施</th></tr>
+            <tr><td class="mid">11</td><td>postbox</td><td>郵箱</td></tr>
+            <tr><td class="mid">12</td><td>junction</td><td>路口</td></tr>
+            <tr><td class="mid">13</td><td>escalator</td><td>電動扶梯</td></tr>
+            <tr><td class="mid">14</td><td>entrance</td><td>入口</td></tr>
+            <tr><td class="mid">15</td><td>exit</td><td>出口</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 社區</th></tr>
+            <tr><td class="mid">16</td><td>announcement</td><td>公告</td></tr>
+            <tr><td class="mid">17</td><td>neighbourhood</td><td>鄰里</td></tr>
+            <tr><td class="mid">18</td><td>public</td><td>公眾的</td></tr>
+            <tr><td class="mid">19</td><td>facility</td><td>設施</td></tr>
+            <tr><td class="mid">20</td><td>district</td><td>地區</td></tr>
+          </tbody>
+        </table>
+        <h3>護理英語</h3>
+        <table class="words compact">
           <caption>護理英語：症狀評估 · 20 詞（只供對照，不填寫）</caption>
           <thead>
             <tr>
@@ -1467,6 +1947,294 @@
             <tr><td class="mid">18</td><td>hypotension</td><td>低血壓</td></tr>
             <tr><td class="mid">19</td><td>hypertension</td><td>高血壓</td></tr>
             <tr><td class="mid">20</td><td>nephrology</td><td>腎科</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>護理英語：交更溝通 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 交更</th></tr>
+            <tr><td class="mid">1</td><td>handover</td><td>交更</td></tr>
+            <tr><td class="mid">2</td><td>shift</td><td>更期</td></tr>
+            <tr><td class="mid">3</td><td>escalate</td><td>上報；升級處理</td></tr>
+            <tr><td class="mid">4</td><td>stable</td><td>穩定的</td></tr>
+            <tr><td class="mid">5</td><td>outstanding</td><td>未完成的</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 狀況</th></tr>
+            <tr><td class="mid">6</td><td>condition</td><td>病情；狀況</td></tr>
+            <tr><td class="mid">7</td><td>alert</td><td>警覺的；警報</td></tr>
+            <tr><td class="mid">8</td><td>deteriorate</td><td>惡化</td></tr>
+            <tr><td class="mid">9</td><td>improve</td><td>改善</td></tr>
+            <tr><td class="mid">10</td><td>review</td><td>覆核；檢視</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 重點</th></tr>
+            <tr><td class="mid">11</td><td>priority</td><td>優先次序</td></tr>
+            <tr><td class="mid">12</td><td>verbal</td><td>口頭的</td></tr>
+            <tr><td class="mid">13</td><td>confirm</td><td>確認</td></tr>
+            <tr><td class="mid">14</td><td>inform</td><td>告知</td></tr>
+            <tr><td class="mid">15</td><td>assign</td><td>指派</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 協調</th></tr>
+            <tr><td class="mid">16</td><td>relief</td><td>替更</td></tr>
+            <tr><td class="mid">17</td><td>absent</td><td>缺勤的</td></tr>
+            <tr><td class="mid">18</td><td>clarify</td><td>澄清</td></tr>
+            <tr><td class="mid">19</td><td>concern</td><td>關注點</td></tr>
+            <tr><td class="mid">20</td><td>workload</td><td>工作量</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>護理英語：病人教育 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 教育</th></tr>
+            <tr><td class="mid">1</td><td>consent</td><td>同意</td></tr>
+            <tr><td class="mid">2</td><td>advise</td><td>勸告；指導</td></tr>
+            <tr><td class="mid">3</td><td>demonstrate</td><td>示範</td></tr>
+            <tr><td class="mid">4</td><td>lifestyle</td><td>生活方式</td></tr>
+            <tr><td class="mid">5</td><td>education</td><td>教育</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 說明</th></tr>
+            <tr><td class="mid">6</td><td>explain</td><td>解釋</td></tr>
+            <tr><td class="mid">7</td><td>understand</td><td>明白</td></tr>
+            <tr><td class="mid">8</td><td>leaflet</td><td>單張</td></tr>
+            <tr><td class="mid">9</td><td>handbook</td><td>手冊</td></tr>
+            <tr><td class="mid">10</td><td>compliance</td><td>依從</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 自理</th></tr>
+            <tr><td class="mid">11</td><td>independence</td><td>自理能力；獨立</td></tr>
+            <tr><td class="mid">12</td><td>mobility</td><td>活動能力</td></tr>
+            <tr><td class="mid">13</td><td>nutrition</td><td>營養</td></tr>
+            <tr><td class="mid">14</td><td>rehabilitation</td><td>康復</td></tr>
+            <tr><td class="mid">15</td><td>activity</td><td>活動</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 風險</th></tr>
+            <tr><td class="mid">16</td><td>risk</td><td>風險</td></tr>
+            <tr><td class="mid">17</td><td>benefit</td><td>益處</td></tr>
+            <tr><td class="mid">18</td><td>refusal</td><td>拒絕</td></tr>
+            <tr><td class="mid">19</td><td>anxiety</td><td>焦慮</td></tr>
+            <tr><td class="mid">20</td><td>counselling</td><td>輔導</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>護理英語：感染控制 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 原則</th></tr>
+            <tr><td class="mid">1</td><td>antiseptic</td><td>消毒藥；防腐劑</td></tr>
+            <tr><td class="mid">2</td><td>disposable</td><td>即棄的</td></tr>
+            <tr><td class="mid">3</td><td>sharps</td><td>利器</td></tr>
+            <tr><td class="mid">4</td><td>aseptic</td><td>無菌操作的</td></tr>
+            <tr><td class="mid">5</td><td>sanitiser</td><td>消毒搓手液</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 防護</th></tr>
+            <tr><td class="mid">6</td><td>gown</td><td>防護衣；袍</td></tr>
+            <tr><td class="mid">7</td><td>mask</td><td>口罩</td></tr>
+            <tr><td class="mid">8</td><td>apron</td><td>保護圍裙</td></tr>
+            <tr><td class="mid">9</td><td>precaution</td><td>預防措施</td></tr>
+            <tr><td class="mid">10</td><td>barrier</td><td>屏障</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 消毒</th></tr>
+            <tr><td class="mid">11</td><td>sterilise</td><td>滅菌</td></tr>
+            <tr><td class="mid">12</td><td>disinfect</td><td>消毒</td></tr>
+            <tr><td class="mid">13</td><td>contaminate</td><td>污染</td></tr>
+            <tr><td class="mid">14</td><td>outbreak</td><td>爆發</td></tr>
+            <tr><td class="mid">15</td><td>pathogen</td><td>病原體</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 隔離</th></tr>
+            <tr><td class="mid">16</td><td>quarantine</td><td>檢疫</td></tr>
+            <tr><td class="mid">17</td><td>waste</td><td>廢物</td></tr>
+            <tr><td class="mid">18</td><td>needlestick</td><td>針刺</td></tr>
+            <tr><td class="mid">19</td><td>exposure</td><td>暴露</td></tr>
+            <tr><td class="mid">20</td><td>transmission</td><td>傳播</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>護理英語：急救應變 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 急救</th></tr>
+            <tr><td class="mid">1</td><td>resuscitation</td><td>復甦</td></tr>
+            <tr><td class="mid">2</td><td>haemorrhage</td><td>出血</td></tr>
+            <tr><td class="mid">3</td><td>seizure</td><td>抽搐；癲癇發作</td></tr>
+            <tr><td class="mid">4</td><td>defibrillator</td><td>除顫器</td></tr>
+            <tr><td class="mid">5</td><td>collapse</td><td>昏倒；倒下</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 氣道循環</th></tr>
+            <tr><td class="mid">6</td><td>airway</td><td>氣道</td></tr>
+            <tr><td class="mid">7</td><td>choking</td><td>哽塞</td></tr>
+            <tr><td class="mid">8</td><td>cardiac</td><td>心臟的</td></tr>
+            <tr><td class="mid">9</td><td>compression</td><td>按壓</td></tr>
+            <tr><td class="mid">10</td><td>shock</td><td>休克</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 急症</th></tr>
+            <tr><td class="mid">11</td><td>stroke</td><td>中風</td></tr>
+            <tr><td class="mid">12</td><td>unconscious</td><td>不省人事的</td></tr>
+            <tr><td class="mid">13</td><td>fracture</td><td>骨折</td></tr>
+            <tr><td class="mid">14</td><td>burn</td><td>燒傷</td></tr>
+            <tr><td class="mid">15</td><td>poisoning</td><td>中毒</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 應變</th></tr>
+            <tr><td class="mid">16</td><td>triage</td><td>分流；檢傷分類</td></tr>
+            <tr><td class="mid">17</td><td>evacuate</td><td>疏散</td></tr>
+            <tr><td class="mid">18</td><td>stretcher</td><td>擔架</td></tr>
+            <tr><td class="mid">19</td><td>intubation</td><td>插管</td></tr>
+            <tr><td class="mid">20</td><td>anaphylaxis</td><td>過敏性休克</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>護理英語：觀察紀錄 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 紀錄</th></tr>
+            <tr><td class="mid">1</td><td>chart</td><td>圖表；紀錄表</td></tr>
+            <tr><td class="mid">2</td><td>cyanosis</td><td>紫紺</td></tr>
+            <tr><td class="mid">3</td><td>intake</td><td>攝入量</td></tr>
+            <tr><td class="mid">4</td><td>output</td><td>排出量</td></tr>
+            <tr><td class="mid">5</td><td>baseline</td><td>基線</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 徵象</th></tr>
+            <tr><td class="mid">6</td><td>pallor</td><td>蒼白</td></tr>
+            <tr><td class="mid">7</td><td>jaundice</td><td>黃疸</td></tr>
+            <tr><td class="mid">8</td><td>clammy</td><td>濕冷的</td></tr>
+            <tr><td class="mid">9</td><td>drowsy</td><td>昏昏欲睡的</td></tr>
+            <tr><td class="mid">10</td><td>restless</td><td>煩躁的</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 量度</th></tr>
+            <tr><td class="mid">11</td><td>reading</td><td>讀數</td></tr>
+            <tr><td class="mid">12</td><td>trend</td><td>趨勢</td></tr>
+            <tr><td class="mid">13</td><td>irregular</td><td>不規則的</td></tr>
+            <tr><td class="mid">14</td><td>frequent</td><td>頻密的</td></tr>
+            <tr><td class="mid">15</td><td>chronic</td><td>慢性的</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 用語</th></tr>
+            <tr><td class="mid">16</td><td>severe</td><td>嚴重的</td></tr>
+            <tr><td class="mid">17</td><td>record</td><td>紀錄</td></tr>
+            <tr><td class="mid">18</td><td>entry</td><td>記入；記錄項目</td></tr>
+            <tr><td class="mid">19</td><td>accurate</td><td>準確的</td></tr>
+            <tr><td class="mid">20</td><td>legible</td><td>字跡清楚的</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>護理英語：化驗報告 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 血細胞</th></tr>
+            <tr><td class="mid">1</td><td>platelet</td><td>血小板</td></tr>
+            <tr><td class="mid">2</td><td>bilirubin</td><td>膽紅素</td></tr>
+            <tr><td class="mid">3</td><td>abnormal</td><td>異常的</td></tr>
+            <tr><td class="mid">4</td><td>elevated</td><td>升高的</td></tr>
+            <tr><td class="mid">5</td><td>arterial</td><td>動脈的</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 項目</th></tr>
+            <tr><td class="mid">6</td><td>albumin</td><td>白蛋白</td></tr>
+            <tr><td class="mid">7</td><td>haematocrit</td><td>血細胞壓積</td></tr>
+            <tr><td class="mid">8</td><td>leucocyte</td><td>白血球</td></tr>
+            <tr><td class="mid">9</td><td>ferritin</td><td>鐵蛋白</td></tr>
+            <tr><td class="mid">10</td><td>bicarbonate</td><td>碳酸氫鹽</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 結果</th></tr>
+            <tr><td class="mid">11</td><td>reduced</td><td>降低的</td></tr>
+            <tr><td class="mid">12</td><td>reference</td><td>參考</td></tr>
+            <tr><td class="mid">13</td><td>positive</td><td>陽性的</td></tr>
+            <tr><td class="mid">14</td><td>negative</td><td>陰性的</td></tr>
+            <tr><td class="mid">15</td><td>critical</td><td>危急的；臨界的</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 檢驗</th></tr>
+            <tr><td class="mid">16</td><td>venous</td><td>靜脈的</td></tr>
+            <tr><td class="mid">17</td><td>sample</td><td>樣本</td></tr>
+            <tr><td class="mid">18</td><td>coagulation</td><td>凝固</td></tr>
+            <tr><td class="mid">19</td><td>urinalysis</td><td>尿液分析</td></tr>
+            <tr><td class="mid">20</td><td>serum</td><td>血清</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>護理英語：透析進階 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 機器</th></tr>
+            <tr><td class="mid">1</td><td>ultrafiltration</td><td>超濾</td></tr>
+            <tr><td class="mid">2</td><td>dialysate</td><td>透析液</td></tr>
+            <tr><td class="mid">3</td><td>priming</td><td>預沖</td></tr>
+            <tr><td class="mid">4</td><td>rinseback</td><td>回血</td></tr>
+            <tr><td class="mid">5</td><td>graft</td><td>人工血管；移植物</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 設定</th></tr>
+            <tr><td class="mid">6</td><td>recirculation</td><td>再循環</td></tr>
+            <tr><td class="mid">7</td><td>conductivity</td><td>導電度</td></tr>
+            <tr><td class="mid">8</td><td>concentrate</td><td>濃縮液</td></tr>
+            <tr><td class="mid">9</td><td>transmembrane</td><td>跨膜的</td></tr>
+            <tr><td class="mid">10</td><td>needling</td><td>穿刺</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 監測</th></tr>
+            <tr><td class="mid">11</td><td>alarm</td><td>警報</td></tr>
+            <tr><td class="mid">12</td><td>bolus</td><td>推注</td></tr>
+            <tr><td class="mid">13</td><td>infusion</td><td>輸注</td></tr>
+            <tr><td class="mid">14</td><td>volume</td><td>容量</td></tr>
+            <tr><td class="mid">15</td><td>target</td><td>目標值</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 通路</th></tr>
+            <tr><td class="mid">16</td><td>infiltration</td><td>滲出；外滲</td></tr>
+            <tr><td class="mid">17</td><td>stenosis</td><td>狹窄</td></tr>
+            <tr><td class="mid">18</td><td>aneurysm</td><td>動脈瘤</td></tr>
+            <tr><td class="mid">19</td><td>ischaemia</td><td>缺血</td></tr>
+            <tr><td class="mid">20</td><td>anticoagulant</td><td>抗凝藥</td></tr>
+          </tbody>
+        </table>
+        <table class="words compact">
+          <caption>護理英語：腎科飲食 · 20 詞（只供對照，不填寫）</caption>
+          <thead>
+            <tr>
+              <th scope="col" class="mid">序</th>
+              <th scope="col">英文</th>
+              <th scope="col">中文意思</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group-row"><th colspan="3" scope="colgroup">A 組 · 1–5 基礎</th></tr>
+            <tr><td class="mid">1</td><td>protein</td><td>蛋白質</td></tr>
+            <tr><td class="mid">2</td><td>binder</td><td>結合劑</td></tr>
+            <tr><td class="mid">3</td><td>dietician</td><td>營養師</td></tr>
+            <tr><td class="mid">4</td><td>salt</td><td>鹽</td></tr>
+            <tr><td class="mid">5</td><td>homemade</td><td>家製的</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">B 組 · 6–10 食物</th></tr>
+            <tr><td class="mid">6</td><td>snack</td><td>小食</td></tr>
+            <tr><td class="mid">7</td><td>processed</td><td>加工的</td></tr>
+            <tr><td class="mid">8</td><td>tinned</td><td>罐頭的</td></tr>
+            <tr><td class="mid">9</td><td>dairy</td><td>奶類</td></tr>
+            <tr><td class="mid">10</td><td>meat</td><td>肉類</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">C 組 · 11–15 指導</th></tr>
+            <tr><td class="mid">11</td><td>serving</td><td>一份；一客</td></tr>
+            <tr><td class="mid">12</td><td>limit</td><td>上限；限制</td></tr>
+            <tr><td class="mid">13</td><td>avoid</td><td>避免</td></tr>
+            <tr><td class="mid">14</td><td>substitute</td><td>替代</td></tr>
+            <tr><td class="mid">15</td><td>seasoning</td><td>調味料</td></tr>
+            <tr class="group-row"><th colspan="3" scope="colgroup">D 組 · 16–20 營養</th></tr>
+            <tr><td class="mid">16</td><td>malnutrition</td><td>營養不良</td></tr>
+            <tr><td class="mid">17</td><td>appetite</td><td>胃口</td></tr>
+            <tr><td class="mid">18</td><td>calorie</td><td>卡路里</td></tr>
+            <tr><td class="mid">19</td><td>supplement</td><td>補充劑</td></tr>
+            <tr><td class="mid">20</td><td>thirst</td><td>口渴</td></tr>
           </tbody>
         </table>
         <nav class="pager no-print" aria-label="前後節">
