@@ -246,7 +246,19 @@
     font-weight: 800;
     line-height: 1.3;
     flex: 1 1 auto;
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    cursor: pointer;
+    touch-action: manipulation;
+    width: 100%;
+    box-sizing: border-box;
+    font-family: inherit;
+    color: inherit;
+    border: 0;
   }
+  .cue-zh:focus, .en-box:focus { outline: none; }
+  .cue-zh:focus-visible, .en-box:focus-visible { outline: 2px solid #0f3d73; outline-offset: 1px; }
   .en-box { background: #fff; border: 2px solid var(--line-soft); letter-spacing: 0.03em; position: relative; }
   .en-box.masked { color: transparent; background: #d5deea; border-style: dashed; user-select: none; }
   .en-box.masked::after {
@@ -313,6 +325,79 @@
   }
   .answer-display:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px rgba(26, 79, 139, 0.18); }
   .answer-display .placeholder { color: var(--muted); font-size: 1.05rem; letter-spacing: 0; font-weight: 600; }
+  #answer-form { margin: 0; padding: 0; width: 100%; }
+  input#answer-input.answer-display {
+    -webkit-appearance: none;
+    appearance: none;
+    display: block;
+    font-family: inherit;
+    font-weight: 800;
+    font-size: max(16px, clamp(1.6rem, 6vw, 2.1rem));
+    margin: 0;
+    color: inherit;
+    min-height: 76px;
+    padding: 14px 16px;
+    border: 2px solid var(--line-soft);
+    border-radius: 12px;
+    background: var(--key);
+  }
+  #answer-input::placeholder {
+    color: var(--muted);
+    font-size: 1.05rem;
+    letter-spacing: 0;
+    font-weight: 600;
+    opacity: 1;
+  }
+  body[data-kb="system"] #osk { display: none !important; }
+
+  /* 系統鍵盤：把練習畫面鎖在 visualViewport 內，避免 iOS 鍵盤蓋住檢查／暫停（100dvh 不會隨鍵盤縮小） */
+  html:has(body[data-screen="practice"][data-kb="system"]),
+  body[data-screen="practice"][data-kb="system"] {
+    display: flex;
+    flex-direction: column;
+    height: var(--vv-height, 100dvh);
+    max-height: var(--vv-height, 100dvh);
+    min-height: 0;
+    min-height: var(--vv-height, 100dvh);
+    overflow: hidden;
+  }
+  body[data-screen="practice"][data-kb="system"] {
+    position: fixed;
+    top: var(--vv-offset, 0px);
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+  body[data-screen="practice"][data-kb="system"] .app {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+  }
+  body[data-screen="practice"][data-kb="system"] #screen-practice,
+  body[data-screen="practice"][data-kb="system"] #screen-practice .practice-card,
+  body[data-screen="practice"][data-kb="system"] #screen-practice .card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  body[data-screen="practice"][data-kb="system"] .practice-scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  body[data-screen="practice"][data-kb="system"] #type-area { flex: 0 0 auto; }
+  body[data-screen="practice"][data-kb="system"] .practice-dock {
+    position: relative;
+    flex: 0 0 auto;
+    z-index: 15;
+    background: var(--paper);
+  }
   .caret {
     display: inline-block;
     width: 2px;
@@ -428,6 +513,20 @@
       max-height: 100dvh;
       overflow: hidden;
     }
+    html:has(body[data-screen="practice"][data-kb="system"]),
+    body[data-screen="practice"][data-kb="system"] {
+      height: var(--vv-height, 100dvh);
+      max-height: var(--vv-height, 100dvh);
+      min-height: 0;
+      min-height: var(--vv-height, 100dvh);
+    }
+    body[data-screen="practice"][data-kb="system"] {
+      position: fixed;
+      top: var(--vv-offset, 0px);
+      left: 0;
+      right: 0;
+      width: 100%;
+    }
     /* margin:auto 在直向 flex 裡會把練習區縮成內容寬，卡片比頂欄窄，鍵盤也被擠到折行 */
     body[data-screen="practice"] .app {
       flex: 1;
@@ -467,23 +566,18 @@
     #screen-practice .purpose { display: none; }
     #screen-practice > .card > .note { display: none; }
     #screen-practice .btn-row { margin-top: 8px; }
-    #screen-practice .speak-row {
-      margin-top: 6px;
-      flex-wrap: nowrap;
-    }
-    #screen-practice .speak-row .btn {
-      flex: 1 1 0;
-      min-width: 0;
-      min-height: 40px;
-    }
-    /* 螢幕鍵盤已有「檢查」，窄屏只留暫停／繼續，避免底部按鈕被 Safari 工具列裁掉 */
+    /* 自訂鍵盤已有「檢查」，窄屏只留暫停／繼續，避免底部按鈕被 Safari 工具列裁掉 */
     .practice-dock #btn-check { display: none; }
+    /* 手機改用系統鍵盤後，「檢查」必須再出現 */
+    body[data-kb="system"] .practice-dock #btn-check { display: inline-flex; }
+    body[data-kb="system"] .practice-dock .btn { flex: 1 1 0; min-width: 0; }
     .cue-grid { gap: 8px 8px; }
     .cue-zh, .en-box { min-height: 58px; padding: 8px; font-size: clamp(1.3rem, 5.6vw, 1.7rem); }
     .syl-box { margin-top: 0; }
     .syl-chip { padding: 5px 8px; min-width: 1.8em; font-size: clamp(1.05rem, 4.2vw, 1.35rem); }
     .syl-cap { margin-top: 4px; font-size: 0.8rem; }
-    .answer-display { min-height: 52px; padding: 8px 12px; font-size: clamp(1.4rem, 6vw, 1.85rem); }
+    .answer-display { min-height: 52px; padding: 8px 12px; font-size: max(16px, clamp(1.4rem, 6vw, 1.85rem)); }
+    input#answer-input.answer-display { min-height: 52px; padding: 8px 12px; font-size: max(16px, clamp(1.4rem, 6vw, 1.85rem)); }
     .hint-line { margin: 2px 0 4px; min-height: 0; font-size: 0.88rem; }
     .hint-line:empty { display: none; }
     .feedback { margin: 4px 0; padding: 8px 10px; }
@@ -526,7 +620,7 @@
       <ol class="steps" aria-label="每一組的次序">
         <li><b>1　看</b><span>英文、中文與音節同時出現。只認得，不評分。</span></li>
         <li><b>2　抄打 1 次</b><span>英文仍可見。抄對了才進入下一步。</span></li>
-        <li><b>3　遮默</b><span>只留中文，可聽讀音。默出拼法。</span></li>
+        <li><b>3　遮默</b><span>只留中文，可點中英方框聽讀音。默出拼法。</span></li>
         <li><b>4　錯了才再練</b><span>看正確拼法，再抄 2 次，並再遮默一次。</span></li>
       </ol>
     </div>
@@ -657,19 +751,15 @@
       <div class="cue-grid">
         <div class="cue-col">
           <span class="kicker">中文</span>
-          <div class="cue-zh" id="cue-zh"></div>
+          <button type="button" class="cue-zh" id="cue-zh"></button>
         </div>
         <div class="cue-col">
           <span class="kicker">英文</span>
-          <div class="en-box" id="cue-en"></div>
+          <button type="button" class="en-box" id="cue-en"></button>
         </div>
         <div class="syl-box" id="cue-syl" hidden></div>
       </div>
       <p class="purpose" id="cue-purpose"></p>
-      <div class="btn-row speak-row">
-        <button type="button" class="btn" id="btn-speak-zh">聽中文</button>
-        <button type="button" class="btn" id="btn-speak-en">聽英文</button>
-      </div>
       <div id="look-area">
         <div class="btn-row">
           <button type="button" class="btn primary large" id="btn-look">認得了，去抄打</button>
@@ -678,6 +768,9 @@
       </div>
       <div id="type-area">
         <div class="answer-display" id="answer-display" tabindex="0" role="textbox" aria-label="拼出的英文"></div>
+        <form id="answer-form" action="#" novalidate>
+          <input type="text" class="answer-display" id="answer-input" inputmode="text" enterkeyhint="done" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" lang="en" aria-label="拼出的英文" maxlength="48" placeholder="用鍵盤拼出英文" hidden>
+        </form>
         <p class="hint-line" id="hint-line"></p>
         <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
       </div>
@@ -694,7 +787,7 @@
           <button type="button" class="btn ghost" id="btn-quit">暫停並保留</button>
         </div>
       </div>
-      <p class="note">可用螢幕鍵盤或實體鍵盤。Enter 檢查。抄打時英文保持可見；遮默時只留中文。</p>
+      <p class="note" id="practice-kb-note">可用螢幕鍵盤或實體鍵盤。Enter 檢查。抄打時英文保持可見；遮默時只留中文。可點中文或英文方框聽讀音。</p>
     </div>
   </section>
 
@@ -2010,12 +2103,85 @@
     return a;
   }
 
+  var kbModeOverride = "";
+
+  function useSystemKeyboard() {
+    if (kbModeOverride === "system") return true;
+    if (kbModeOverride === "osk") return false;
+    var q = location.search || "";
+    if (/(?:^|[?&])kb=system(?:&|$)/.test(q)) return true;
+    if (/(?:^|[?&])kb=osk(?:&|$)/.test(q)) return false;
+    return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent || "");
+  }
+
+  function applyKeyboardMode() {
+    var sys = useSystemKeyboard();
+    document.body.setAttribute("data-kb", sys ? "system" : "osk");
+    var osk = document.getElementById("osk");
+    var display = document.getElementById("answer-display");
+    var input = document.getElementById("answer-input");
+    var note = document.getElementById("practice-kb-note");
+    if (input) input.hidden = !sys;
+    if (display) display.hidden = sys;
+    if (sys) {
+      if (osk) osk.hidden = true;
+      if (note) note.textContent = "請用系統鍵盤拼出英文。按鍵盤的完成或「檢查」。抄打時英文保持可見；遮默時只留中文。可點中文或英文方框聽讀音。";
+    } else if (note) {
+      note.textContent = "可用螢幕鍵盤或實體鍵盤。Enter 檢查。抄打時英文保持可見；遮默時只留中文。可點中文或英文方框聽讀音。";
+    }
+    if (document.body.getAttribute("data-screen") !== "practice") blurAnswer();
+    syncPracticeViewport();
+  }
+
+  function answerField() {
+    return useSystemKeyboard()
+      ? document.getElementById("answer-input")
+      : document.getElementById("answer-display");
+  }
+
+  function focusAnswer() {
+    if (!session || session.phase === "look" || session.locked) return;
+    if (document.body.getAttribute("data-screen") !== "practice") return;
+    var typeArea = document.getElementById("type-area");
+    if (typeArea && typeArea.hidden) return;
+    var el = answerField();
+    if (!el || el.hidden) return;
+    try { el.focus({ preventScroll: true }); }
+    catch (e) { try { el.focus(); } catch (err) { /* ignore */ } }
+  }
+
+  function blurAnswer() {
+    var input = document.getElementById("answer-input");
+    if (input && document.activeElement === input) input.blur();
+    var box = document.getElementById("answer-display");
+    if (box && document.activeElement === box) box.blur();
+  }
+
+  function syncPracticeViewport() {
+    var root = document.documentElement;
+    var practicing = document.body.getAttribute("data-screen") === "practice" && useSystemKeyboard();
+    if (!practicing) {
+      root.style.removeProperty("--vv-height");
+      root.style.removeProperty("--vv-offset");
+      return;
+    }
+    var vv = window.visualViewport;
+    var height = vv ? vv.height : window.innerHeight;
+    var offset = vv && vv.offsetTop ? vv.offsetTop : 0;
+    if (!height) height = window.innerHeight;
+    root.style.setProperty("--vv-height", height + "px");
+    root.style.setProperty("--vv-offset", offset + "px");
+  }
+
   function showScreen(name) {
     ["setup", "practice", "end"].forEach(function (id) {
       document.getElementById("screen-" + id).hidden = id !== name;
     });
     document.body.setAttribute("data-screen", name);
+    applyKeyboardMode();
+    if (name !== "practice") blurAnswer();
     window.scrollTo(0, 0);
+    syncPracticeViewport();
   }
 
   function currentItem() {
@@ -2254,6 +2420,7 @@
     session.timer = null;
     showScreen("practice");
     renderPractice();
+    if (session.phase !== "look" && !session.locked) focusAnswer();
     return true;
   }
 
@@ -2305,11 +2472,10 @@
     renderPractice();
     save();
     maybeAutoSpeak();
-    if (phase !== "look") {
-      setTimeout(function () {
-        var box = document.getElementById("answer-display");
-        if (box && document.body.getAttribute("data-screen") === "practice") box.focus();
-      }, 30);
+    if (phase === "look" || (session && session.locked)) {
+      blurAnswer();
+    } else {
+      focusAnswer();
     }
   }
 
@@ -2370,16 +2536,17 @@
     document.getElementById("cue-zh").textContent = item.zh;
     var en = document.getElementById("cue-en");
     var showEn = englishVisible();
+    document.getElementById("cue-zh").setAttribute("aria-label", "聽中文");
     if (showEn) {
       en.textContent = item.en;
       en.classList.remove("masked");
       en.lang = "en";
-      en.removeAttribute("aria-label");
+      en.setAttribute("aria-label", "聽英文");
     } else {
       en.textContent = "";
       en.classList.add("masked");
       en.removeAttribute("lang");
-      en.setAttribute("aria-label", "英文已遮住");
+      en.setAttribute("aria-label", "聽英文（已遮住）");
     }
     renderSylBox(item, showEn);
 
@@ -2389,11 +2556,11 @@
     } else if (session.phase === "look" && session.mode === "wrongs") {
       purpose.textContent = "這是錯詞。先看正確拼法、音節與中文，再抄打。此步不評分。";
     } else if (session.phase === "look") {
-      purpose.textContent = "同時看英文、中文與音節。依色塊把詞拆開來記。可以聽一次。此步只負責認得，不評分，也不是默書。";
+      purpose.textContent = "同時看英文、中文與音節。依色塊把詞拆開來記。可點中文或英文方框聽讀音。此步只負責認得，不評分，也不是默書。";
     } else if (session.phase === "copy" && session.copyNeed > 1) {
       purpose.textContent = "看著正確拼法抄打。這個詞要抄對 2 次，然後才遮默。";
     } else if (session.phase === "copy") {
-      purpose.textContent = "看著英文，用鍵盤抄打一遍。抄對了才進入遮默。這是抄寫，不是默書。";
+      purpose.textContent = "看著英文，用鍵盤抄打一遍。抄對了才進入遮默。這是抄寫，不是默書。可點方框聽讀音。";
     } else if (session.phase === "recopy") {
       purpose.textContent = "默錯了，所以要看著正確拼法再抄 2 次。第一次就默對的詞不用再抄。";
     } else if (session.phase === "remask") {
@@ -2401,21 +2568,28 @@
     } else if (test) {
       purpose.textContent = "只給中文。請默出英文。默對就停；默錯會顯示拼法，並記入錯詞本。";
     } else {
-      purpose.textContent = "英文已遮住。請看中文，也可以聽英文讀音，然後默出拼法。";
+      purpose.textContent = "英文已遮住。請看中文，也可以點英文方框聽讀音（不會顯示拼法），然後默出拼法。";
     }
 
     document.getElementById("btn-look").textContent = session.mode === "wrongs" ? "看過了，去抄打" : "認得了，去抄打";
     document.getElementById("look-area").hidden = session.phase !== "look";
     document.getElementById("type-area").hidden = session.phase === "look";
-    document.getElementById("osk").hidden = session.phase === "look";
+    if (useSystemKeyboard()) {
+      document.getElementById("osk").hidden = true;
+    } else {
+      document.getElementById("osk").hidden = session.phase === "look";
+    }
     document.getElementById("btn-check").hidden = session.phase === "look" || session.locked;
     var next = document.getElementById("btn-next");
     next.hidden = !session.locked;
     if (session.locked) next.textContent = nextLabel();
     setKeysEnabled(session.phase !== "look" && !session.locked);
+    applyKeyboardMode();
     renderAnswer();
     updateHint();
     paintNotice();
+    if (session.locked || session.phase === "look") blurAnswer();
+    syncPracticeViewport();
   }
 
   function nextLabel() {
@@ -2432,22 +2606,33 @@
       hint.textContent = "";
       return;
     }
+    var checkHow = useSystemKeyboard() ? "按完成或「檢查」。" : "Enter 檢查。";
     if (session.phase === "copy" || session.phase === "recopy") {
       hint.textContent = session.copyNeed > 1
         ? ("已抄對 " + session.copyDone + "／" + session.copyNeed + " 次。")
-        : "看著上方英文抄打。Enter 檢查。";
+        : ("看著上方英文抄打。" + checkHow);
       return;
     }
-    hint.textContent = session.revealEn ? "正確拼法在上方。" : "英文已遮住。Enter 檢查。";
+    hint.textContent = session.revealEn ? "正確拼法在上方。" : ("英文已遮住。" + checkHow);
   }
 
   function renderAnswer() {
-    var box = document.getElementById("answer-display");
-    if (!session || !session.answer) {
-      box.innerHTML = '<span class="placeholder">點鍵盤拼出英文</span><span class="caret"></span>';
+    var value = (session && session.answer) || "";
+    var input = document.getElementById("answer-input");
+    if (input && useSystemKeyboard()) {
+      if (input.value !== value) input.value = value;
+      input.placeholder = "用鍵盤拼出英文";
+      input.readOnly = !!(session && session.locked);
       return;
     }
-    box.textContent = session.answer;
+    var box = document.getElementById("answer-display");
+    if (!box) return;
+    var placeholder = useSystemKeyboard() ? "用鍵盤拼出英文" : "點鍵盤拼出英文";
+    if (!value) {
+      box.innerHTML = '<span class="placeholder">' + placeholder + '</span><span class="caret"></span>';
+      return;
+    }
+    box.textContent = value;
     var caret = document.createElement("span");
     caret.className = "caret";
     box.appendChild(caret);
@@ -3334,10 +3519,12 @@
     document.getElementById("btn-check").addEventListener("click", checkAnswer);
     document.getElementById("btn-next").addEventListener("click", advance);
     document.getElementById("btn-quit").addEventListener("click", quitPractice);
-    document.getElementById("btn-speak-zh").addEventListener("click", function () {
+    document.getElementById("cue-zh").addEventListener("click", function (e) {
+      e.preventDefault();
       if (session) speak(currentItem().zh, "zh");
     });
-    document.getElementById("btn-speak-en").addEventListener("click", function () {
+    document.getElementById("cue-en").addEventListener("click", function (e) {
+      e.preventDefault();
       if (session) speak(currentItem().en, "en");
     });
     document.getElementById("btn-home").addEventListener("click", function () {
@@ -3371,6 +3558,35 @@
     document.getElementById("answer-display").addEventListener("click", function () {
       document.getElementById("answer-display").focus();
     });
+    var answerForm = document.getElementById("answer-form");
+    var answerInput = document.getElementById("answer-input");
+    function submitTypedAnswer(e) {
+      if (e) e.preventDefault();
+      if (!session || document.body.getAttribute("data-screen") !== "practice") return;
+      if (session.phase === "look") continueFromLook();
+      else if (session.locked) advance();
+      else checkAnswer();
+    }
+    if (answerForm) {
+      answerForm.addEventListener("submit", submitTypedAnswer);
+    }
+    if (answerInput) {
+      answerInput.addEventListener("input", function () {
+        if (!session || session.locked || session.phase === "look") {
+          answerInput.value = (session && session.answer) || "";
+          return;
+        }
+        var v = answerInput.value;
+        if (v.length > 48) {
+          v = v.slice(0, 48);
+          answerInput.value = v;
+        }
+        session.answer = v;
+      });
+      answerInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") submitTypedAnswer(e);
+      });
+    }
     document.addEventListener("keydown", function (e) {
       if (document.body.getAttribute("data-screen") !== "practice") return;
       var tag = e.target && e.target.tagName;
@@ -3440,10 +3656,31 @@
     assert(document.getElementById("cue-syl").textContent.indexOf("cash") >= 0, "cash 的音節可見");
     var cashChip = document.querySelector("#cue-syl button.syl-chip");
     assert(cashChip && cashChip.textContent.indexOf("cash") >= 0, "可見音節是可點的按鈕");
+    var cueZh = document.getElementById("cue-zh");
+    var cueEn = document.getElementById("cue-en");
+    assert(cueZh && cueZh.tagName === "BUTTON" && cueZh.getAttribute("type") === "button", "中文格是按鈕");
+    assert(cueEn && cueEn.tagName === "BUTTON" && cueEn.getAttribute("type") === "button", "英文格是按鈕");
+    assert(cueZh.getAttribute("aria-label") === "聽中文", "中文格標成聽中文");
+    assert(cueEn.getAttribute("aria-label") === "聽英文", "可見時英文格標成聽英文");
+    assert(!document.getElementById("btn-speak-zh") && !document.getElementById("btn-speak-en") && !document.querySelector(".speak-row"), "已沒有獨立聽讀鈕");
     assert(lockReason("full", currentLesson()).length > 0, "未完成四組時不能整課遮默");
     continueFromLook();
     assert(session.phase === "copy" && session.copyNeed === 1, "新詞只抄打 1 次");
     assert(document.getElementById("cue-en").textContent === "cash", "抄打時英文可見");
+    assert(!document.getElementById("osk").hidden, "桌面抄打顯示自訂鍵盤");
+    assert(document.body.getAttribute("data-kb") === "osk", "桌面自動測試走自訂鍵盤");
+    kbModeOverride = "system";
+    applyKeyboardMode();
+    renderPractice();
+    assert(document.body.getAttribute("data-kb") === "system", "可強制系統鍵盤模式");
+    assert(document.getElementById("osk").hidden, "系統鍵盤模式隱藏自訂鍵盤");
+    assert(window.getComputedStyle(document.getElementById("osk")).display === "none", "系統鍵盤模式不顯示自訂鍵盤");
+    assert(!document.getElementById("btn-check").hidden, "系統鍵盤模式顯示檢查鈕");
+    kbModeOverride = "";
+    applyKeyboardMode();
+    renderPractice();
+    assert(document.body.getAttribute("data-kb") === "osk" && !document.getElementById("osk").hidden, "還原後抄打仍用自訂鍵盤");
+    assert(document.getElementById("cue-en").textContent === "cash", "切換鍵盤模式不改可見英文");
     session.answer = "cas";
     checkAnswer();
     assert(session.phase === "copy" && !session.locked, "抄錯仍留在抄打，不進入遮默");
@@ -3455,6 +3692,10 @@
     assert(session.phase === "mask", "進入遮默");
     assert(document.getElementById("cue-en").textContent.indexOf("cash") < 0, "遮默不顯示英文");
     assert(document.getElementById("cue-en").classList.contains("masked"), "英文格標成已遮住");
+    assert(document.getElementById("cue-en").tagName === "BUTTON", "遮默時英文格仍是按鈕");
+    assert(document.getElementById("cue-en").getAttribute("aria-label") === "聽英文（已遮住）", "遮住時朗讀標籤不含拼法");
+    assert(document.getElementById("cue-en").getAttribute("aria-label").indexOf("cash") < 0, "aria 不洩漏英文拼法");
+    assert((document.getElementById("cue-en").innerHTML || "").indexOf("cash") < 0, "英文格 HTML 不洩漏拼法");
     assert(document.getElementById("cue-syl").hidden, "遮默時不顯示音節");
     session.answer = "cash";
     checkAnswer();
@@ -3488,6 +3729,8 @@
     advance();
     assert(session.phase === "remask", "再遮默一次");
     assert(document.getElementById("cue-en").classList.contains("masked"), "再遮默時英文再次遮住");
+    assert(document.getElementById("cue-en").textContent.indexOf("appointment") < 0, "再遮默不顯示英文");
+    assert(document.getElementById("cue-en").getAttribute("aria-label") === "聽英文（已遮住）", "再遮默朗讀標籤不含拼法");
     session.answer = "appointment";
     checkAnswer();
     assert(!state.words[wordKey("lesson-01", "appointment")].inWrongBook, "再遮默對了，不留在錯詞本");
@@ -3593,6 +3836,12 @@
   buildKeyboard();
   state = load();
   bind();
+  applyKeyboardMode();
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener("resize", syncPracticeViewport);
+    window.visualViewport.addEventListener("scroll", syncPracticeViewport);
+  }
+  window.addEventListener("resize", syncPracticeViewport);
   var autotestHost = location.hostname === "127.0.0.1" || location.hostname === "localhost";
   if (autotestHost && (location.search || "").indexOf("autotest=1") >= 0) {
     try { runAutotest(); }
