@@ -384,20 +384,28 @@
     display: flex;
     flex-direction: column;
     min-height: 0;
+    overflow: hidden;
   }
+  /* 不要把空白全留給生詞區，否則輸入框會被推到畫面最底，離英文太遠；剩餘空間放在輸入框與底部按鈕之間 */
   body[data-screen="practice"][data-kb="system"] .practice-scroll {
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     min-height: 0;
-    overflow-y: auto;
+    overflow: hidden auto;
     -webkit-overflow-scrolling: touch;
   }
   body[data-screen="practice"][data-kb="system"] #type-area { flex: 0 0 auto; }
+  body[data-screen="practice"][data-kb="system"] .practice-spacer {
+    display: block;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
   body[data-screen="practice"][data-kb="system"] .practice-dock {
     position: relative;
     flex: 0 0 auto;
     z-index: 15;
     background: var(--paper);
   }
+  .practice-spacer { display: none; }
   .caret {
     display: inline-block;
     width: 2px;
@@ -559,7 +567,20 @@
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
+    body[data-screen="practice"][data-kb="system"] .practice-scroll {
+      flex: 0 1 auto;
+    }
+    body[data-screen="practice"][data-kb="system"] #screen-practice,
+    body[data-screen="practice"][data-kb="system"] #screen-practice .practice-card,
+    body[data-screen="practice"][data-kb="system"] #screen-practice .card {
+      overflow: hidden;
+    }
     #type-area { flex: 0 0 auto; }
+    body[data-screen="practice"][data-kb="system"] .practice-spacer {
+      display: block;
+      flex: 1 1 auto;
+      min-height: 0;
+    }
     #screen-practice .pips { gap: 6px; margin-bottom: 8px; }
     #screen-practice .pips li { padding: 6px 3px; font-size: 0.86rem; }
     #screen-practice .kicker { font-size: 0.78rem; margin-bottom: 2px; }
@@ -774,6 +795,7 @@
         <p class="hint-line" id="hint-line"></p>
         <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
       </div>
+      <div class="practice-spacer" aria-hidden="true"></div>
       <div class="practice-dock">
         <div class="osk" id="osk" aria-label="英文鍵盤">
           <div class="osk-row" id="osk-0"></div>
@@ -2171,6 +2193,27 @@
     if (!height) height = window.innerHeight;
     root.style.setProperty("--vv-height", height + "px");
     root.style.setProperty("--vv-offset", offset + "px");
+    if (window.requestAnimationFrame) {
+      window.requestAnimationFrame(function () { revealTypingCues(); });
+    } else {
+      revealTypingCues();
+    }
+  }
+
+  function revealTypingCues() {
+    if (!useSystemKeyboard()) return;
+    if (document.body.getAttribute("data-screen") !== "practice") return;
+    var sc = document.querySelector("#screen-practice .practice-scroll");
+    var type = document.getElementById("type-area");
+    if (!sc || !type || type.hidden) return;
+    var anchor = document.getElementById("cue-syl");
+    if (!anchor || anchor.hidden) anchor = document.querySelector("#screen-practice .cue-grid");
+    if (!anchor) return;
+    var sRect = sc.getBoundingClientRect();
+    var aRect = anchor.getBoundingClientRect();
+    if (aRect.bottom > sRect.bottom + 1) {
+      sc.scrollTop += (aRect.bottom - sRect.bottom) + 2;
+    }
   }
 
   function showScreen(name) {
