@@ -3,6 +3,8 @@
  * 小二：type partWhole（已知總數，可多部分）/ compare（比多比少）/ seq（數列）/ shapes（圖形重複）/ choiceSeq / multi
  *       steps（數量變化：原有 → 下車 → 上車）/ twoStep（兩步應用題，第二步用 "$1" 代表第一步答案）
  * K3：count（十格框）/ match（一一配對；ask: more／less／diff／toEqual）/ numeral（讀數）/ numberLine（數線）/ shapes
+ * 小二第 5 週另加：gridCount（數方格）/ cutGrid（割補，突出的一格補進缺口）/ joinShapes（兩塊拼起來）
+ *       fold（一條摺線，左右或上下）/ perim（沿外圈數小邊，不背公式）
  */
 (function (global) {
   "use strict";
@@ -376,6 +378,84 @@
       parent: "「溫故：一個配一個，蘋果多出 3 個。」" }
   });
 
+
+  /* ================= 小二 第5週：圖形・方格・割補 ================= */
+  add("w05", "practice", {
+    q1: { type: "shapeName", shape: "circle", answer: "0 個角", expect: { q1: "0" },
+      think: "用手指沿著邊摸一圈。圓形一直彎彎的，沒有尖角。",
+      say: "有 0 個角。",
+      formula: "圓形沒有尖角，所以是 0 個角",
+      check: "正方形有 4 個角，三角形有 3 個角；這個圖一個角都沒有" },
+    q2: { type: "shapeName", shape: "rectangle", answer: "對邊一樣長", expect: { q2: "對邊一樣長" },
+      think: "上面和下面一樣長，左邊和右邊一樣長。四條邊並不是全都一樣長。",
+      say: "對邊一樣長。",
+      formula: "上面＝下面，左邊＝右邊。有 4 個角，但四條邊不是全都一樣長",
+      check: "四條邊都一樣長才是正方形。這張比較扁，所以不選「四邊都一樣長」，也不是「沒有角」" },
+    q3: { type: "fold", axis: "v", rows: 2, cols: 4, cells: [1, 1, 1, 1, 0, 1, 1, 0],
+      answer: "左右摺會重合", expect: { q3: "左右摺會重合" },
+      think: "摺線是直的，畫在正中。左邊兩格和右邊兩格左右對調後一樣。",
+      say: "沿這條線左右摺，兩半會重合。",
+      check: "若改成上下摺，上一行全是塗色，下一行兩邊是空的，對不上" },
+    q4: { type: "gridCount", rows: 3, cols: 3, cells: [1, 0, 0, 1, 1, 0, 1, 0, 0],
+      answer: "4 格", expect: { q4: "4" },
+      think: "空格不要數。由上到下，一行一行數塗色的格。",
+      say: "塗色的有 4 格。" },
+    q5: { type: "gridCount", rows: 2, cols: 4, cells: [1, 1, 1, 1, 1, 1, 1, 0],
+      answer: "7 格", expect: { q5: "7" },
+      think: "先數上面那一行，再數下面那一行，最後加起來。",
+      say: "塗色的有 7 格。" },
+    q6: { type: "perim", rows: 2, cols: 3, cells: [1, 1, 1, 1, 1, 1],
+      answer: "10 條", expect: { q6: "10" },
+      think: "不要數格子有幾格。沿著最外面的小段走，每一段算 1 條。",
+      say: "外圈有 10 條小邊。" },
+    q7: { type: "joinShapes", layout: "triangles-rect", piece: "三角形", result: "長方形",
+      answer: "長方形", expect: { q7: "長方形" },
+      think: "兩塊都是三角形。把斜邊貼在一起，看外圍變成甚麼。",
+      say: "拼成的是長方形。",
+      formula: "兩塊三角形的斜邊貼在一起",
+      check: "拼好後有 4 個角，對邊一樣長，四條邊不是全都一樣長 → 長方形" },
+    q8: { type: "cutGrid", rows: 2, cols: 4, cells: [1, 1, 0, 0, 1, 1, 1, 1],
+      from: { r: 1, c: 3 }, to: { r: 0, c: 2 },
+      answer: "6 格", expect: { q8: "6" },
+      think: "深色那一格是多出來的，虛線格是缺口。剪下來補進去，格數不會變。",
+      say: "補好以後一共有 6 格。" },
+    q9: { type: "seq", terms: [4, 7, 10, 13, null], step: 3, answer: "16", expect: { q9: "16" },
+      think: "4→7→10→13，每次多 3。", say: "空格是 16。" },
+    q10: { type: "compare", rows: [{ label: "小魚", v: 23, role: "small" }, { label: "大魚", v: null, role: "big" }],
+      diff: { v: 14, word: "多" }, answer: "37 條", expect: { q10: "37" },
+      think: "大魚比小魚多 → 大魚是大數。大數＝小數＋相差。", say: "大魚有 37 條。" }
+  });
+
+  add("w05", "quiz", {
+    q1: { type: "shapeName", shape: "triangle", answer: "3 條邊", expect: { q1: "3" },
+      think: "用手指沿邊走，回到起點。尖角也是 3 個。",
+      say: "有 3 條邊。",
+      formula: "三角形有 3 條邊，也有 3 個角",
+      check: "正方形才是 4 條邊；這個圖只有 3 條" },
+    q2: { type: "fold", axis: "h", rows: 4, cols: 3, cells: [1, 1, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0],
+      answer: "上下摺會重合", expect: { q2: "上下摺會重合" },
+      think: "摺線是橫的，畫在正中。上面兩行和下面兩行對得上。",
+      say: "沿這條線上下摺，兩半會重合。",
+      check: "左右對一看：左邊和右邊的塗色不一樣，所以不是左右摺" },
+    q3: { type: "gridCount", rows: 3, cols: 3, cells: [0, 1, 0, 1, 1, 1, 0, 1, 0],
+      answer: "5 格", expect: { q3: "5" },
+      think: "中間一豎和中間一橫重疊的那一格只數一次。",
+      say: "塗色的有 5 格。" },
+    q4: { type: "perim", rows: 2, cols: 2, cells: [1, 0, 1, 1],
+      answer: "8 條", expect: { q4: "8" },
+      think: "這塊不是長方形。仍然只數露在外面的小段，貼在一起的邊不算。",
+      say: "外圈有 8 條小邊。" },
+    q5: { type: "cutGrid", rows: 3, cols: 4, cells: [0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0],
+      from: { r: 2, c: 0 }, to: { r: 0, c: 0 },
+      answer: "8 格", expect: { q5: "8" },
+      think: "左下多出一格，左上是缺口。補進去以後變成兩行，每行 4 格。",
+      say: "補好以後一共有 8 格。" },
+    q6: { type: "seq", terms: [11, 15, 19, 23, null], step: 4, answer: "27", expect: { q6: "27" },
+      think: "11→15→19→23，每次多 4。", say: "下一個是 27。" },
+    q7: { type: "partWhole", total: { label: "原有", v: 40 }, parts: [{ label: "拿走", v: 16 }, { label: "剩下", v: null }],
+      answer: "24 顆", expect: { q7: "24" },
+      think: "原有 40 顆是總數，拿走的和剩下的是兩部分。", say: "還剩 24 顆。" }
+  });
 
   global.MathExplainData = D;
 })(typeof window !== "undefined" ? window : this);

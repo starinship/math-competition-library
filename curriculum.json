@@ -234,11 +234,13 @@
           "id": "w05",
           "folder": "tracks/p2/w05-figures",
           "week": 5,
-          "title": "圖形認識・簡單空間",
-          "skills": ["平面圖形特徵", "對稱初步", "數方格與周界直覺", "圖形組合觀察"],
+          "title": "圖形與方格",
+          "skills": ["平面圖形特徵", "對稱初步", "數方格與周界直覺", "圖形組合觀察", "簡單割補"],
           "level": "小二核心",
-          "status": "planned",
-          "sheets": []
+          "status": "ready",
+          "sheets": ["teach.html", "practice.html", "quiz.html", "answers.html"],
+          "sessionHint": "15–25 分・練習 10 題（含溫故 2 題）・測驗 7 題（含溫故 2 題）・精熟≈8/10、5/7",
+          "spiralReview": ["觀察數列規律", "已知差求一部分", "已知和求一部分"]
         },
         {
           "id": "w06",

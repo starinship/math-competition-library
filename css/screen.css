@@ -678,6 +678,7 @@ body.track-k3 .sheet {
   border-radius: 12px;
   border: 1.5px dashed #a8c5b5;
 }
+.big-visual svg { max-width: 100%; height: auto; letter-spacing: 0; }
 .k3-prompt {
   font-size: 1.25rem;
   font-weight: 700;
@@ -1008,6 +1009,7 @@ body[data-track="p2"] .nav-bar { /* marker only */ }
 .sol-svg .sol-seg-known { fill: #dbe8f6; stroke: #1a4d8c; stroke-width: 2; }
 .sol-svg .sol-seg-unknown { fill: #fff3c4; stroke: #8a5a00; stroke-width: 2; stroke-dasharray: 6 4; }
 .sol-svg .sol-seg-diff { fill: #fde2d0; stroke: #b03a00; stroke-width: 2; stroke-dasharray: 5 4; }
+.sol-svg .sol-cut-from { fill: #f0b27a; stroke: #b03a00; stroke-width: 2.5; }
 .sol-svg .sol-brace { fill: none; stroke: #1a4d8c; stroke-width: 2; }
 .sol-svg .sol-guide { stroke: #888; stroke-width: 1.5; stroke-dasharray: 4 4; }
 .sol-svg .sol-box { fill: #fff; stroke: #1a4d8c; stroke-width: 2; }

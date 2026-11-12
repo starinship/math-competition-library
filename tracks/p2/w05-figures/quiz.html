@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>第5週｜圖形與方格（測驗）</title>
+  <link rel="stylesheet" href="../../../css/print-a4.css" />
+  <link rel="stylesheet" href="../../../css/screen.css" />
+</head>
+<body data-track="p2">
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="../../../index.html">首頁</a>
+    <a href="teach.html">教學</a>
+    <a href="practice.html">練習</a>
+    <a href="answers.html">答案</a>
+    <a href="../../../wrongbook.html?track=p2">錯題本</a>
+    <a href="../../../review.html?track=p2">重溫</a>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印 A4</button>
+  </nav>
+  <article class="sheet">
+    <header class="sheet-header">
+      <div class="titles">
+        <h1>第5週｜圖形與方格（測驗）</h1>
+        <div class="meta">7 題・限時 20 分・精熟≈5/7・交卷後才顯示圖解</div>
+      </div>
+      <span class="badge badge-student">學生用・測驗</span>
+    </header>
+    <div id="quiz-gate" class="quiz-gate screen-only">
+      <p>準備好再開始。可選<strong>計時 20 分</strong>或<strong>不計時</strong>。交卷前不能看答案。先看圖，再寫「圖 → 式 → 答 → 驗」。</p>
+      <button type="button" class="btn" id="btn-start-timed">開始（計時 20 分）</button>
+      <button type="button" class="btn btn-secondary" id="btn-start-free">開始（不計時）</button>
+    </div>
+    <div id="quiz-body" class="quiz-body is-locked-gate">
+      <div class="toolbar screen-only" id="quiz-toolbar" style="display:none">
+        <span id="timer-display" class="timer">20:00</span>
+        <button type="button" class="btn btn-warn" id="btn-submit">交卷</button>
+      </div>
+      <div class="meta-fields">
+        <label class="screen-only">姓名 <input class="meta-input" type="text" /></label>
+        <label class="screen-only">日期 <input class="meta-input" type="text" /></label>
+      </div>
+      <ol class="questions quiz-questions">
+        <li class="problem-card" data-unit="q1">
+          <p>這個圖有幾條邊？</p>
+          <p class="big-visual"><svg viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="三角形"><polygon points="50,12 90,86 10,86" fill="#f0c2d0" stroke="#3c6554" stroke-width="3"/></svg></p>
+          <p>
+            <span class="screen-only"><span class="choice-group" data-key="q1" role="group" aria-label="第1題">
+              <button type="button" class="choice-btn" data-value="2">2 條</button>
+              <button type="button" class="choice-btn" data-value="3">3 條</button>
+              <button type="button" class="choice-btn" data-value="4">4 條</button>
+            </span></span>
+            <span class="print-only">圈起來：　2 條　／　3 條　／　4 條</span>
+          </p>
+        </li>
+        <li class="problem-card" data-unit="q2">
+          <p>虛線是摺線。沿這條線摺，哪一種說法對？</p>
+          <p class="big-visual"><svg viewBox="0 0 108 144" width="108" height="144" role="img" aria-label="方格圖，正中有一條橫的摺線"><rect x="1.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="1.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><rect x="1.5" y="37.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="1.5" y="73.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="73.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="73.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="1.5" y="109.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="109.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="109.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><line x1="2" y1="72" x2="106" y2="72" stroke="#b03a00" stroke-width="2.5" stroke-dasharray="6 4"/></svg></p>
+          <p>
+            <span class="screen-only"><span class="choice-group" data-key="q2" role="group" aria-label="第2題">
+              <button type="button" class="choice-btn" data-value="上下摺會重合">上下摺會重合</button>
+              <button type="button" class="choice-btn" data-value="左右摺會重合">左右摺會重合</button>
+              <button type="button" class="choice-btn" data-value="不會重合">不會重合</button>
+            </span></span>
+            <span class="print-only">圈起來：　上下摺會重合　／　左右摺會重合　／　不會重合</span>
+          </p>
+        </li>
+        <li class="problem-card" data-unit="q3">
+          <p>塗了色的有幾格？交叉的那一格只數一次。</p>
+          <p class="big-visual"><svg viewBox="0 0 108 108" width="108" height="108" role="img" aria-label="三行三列的方格，中間塗成十字"><rect x="1.5" y="1.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="1.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><rect x="1.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="1.5" y="73.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="73.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="73.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/></svg></p>
+          <p>答：<input type="text" class="ans-input screen-only" data-key="q3" inputmode="numeric" aria-label="第3題" /><span class="answer-box print-only inline-block"></span> 格</p>
+          <div class="work-space print-only block">① 圖：　　② 式：　　③ 答：　　④ 驗：</div>
+        </li>
+        <li class="problem-card" data-unit="q4">
+          <p>沿外圈數小邊，有幾條？貼在一起的邊不算。</p>
+          <p class="big-visual"><svg viewBox="0 0 72 72" width="72" height="72" role="img" aria-label="兩行兩列，缺了右上角的方格"><rect x="1.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="1.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><rect x="1.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/></svg></p>
+          <p>答：<input type="text" class="ans-input screen-only" data-key="q4" inputmode="numeric" aria-label="第4題" /><span class="answer-box print-only inline-block"></span> 條</p>
+          <div class="work-space print-only block">① 圖：　　② 式：　　③ 答：　　④ 驗：</div>
+        </li>
+        <li class="problem-card" data-unit="q5">
+          <p>深色的一格剪下來，補進左上角的虛線格。補好以後有幾格？</p>
+          <p class="big-visual"><svg viewBox="0 0 144 108" width="144" height="108" role="img" aria-label="方格圖，一格塗成深色，一格是虛線空格"><rect x="1.5" y="1.5" width="33" height="33" fill="#fff" stroke="#8a5a00" stroke-width="2.5" stroke-dasharray="5 3"/><rect x="37.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="109.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="1.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="109.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="1.5" y="73.5" width="33" height="33" fill="#f0b27a" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="73.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="73.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><rect x="109.5" y="73.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/></svg></p>
+          <p>答：<input type="text" class="ans-input screen-only" data-key="q5" inputmode="numeric" aria-label="第5題" /><span class="answer-box print-only inline-block"></span> 格</p>
+          <div class="work-space print-only block">① 圖：　　② 式：　　③ 答：　　④ 驗：</div>
+        </li>
+        <li class="problem-card" data-unit="q6">
+          <p>找規律：11、15、19、23、____。（溫故）</p>
+          <p>答：<input type="text" class="ans-input screen-only" data-key="q6" inputmode="numeric" aria-label="第6題" /><span class="answer-box print-only inline-block"></span></p>
+        </li>
+        <li class="problem-card" data-unit="q7">
+          <p>罐子裡有 40 顆彈珠，拿走 16 顆。還剩多少顆？（溫故）</p>
+          <p>答：<input type="text" class="ans-input screen-only" data-key="q7" inputmode="numeric" aria-label="第7題" /><span class="answer-box print-only inline-block"></span> 顆</p>
+        </li>
+      </ol>
+      <div class="summary-panel screen-only" id="quiz-summary">
+        <h2>測驗結果</h2>
+        <p>得分：<strong id="quiz-score">—</strong></p>
+        <p>用時：<span id="quiz-time-used">—</span></p>
+        <div class="verdict" id="quiz-verdict" role="status"></div>
+        <p class="small">過關參考：約 5／7 題以上正確。錯了先看技能標籤，再回教學頁。</p>
+        <h3>答錯的題</h3>
+        <ul class="wrong-list" id="quiz-wrong-list"></ul>
+      </div>
+    </div>
+    <footer class="sheet-footer"><span>第5週・測驗</span><span>限時 20 分</span></footer>
+  </article>
+  <script src="../../../js/track.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script>if(window.MathTrack)MathTrack.initFromPage("p2");</script>
+  <script src="../../../js/wrongbook.js"></script>
+  <script src="../../../js/explain-data.js"></script>
+  <script src="../../../js/explain.js"></script>
+  <script src="quiz.js"></script>
+</body>
+</html>
