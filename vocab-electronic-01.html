@@ -380,13 +380,14 @@
   body[data-screen="practice"][data-kb="system"] #screen-practice,
   body[data-screen="practice"][data-kb="system"] #screen-practice .practice-card,
   body[data-screen="practice"][data-kb="system"] #screen-practice .card {
-    flex: 1;
+    flex: 0 1 auto;
     display: flex;
     flex-direction: column;
     min-height: 0;
+    max-height: 100%;
     overflow: hidden;
   }
-  /* 不要把空白全留給生詞區，否則輸入框會被推到畫面最底，離英文太遠；剩餘空間放在輸入框與底部按鈕之間 */
+  /* 卡片只佔內容高度，避免輸入框與按鈕之間留下大片空白；空間不夠時再由生詞區縮小捲動 */
   body[data-screen="practice"][data-kb="system"] .practice-scroll {
     flex: 0 1 auto;
     min-height: 0;
@@ -395,9 +396,7 @@
   }
   body[data-screen="practice"][data-kb="system"] #type-area { flex: 0 0 auto; }
   body[data-screen="practice"][data-kb="system"] .practice-spacer {
-    display: block;
-    flex: 1 1 auto;
-    min-height: 0;
+    display: none;
   }
   body[data-screen="practice"][data-kb="system"] .practice-dock {
     position: relative;
@@ -573,13 +572,13 @@
     body[data-screen="practice"][data-kb="system"] #screen-practice,
     body[data-screen="practice"][data-kb="system"] #screen-practice .practice-card,
     body[data-screen="practice"][data-kb="system"] #screen-practice .card {
+      flex: 0 1 auto;
+      max-height: 100%;
       overflow: hidden;
     }
     #type-area { flex: 0 0 auto; }
     body[data-screen="practice"][data-kb="system"] .practice-spacer {
-      display: block;
-      flex: 1 1 auto;
-      min-height: 0;
+      display: none;
     }
     #screen-practice .pips { gap: 6px; margin-bottom: 8px; }
     #screen-practice .pips li { padding: 6px 3px; font-size: 0.86rem; }
@@ -790,7 +789,7 @@
       <div id="type-area">
         <div class="answer-display" id="answer-display" tabindex="0" role="textbox" aria-label="拼出的英文"></div>
         <form id="answer-form" action="#" novalidate>
-          <input type="text" class="answer-display" id="answer-input" inputmode="text" enterkeyhint="done" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" lang="en" aria-label="拼出的英文" maxlength="48" placeholder="用鍵盤拼出英文" hidden>
+          <input type="text" class="answer-display" id="answer-input" inputmode="text" enterkeyhint="done" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" lang="en" aria-label="拼出的英文" maxlength="48" hidden>
         </form>
         <p class="hint-line" id="hint-line"></p>
         <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
@@ -2664,15 +2663,14 @@
     var input = document.getElementById("answer-input");
     if (input && useSystemKeyboard()) {
       if (input.value !== value) input.value = value;
-      input.placeholder = "用鍵盤拼出英文";
+      input.placeholder = "";
       input.readOnly = !!(session && session.locked);
       return;
     }
     var box = document.getElementById("answer-display");
     if (!box) return;
-    var placeholder = useSystemKeyboard() ? "用鍵盤拼出英文" : "點鍵盤拼出英文";
     if (!value) {
-      box.innerHTML = '<span class="placeholder">' + placeholder + '</span><span class="caret"></span>';
+      box.innerHTML = '<span class="caret"></span>';
       return;
     }
     box.textContent = value;
