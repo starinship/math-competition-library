@@ -789,7 +789,7 @@
       <div id="type-area">
         <div class="answer-display" id="answer-display" tabindex="0" role="textbox" aria-label="拼出的英文"></div>
         <form id="answer-form" action="#" novalidate>
-          <input type="text" class="answer-display" id="answer-input" inputmode="text" enterkeyhint="done" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" lang="en" aria-label="拼出的英文" maxlength="48" hidden>
+          <input type="text" class="answer-display" id="answer-input" inputmode="text" enterkeyhint="go" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" lang="en" aria-label="拼出的英文" maxlength="48" hidden>
         </form>
         <p class="hint-line" id="hint-line"></p>
         <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
@@ -1841,11 +1841,7 @@
       chip.lang = "en";
       chip.textContent = part;
       chip.setAttribute("aria-label", "朗讀音節 " + part);
-      chip.addEventListener("click", function (ev) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        speak(part, "en");
-      });
+      bindSpeakKeepFocus(chip, function () { speak(part, "en"); });
       row.appendChild(chip);
     });
     var cap = document.createElement("p");
@@ -2146,7 +2142,7 @@
     if (display) display.hidden = sys;
     if (sys) {
       if (osk) osk.hidden = true;
-      if (note) note.textContent = "請用系統鍵盤拼出英文。按鍵盤的完成或「檢查」。抄打時英文保持可見；遮默時只留中文。可點中文或英文方框聽讀音。";
+      if (note) note.textContent = "請用系統鍵盤拼出英文。按鍵盤的前往或「檢查」。抄打時英文保持可見；遮默時只留中文。可點中文或英文方框聽讀音。";
     } else if (note) {
       note.textContent = "可用螢幕鍵盤或實體鍵盤。Enter 檢查。抄打時英文保持可見；遮默時只留中文。可點中文或英文方框聽讀音。";
     }
@@ -2160,11 +2156,21 @@
       : document.getElementById("answer-display");
   }
 
-  function focusAnswer() {
-    if (!session || session.phase === "look" || session.locked) return;
-    if (document.body.getAttribute("data-screen") !== "practice") return;
+  function typingSurfaceOpen() {
+    if (!session) return false;
+    if (document.body.getAttribute("data-screen") !== "practice") return false;
+    if (session.phase === "look") return false;
     var typeArea = document.getElementById("type-area");
-    if (typeArea && typeArea.hidden) return;
+    return !!(typeArea && !typeArea.hidden);
+  }
+
+  function focusAnswer() {
+    if (!typingSurfaceOpen()) return;
+    if (useSystemKeyboard()) {
+      holdSystemKeyboard();
+      return;
+    }
+    if (session.locked) return;
     var el = answerField();
     if (!el || el.hidden) return;
     try { el.focus({ preventScroll: true }); }
@@ -2178,6 +2184,69 @@
     if (box && document.activeElement === box) box.blur();
   }
 
+  // iOS 在輸入框 blur，或把已聚焦的輸入框設成 readonly 時會收起系統鍵盤。
+  // 逾時後的 focus() 叫不回鍵盤，所以抄打／遮默（含自動前進前的短暫停頓）要一直留著焦點。
+  function holdSystemKeyboard() {
+    if (!useSystemKeyboard() || !typingSurfaceOpen()) return;
+    var input = document.getElementById("answer-input");
+    if (!input || input.hidden) return;
+    input.readOnly = false;
+    if (document.activeElement === input) return;
+    try { input.focus({ preventScroll: true }); }
+    catch (e) { try { input.focus(); } catch (err) { /* ignore */ } }
+  }
+
+  function keepSystemAnswerFocus(e) {
+    if (!e || !e.cancelable || !useSystemKeyboard()) return;
+    var input = document.getElementById("answer-input");
+    if (!input || input.hidden || document.activeElement !== input) return;
+    e.preventDefault();
+  }
+
+  function bindKeepSystemFocus(el) {
+    if (!el) return;
+    el.addEventListener("pointerdown", keepSystemAnswerFocus);
+    el.addEventListener("mousedown", keepSystemAnswerFocus);
+  }
+
+  function bindSpeakKeepFocus(el, play) {
+    if (!el) return;
+    var seq = 0;
+    var pending = 0;
+    var fallback = 0;
+    function onDown(e) {
+      keepSystemAnswerFocus(e);
+      if (e && e.defaultPrevented && !pending) pending = ++seq;
+    }
+    el.addEventListener("pointerdown", onDown);
+    el.addEventListener("mousedown", onDown);
+    el.addEventListener("pointerup", function () {
+      var token = pending;
+      if (!token) return;
+      if (fallback) clearTimeout(fallback);
+      fallback = setTimeout(function () {
+        fallback = 0;
+        if (pending !== token) return;
+        pending = 0;
+        play();
+      }, 480);
+    });
+    el.addEventListener("click", function (e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      pending = 0;
+      if (fallback) {
+        clearTimeout(fallback);
+        fallback = 0;
+      }
+      play();
+    });
+  }
+
+  var revealQueued = false;
+
   function syncPracticeViewport() {
     var root = document.documentElement;
     var practicing = document.body.getAttribute("data-screen") === "practice" && useSystemKeyboard();
@@ -2190,13 +2259,22 @@
     var height = vv ? vv.height : window.innerHeight;
     var offset = vv && vv.offsetTop ? vv.offsetTop : 0;
     if (!height) height = window.innerHeight;
-    root.style.setProperty("--vv-height", height + "px");
-    root.style.setProperty("--vv-offset", offset + "px");
-    if (window.requestAnimationFrame) {
-      window.requestAnimationFrame(function () { revealTypingCues(); });
-    } else {
-      revealTypingCues();
+    var heightPx = height + "px";
+    var offsetPx = offset + "px";
+    if (root.style.getPropertyValue("--vv-height") !== heightPx) {
+      root.style.setProperty("--vv-height", heightPx);
     }
+    if (root.style.getPropertyValue("--vv-offset") !== offsetPx) {
+      root.style.setProperty("--vv-offset", offsetPx);
+    }
+    if (revealQueued) return;
+    revealQueued = true;
+    var runReveal = function () {
+      revealQueued = false;
+      revealTypingCues();
+    };
+    if (window.requestAnimationFrame) window.requestAnimationFrame(runReveal);
+    else runReveal();
   }
 
   function revealTypingCues() {
@@ -2514,11 +2592,8 @@
     renderPractice();
     save();
     maybeAutoSpeak();
-    if (phase === "look" || (session && session.locked)) {
-      blurAnswer();
-    } else {
-      focusAnswer();
-    }
+    if (phase === "look") blurAnswer();
+    else focusAnswer();
   }
 
   function englishVisible() {
@@ -2630,7 +2705,9 @@
     renderAnswer();
     updateHint();
     paintNotice();
-    if (session.locked || session.phase === "look") blurAnswer();
+    if (session.phase === "look") blurAnswer();
+    else if (useSystemKeyboard()) holdSystemKeyboard();
+    else if (session.locked) blurAnswer();
     syncPracticeViewport();
   }
 
@@ -2648,7 +2725,7 @@
       hint.textContent = "";
       return;
     }
-    var checkHow = useSystemKeyboard() ? "按完成或「檢查」。" : "Enter 檢查。";
+    var checkHow = useSystemKeyboard() ? "按前往或「檢查」。" : "Enter 檢查。";
     if (session.phase === "copy" || session.phase === "recopy") {
       hint.textContent = session.copyNeed > 1
         ? ("已抄對 " + session.copyDone + "／" + session.copyNeed + " 次。")
@@ -2664,7 +2741,7 @@
     if (input && useSystemKeyboard()) {
       if (input.value !== value) input.value = value;
       input.placeholder = "";
-      input.readOnly = !!(session && session.locked);
+      input.readOnly = false;
       return;
     }
     var box = document.getElementById("answer-display");
@@ -2729,6 +2806,7 @@
   function continueFromLook() {
     if (!session || session.phase !== "look") return;
     enterPhase("copy");
+    holdSystemKeyboard();
   }
 
   function noteScore(ok) {
@@ -2746,6 +2824,14 @@
 
   function checkAnswer() {
     if (!session || session.locked || session.phase === "look") return;
+    try {
+      commitCheckedAnswer();
+    } finally {
+      holdSystemKeyboard();
+    }
+  }
+
+  function commitCheckedAnswer() {
     if (!String(session.answer || "").trim()) {
       showFb(false, "還沒有輸入。請用鍵盤拼出英文。");
       playNope();
@@ -3557,15 +3643,19 @@
       reader.readAsText(file);
     });
     document.getElementById("btn-look").addEventListener("click", continueFromLook);
-    document.getElementById("btn-check").addEventListener("click", checkAnswer);
-    document.getElementById("btn-next").addEventListener("click", advance);
+    document.getElementById("btn-check").addEventListener("click", function () {
+      checkAnswer();
+      holdSystemKeyboard();
+    });
+    document.getElementById("btn-next").addEventListener("click", function () {
+      advance();
+      holdSystemKeyboard();
+    });
     document.getElementById("btn-quit").addEventListener("click", quitPractice);
-    document.getElementById("cue-zh").addEventListener("click", function (e) {
-      e.preventDefault();
+    bindSpeakKeepFocus(document.getElementById("cue-zh"), function () {
       if (session) speak(currentItem().zh, "zh");
     });
-    document.getElementById("cue-en").addEventListener("click", function (e) {
-      e.preventDefault();
+    bindSpeakKeepFocus(document.getElementById("cue-en"), function () {
       if (session) speak(currentItem().en, "en");
     });
     document.getElementById("btn-home").addEventListener("click", function () {
@@ -3607,6 +3697,7 @@
       if (session.phase === "look") continueFromLook();
       else if (session.locked) advance();
       else checkAnswer();
+      holdSystemKeyboard();
     }
     if (answerForm) {
       answerForm.addEventListener("submit", submitTypedAnswer);
@@ -3626,6 +3717,9 @@
       });
       answerInput.addEventListener("keydown", function (e) {
         if (e.key === "Enter") submitTypedAnswer(e);
+      });
+      answerInput.addEventListener("keyup", function (e) {
+        if (e.key === "Enter") holdSystemKeyboard();
       });
     }
     document.addEventListener("keydown", function (e) {
@@ -3717,11 +3811,120 @@
     assert(document.getElementById("osk").hidden, "系統鍵盤模式隱藏自訂鍵盤");
     assert(window.getComputedStyle(document.getElementById("osk")).display === "none", "系統鍵盤模式不顯示自訂鍵盤");
     assert(!document.getElementById("btn-check").hidden, "系統鍵盤模式顯示檢查鈕");
+    var sysInput = document.getElementById("answer-input");
+    assert(sysInput && !sysInput.hidden && sysInput.getAttribute("enterkeyhint") === "go", "系統鍵盤用前往鍵，避免完成鍵收起鍵盤");
+    assert(document.getElementById("hint-line").textContent.indexOf("前往") >= 0, "系統鍵盤提示改按前往");
+    sysInput.focus();
+    assert(document.activeElement === sysInput, "抄打時系統鍵盤輸入框可取得焦點");
+    var cueDown = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
+    document.getElementById("cue-zh").dispatchEvent(cueDown);
+    assert(cueDown.defaultPrevented && document.activeElement === sysInput, "點中文方框不會搶走系統鍵盤焦點");
+    var cuePtr = new PointerEvent("pointerdown", { bubbles: true, cancelable: true });
+    document.getElementById("cue-en").dispatchEvent(cuePtr);
+    assert(cuePtr.defaultPrevented && document.activeElement === sysInput, "點英文方框不會搶走系統鍵盤焦點");
+    var chip = document.querySelector("#cue-syl button.syl-chip");
+    assert(!!chip, "抄打時音節按鈕還在");
+    var chipDown = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
+    chip.dispatchEvent(chipDown);
+    assert(chipDown.defaultPrevented && document.activeElement === sysInput, "點音節不會搶走系統鍵盤焦點");
+    var speaks = 0;
+    var prevSpeak = speak;
+    speak = function () { speaks += 1; };
+    try {
+      document.getElementById("cue-zh").click();
+      chip.click();
+    } finally {
+      speak = prevSpeak;
+    }
+    assert(speaks === 2, "點中文方框與音節仍各朗讀一次");
+    var checkDown = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
+    document.getElementById("btn-check").dispatchEvent(checkDown);
+    assert(!checkDown.defaultPrevented, "檢查鈕不攔截點擊，改在同一個動作裡還原焦點");
+    var quitDown = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
+    document.getElementById("btn-quit").dispatchEvent(quitDown);
+    assert(!quitDown.defaultPrevented, "暫停並保留仍可取走焦點以收起鍵盤");
+    sysInput.blur();
+    var idleDown = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
+    document.getElementById("cue-zh").dispatchEvent(idleDown);
+    assert(!idleDown.defaultPrevented, "輸入框沒有焦點時，點中文方框不攔截");
+
+    session.answer = "";
+    sysInput.value = "";
+    sysInput.readOnly = true;
+    sysInput.blur();
+    document.getElementById("answer-form").dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
+    assert(session.phase === "copy" && !session.locked, "空白答案仍留在抄打");
+    assert(!sysInput.readOnly && document.activeElement === sysInput, "送出後若還要打字，輸入框保持焦點且不是唯讀");
+
+    session.answer = "cas";
+    sysInput.value = "cas";
+    sysInput.readOnly = true;
+    sysInput.blur();
+    document.getElementById("btn-check").click();
+    assert(session.phase === "copy" && !session.locked, "系統鍵盤抄錯仍留在抄打");
+    assert(!sysInput.readOnly && document.activeElement === sysInput, "抄錯後輸入框仍是焦點且不是唯讀");
+
+    session.copyNeed = 2;
+    session.copyDone = 0;
+    session.answer = "cash";
+    sysInput.value = "cash";
+    sysInput.readOnly = true;
+    sysInput.blur();
+    var againKey = new KeyboardEvent("keydown", { key: "Enter", bubbles: true, cancelable: true });
+    sysInput.dispatchEvent(againKey);
+    assert(againKey.defaultPrevented, "返回鍵會送出答案而不換行");
+    assert(session.phase === "copy" && session.copyDone === 1 && !session.locked, "系統鍵盤再抄一次仍留在抄打");
+    assert(!sysInput.readOnly && document.activeElement === sysInput, "再抄一次後輸入框仍可輸入且是焦點");
+    sysInput.dispatchEvent(new KeyboardEvent("keyup", { key: "Enter", bubbles: true }));
+
+    autoNext = true;
+    session.copyNeed = 1;
+    session.copyDone = 0;
+    session.locked = false;
+    session.pendingPhase = null;
+    session.answer = "cash";
+    sysInput.value = "cash";
+    sysInput.readOnly = true;
+    sysInput.focus();
+    var blurCalls = 0;
+    var origBlur = sysInput.blur.bind(sysInput);
+    sysInput.blur = function () {
+      blurCalls += 1;
+      return origBlur();
+    };
+    try {
+      checkAnswer();
+      assert(session.locked && session.pendingPhase === "mask" && !!session.timer, "抄對後會自動前往遮默");
+      assert(blurCalls === 0, "自動前往遮默前不讓輸入框失焦");
+      assert(!sysInput.readOnly && document.activeElement === sysInput, "自動前往遮默前輸入框不是唯讀且仍是焦點");
+    } finally {
+      sysInput.blur = origBlur;
+      if (session && session.timer) {
+        clearTimeout(session.timer);
+        session.timer = null;
+      }
+      autoNext = false;
+    }
+
+    sysInput.focus();
+    enterPhase("look");
+    assert(session.phase === "look" && document.getElementById("type-area").hidden, "看的階段隱藏輸入區");
+    assert(document.activeElement !== sysInput, "看的階段收起系統鍵盤");
+    document.getElementById("btn-look").click();
+    assert(session.phase === "copy" && session.copyNeed === 1 && !session.locked, "認得了之後回到抄打");
+    assert(!sysInput.readOnly && document.activeElement === sysInput, "去抄打時在同一個動作裡聚焦系統鍵盤");
+    session.answer = "";
+    sysInput.value = "";
+    clearFeedback();
+
     kbModeOverride = "";
     applyKeyboardMode();
     renderPractice();
     assert(document.body.getAttribute("data-kb") === "osk" && !document.getElementById("osk").hidden, "還原後抄打仍用自訂鍵盤");
     assert(document.getElementById("cue-en").textContent === "cash", "切換鍵盤模式不改可見英文");
+    var deskDown = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
+    document.getElementById("cue-zh").dispatchEvent(deskDown);
+    assert(!deskDown.defaultPrevented, "自訂鍵盤模式點中文方框不攔截");
     session.answer = "cas";
     checkAnswer();
     assert(session.phase === "copy" && !session.locked, "抄錯仍留在抄打，不進入遮默");
