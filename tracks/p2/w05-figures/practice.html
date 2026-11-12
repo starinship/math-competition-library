@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>第5週｜圖形與方格（練習）</title>
+  <link rel="stylesheet" href="../../../css/print-a4.css" />
+  <link rel="stylesheet" href="../../../css/screen.css" />
+  <link rel="stylesheet" href="../../../css/draw.css" />
+</head>
+<body data-track="p2">
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="../../../index.html">首頁</a>
+    <a href="teach.html">教學</a>
+    <a href="quiz.html">測驗</a>
+    <a href="answers.html">答案</a>
+    <a href="../../../wrongbook.html?track=p2">錯題本</a>
+    <a href="../../../review.html?track=p2">重溫</a>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印 A4</button>
+  </nav>
+
+  <article class="sheet">
+    <header class="sheet-header">
+      <div class="titles">
+        <h1>第5週｜圖形與方格（練習）</h1>
+        <div class="meta">學界賽專軌・小二核心・學生用・共 10 題（含溫故 2 題）・約 15–25 分</div>
+      </div>
+      <span class="badge badge-student">學生用・練習</span>
+    </header>
+
+    <div class="mode-banner screen-only">
+      <strong>螢幕模式：</strong>先看圖，再用右下角「✏️ 畫筆」點小邊或畫割補那一刀。選好或填好後按「檢查」。列印時變成空白卷。
+    </div>
+
+    <div class="toolbar screen-only" role="group" aria-label="練習進度">
+      <div class="progress-bar-wrap" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
+      <span class="progress-text" id="progress-text">已檢查 0 / 10　答對 0</span>
+      <button type="button" class="btn btn-success" id="btn-check-all">全部檢查</button>
+    </div>
+    <div class="stop-cue screen-only" id="stop-cue" role="alert">家長停損：已連錯 2 題。請先停一停；今天可以到此為止，明天只重做錯題 2–3 題。</div>
+
+    <div class="meta-fields">
+      <span class="print-only">姓名：<span class="answer-line" style="min-width:6em"></span> 日期：<span class="answer-line" style="min-width:5em"></span></span>
+      <label class="screen-only">姓名 <input class="meta-input" type="text" autocomplete="name" /></label>
+      <label class="screen-only">日期 <input class="meta-input" type="text" /></label>
+    </div>
+    <p class="small">口訣：<strong>先看圖，再寫「圖 → 式 → 答 → 驗」。</strong>數方格不數空格；周界只數外圈的小段。</p>
+
+    <h2>A. 邊、角、摺線</h2>
+    <ol class="questions">
+      <li class="problem-card" data-unit="q1">
+        <p>這個圖有幾個角？</p>
+        <p class="big-visual"><svg viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="圓形"><circle cx="50" cy="50" r="38" fill="#b7d4c4" stroke="#3c6554" stroke-width="3"/></svg></p>
+        <p>
+          <span class="screen-only"><span class="choice-group" data-key="q1" role="group" aria-label="第1題">
+            <button type="button" class="choice-btn" data-value="0">0 個</button>
+            <button type="button" class="choice-btn" data-value="3">3 個</button>
+            <button type="button" class="choice-btn" data-value="4">4 個</button>
+          </span></span>
+          <span class="print-only">圈起來：　0 個　／　3 個　／　4 個</span>
+        </p>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q1">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q2">
+        <p>下面哪一句說對了這張長方形？</p>
+        <p class="big-visual"><svg viewBox="0 0 160 84" width="160" height="84" role="img" aria-label="橫放的長方形"><rect x="8" y="18" width="144" height="52" fill="#8eb6d4" stroke="#3c6554" stroke-width="3"/></svg></p>
+        <p>
+          <span class="screen-only"><span class="choice-group" data-key="q2" role="group" aria-label="第2題">
+            <button type="button" class="choice-btn" data-value="對邊一樣長">對邊一樣長</button>
+            <button type="button" class="choice-btn" data-value="四邊都一樣長">四邊都一樣長</button>
+            <button type="button" class="choice-btn" data-value="沒有角">沒有角</button>
+          </span></span>
+          <span class="print-only">圈起來：　對邊一樣長　／　四邊都一樣長　／　沒有角</span>
+        </p>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q2">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q3">
+        <p>虛線是摺線。沿這條線摺，哪一種說法對？</p>
+        <p class="big-visual"><svg viewBox="0 0 144 72" width="144" height="72" role="img" aria-label="方格圖，正中有一條直的摺線"><rect x="1.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="109.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="1.5" y="37.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="109.5" y="37.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><line x1="72" y1="2" x2="72" y2="70" stroke="#b03a00" stroke-width="2.5" stroke-dasharray="6 4"/></svg></p>
+        <p>
+          <span class="screen-only"><span class="choice-group" data-key="q3" role="group" aria-label="第3題">
+            <button type="button" class="choice-btn" data-value="左右摺會重合">左右摺會重合</button>
+            <button type="button" class="choice-btn" data-value="上下摺會重合">上下摺會重合</button>
+            <button type="button" class="choice-btn" data-value="不會重合">不會重合</button>
+          </span></span>
+          <span class="print-only">圈起來：　左右摺會重合　／　上下摺會重合　／　不會重合</span>
+        </p>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q3">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+    </ol>
+
+    <h2>B. 方格、外圈、拼圖、割補</h2>
+    <ol class="questions" start="4" style="counter-reset: q 3">
+      <li class="problem-card" data-unit="q4">
+        <p>塗了色的有幾格？空格不要數。</p>
+        <p class="big-visual"><svg viewBox="0 0 108 108" width="108" height="108" role="img" aria-label="三行三列的方格，部分格子塗了色"><rect x="1.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="1.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="1.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><rect x="1.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="37.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><rect x="1.5" y="73.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="73.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="73.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/></svg></p>
+        <p>答：<input type="text" class="ans-input screen-only" data-key="q4" inputmode="numeric" aria-label="第4題" /><span class="answer-box print-only inline-block"></span> 格</p>
+        <div class="work-space print-only block">① 圖：　　② 式：　　③ 答：　　④ 驗：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q4">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q5">
+        <p>先數上面一行，再數下面一行。塗了色的一共有幾格？</p>
+        <p class="big-visual"><svg viewBox="0 0 144 72" width="144" height="72" role="img" aria-label="兩行四列的方格，部分格子塗了色"><rect x="1.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="109.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="1.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="109.5" y="37.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/></svg></p>
+        <p>答：<input type="text" class="ans-input screen-only" data-key="q5" inputmode="numeric" aria-label="第5題" /><span class="answer-box print-only inline-block"></span> 格</p>
+        <div class="work-space print-only block">① 圖：　　② 式：　　③ 答：　　④ 驗：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q5">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q6">
+        <p>沿最外面走一圈，有幾條小邊？中間貼住的邊不要數，也不用背公式。</p>
+        <p class="big-visual"><svg viewBox="0 0 108 72" width="108" height="72" role="img" aria-label="兩行三列都塗了色的方格"><rect x="1.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="1.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/></svg></p>
+        <p>答：<input type="text" class="ans-input screen-only" data-key="q6" inputmode="numeric" aria-label="第6題" /><span class="answer-box print-only inline-block"></span> 條</p>
+        <div class="work-space print-only block">① 圖：　　② 式：　　③ 答：　　④ 驗：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q6">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q7">
+        <p>兩塊都是三角形（直角處有一個小方角）。把斜邊貼在一起，拼成甚麼？</p>
+        <p class="big-visual"><svg viewBox="0 0 230 78" width="230" height="78" role="img" aria-label="兩塊分開的直角三角形"><polygon points="8,66 104,66 8,18" fill="#f0c2d0" stroke="#3c6554" stroke-width="3"/><path d="M 8 54 L 20 54 L 20 66" fill="none" stroke="#3c6554" stroke-width="2"/><polygon points="122,18 218,18 218,66" fill="#f0c2d0" stroke="#3c6554" stroke-width="3"/><path d="M 206 18 L 206 30 L 218 30" fill="none" stroke="#3c6554" stroke-width="2"/></svg></p>
+        <p>
+          <span class="screen-only"><span class="choice-group" data-key="q7" role="group" aria-label="第7題">
+            <button type="button" class="choice-btn" data-value="長方形">長方形</button>
+            <button type="button" class="choice-btn" data-value="正方形">正方形</button>
+            <button type="button" class="choice-btn" data-value="三角形">三角形</button>
+          </span></span>
+          <span class="print-only">圈起來：　長方形　／　正方形　／　三角形</span>
+        </p>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q7">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q8">
+        <p>深色的一格剪下來，補進虛線空格。可以用畫筆畫那一刀。補好以後，一共有幾格？</p>
+        <p class="big-visual"><svg viewBox="0 0 144 72" width="144" height="72" role="img" aria-label="方格圖，一格塗成深色，一格是虛線空格"><rect x="1.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="1.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="1.5" width="33" height="33" fill="#fff" stroke="#8a5a00" stroke-width="2.5" stroke-dasharray="5 3"/><rect x="109.5" y="1.5" width="33" height="33" fill="#fff" stroke="#3c6554" stroke-width="2.5"/><rect x="1.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="37.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="73.5" y="37.5" width="33" height="33" fill="#9fd0b5" stroke="#3c6554" stroke-width="2.5"/><rect x="109.5" y="37.5" width="33" height="33" fill="#f0b27a" stroke="#3c6554" stroke-width="2.5"/></svg></p>
+        <p>答：<input type="text" class="ans-input screen-only" data-key="q8" inputmode="numeric" aria-label="第8題" /><span class="answer-box print-only inline-block"></span> 格</p>
+        <div class="work-space print-only block">① 圖：　　② 式：　　③ 答：　　④ 驗：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q8">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+    </ol>
+
+    <h2>C. 溫故（規律、和與差）</h2>
+    <ol class="questions" start="9" style="counter-reset: q 8">
+      <li class="problem-card" data-unit="q9">
+        <p>找規律：4、7、10、13、____。空格是多少？（溫故：規律）</p>
+        <p>答：<input type="text" class="ans-input screen-only" data-key="q9" inputmode="numeric" aria-label="第9題" /><span class="answer-box print-only inline-block"></span></p>
+        <div class="work-space print-only block">① 圖：　　② 式：　　③ 答：　　④ 驗：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q9">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+      <li class="problem-card" data-unit="q10">
+        <p>小魚有 23 條，大魚比小魚多 14 條。大魚有多少條？（溫故：和與差）</p>
+        <p>答：<input type="text" class="ans-input screen-only" data-key="q10" inputmode="numeric" aria-label="第10題" /><span class="answer-box print-only inline-block"></span> 條</p>
+        <div class="work-space print-only block">① 圖：　　② 式：　　③ 答：　　④ 驗：</div>
+        <div class="q-actions screen-only">
+          <button type="button" class="btn btn-sm" data-check-unit="q10">檢查</button>
+        </div>
+        <div class="feedback" role="status"></div>
+      </li>
+    </ol>
+
+    <div class="summary-panel screen-only" id="practice-summary">
+      <h2>本份結果</h2>
+      <p>得分：<strong id="final-score">—</strong></p>
+      <div class="verdict" id="practice-verdict" role="status"></div>
+      <p class="small"><strong>精熟門檻：</strong>約 8／10 以上正確；到期錯題清完再進下一週。</p>
+      <h3>需要再練的題</h3>
+      <ul class="wrong-list" id="wrong-list"></ul>
+      <p class="small">詳細解析請看 <a href="answers.html">答案頁</a>。</p>
+    </div>
+
+    <div class="tip"><strong>家長停損：</strong>連錯 2 題 → 立刻停，明天只重做錯題。</div>
+    <footer class="sheet-footer"><span>第5週・練習</span><span>可列印 A4</span></footer>
+  </article>
+  <script src="../../../js/track.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script>if(window.MathTrack)MathTrack.initFromPage("p2");</script>
+  <script src="../../../js/wrongbook.js"></script>
+  <script src="../../../js/explain-data.js"></script>
+  <script src="../../../js/explain.js"></script>
+  <script src="practice.js"></script>
+  <script src="../../../js/draw.js"></script>
+</body>
+</html>

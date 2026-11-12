@@ -1,6 +1,8 @@
 /* 圖解解法（看看怎樣做）：小二「圖→式→答→驗」・K3 大圖少字＋家長讀
  * 只用 inline SVG／HTML，離線可用。資料在 js/explain-data.js（window.MathExplainData）。
  * key 格式：單元|來源|題號，例如 "w02|practice|q1"、"k3-w01|quiz|q3"。
+ * 第 5 週另加 gridCount（數方格）、cutGrid（割補）、joinShapes（兩塊拼起來）；
+ * fold（一條摺線）、perim（外圈小邊）是固定版面，只服務這一週的對稱和周界。
  */
 (function (global) {
   "use strict";
@@ -342,7 +344,173 @@
     };
   }
 
-    function solve(spec) {
+  /* ---------- 第 5 週：方格、割補、拼圖、摺線、外圈 ---------- */
+  function cellAt(spec, r, c) {
+    if (r < 0 || c < 0 || r >= spec.rows || c >= spec.cols) return 0;
+    return spec.cells[r * spec.cols + c] ? 1 : 0;
+  }
+  function rowCounts(spec) {
+    var rowsN = [];
+    var n = 0;
+    for (var r = 0; r < spec.rows; r++) {
+      var row = 0;
+      for (var c = 0; c < spec.cols; c++) {
+        if (cellAt(spec, r, c)) { row++; n++; }
+      }
+      rowsN.push(row);
+    }
+    return { n: n, rowsN: rowsN };
+  }
+  function solveGridCount(spec) {
+    var g = rowCounts(spec);
+    var parts = g.rowsN.map(function (v, i) { return "第 " + (i + 1) + " 行 " + v + " 格"; });
+    return {
+      kind: "gridCount", n: g.n, rowsN: g.rowsN, answer: g.n, answers: [String(g.n)],
+      formula: parts.join("，") + "，一共 " + g.n + " 格",
+      check: "再從 1 點到 " + g.n + "，沒有跳號，也沒有多點空格"
+    };
+  }
+  function movedCells(spec) {
+    var cells = spec.cells.slice();
+    var from = spec.from, to = spec.to;
+    cells[from.r * spec.cols + from.c] = 0;
+    cells[to.r * spec.cols + to.c] = 1;
+    return cells;
+  }
+  function solidBox(rows, cols, cells) {
+    var r0 = rows, r1 = -1, c0 = cols, c1 = -1, n = 0;
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        if (!cells[r * cols + c]) continue;
+        n++;
+        if (r < r0) r0 = r;
+        if (r > r1) r1 = r;
+        if (c < c0) c0 = c;
+        if (c > c1) c1 = c;
+      }
+    }
+    if (!n) return null;
+    var h = r1 - r0 + 1, w = c1 - c0 + 1;
+    if (h * w !== n) return null;
+    return { h: h, w: w, n: n };
+  }
+  function solveCutGrid(spec) {
+    var before = rowCounts(spec);
+    var afterCells = movedCells(spec);
+    var afterSpec = { rows: spec.rows, cols: spec.cols, cells: afterCells };
+    var after = rowCounts(afterSpec);
+    var box = solidBox(spec.rows, spec.cols, afterCells);
+    var ok = cellAt(spec, spec.from.r, spec.from.c) === 1 && cellAt(spec, spec.to.r, spec.to.c) === 0 && before.n === after.n;
+    var formula = "深色的 1 格剪下來，補進虛線格，格數不變，一共 " + before.n + " 格";
+    if (box) formula += "。補好後是 " + box.h + " 行，每行 " + box.w + " 格";
+    return {
+      kind: "cutGrid", n: before.n, afterN: after.n, box: box, ok: ok,
+      afterCells: afterCells, answer: before.n, answers: [String(before.n)],
+      formula: formula,
+      check: "把深色那一格放回原位再數一次，仍是 " + before.n + " 格"
+    };
+  }
+  function solveJoinShapes(spec) {
+    var name = spec.result;
+    var piece = spec.piece || "圖形";
+    return {
+      kind: "joinShapes", answer: name, answers: [name], layout: spec.layout,
+      formula: "兩塊" + piece + "先分開看，再沿邊拼在一起",
+      check: "拼好後再認一次：這是" + name
+    };
+  }
+  function foldMirrorOk(spec, axis) {
+    var rows = spec.rows, cols = spec.cols;
+    if (axis === "v") {
+      if (cols % 2) return false;
+      for (var r = 0; r < rows; r++) {
+        for (var c = 0; c < cols / 2; c++) {
+          if (cellAt(spec, r, c) !== cellAt(spec, r, cols - 1 - c)) return false;
+        }
+      }
+      return true;
+    }
+    if (rows % 2) return false;
+    for (var rr = 0; rr < rows / 2; rr++) {
+      for (var cc = 0; cc < cols; cc++) {
+        if (cellAt(spec, rr, cc) !== cellAt(spec, rows - 1 - rr, cc)) return false;
+      }
+    }
+    return true;
+  }
+  function solveFold(spec) {
+    var axis = spec.axis === "h" ? "h" : "v";
+    var ok = foldMirrorOk(spec, axis);
+    var other = axis === "v" ? "h" : "v";
+    var word = axis === "v" ? "左右" : "上下";
+    var otherWord = axis === "v" ? "上下" : "左右";
+    return {
+      kind: "fold", axis: axis, ok: ok, otherOk: foldMirrorOk(spec, other),
+      answer: word, answers: [word],
+      formula: "摺線兩邊的塗色格互相對得上 → 沿這條線做" + word + "摺，兩半會重合",
+      check: "改做" + otherWord + "摺，兩邊對不上，所以不是" + otherWord + "摺"
+    };
+  }
+  /* 外圈小段，順時針繞一圈（塗色在前進方向的右側）。凹角會左轉，編號才能沿邊 1、2、3 點下去。 */
+  function outerEdgeList(spec) {
+    var raw = [];
+    for (var r = 0; r < spec.rows; r++) {
+      for (var c = 0; c < spec.cols; c++) {
+        if (!cellAt(spec, r, c)) continue;
+        if (!cellAt(spec, r - 1, c)) raw.push({ r: r, c: c, side: "t", gx: c, gy: r, dir: 0 });
+        if (!cellAt(spec, r, c + 1)) raw.push({ r: r, c: c, side: "r", gx: c + 1, gy: r, dir: 1 });
+        if (!cellAt(spec, r + 1, c)) raw.push({ r: r, c: c, side: "b", gx: c + 1, gy: r + 1, dir: 2 });
+        if (!cellAt(spec, r, c - 1)) raw.push({ r: r, c: c, side: "l", gx: c, gy: r + 1, dir: 3 });
+      }
+    }
+    if (!raw.length) return raw;
+    var by = {};
+    raw.forEach(function (e) { by[e.gx + "," + e.gy + "," + e.dir] = e; });
+    raw.sort(function (a, b) {
+      if (a.gy !== b.gy) return a.gy - b.gy;
+      if (a.gx !== b.gx) return a.gx - b.gx;
+      return a.dir - b.dir;
+    });
+    var start = raw[0];
+    var out = [];
+    var cur = start;
+    var guard = 0;
+    while (cur && guard++ <= raw.length) {
+      out.push({ r: cur.r, c: cur.c, side: cur.side });
+      var nx = cur.gx, ny = cur.gy;
+      if (cur.dir === 0) nx += 1;
+      else if (cur.dir === 1) ny += 1;
+      else if (cur.dir === 2) nx -= 1;
+      else ny -= 1;
+      var prefs = [(cur.dir + 1) % 4, cur.dir, (cur.dir + 3) % 4, (cur.dir + 2) % 4];
+      var next = null;
+      for (var i = 0; i < prefs.length; i++) {
+        next = by[nx + "," + ny + "," + prefs[i]];
+        if (next) break;
+      }
+      delete by[cur.gx + "," + cur.gy + "," + cur.dir];
+      if (!next || next === start) break;
+      cur = next;
+    }
+    if (out.length !== raw.length) {
+      return raw.map(function (e) { return { r: e.r, c: e.c, side: e.side }; });
+    }
+    return out;
+  }
+  function solvePerim(spec) {
+    var edges = outerEdgeList(spec);
+    var n = edges.length;
+    var full = spec.cells.every(function (v) { return v; });
+    var formula = "沿外圈每一小段點一次，最後一號是 " + n;
+    if (full) formula = "上 " + spec.cols + " 條、下 " + spec.cols + " 條、左 " + spec.rows + " 條、右 " + spec.rows + " 條，一共 " + n + " 條";
+    return {
+      kind: "perim", n: n, edges: edges, answer: n, answers: [String(n)],
+      formula: formula,
+      check: "在起點做個記號，再沿外圈點一次，回到起點時仍是 " + n + " 條"
+    };
+  }
+
+  function solve(spec) {
     switch (spec.type) {
       case "steps": return solveSteps(spec);
       case "twoStep": return solveTwoStep(spec);
@@ -358,6 +526,11 @@
       case "clock": return solveClock(spec);
       case "elapsed": return solveElapsed(spec);
       case "shapeName": return solveShapeName(spec);
+      case "gridCount": return solveGridCount(spec);
+      case "cutGrid": return solveCutGrid(spec);
+      case "joinShapes": return solveJoinShapes(spec);
+      case "fold": return solveFold(spec);
+      case "perim": return solvePerim(spec);
       case "multi": {
         var subs = spec.parts.map(solve);
         var all = [];
@@ -794,7 +967,191 @@
     return s;
   }
 
-    function figure(spec, r) {
+  function gridSvg(spec, cells, opt) {
+    opt = opt || {};
+    var rows = spec.rows, cols = spec.cols;
+    var cell = opt.cell || 36;
+    var pad = opt.pad || 8;
+    var W = pad * 2 + cols * cell;
+    var H = pad * 2 + rows * cell + (opt.cap ? 26 : 0);
+    var s = svgOpen(W, H, opt.label || "方格", opt.cls || "sol-grid");
+    for (var r = 0; r < rows; r++) {
+      for (var c = 0; c < cols; c++) {
+        var x = pad + c * cell, y = pad + r * cell;
+        var on = cells[r * cols + c] ? 1 : 0;
+        var cls = "sol-box";
+        if (on && opt.from && opt.from.r === r && opt.from.c === c) cls = "sol-seg-diff";
+        else if (!on && opt.to && opt.to.r === r && opt.to.c === c) cls = "sol-seg-unknown";
+        else if (on && opt.moved && opt.moved.r === r && opt.moved.c === c) cls = "sol-seg-derived";
+        else if (on) cls = "sol-seg-known";
+        s += rect(x, y, cell, cell, cls, 0);
+      }
+    }
+    if (opt.numbers) {
+      var k = 0;
+      for (var rr = 0; rr < rows; rr++) {
+        for (var cc = 0; cc < cols; cc++) {
+          if (!cells[rr * cols + cc]) continue;
+          k++;
+          s += txt(pad + cc * cell + cell / 2, pad + rr * cell + cell / 2 + 6, String(k), "sol-t-c sol-t-num");
+        }
+      }
+    }
+    if (opt.cap) s += txt(W / 2, H - 8, opt.cap, "sol-t-c sol-t-ans");
+    s += "</svg>";
+    return s;
+  }
+  function svgGridCount(spec, r) {
+    return gridSvg(spec, spec.cells, {
+      numbers: true,
+      cap: "共 " + r.n + " 格",
+      label: "塗色的方格共 " + r.n + " 格"
+    });
+  }
+  function svgCutGrid(spec, r) {
+    var cell = 34, pad = 6, gap = 54;
+    var gw = spec.cols * cell, gh = spec.rows * cell;
+    var W = pad * 2 + gw * 2 + gap;
+    var H = pad + 22 + gh + 28;
+    var s = svgOpen(W, H, "割補：把突出的 1 格補進缺口，一共 " + r.n + " 格", "sol-cut");
+    function paint(originX, cells, mark) {
+      for (var rr = 0; rr < spec.rows; rr++) {
+        for (var cc = 0; cc < spec.cols; cc++) {
+          var x = originX + cc * cell, y = 24 + rr * cell;
+          var on = cells[rr * spec.cols + cc] ? 1 : 0;
+          var cls = "sol-box";
+          if (mark === "before" && spec.from.r === rr && spec.from.c === cc) cls = "sol-cut-from";
+          else if (mark === "before" && spec.to.r === rr && spec.to.c === cc) cls = "sol-seg-unknown";
+          else if (mark === "after" && spec.to.r === rr && spec.to.c === cc) cls = "sol-seg-derived";
+          else if (on) cls = "sol-seg-known";
+          s += rect(x, y, cell, cell, cls, 0);
+        }
+      }
+      var k = 0;
+      for (var r2 = 0; r2 < spec.rows; r2++) {
+        for (var c2 = 0; c2 < spec.cols; c2++) {
+          if (!cells[r2 * spec.cols + c2]) continue;
+          k++;
+          s += txt(originX + c2 * cell + cell / 2, 24 + r2 * cell + cell / 2 + 6, String(k), "sol-t-c sol-t-num");
+        }
+      }
+    }
+    var x1 = pad, x2 = pad + gw + gap;
+    s += txt(x1 + gw / 2, 16, "剪開前", "sol-t-c sol-t-note");
+    s += txt(x2 + gw / 2, 16, "補好後", "sol-t-c sol-t-note");
+    paint(x1, spec.cells, "before");
+    paint(x2, r.afterCells, "after");
+    s += arcArrow(x1 + gw + 8, x2 - 8, 24 + gh / 2, 22, "is-hot");
+    s += txt(W / 2, H - 6, "一共 " + r.n + " 格", "sol-t-c sol-t-ans");
+    s += "</svg>";
+    return s;
+  }
+  function poly(points, fill, stroke) {
+    return '<polygon points="' + points + '" fill="' + fill + '" stroke="' + (stroke || "#3c6554") + '" stroke-width="3" stroke-linejoin="round"/>';
+  }
+  function rightMark(x, y, dx, dy) {
+    var s = 10;
+    return '<path d="M ' + (x + dx * s) + " " + y + " L " + (x + dx * s) + " " + (y + dy * s) + " L " + x + " " + (y + dy * s) + '" fill="none" stroke="#3c6554" stroke-width="2"/>';
+  }
+  function svgJoinShapes(spec) {
+    var W = 460, H = 168;
+    var s = svgOpen(W, H, "兩塊" + (spec.piece || "圖形") + "拼成" + spec.result, "sol-join");
+    s += txt(78, 18, "分開", "sol-t-c sol-t-note");
+    s += txt(330, 18, "拼好", "sol-t-c sol-t-note");
+    s += arcArrow(168, 250, 78, 28, "is-hot");
+    if (spec.layout === "squares-row") {
+      s += rect(28, 48, 58, 58, "sol-seg-known", 2);
+      s += rect(96, 48, 58, 58, "sol-seg-known", 2);
+      s += rect(268, 48, 116, 58, "sol-seg-derived", 2);
+      s += line(326, 48, 326, 106, "sol-guide");
+    } else if (spec.layout === "triangles-rect") {
+      /* 兩塊直角三角形，直角邊 96 和 48；斜邊貼合後是 96×48 的長方形 */
+      s += poly("12,124 108,124 12,76", "#f0c2d0");
+      s += rightMark(12, 124, 1, -1);
+      s += poly("122,76 218,76 218,124", "#f0c2d0");
+      s += rightMark(218, 76, -1, 1);
+      s += rect(286, 76, 96, 48, "sol-seg-derived", 2);
+      s += '<line x1="286" y1="124" x2="382" y2="76" class="sol-guide"/>';
+    } else if (spec.layout === "triangles-square") {
+      /* 兩塊等腰直角三角形，直角邊 68；斜邊貼合後是邊長 68 的正方形 */
+      s += poly("36,120 104,120 36,52", "#f0c2d0");
+      s += rightMark(36, 120, 1, -1);
+      s += poly("118,52 186,52 186,120", "#f0c2d0");
+      s += rightMark(186, 52, -1, 1);
+      s += rect(300, 52, 68, 68, "sol-seg-derived", 2);
+      s += '<line x1="300" y1="120" x2="368" y2="52" class="sol-guide"/>';
+    }
+    s += txt(W / 2, H - 10, spec.result, "sol-t-c sol-t-ans");
+    s += "</svg>";
+    return s;
+  }
+  function svgFold(spec, r) {
+    var cell = 36, pad = 16;
+    var W = pad * 2 + spec.cols * cell;
+    var H = pad * 2 + spec.rows * cell + 24;
+    var s = svgOpen(W, H, (r.axis === "v" ? "左右" : "上下") + "摺線，兩半會重合", "sol-fold");
+    for (var rr = 0; rr < spec.rows; rr++) {
+      for (var cc = 0; cc < spec.cols; cc++) {
+        var on = cellAt(spec, rr, cc);
+        s += rect(pad + cc * cell, pad + rr * cell, cell, cell, on ? "sol-seg-known" : "sol-box", 0);
+      }
+    }
+    if (r.axis === "v") {
+      var x = pad + (spec.cols / 2) * cell;
+      s += '<line x1="' + x + '" y1="' + (pad - 6) + '" x2="' + x + '" y2="' + (pad + spec.rows * cell + 6) + '" stroke="#b03a00" stroke-width="2.5" stroke-dasharray="6 4"/>';
+    } else {
+      var y = pad + (spec.rows / 2) * cell;
+      s += '<line x1="' + (pad - 6) + '" y1="' + y + '" x2="' + (pad + spec.cols * cell + 6) + '" y2="' + y + '" stroke="#b03a00" stroke-width="2.5" stroke-dasharray="6 4"/>';
+    }
+    s += txt(W / 2, H - 6, (r.axis === "v" ? "左右" : "上下") + "摺會重合", "sol-t-c sol-t-ans");
+    s += "</svg>";
+    return s;
+  }
+  function nudgePerim(mark, other) {
+    var step = 12;
+    if (mark.side === "t" || mark.side === "b") mark.tx += mark.tx < other.tx ? -step : step;
+    else mark.ty += mark.ty < other.ty ? -step : step;
+  }
+  function svgPerim(spec, r) {
+    var cell = 42, pad = 28;
+    var W = pad * 2 + spec.cols * cell;
+    var H = pad * 2 + spec.rows * cell + 22;
+    var s = svgOpen(W, H, "外圈有 " + r.n + " 條小邊", "sol-perim");
+    for (var rr = 0; rr < spec.rows; rr++) {
+      for (var cc = 0; cc < spec.cols; cc++) {
+        var on = cellAt(spec, rr, cc);
+        s += rect(pad + cc * cell, pad + rr * cell, cell, cell, on ? "sol-seg-known" : "sol-box", 0);
+      }
+    }
+    var marks = [];
+    r.edges.forEach(function (e, i) {
+      var x = pad + e.c * cell, y = pad + e.r * cell;
+      var x1 = x, y1 = y, x2 = x, y2 = y, tx = x, ty = y;
+      if (e.side === "t") { x2 = x + cell; tx = x + cell / 2; ty = y - 6; }
+      if (e.side === "b") { y1 = y + cell; x2 = x + cell; y2 = y + cell; tx = x + cell / 2; ty = y + cell + 14; }
+      if (e.side === "l") { y2 = y + cell; tx = x - 12; ty = y + cell / 2 + 5; }
+      if (e.side === "r") { x1 = x + cell; x2 = x + cell; y2 = y + cell; tx = x + cell + 12; ty = y + cell / 2 + 5; }
+      marks.push({ x1: x1, y1: y1, x2: x2, y2: y2, tx: tx, ty: ty, side: e.side, n: i + 1 });
+    });
+    /* 凹角兩邊的編號會落在同一格空位，沿邊往外挪開 */
+    for (var a = 0; a < marks.length; a++) {
+      for (var b = a + 1; b < marks.length; b++) {
+        var dx = marks[a].tx - marks[b].tx, dy = marks[a].ty - marks[b].ty;
+        if (dx * dx + dy * dy > 18 * 18) continue;
+        nudgePerim(marks[a], marks[b]);
+        nudgePerim(marks[b], marks[a]);
+      }
+    }
+    marks.forEach(function (m) {
+      s += '<line x1="' + m.x1 + '" y1="' + m.y1 + '" x2="' + m.x2 + '" y2="' + m.y2 + '" stroke="#b03a00" stroke-width="4" stroke-linecap="butt"/>';
+      s += txt(m.tx, m.ty, String(m.n), "sol-t-c sol-t-small sol-t-ans");
+    });
+    s += txt(W / 2, H - 4, "外圈 " + r.n + " 條", "sol-t-c sol-t-ans");
+    s += "</svg>";
+    return s;
+  }
+
+  function figure(spec, r) {
     var k3 = trackOf(spec) === "k3";
     switch (spec.type) {
       case "partWhole": return svgPartWhole(spec, r);
@@ -811,6 +1168,11 @@
       case "clock": return svgClock(spec, r);
       case "elapsed": return svgElapsed(spec, r);
       case "shapeName": return svgShapeName(spec, r);
+      case "gridCount": return svgGridCount(spec, r);
+      case "cutGrid": return svgCutGrid(spec, r);
+      case "joinShapes": return svgJoinShapes(spec, r);
+      case "fold": return svgFold(spec, r);
+      case "perim": return svgPerim(spec, r);
     }
     return "";
   }
@@ -1073,7 +1435,12 @@
       case "twoStep": spec.steps.forEach(function (p) { out = out.concat(knownNumbers(p)); }); break;
       case "clock":
       case "shapeName":
-        break; /* 鐘面／形狀圖在 SVG，不要求題幹重複數字 */
+      case "gridCount":
+      case "cutGrid":
+      case "joinShapes":
+      case "fold":
+      case "perim":
+        break; /* 鐘面、形狀、方格與外圈的數字在圖解裡才標出 */
       case "elapsed":
         add(spec.start.hour);
         add(spec.end.hour);
