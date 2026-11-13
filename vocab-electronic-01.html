@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="生詞默寫">
 <meta name="theme-color" content="#13283f">
-<meta name="description" content="日常生活與護理英語生詞電子默寫，共 28 課、560 詞（日常 16 課、護理 12 課）。先看英文與中文，抄打一次，再遮默。四組完成後才整課遮默。進度存在這部機的瀏覽器。">
+<meta name="description" content="醫學與護理英語生詞電子默寫，共 28 課、560 詞（醫學 16 課、護理 12 課）。先看英文與中文，抄打一次，再遮默。四組完成後才整課遮默。每課可聽病人問答句子。進度存在這部機的瀏覽器。">
 <title>生詞電子默寫</title>
 <style>
   :root {
@@ -617,6 +617,35 @@
     .practice-dock .btn-row { margin-top: 4px; flex-wrap: nowrap; }
     .practice-dock .btn { min-height: 40px; }
   }
+
+  .listen-entry { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line-soft); }
+  .listen-entry .btn { width: 100%; }
+  .listen-scene { margin: 4px 0 10px; font-weight: 800; }
+  .qa-block { margin: 0 0 12px; }
+  .qa-block .kicker { margin-bottom: 4px; }
+  .line-en, .line-zh {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 48px;
+    margin: 0 0 6px;
+    padding: 8px 12px;
+    border-radius: 12px;
+    text-align: left;
+    font: inherit;
+    font-weight: 700;
+    line-height: 1.45;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-appearance: none;
+    appearance: none;
+    color: inherit;
+  }
+  .line-en { background: #fff; border: 2px solid var(--line-soft); }
+  .line-zh { background: var(--accent-soft); border: 0; }
+  .line-en:focus, .line-zh:focus { outline: none; }
+  .line-en:focus-visible, .line-zh:focus-visible { outline: 2px solid #0f3d73; outline-offset: 1px; }
+  #screen-listen .btn-row .btn { flex: 1 1 calc(50% - 8px); }
 </style>
 </head>
 <body>
@@ -633,6 +662,7 @@
       <button type="button" class="btn ghost" id="btn-drop">放棄這一份</button>
     </div>
     <div class="card">
+      <p>醫學與護理英語，28 課、560 詞（醫學 16 課、護理 12 課）。生詞仍是看、抄打、遮默。每課另可聽病人問答句子，只聽不默。</p>
       <blockquote class="motto">
         <strong>起手不是默書。</strong>
         <p>每一組先同時看英文、中文與音節拆解，再看著抄打一遍，然後才遮住英文默寫。默對的停止；默錯的才再抄，並再遮默一次。四組都完成，才做整課遮默。</p>
@@ -674,6 +704,10 @@
         <button type="button" class="btn" id="btn-due">今日到期</button>
       </div>
       <p class="lock-note" id="lock-note"></p>
+      <div class="listen-entry">
+        <button type="button" class="btn large" id="btn-listen">聽問答</button>
+        <p class="note" id="listen-note">只聽病人與護士的問答，不抄打、不遮默，也不會打開鍵盤。</p>
+      </div>
     </div>
 
     <div class="card">
@@ -703,7 +737,7 @@
           <label><input type="checkbox" id="opt-sfx"> 答對時播放短音效</label>
         </div>
         <div class="tts-row">
-          <button type="button" class="btn" id="btn-preview">試聽 cash／現金</button>
+          <button type="button" class="btn" id="btn-preview">試聽 ward／病房</button>
         </div>
       </div>
       <p class="note" id="tts-voice-hint">實際聲線視這部手機已安裝的聲音而定。若沒有所選的口音或男女聲，會改用最接近的英語聲線。可在 iOS「輔助使用 → 朗讀內容 → 聲音」下載更多。</p>
@@ -829,6 +863,33 @@
       </div>
     </div>
   </section>
+
+  <section id="screen-listen" hidden>
+    <div class="card">
+      <div class="progress-bar">
+        <span id="listen-prog">第 1／4 段</span>
+        <span id="listen-group">A 組</span>
+      </div>
+      <p class="listen-scene" id="listen-scene"></p>
+      <div class="qa-block">
+        <span class="kicker">病人</span>
+        <button type="button" class="line-en" id="listen-p-en" lang="en"></button>
+        <button type="button" class="line-zh" id="listen-p-zh" lang="zh-Hant"></button>
+      </div>
+      <div class="qa-block">
+        <span class="kicker">護士</span>
+        <button type="button" class="line-en" id="listen-n-en" lang="en"></button>
+        <button type="button" class="line-zh" id="listen-n-zh" lang="zh-Hant"></button>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn primary" id="btn-listen-all">聽整段</button>
+        <button type="button" class="btn" id="btn-listen-prev">上一段</button>
+        <button type="button" class="btn" id="btn-listen-next">下一段</button>
+        <button type="button" class="btn ghost" id="btn-listen-back">返回選課</button>
+      </div>
+      <p class="note">點英文聽英文，點中文聽中文。沒有抄打，也沒有遮默。</p>
+    </div>
+  </section>
   <pre id="autotest-result" hidden></pre>
 </main>
 <noscript><p style="padding:16px">請啟用 JavaScript。本頁不需連線，進度存在瀏覽器的 localStorage。</p></noscript>
@@ -857,106 +918,194 @@
   var PRESETS = [
     {
       id: "lesson-01",
-      title: "日常生活：辦事購物",
+      title: "醫學英語：病房溝通",
       words: [
-        { en: "cash", zh: "現金", syl: "cash" },
-        { en: "appointment", zh: "預約", syl: "ap-point-ment" },
-        { en: "receipt", zh: "收據", syl: "re-ceipt" },
-        { en: "refund", zh: "退款", syl: "re-fund" },
-        { en: "queue", zh: "排隊", syl: "queue" },
-        { en: "bargain", zh: "減價；講價", syl: "bar-gain" },
-        { en: "discount", zh: "折扣", syl: "dis-count" },
-        { en: "invoice", zh: "發票", syl: "in-voice" },
-        { en: "wallet", zh: "錢包", syl: "wal-let" },
-        { en: "cashier", zh: "收銀員", syl: "cash-ier" },
-        { en: "size", zh: "尺碼", syl: "size" },
-        { en: "exchange", zh: "更換；兌換", syl: "ex-change" },
-        { en: "membership", zh: "會員資格", syl: "mem-ber-ship" },
-        { en: "checkout", zh: "付款處", syl: "check-out" },
-        { en: "deposit", zh: "訂金；存款", syl: "de-pos-it" },
-        { en: "budget", zh: "預算", syl: "budg-et" },
-        { en: "expensive", zh: "昂貴的", syl: "ex-pen-sive" },
-        { en: "cheap", zh: "便宜的", syl: "cheap" },
-        { en: "available", zh: "有貨的", syl: "a-vail-a-ble" },
-        { en: "change", zh: "找贖；零錢", syl: "change" }
+        { en: "ward", zh: "病房", syl: "ward" },
+        { en: "bedside", zh: "床邊", syl: "bed-side" },
+        { en: "visitor", zh: "訪客", syl: "vis-i-tor" },
+        { en: "wristband", zh: "識別手帶", syl: "wrist-band" },
+        { en: "allergy", zh: "過敏", syl: "al-ler-gy" },
+        { en: "interpreter", zh: "傳譯員", syl: "in-ter-pre-ter" },
+        { en: "privacy", zh: "私隱", syl: "pri-va-cy" },
+        { en: "cubicle", zh: "隔簾床位", syl: "cu-bi-cle" },
+        { en: "locker", zh: "儲物櫃", syl: "lock-er" },
+        { en: "call-bell", zh: "呼叫鈴", syl: "call-bell" },
+        { en: "pillow", zh: "枕頭", syl: "pil-low" },
+        { en: "blanket", zh: "毛毯", syl: "blan-ket" },
+        { en: "porter", zh: "運送員", syl: "por-ter" },
+        { en: "trolley", zh: "推車", syl: "trol-ley" },
+        { en: "identity", zh: "身分", syl: "i-den-ti-ty" },
+        { en: "overnight", zh: "留宿；過夜", syl: "o-ver-night" },
+        { en: "admission", zh: "入院", syl: "ad-mis-sion" },
+        { en: "occupied", zh: "已佔用的", syl: "oc-cu-pied" },
+        { en: "vacant", zh: "空置的", syl: "va-cant" },
+        { en: "comfortable", zh: "舒適的", syl: "com-fort-a-ble" }
+      ],
+      dialogues: [
+        {
+          scene: "剛到病房",
+          patient: { en: "Is this my ward? Which bedside is mine?", zh: "這是我的病房嗎？哪一張床邊是我的？" },
+          nurse: { en: "Yes. You are in this cubicle, by the window.", zh: "是的。你在這張隔簾床位，靠窗那一側。" }
+        },
+        {
+          scene: "探病時段",
+          patient: { en: "Can my visitor stay after visiting hours?", zh: "探病時間過了，我的訪客可以留下嗎？" },
+          nurse: { en: "Visiting usually ends at eight, so we can also protect your privacy.", zh: "探病通常八時結束，這樣也可以保障你的私隱。" }
+        },
+        {
+          scene: "覺得寒冷",
+          patient: { en: "I feel cold. May I have another blanket?", zh: "我覺得冷。可以再給我一張毛毯嗎？" },
+          nurse: { en: "Of course. I will bring a blanket and check your pillow too.", zh: "當然可以。我去拿毛毯，也看看你的枕頭。" }
+        },
+        {
+          scene: "辦入院",
+          patient: { en: "Is this bed vacant? I was told I need overnight admission.", zh: "這張床是空置的嗎？他們說我要留宿入院。" },
+          nurse: { en: "This bed is vacant. Let us first confirm your identity and any allergy.", zh: "這張床是空的。我們先核對你的身分和有沒有過敏。" }
+        }
       ]
     },
     {
       id: "lesson-03",
-      title: "日常生活：家居飲食",
+      title: "醫學英語：身體部位",
       words: [
-        { en: "laundry", zh: "洗衣", syl: "laun-dry" },
-        { en: "grocery", zh: "雜貨", syl: "gro-cer-y" },
-        { en: "leftover", zh: "剩餘食物", syl: "left-o-ver" },
-        { en: "charger", zh: "充電器", syl: "char-ger" },
-        { en: "upstairs", zh: "樓上", syl: "up-stairs" },
-        { en: "downstairs", zh: "樓下", syl: "down-stairs" },
-        { en: "kitchen", zh: "廚房", syl: "kitch-en" },
-        { en: "bathroom", zh: "浴室；洗手間", syl: "bath-room" },
-        { en: "refrigerator", zh: "雪櫃", syl: "re-frig-er-a-tor" },
-        { en: "microwave", zh: "微波爐", syl: "mi-cro-wave" },
-        { en: "breakfast", zh: "早餐", syl: "break-fast" },
-        { en: "dinner", zh: "晚餐", syl: "din-ner" },
-        { en: "recipe", zh: "食譜", syl: "rec-i-pe" },
-        { en: "ingredients", zh: "材料", syl: "in-gre-di-ents" },
-        { en: "vegetable", zh: "蔬菜", syl: "veg-e-ta-ble" },
-        { en: "thirsty", zh: "口渴的", syl: "thirst-y" },
-        { en: "rubbish", zh: "垃圾", syl: "rub-bish" },
-        { en: "neighbour", zh: "鄰居", syl: "neigh-bour" },
-        { en: "housework", zh: "家務", syl: "house-work" },
-        { en: "tidy", zh: "整齊的", syl: "ti-dy" }
+        { en: "head", zh: "頭", syl: "head" },
+        { en: "chest", zh: "胸口；胸部", syl: "chest" },
+        { en: "abdomen", zh: "腹部", syl: "ab-do-men" },
+        { en: "back", zh: "背部", syl: "back" },
+        { en: "shoulder", zh: "肩膀", syl: "shoul-der" },
+        { en: "arm", zh: "手臂", syl: "arm" },
+        { en: "leg", zh: "腿", syl: "leg" },
+        { en: "knee", zh: "膝", syl: "knee" },
+        { en: "ankle", zh: "足踝", syl: "an-kle" },
+        { en: "wrist", zh: "手腕", syl: "wrist" },
+        { en: "throat", zh: "喉嚨", syl: "throat" },
+        { en: "stomach", zh: "胃", syl: "stom-ach" },
+        { en: "flank", zh: "腰側；腎區", syl: "flank" },
+        { en: "liver", zh: "肝", syl: "liv-er" },
+        { en: "lung", zh: "肺", syl: "lung" },
+        { en: "heart", zh: "心臟", syl: "heart" },
+        { en: "skin", zh: "皮膚", syl: "skin" },
+        { en: "joint", zh: "關節", syl: "joint" },
+        { en: "muscle", zh: "肌肉", syl: "mus-cle" },
+        { en: "neck", zh: "頸", syl: "neck" }
+      ],
+      dialogues: [
+        {
+          scene: "問痛楚部位",
+          patient: { en: "The pain is in my chest and also in my abdomen.", zh: "痛在胸口，腹部也痛。" },
+          nurse: { en: "Can you show me with one hand whether it is more in the chest or the abdomen?", zh: "你可以一隻手指出來，是胸口比較痛，還是腹部比較痛？" }
+        },
+        {
+          scene: "跌倒之後",
+          patient: { en: "I hurt my knee and my ankle when I fell.", zh: "我跌倒時弄傷了膝和足踝。" },
+          nurse: { en: "I will look at your leg, starting from the knee down to the ankle.", zh: "我看看你的腿，由膝一直看到足踝。" }
+        },
+        {
+          scene: "喉痛",
+          patient: { en: "My throat is sore, and my stomach feels uneasy too.", zh: "我喉嚨痛，胃也不舒服。" },
+          nurse: { en: "I will check your throat first, then ask about your stomach and flank.", zh: "我先看你的喉嚨，再問你的胃和腰側。" }
+        },
+        {
+          scene: "關節不適",
+          patient: { en: "The muscle around my neck and shoulder feels very tight.", zh: "我頸和肩膀附近的肌肉很緊。" },
+          nurse: { en: "Let me see how that joint moves, and whether the neck pain goes to the shoulder.", zh: "我看看這個關節怎樣活動，以及頸痛會不會走到肩膀。" }
+        }
       ]
     },
     {
       id: "lesson-04",
-      title: "日常生活：出行交通",
+      title: "醫學英語：疼痛描述",
       words: [
-        { en: "traffic", zh: "交通；塞車", syl: "traf-fic" },
-        { en: "elevator", zh: "升降機", syl: "el-e-va-tor" },
-        { en: "pedestrian", zh: "行人", syl: "ped-es-tri-an" },
-        { en: "luggage", zh: "行李", syl: "lug-gage" },
-        { en: "delayed", zh: "延誤的", syl: "de-layed" },
-        { en: "platform", zh: "月台", syl: "plat-form" },
-        { en: "ticket", zh: "車票；門票", syl: "tick-et" },
-        { en: "ferry", zh: "渡輪", syl: "fer-ry" },
-        { en: "departure", zh: "開出；出發", syl: "de-par-ture" },
-        { en: "arrival", zh: "到達", syl: "ar-ri-val" },
-        { en: "transfer", zh: "轉車；轉機", syl: "trans-fer" },
-        { en: "passport", zh: "護照", syl: "pass-port" },
-        { en: "customs", zh: "海關", syl: "cus-toms" },
-        { en: "direction", zh: "方向", syl: "di-rec-tion" },
-        { en: "shortcut", zh: "捷徑", syl: "short-cut" },
-        { en: "pavement", zh: "行人路", syl: "pave-ment" },
-        { en: "parking", zh: "泊車", syl: "park-ing" },
-        { en: "licence", zh: "執照；車牌", syl: "li-cence" },
-        { en: "helmet", zh: "頭盔", syl: "hel-met" },
-        { en: "bridge", zh: "橋", syl: "bridge" }
+        { en: "ache", zh: "隱痛；痠痛", syl: "ache" },
+        { en: "sharp", zh: "尖銳的", syl: "sharp" },
+        { en: "dull", zh: "悶痛的", syl: "dull" },
+        { en: "throbbing", zh: "跳痛的", syl: "throb-bing" },
+        { en: "burning", zh: "灼痛的", syl: "burn-ing" },
+        { en: "stabbing", zh: "刺痛的", syl: "stab-bing" },
+        { en: "tender", zh: "觸痛的", syl: "ten-der" },
+        { en: "sore", zh: "痠軟疼痛的", syl: "sore" },
+        { en: "mild", zh: "輕微的", syl: "mild" },
+        { en: "moderate", zh: "中等的", syl: "mod-er-ate" },
+        { en: "unbearable", zh: "難以忍受的", syl: "un-bear-a-ble" },
+        { en: "radiate", zh: "放射；擴散", syl: "ra-di-ate" },
+        { en: "onset", zh: "起始；發作時間", syl: "on-set" },
+        { en: "alleviate", zh: "減輕", syl: "al-le-vi-ate" },
+        { en: "worsening", zh: "正在加重的", syl: "wors-en-ing" },
+        { en: "easing", zh: "正在減輕的", syl: "eas-ing" },
+        { en: "constant", zh: "持續的", syl: "con-stant" },
+        { en: "intermittent", zh: "間歇的", syl: "in-ter-mit-tent" },
+        { en: "location", zh: "部位", syl: "lo-ca-tion" },
+        { en: "severity", zh: "嚴重程度", syl: "se-ver-i-ty" }
+      ],
+      dialogues: [
+        {
+          scene: "描述痛楚",
+          patient: { en: "It is not a sharp pain. It is a dull ache, but sometimes it is throbbing.", zh: "不是尖銳的痛。是悶悶的隱痛，但有時會跳痛。" },
+          nurse: { en: "Thank you. Is the burning pain there all the time, or only now and then?", zh: "謝謝。那灼痛是一直都在，還是時有時無？" }
+        },
+        {
+          scene: "觸碰時更痛",
+          patient: { en: "The area is tender and sore. It was mild yesterday, but today it is more moderate.", zh: "那裡觸痛，又痠軟疼痛。昨天是輕微的，今天比較中等。" },
+          nurse: { en: "I will be gentle. Tell me if it becomes unbearable when I touch it.", zh: "我會小心輕碰。如果一碰就難以忍受，請告訴我。" }
+        },
+        {
+          scene: "痛楚放射",
+          patient: { en: "The pain seemed to radiate to my back, and the onset was after lunch.", zh: "痛好像放射到背部，是午飯後開始的。" },
+          nurse: { en: "What helps alleviate it? Rest, medicine, or a change of position?", zh: "怎樣可以減輕？休息、藥物，還是換一個姿勢？" }
+        },
+        {
+          scene: "痛的變化",
+          patient: { en: "It used to be intermittent, but now it is constant and worsening.", zh: "以前是間歇的，現在變成持續，而且正在加重。" },
+          nurse: { en: "Please show me the location. I need to record the severity as well.", zh: "請指給我看部位。我還要記下嚴重程度。" }
+        }
       ]
     },
     {
       id: "lesson-05",
-      title: "日常生活：通訊應急",
+      title: "醫學英語：入院出院",
       words: [
-        { en: "allergy", zh: "過敏", syl: "al-ler-gy" },
-        { en: "password", zh: "密碼", syl: "pass-word" },
-        { en: "delivery", zh: "送貨", syl: "de-liv-er-y" },
-        { en: "expired", zh: "過期的", syl: "ex-pired" },
-        { en: "emergency", zh: "緊急情況", syl: "e-mer-gen-cy" },
-        { en: "address", zh: "地址", syl: "ad-dress" },
-        { en: "message", zh: "訊息", syl: "mes-sage" },
-        { en: "notification", zh: "通知", syl: "no-ti-fi-ca-tion" },
-        { en: "battery", zh: "電池", syl: "bat-ter-y" },
-        { en: "signal", zh: "訊號", syl: "sig-nal" },
-        { en: "reservation", zh: "預訂", syl: "res-er-va-tion" },
-        { en: "cancel", zh: "取消", syl: "can-cel" },
-        { en: "reminder", zh: "提醒", syl: "re-mind-er" },
-        { en: "payment", zh: "付款", syl: "pay-ment" },
-        { en: "insurance", zh: "保險", syl: "in-sur-ance" },
-        { en: "pharmacy", zh: "藥房", syl: "phar-ma-cy" },
-        { en: "ambulance", zh: "救護車", syl: "am-bu-lance" },
-        { en: "injury", zh: "受傷", syl: "in-ju-ry" },
-        { en: "thermometer", zh: "溫度計", syl: "ther-mom-e-ter" },
-        { en: "umbrella", zh: "雨傘", syl: "um-brel-la" }
+        { en: "belongings", zh: "個人物品", syl: "be-long-ings" },
+        { en: "valuables", zh: "貴重物品", syl: "val-u-a-bles" },
+        { en: "hospital", zh: "醫院", syl: "hos-pi-tal" },
+        { en: "clinic", zh: "診所；門診", syl: "clin-ic" },
+        { en: "appointment", zh: "預約；約診", syl: "ap-point-ment" },
+        { en: "registration", zh: "登記", syl: "reg-is-tra-tion" },
+        { en: "referral", zh: "轉介", syl: "re-fer-ral" },
+        { en: "follow-up", zh: "覆診", syl: "fol-low-up" },
+        { en: "outpatient", zh: "門診病人", syl: "out-pa-tient" },
+        { en: "inpatient", zh: "住院病人", syl: "in-pa-tient" },
+        { en: "transfer", zh: "轉院；轉床", syl: "trans-fer" },
+        { en: "escort", zh: "陪同", syl: "es-cort" },
+        { en: "wheelchair", zh: "輪椅", syl: "wheel-chair" },
+        { en: "certificate", zh: "證明書", syl: "cer-tif-i-cate" },
+        { en: "waiting-room", zh: "候診室", syl: "wait-ing-room" },
+        { en: "arrange", zh: "安排", syl: "ar-range" },
+        { en: "return", zh: "回家", syl: "re-turn" },
+        { en: "notes", zh: "病歷摘要；備註", syl: "notes" },
+        { en: "pack", zh: "收拾行李", syl: "pack" },
+        { en: "paperwork", zh: "文件手續", syl: "pa-per-work" }
+      ],
+      dialogues: [
+        {
+          scene: "入院登記",
+          patient: { en: "Where should I leave my belongings and valuables in the hospital?", zh: "在醫院裡，個人物品和貴重物品應該放在哪裡？" },
+          nurse: { en: "Keep only what you need. We can lock valuables after registration.", zh: "只留需要用的。登記之後，我們可以把貴重物品鎖起來。" }
+        },
+        {
+          scene: "門診改住院",
+          patient: { en: "I came for a clinic appointment. Why do I need to stay as an inpatient?", zh: "我是來診所約診的。為什麼要留院做住院病人？" },
+          nurse: { en: "The doctor wants a short admission after this referral, and then a follow-up as an outpatient.", zh: "醫生希望這次轉介後短期入院，之後再以門診病人覆診。" }
+        },
+        {
+          scene: "準備出院",
+          patient: { en: "Will someone escort me? I need a wheelchair to transfer to the car.", zh: "有人陪同嗎？我需要輪椅轉到車上。" },
+          nurse: { en: "Yes. We will arrange an escort and a wheelchair, and prepare a certificate if you need one.", zh: "有的。我們會安排陪同和輪椅，需要的話也準備證明書。" }
+        },
+        {
+          scene: "等候辦手續",
+          patient: { en: "I have packed. Can I return home after the paperwork in the waiting-room?", zh: "我已經收拾行李。在候診室辦完文件手續就可以回家嗎？" },
+          nurse: { en: "Once the notes and paperwork are done, you can return home.", zh: "病歷摘要和文件手續辦好，你就可以回家。" }
+        }
       ]
     },
     {
@@ -983,6 +1132,28 @@
         { en: "itch", zh: "痕癢", syl: "itch" },
         { en: "bruise", zh: "瘀傷", syl: "bruise" },
         { en: "rash", zh: "皮疹", syl: "rash" }
+      ],
+      dialogues: [
+        {
+          scene: "發燒",
+          patient: { en: "I have a fever, and my pulse feels very fast.", zh: "我發燒，脈搏好像跳得很快。" },
+          nurse: { en: "I will check your temperature and pulse, and see whether you need oxygen.", zh: "我量你的體溫和脈搏，看看是否需要氧氣。" }
+        },
+        {
+          scene: "頭暈與痛",
+          patient: { en: "The pain is worse, and I feel dizzy.", zh: "疼痛加重了，我也覺得頭暈。" },
+          nurse: { en: "Please stay in bed. I will start close observation and tell the doctor.", zh: "請留在病床上。我會開始密切觀察，並告訴醫生。" }
+        },
+        {
+          scene: "氣促",
+          patient: { en: "I have been coughing and I feel breathless.", zh: "我一直咳嗽，而且覺得氣促。" },
+          nurse: { en: "Sit upright for me. Tell me if the cough comes with vomiting or fatigue.", zh: "請坐直。如果咳嗽同時有嘔吐或疲勞，請告訴我。" }
+        },
+        {
+          scene: "腹瀉與皮疹",
+          patient: { en: "I have diarrhoea and an itchy rash.", zh: "我有腹瀉，還有痕癢的皮疹。" },
+          nurse: { en: "Thank you for telling me. We will look at these symptoms, and also check for swelling or a bruise.", zh: "謝謝你告訴我。我們會看這些症狀，也檢查有沒有腫脹或瘀傷。" }
+        }
       ]
     },
     {
@@ -1009,6 +1180,28 @@
         { en: "restriction", zh: "限制", syl: "re-stric-tion" },
         { en: "documentation", zh: "紀錄", syl: "doc-u-men-ta-tion" },
         { en: "assessment", zh: "評估", syl: "as-sess-ment" }
+      ],
+      dialogues: [
+        {
+          scene: "打針",
+          patient: { en: "Do I really need this injection? Will you use a syringe and a cannula?", zh: "我真的需要這次注射嗎？你會用針筒和套管嗎？" },
+          nurse: { en: "Yes, it is an intravenous medicine. I will use a new syringe and check the cannula first.", zh: "是的，這是靜脈藥物。我會用新針筒，並先檢查套管。" }
+        },
+        {
+          scene: "換敷料",
+          patient: { en: "When will you change the dressing and the bandage?", zh: "你什麼時候換敷料和繃帶？" },
+          nurse: { en: "I will change the dressing now, take a specimen if needed, and keep the swab clean.", zh: "我現在換敷料，需要的話取標本，並保持拭子清潔。" }
+        },
+        {
+          scene: "量體溫",
+          patient: { en: "What are you doing with the monitor and this catheter?", zh: "你用監察器和這條導管在做什麼？" },
+          nurse: { en: "I am checking your vitals and temperature. The catheter must stay clean to reduce infection risk.", zh: "我在看生命體徵和體溫。導管必須保持清潔，以減低感染風險。" }
+        },
+        {
+          scene: "準備出院",
+          patient: { en: "Before discharge, what documentation and assessment do you still need?", zh: "出院之前，你還需要什麼紀錄和評估？" },
+          nurse: { en: "We will finish the assessment, confirm any fluid restriction, and complete the documentation.", zh: "我們會完成評估，確認有沒有體液限制，並寫好紀錄。" }
+        }
       ]
     },
     {
@@ -1035,6 +1228,28 @@
         { en: "warning", zh: "警告", syl: "war-ning" },
         { en: "overdue", zh: "逾期未給", syl: "o-ver-due" },
         { en: "dilution", zh: "稀釋", syl: "di-lu-tion" }
+      ],
+      dialogues: [
+        {
+          scene: "問處方",
+          patient: { en: "What is the dosage on this prescription? Is it an antibiotic or an analgesic?", zh: "這張處方的劑量是多少？是抗生素還是止痛藥？" },
+          nurse: { en: "I will check the medication with you. Please tell me if you have had a reaction before.", zh: "我和你一起核對藥物。如果以前有過反應，請告訴我。" }
+        },
+        {
+          scene: "抽血前",
+          patient: { en: "I am fasting for the laboratory. Will you also check my haemoglobin and potassium?", zh: "我為了化驗室在禁食。你們也會查血色素和鉀嗎？" },
+          nurse: { en: "Yes. We will also look at sodium, creatinine and glucose when the result is back.", zh: "會。結果回來後，我們也會看鈉、肌酸酐和葡萄糖。" }
+        },
+        {
+          scene: "擔心感染",
+          patient: { en: "Could this be an infection? When will the culture result be ready?", zh: "這會不會是感染？培養結果什麼時候有？" },
+          nurse: { en: "The culture takes time. I will tell you as soon as the laboratory result is back.", zh: "培養需要時間。化驗室結果一到，我就告訴你。" }
+        },
+        {
+          scene: "漏服警告",
+          patient: { en: "The warning on the bag says the dose may be overdue. Is the dilution still safe?", zh: "袋子上的警告說這劑可能逾期未給。稀釋仍然安全嗎？" },
+          nurse: { en: "I will not give it until I confirm the dose and dilution, and check your adherence record.", zh: "在確認劑量和稀釋，並查看你的遵從紀錄之前，我不會給。" }
+        }
       ]
     },
     {
@@ -1061,318 +1276,604 @@
         { en: "hypotension", zh: "低血壓", syl: "hy-po-ten-sion" },
         { en: "hypertension", zh: "高血壓", syl: "hy-per-ten-sion" },
         { en: "nephrology", zh: "腎科", syl: "neph-rol-o-gy" }
+      ],
+      dialogues: [
+        {
+          scene: "瘻管",
+          patient: { en: "Please check my fistula. I cannot feel the thrill as clearly today.", zh: "請檢查我的瘻管。今天震顫沒有那麼清楚。" },
+          nurse: { en: "I will check the access and the thrill before dialysis, and look for clotting.", zh: "透析前我會檢查血管通路和震顫，並看看有沒有凝血。" }
+        },
+        {
+          scene: "透析中抽筋",
+          patient: { en: "I have a cramp, and I feel unwell. Is it hypotension?", zh: "我抽筋，也覺得不舒服。是低血壓嗎？" },
+          nurse: { en: "I will stop ultrafiltration if needed, check your blood pressure, and tell the nephrology team.", zh: "需要的話我會停下超濾，量血壓，並告訴腎科團隊。" }
+        },
+        {
+          scene: "體液與水腫",
+          patient: { en: "My legs have oedema. Are my kidney fluid and urea results very high?", zh: "我雙腿有水腫。腎臟的體液和尿素結果會很高嗎？" },
+          nurse: { en: "We will review fluid, urea, phosphate and calcium, and set a safer filtration target.", zh: "我們會檢視體液、尿素、磷酸鹽和鈣，並訂一個較安全的濾過目標。" }
+        },
+        {
+          scene: "擔心貧血",
+          patient: { en: "The doctor mentioned anaemia, heparin and a possible transplant later.", zh: "醫生提到貧血、肝素，以及日後可能移植。" },
+          nurse: { en: "After this session I can explain the anaemia treatment, the heparin, and how transplant work-up is done in nephrology.", zh: "這一班之後，我可以解釋貧血治療、肝素，以及腎科怎樣做移植評估。" }
+        }
       ]
     },
     {
       id: "lesson-09",
-      title: "日常生活：食肆點餐",
+      title: "醫學英語：呼吸不適",
       words: [
-        { en: "menu", zh: "菜單", syl: "men-u" },
-        { en: "waiter", zh: "侍應", syl: "wait-er" },
-        { en: "takeaway", zh: "外帶", syl: "take-a-way" },
-        { en: "spicy", zh: "辣的", syl: "spic-y" },
-        { en: "bill", zh: "帳單", syl: "bill" },
-        { en: "starter", zh: "前菜", syl: "start-er" },
-        { en: "dessert", zh: "甜品", syl: "des-sert" },
-        { en: "soup", zh: "湯", syl: "soup" },
-        { en: "noodle", zh: "麵條", syl: "noo-dle" },
-        { en: "seafood", zh: "海鮮", syl: "sea-food" },
-        { en: "salty", zh: "鹹的", syl: "salt-y" },
-        { en: "sour", zh: "酸的", syl: "sour" },
-        { en: "beverage", zh: "飲品", syl: "bev-er-age" },
-        { en: "coffee", zh: "咖啡", syl: "cof-fee" },
-        { en: "lemonade", zh: "檸檬水", syl: "lem-on-ade" },
-        { en: "reserved", zh: "已預訂的", syl: "re-served" },
-        { en: "portion", zh: "份量", syl: "por-tion" },
-        { en: "vegetarian", zh: "素食的", syl: "veg-e-tar-i-an" },
-        { en: "tip", zh: "小費", syl: "tip" },
-        { en: "refill", zh: "續杯", syl: "re-fill" }
+        { en: "sputum", zh: "痰", syl: "spu-tum" },
+        { en: "wheeze", zh: "喘鳴", syl: "wheeze" },
+        { en: "asthma", zh: "哮喘", syl: "asth-ma" },
+        { en: "pneumonia", zh: "肺炎", syl: "pneu-mo-ni-a" },
+        { en: "inhaler", zh: "吸入劑", syl: "in-hal-er" },
+        { en: "nebuliser", zh: "霧化器", syl: "neb-u-lis-er" },
+        { en: "tightness", zh: "緊繃；胸口緊", syl: "tight-ness" },
+        { en: "hoarse", zh: "聲沙的", syl: "hoarse" },
+        { en: "mucus", zh: "黏液", syl: "mu-cus" },
+        { en: "shallow", zh: "淺淺的（呼吸）", syl: "shal-low" },
+        { en: "deep", zh: "深的（呼吸）", syl: "deep" },
+        { en: "rib", zh: "肋骨", syl: "rib" },
+        { en: "productive", zh: "有痰的", syl: "pro-duc-tive" },
+        { en: "dry", zh: "乾的（咳嗽）", syl: "dry" },
+        { en: "inhale", zh: "吸入", syl: "in-hale" },
+        { en: "exhale", zh: "呼出", syl: "ex-hale" },
+        { en: "saturation", zh: "血氧飽和度", syl: "sat-u-ra-tion" },
+        { en: "breath", zh: "呼吸；一口氣", syl: "breath" },
+        { en: "chesty", zh: "痰咳的", syl: "chest-y" },
+        { en: "spacer", zh: "吸入輔助器", syl: "spa-cer" }
+      ],
+      dialogues: [
+        {
+          scene: "哮喘發作",
+          patient: { en: "I have asthma, and I can hear a wheeze. There is also a lot of sputum.", zh: "我有哮喘，聽得到喘鳴，痰也很多。" },
+          nurse: { en: "Sit upright. Use your inhaler, and tell me if the tightness feels like pneumonia.", zh: "請坐直。用吸入劑；如果胸口緊得像肺炎那樣，請告訴我。" }
+        },
+        {
+          scene: "聲沙有痰",
+          patient: { en: "My voice is hoarse and the mucus makes my breath feel shallow.", zh: "我聲沙，黏液令呼吸變得很淺。" },
+          nurse: { en: "Take slow deep breaths. I will set up the nebuliser.", zh: "慢慢做深呼吸。我去準備霧化器。" }
+        },
+        {
+          scene: "咳痰",
+          patient: { en: "It is a productive cough, and it hurts around my rib when I cough.", zh: "這是有痰的咳嗽，一咳肋骨附近就痛。" },
+          nurse: { en: "Is it chesty with sputum, or a dry cough as well at night?", zh: "是痰咳，還是晚上也有乾咳？" }
+        },
+        {
+          scene: "血氧",
+          patient: { en: "I feel I cannot inhale or exhale fully. What is my saturation?", zh: "我覺得吸不入，也呼不盡。我的血氧飽和度是多少？" },
+          nurse: { en: "Your saturation is a little low. Take a slow breath with the spacer, and I will stay with you.", zh: "血氧飽和度偏低。請用吸入輔助器慢慢吸一口氣，我留在這裡。" }
+        }
       ]
     },
     {
       id: "lesson-10",
-      title: "日常生活：銀行郵局",
+      title: "醫學英語：心臟循環",
       words: [
-        { en: "withdraw", zh: "提款", syl: "with-draw" },
-        { en: "cheque", zh: "支票", syl: "cheque" },
-        { en: "statement", zh: "結單", syl: "state-ment" },
-        { en: "savings", zh: "儲蓄", syl: "sav-ings" },
-        { en: "balance", zh: "餘額", syl: "bal-ance" },
-        { en: "account", zh: "帳戶", syl: "ac-count" },
-        { en: "interest", zh: "利息", syl: "in-ter-est" },
-        { en: "counter", zh: "櫃檯", syl: "coun-ter" },
-        { en: "signature", zh: "簽名", syl: "sig-na-ture" },
-        { en: "passbook", zh: "存摺", syl: "pass-book" },
-        { en: "parcel", zh: "包裹", syl: "par-cel" },
-        { en: "postage", zh: "郵資", syl: "post-age" },
-        { en: "envelope", zh: "信封", syl: "en-ve-lope" },
-        { en: "stamp", zh: "郵票", syl: "stamp" },
-        { en: "registered", zh: "掛號的", syl: "reg-is-tered" },
-        { en: "remittance", zh: "匯款", syl: "re-mit-tance" },
-        { en: "branch", zh: "分行", syl: "branch" },
-        { en: "currency", zh: "貨幣", syl: "cur-ren-cy" },
-        { en: "identity", zh: "身分", syl: "i-den-ti-ty" },
-        { en: "bank", zh: "銀行", syl: "bank" }
+        { en: "palpitation", zh: "心悸", syl: "pal-pi-ta-tion" },
+        { en: "angina", zh: "心絞痛", syl: "an-gi-na" },
+        { en: "pacemaker", zh: "起搏器", syl: "pace-mak-er" },
+        { en: "cholesterol", zh: "膽固醇", syl: "cho-les-ter-ol" },
+        { en: "artery", zh: "動脈", syl: "ar-ter-y" },
+        { en: "vein", zh: "靜脈", syl: "vein" },
+        { en: "circulation", zh: "循環", syl: "cir-cu-la-tion" },
+        { en: "electrocardiogram", zh: "心電圖", syl: "e-lec-tro-car-di-o-gram" },
+        { en: "stent", zh: "支架", syl: "stent" },
+        { en: "bypass", zh: "繞道手術", syl: "by-pass" },
+        { en: "murmur", zh: "雜音", syl: "mur-mur" },
+        { en: "blood-pressure", zh: "血壓", syl: "blood-pres-sure" },
+        { en: "heartbeat", zh: "心跳", syl: "heart-beat" },
+        { en: "heavy", zh: "沉重的（胸口）", syl: "heav-y" },
+        { en: "sweat", zh: "出汗", syl: "sweat" },
+        { en: "faint", zh: "差點昏倒的", syl: "faint" },
+        { en: "swollen", zh: "腫了的", syl: "swol-len" },
+        { en: "exercise", zh: "運動", syl: "ex-er-cise" },
+        { en: "rest", zh: "休息", syl: "rest" },
+        { en: "aspirin", zh: "阿士匹靈", syl: "as-pi-rin" }
+      ],
+      dialogues: [
+        {
+          scene: "心悸",
+          patient: { en: "I have palpitations, and I am worried it is angina. I also have a pacemaker.", zh: "我有心悸，擔心是心絞痛。我還裝了起搏器。" },
+          nurse: { en: "I will check your heartbeat and do an electrocardiogram. Please try to stay still.", zh: "我量你的心跳，並做心電圖。請盡量不要動。" }
+        },
+        {
+          scene: "談血脂",
+          patient: { en: "The doctor said my cholesterol is high. Is that bad for an artery or a vein?", zh: "醫生說我膽固醇高。這對動脈還是靜脈不好？" },
+          nurse: { en: "High cholesterol mainly affects the arteries and circulation. We will also review your stent and bypass history.", zh: "高膽固醇主要影響動脈和循環。我們也會看你的支架和繞道手術紀錄。" }
+        },
+        {
+          scene: "量血壓",
+          patient: { en: "My blood-pressure is high, and the nurse said there was a murmur. My chest feels heavy.", zh: "我血壓高，護士說有雜音。胸口覺得很沉重。" },
+          nurse: { en: "I will recheck your blood pressure and heartbeat, and ask the doctor about the murmur.", zh: "我再量血壓和心跳，並就雜音請問醫生。" }
+        },
+        {
+          scene: "浮腫與休息",
+          patient: { en: "My ankles are swollen, and I sweat and feel faint when I walk.", zh: "我的足踝腫了，走路時會出汗，還覺得差點昏倒。" },
+          nurse: { en: "Please rest now. After you recover, we can talk about gentle exercise and whether aspirin is still needed.", zh: "請先休息。恢復之後，我們再談輕柔運動，以及是否仍需要阿士匹靈。" }
+        }
       ]
     },
     {
       id: "lesson-11",
-      title: "日常生活：住屋維修",
+      title: "醫學英語：腸胃消化",
       words: [
-        { en: "landlord", zh: "業主；房東", syl: "land-lord" },
-        { en: "tenant", zh: "租客", syl: "ten-ant" },
-        { en: "rent", zh: "租金", syl: "rent" },
-        { en: "lease", zh: "租約", syl: "lease" },
-        { en: "furniture", zh: "傢俬", syl: "fur-ni-ture" },
-        { en: "plumber", zh: "水喉匠", syl: "plum-ber" },
-        { en: "electrician", zh: "電工", syl: "e-lec-tri-cian" },
-        { en: "carpenter", zh: "木匠", syl: "car-pen-ter" },
-        { en: "repair", zh: "維修", syl: "re-pair" },
-        { en: "caretaker", zh: "管理員", syl: "care-tak-er" },
-        { en: "leak", zh: "漏水", syl: "leak" },
-        { en: "socket", zh: "插座", syl: "sock-et" },
-        { en: "blockage", zh: "堵塞", syl: "block-age" },
-        { en: "flood", zh: "水浸", syl: "flood" },
-        { en: "fuse", zh: "保險絲", syl: "fuse" },
-        { en: "ceiling", zh: "天花", syl: "ceil-ing" },
-        { en: "balcony", zh: "露台", syl: "bal-co-ny" },
-        { en: "corridor", zh: "走廊", syl: "cor-ri-dor" },
-        { en: "intercom", zh: "對講機", syl: "in-ter-com" },
-        { en: "tap", zh: "水龍頭", syl: "tap" }
+        { en: "indigestion", zh: "消化不良", syl: "in-di-ges-tion" },
+        { en: "heartburn", zh: "胃灼熱", syl: "heart-burn" },
+        { en: "bloating", zh: "腹脹", syl: "bloat-ing" },
+        { en: "reflux", zh: "反流", syl: "re-flux" },
+        { en: "ulcer", zh: "潰瘍", syl: "ul-cer" },
+        { en: "bowel", zh: "腸；排便", syl: "bow-el" },
+        { en: "stool", zh: "大便", syl: "stool" },
+        { en: "laxative", zh: "瀉藥", syl: "lax-a-tive" },
+        { en: "antacid", zh: "抗酸藥", syl: "ant-ac-id" },
+        { en: "swallow", zh: "吞嚥", syl: "swal-low" },
+        { en: "hiccup", zh: "呃逆", syl: "hic-cup" },
+        { en: "wind", zh: "腸氣", syl: "wind" },
+        { en: "endoscopy", zh: "內視鏡檢查", syl: "en-dos-co-py" },
+        { en: "gastritis", zh: "胃炎", syl: "gas-tri-tis" },
+        { en: "colic", zh: "絞痛", syl: "col-ic" },
+        { en: "bile", zh: "膽汁", syl: "bile" },
+        { en: "gallbladder", zh: "膽囊", syl: "gall-blad-der" },
+        { en: "hungry", zh: "肚餓的", syl: "hun-gry" },
+        { en: "burp", zh: "噯氣", syl: "burp" },
+        { en: "bland", zh: "清淡的（飲食）", syl: "bland" }
+      ],
+      dialogues: [
+        {
+          scene: "食後不適",
+          patient: { en: "I have indigestion and heartburn, and a lot of bloating.", zh: "我消化不良，又有胃灼熱，腹脹也很厲害。" },
+          nurse: { en: "That can come from reflux or an ulcer. When did it start after eating?", zh: "這可能來自反流或潰瘍。食後多久開始的？" }
+        },
+        {
+          scene: "排便問題",
+          patient: { en: "My bowel is sluggish, and the stool is very hard.", zh: "我排便不暢，大便很硬。" },
+          nurse: { en: "I will ask the doctor about a laxative, and we can also use an antacid for the burning.", zh: "我會問醫生是否用瀉藥，灼熱也可以用抗酸藥。" }
+        },
+        {
+          scene: "吞嚥困難",
+          patient: { en: "I cannot swallow well, and I keep getting hiccups and wind.", zh: "我吞嚥不好，還一直呃逆，腸氣也多。" },
+          nurse: { en: "I will note this for the doctor. If it continues, an endoscopy can look for gastritis.", zh: "我記下給醫生。如果持續，內視鏡可以查看是否胃炎。" }
+        },
+        {
+          scene: "腹痛",
+          patient: { en: "The colic on the right is bad. Could it be my gallbladder? I have switched to bland food.", zh: "右邊的絞痛很厲害。會不會是膽囊？我已改吃清淡的。" },
+          nurse: { en: "It may be the gallbladder or bile. Stay with bland food, and tell me if you burp or feel hungry then sick.", zh: "可能是膽囊或膽汁的問題。先吃清淡的。如果有噯氣，或者肚餓之後覺得不舒服，請告訴我。" }
+        }
       ]
     },
     {
       id: "lesson-12",
-      title: "日常生活：衣著天氣",
+      title: "醫學英語：排尿泌尿",
       words: [
-        { en: "typhoon", zh: "颱風", syl: "ty-phoon" },
-        { en: "humid", zh: "潮濕的", syl: "hu-mid" },
-        { en: "forecast", zh: "預報", syl: "fore-cast" },
-        { en: "drizzle", zh: "毛毛雨", syl: "driz-zle" },
-        { en: "lightning", zh: "閃電", syl: "light-ning" },
-        { en: "jacket", zh: "外套", syl: "jack-et" },
-        { en: "trousers", zh: "褲子", syl: "trou-sers" },
-        { en: "raincoat", zh: "雨衣", syl: "rain-coat" },
-        { en: "socks", zh: "襪子", syl: "socks" },
-        { en: "uniform", zh: "制服", syl: "u-ni-form" },
-        { en: "scarf", zh: "圍巾", syl: "scarf" },
-        { en: "gloves", zh: "手套", syl: "gloves" },
-        { en: "slippers", zh: "拖鞋", syl: "slip-pers" },
-        { en: "pyjamas", zh: "睡衣", syl: "py-ja-mas" },
-        { en: "underwear", zh: "內衣", syl: "un-der-wear" },
-        { en: "climate", zh: "氣候", syl: "cli-mate" },
-        { en: "cloudy", zh: "多雲的", syl: "cloud-y" },
-        { en: "sunshine", zh: "陽光", syl: "sun-shine" },
-        { en: "windy", zh: "有風的", syl: "wind-y" },
-        { en: "season", zh: "季節", syl: "sea-son" }
+        { en: "urine", zh: "尿液", syl: "u-rine" },
+        { en: "urinate", zh: "小便；排尿", syl: "u-ri-nate" },
+        { en: "frequency", zh: "頻尿", syl: "fre-quen-cy" },
+        { en: "urgency", zh: "尿急", syl: "ur-gen-cy" },
+        { en: "incontinence", zh: "失禁", syl: "in-con-ti-nence" },
+        { en: "retention", zh: "尿瀦留", syl: "re-ten-tion" },
+        { en: "dysuria", zh: "排尿疼痛", syl: "dys-u-ri-a" },
+        { en: "haematuria", zh: "血尿", syl: "hae-ma-tu-ri-a" },
+        { en: "nocturia", zh: "夜尿", syl: "noc-tu-ri-a" },
+        { en: "prostate", zh: "前列腺", syl: "pros-tate" },
+        { en: "stream", zh: "尿流", syl: "stream" },
+        { en: "midstream", zh: "中段尿", syl: "mid-stream" },
+        { en: "bedpan", zh: "便盆", syl: "bed-pan" },
+        { en: "urinal", zh: "尿壺", syl: "u-ri-nal" },
+        { en: "commode", zh: "便椅", syl: "com-mode" },
+        { en: "toilet", zh: "洗手間；馬桶", syl: "toi-let" },
+        { en: "cloudy", zh: "混濁的", syl: "cloud-y" },
+        { en: "stinging", zh: "刺痛的（小便時）", syl: "sting-ing" },
+        { en: "leakage", zh: "漏尿", syl: "leak-age" },
+        { en: "hesitancy", zh: "排尿猶豫", syl: "hes-i-tan-cy" }
+      ],
+      dialogues: [
+        {
+          scene: "頻尿尿急",
+          patient: { en: "I have to urinate very often, and the urgency is hard to hold.", zh: "我要常常小便，尿急時很難忍住。" },
+          nurse: { en: "How many times at night? We will also check for incontinence.", zh: "晚上幾次？我們也會看看有沒有失禁。" }
+        },
+        {
+          scene: "小便痛與血尿",
+          patient: { en: "It stings when I pass urine. The colour looked like haematuria, and I have nocturia too.", zh: "小便時刺痛。顏色看起來像血尿，晚上也有夜尿。" },
+          nurse: { en: "I will request a midstream urine sample and ask about prostate symptoms and retention.", zh: "我會安排中段尿樣本，並詢問前列腺症狀和尿瀦留。" }
+        },
+        {
+          scene: "不能下床",
+          patient: { en: "I cannot get to the toilet in time. May I have a urinal or a bedpan?", zh: "我來不及去洗手間。可以給我尿壺或便盆嗎？" },
+          nurse: { en: "Yes. I can also bring a commode to the bedside if that is easier.", zh: "可以。如果比較方便，我也可以把便椅推到床邊。" }
+        },
+        {
+          scene: "尿流變弱",
+          patient: { en: "The stream is weak, with hesitancy, and sometimes there is leakage.", zh: "尿流很弱，開始時有猶豫，有時還會漏尿。" },
+          nurse: { en: "Thank you. Is the urine cloudy, and do you feel stinging when it starts?", zh: "謝謝。尿液混濁嗎？開始時會刺痛嗎？" }
+        }
       ]
     },
     {
       id: "lesson-13",
-      title: "日常生活：時間約會",
+      title: "醫學英語：皮膚傷口",
       words: [
-        { en: "tomorrow", zh: "明天", syl: "to-mor-row" },
-        { en: "yesterday", zh: "昨天", syl: "yes-ter-day" },
-        { en: "tonight", zh: "今晚", syl: "to-night" },
-        { en: "weekend", zh: "週末", syl: "week-end" },
-        { en: "fortnight", zh: "兩週", syl: "fort-night" },
-        { en: "postpone", zh: "延期", syl: "post-pone" },
-        { en: "punctual", zh: "準時的", syl: "punc-tu-al" },
-        { en: "schedule", zh: "時間表", syl: "sched-ule" },
-        { en: "calendar", zh: "日曆", syl: "cal-en-dar" },
-        { en: "deadline", zh: "限期", syl: "dead-line" },
-        { en: "morning", zh: "早上", syl: "morn-ing" },
-        { en: "afternoon", zh: "下午", syl: "af-ter-noon" },
-        { en: "evening", zh: "晚上", syl: "eve-ning" },
-        { en: "midnight", zh: "午夜", syl: "mid-night" },
-        { en: "noon", zh: "正午", syl: "noon" },
-        { en: "earlier", zh: "較早", syl: "ear-li-er" },
-        { en: "later", zh: "較遲；稍後", syl: "la-ter" },
-        { en: "immediately", zh: "立刻", syl: "im-me-di-ate-ly" },
-        { en: "urgent", zh: "緊急的", syl: "ur-gent" },
-        { en: "convenient", zh: "方便的", syl: "con-ven-ient" }
+        { en: "wound", zh: "傷口", syl: "wound" },
+        { en: "incision", zh: "切口", syl: "in-ci-sion" },
+        { en: "stitch", zh: "縫線；縫針", syl: "stitch" },
+        { en: "suture", zh: "縫合", syl: "su-ture" },
+        { en: "drain", zh: "引流管", syl: "drain" },
+        { en: "pus", zh: "膿", syl: "pus" },
+        { en: "scab", zh: "痂", syl: "scab" },
+        { en: "blister", zh: "水疱", syl: "blis-ter" },
+        { en: "reddened", zh: "發紅的", syl: "red-dened" },
+        { en: "exudate", zh: "滲液", syl: "ex-u-date" },
+        { en: "plaster", zh: "膠布", syl: "plas-ter" },
+        { en: "gauze", zh: "紗布", syl: "gauze" },
+        { en: "tape", zh: "膠貼", syl: "tape" },
+        { en: "healing", zh: "癒合中的", syl: "heal-ing" },
+        { en: "clean", zh: "清潔的", syl: "clean" },
+        { en: "dirty", zh: "污穢的", syl: "dirt-y" },
+        { en: "sterile", zh: "無菌的", syl: "ster-ile" },
+        { en: "bedsore", zh: "壓瘡", syl: "bed-sore" },
+        { en: "skin-tear", zh: "皮膚撕裂", syl: "skin-tear" },
+        { en: "odour", zh: "氣味", syl: "o-dour" }
+      ],
+      dialogues: [
+        {
+          scene: "術後切口",
+          patient: { en: "The incision looks red. Are the stitches or the suture coming loose?", zh: "切口看起來發紅。縫線或縫合會鬆開嗎？" },
+          nurse: { en: "I will check the wound and the drain, and call the doctor if needed.", zh: "我看看傷口和引流管，需要的話請醫生。" }
+        },
+        {
+          scene: "傷口滲液",
+          patient: { en: "There is pus under the scab, and a blister next to it.", zh: "痂下面有膿，旁邊還有一個水疱。" },
+          nurse: { en: "The skin is reddened and there is exudate. I will clean it and put on a new dressing.", zh: "皮膚發紅，而且有滲液。我清潔後會換上新敷料。" }
+        },
+        {
+          scene: "換敷料",
+          patient: { en: "May I take the plaster off in the shower?", zh: "洗澡時可以撕掉膠布嗎？" },
+          nurse: { en: "Please leave the sterile gauze and tape in place until we change it.", zh: "請保留無菌紗布和膠貼，等我們來換。" }
+        },
+        {
+          scene: "壓瘡",
+          patient: { en: "The bedsore has a strong odour, and there is a small skin-tear beside it.", zh: "壓瘡氣味很重，旁邊還有一小塊皮膚撕裂。" },
+          nurse: { en: "We will keep it clean and off the pressure area so healing can continue. It should not be left dirty.", zh: "我們會保持清潔，並避免再壓到，讓它繼續癒合。不可以讓它一直污穢。" }
+        }
       ]
     },
     {
       id: "lesson-14",
-      title: "日常生活：家庭人際",
+      title: "醫學英語：活動與跌倒",
       words: [
-        { en: "relative", zh: "親戚", syl: "rel-a-tive" },
-        { en: "elderly", zh: "年長的", syl: "el-der-ly" },
-        { en: "cousin", zh: "堂／表親", syl: "cous-in" },
-        { en: "spouse", zh: "配偶", syl: "spouse" },
-        { en: "sibling", zh: "兄弟姐妹", syl: "sib-ling" },
-        { en: "visit", zh: "探訪", syl: "vis-it" },
-        { en: "apology", zh: "道歉", syl: "a-pol-o-gy" },
-        { en: "invitation", zh: "邀請", syl: "in-vi-ta-tion" },
-        { en: "gathering", zh: "聚會", syl: "gath-er-ing" },
-        { en: "greeting", zh: "問候", syl: "greet-ing" },
-        { en: "polite", zh: "有禮貌的", syl: "po-lite" },
-        { en: "grateful", zh: "感激的", syl: "grate-ful" },
-        { en: "sincere", zh: "誠懇的", syl: "sin-cere" },
-        { en: "patience", zh: "忍耐；耐性", syl: "pa-tience" },
-        { en: "respect", zh: "尊重", syl: "re-spect" },
-        { en: "friendship", zh: "友誼", syl: "friend-ship" },
-        { en: "quarrel", zh: "吵架", syl: "quar-rel" },
-        { en: "forgive", zh: "原諒", syl: "for-give" },
-        { en: "birthday", zh: "生日", syl: "birth-day" },
-        { en: "wedding", zh: "婚禮", syl: "wed-ding" }
+        { en: "fall", zh: "跌倒", syl: "fall" },
+        { en: "slip", zh: "滑倒", syl: "slip" },
+        { en: "walk", zh: "行走", syl: "walk" },
+        { en: "stand", zh: "站立", syl: "stand" },
+        { en: "sit", zh: "坐下", syl: "sit" },
+        { en: "hoist", zh: "移位機", syl: "hoist" },
+        { en: "frame", zh: "助行架", syl: "frame" },
+        { en: "crutches", zh: "腋杖", syl: "crutch-es" },
+        { en: "stick", zh: "手杖", syl: "stick" },
+        { en: "rails", zh: "床欄", syl: "rails" },
+        { en: "balance", zh: "平衡", syl: "bal-ance" },
+        { en: "weak", zh: "乏力的", syl: "weak" },
+        { en: "stiff", zh: "僵硬的", syl: "stiff" },
+        { en: "physiotherapy", zh: "物理治療", syl: "phys-i-o-ther-a-py" },
+        { en: "stretch", zh: "伸展", syl: "stretch" },
+        { en: "shoes", zh: "鞋子", syl: "shoes" },
+        { en: "uneven", zh: "不平的", syl: "un-e-ven" },
+        { en: "supervise", zh: "看顧；監督", syl: "su-per-vise" },
+        { en: "turnover", zh: "翻身", syl: "turn-o-ver" },
+        { en: "grab-rail", zh: "扶手", syl: "grab-rail" }
+      ],
+      dialogues: [
+        {
+          scene: "差點跌倒",
+          patient: { en: "I almost had a fall. I started to slip when I tried to walk to the toilet.", zh: "我差點跌倒。想走去洗手間時開始滑倒。" },
+          nurse: { en: "Please do not walk alone. Call us before you stand or sit up.", zh: "請不要自己走。站起來或坐起之前先叫我們。" }
+        },
+        {
+          scene: "助行",
+          patient: { en: "Do I have to use the hoist? I would rather use the frame or a stick.", zh: "一定要用移位機嗎？我比較想用助行架或手杖。" },
+          nurse: { en: "We will try the frame first. Crutches are not suitable yet, and the bed rails should stay up at night.", zh: "我們先試助行架。腋杖暫時不合適，晚上床欄要保持拉起。" }
+        },
+        {
+          scene: "物理治療",
+          patient: { en: "My legs feel weak and stiff. Will physiotherapy help my balance?", zh: "我雙腿乏力又僵硬。物理治療可以幫助平衡嗎？" },
+          nurse: { en: "Yes. They will teach you a safe stretch, and we will supervise your first walks.", zh: "可以。他們會教你安全的伸展，第一次行走我們會看顧。" }
+        },
+        {
+          scene: "去洗手間",
+          patient: { en: "The floor looks uneven, and my shoes are loose.", zh: "地面看起來不平，我的鞋子也鬆。" },
+          nurse: { en: "I will help with a turnover in bed first, then we walk holding the grab-rail.", zh: "我先幫你在床上翻身，然後扶住扶手一起走。" }
+        }
       ]
     },
     {
       id: "lesson-15",
-      title: "日常生活：工作學習",
+      title: "醫學英語：睡眠與情緒",
       words: [
-        { en: "colleague", zh: "同事", syl: "col-league" },
-        { en: "overtime", zh: "加班", syl: "o-ver-time" },
-        { en: "interview", zh: "面試", syl: "in-ter-view" },
-        { en: "salary", zh: "薪酬", syl: "sal-a-ry" },
-        { en: "employer", zh: "僱主", syl: "em-ploy-er" },
-        { en: "meeting", zh: "會議", syl: "meet-ing" },
-        { en: "promotion", zh: "晉升", syl: "pro-mo-tion" },
-        { en: "resign", zh: "辭職", syl: "re-sign" },
-        { en: "trainee", zh: "實習生", syl: "train-ee" },
-        { en: "duty", zh: "職責", syl: "du-ty" },
-        { en: "revise", zh: "溫習", syl: "re-vise" },
-        { en: "homework", zh: "功課", syl: "home-work" },
-        { en: "textbook", zh: "課本", syl: "text-book" },
-        { en: "dictionary", zh: "詞典", syl: "dic-tion-ar-y" },
-        { en: "assignment", zh: "習作", syl: "as-sign-ment" },
-        { en: "certificate", zh: "證書", syl: "cer-tif-i-cate" },
-        { en: "qualification", zh: "資歷", syl: "qual-i-fi-ca-tion" },
-        { en: "practise", zh: "練習（動詞）", syl: "prac-tise" },
-        { en: "lecture", zh: "講座；講課", syl: "lec-ture" },
-        { en: "course", zh: "課程", syl: "course" }
+        { en: "sleep", zh: "睡眠", syl: "sleep" },
+        { en: "insomnia", zh: "失眠", syl: "in-som-ni-a" },
+        { en: "nightmare", zh: "惡夢", syl: "night-mare" },
+        { en: "mood", zh: "情緒", syl: "mood" },
+        { en: "depression", zh: "抑鬱", syl: "de-pres-sion" },
+        { en: "confusion", zh: "混亂；定向不清", syl: "con-fu-sion" },
+        { en: "agitation", zh: "躁動", syl: "ag-i-ta-tion" },
+        { en: "panic", zh: "恐慌", syl: "pan-ic" },
+        { en: "calm", zh: "平靜的", syl: "calm" },
+        { en: "support", zh: "支援", syl: "sup-port" },
+        { en: "lonely", zh: "孤單的", syl: "lone-ly" },
+        { en: "worry", zh: "擔心", syl: "wor-ry" },
+        { en: "tired", zh: "疲倦的", syl: "tired" },
+        { en: "quiet", zh: "安靜的", syl: "qui-et" },
+        { en: "noise", zh: "嘈音", syl: "noise" },
+        { en: "nap", zh: "小睡", syl: "nap" },
+        { en: "evening", zh: "晚上", syl: "eve-ning" },
+        { en: "morning", zh: "早上", syl: "morn-ing" },
+        { en: "relax", zh: "放鬆", syl: "re-lax" },
+        { en: "afraid", zh: "害怕的", syl: "a-fraid" }
+      ],
+      dialogues: [
+        {
+          scene: "失眠",
+          patient: { en: "I cannot sleep. The insomnia is worse, and I had a nightmare.", zh: "我無法入睡。失眠更嚴重了，還做了惡夢。" },
+          nurse: { en: "I will try to keep the ward quiet this evening so you can rest.", zh: "今晚我會盡量讓病房保持安靜，讓你可以休息。" }
+        },
+        {
+          scene: "心緒",
+          patient: { en: "My mood is very low. I think this is depression, and I also have confusion at night.", zh: "我情緒很低落。我想這是抑鬱，晚上也會混亂、定向不清。" },
+          nurse: { en: "Thank you for telling me. If agitation or panic starts, please ring the bell at once.", zh: "謝謝你告訴我。如果出現躁動或恐慌，請立刻按鈴。" }
+        },
+        {
+          scene: "覺得孤單",
+          patient: { en: "I feel lonely and I worry about my family.", zh: "我覺得孤單，也擔心家人。" },
+          nurse: { en: "That is understandable. We can find support, and I will sit with you until you feel calmer.", zh: "這可以理解。我們可以找支援，我會陪你坐到你平靜一點。" }
+        },
+        {
+          scene: "晚上難以放鬆",
+          patient: { en: "I am tired but still afraid to sleep. The noise in the morning woke me after a short nap.", zh: "我很疲倦，但仍然害怕睡覺。早上的嘈音在我小睡後把我吵醒。" },
+          nurse: { en: "Let us relax now. I will dim the light and come back to check on you.", zh: "現在先放鬆。我把燈調暗，稍後再來看你。" }
+        }
       ]
     },
     {
       id: "lesson-16",
-      title: "日常生活：康樂休閒",
+      title: "醫學英語：血糖與內分泌",
       words: [
-        { en: "cinema", zh: "電影院", syl: "cin-e-ma" },
-        { en: "museum", zh: "博物館", syl: "mu-se-um" },
-        { en: "theatre", zh: "劇院", syl: "the-a-tre" },
-        { en: "playground", zh: "遊樂場", syl: "play-ground" },
-        { en: "gallery", zh: "藝廊", syl: "gal-ler-y" },
-        { en: "hiking", zh: "遠足", syl: "hik-ing" },
-        { en: "swimming", zh: "游泳", syl: "swim-ming" },
-        { en: "picnic", zh: "野餐", syl: "pic-nic" },
-        { en: "concert", zh: "音樂會", syl: "con-cert" },
-        { en: "gardening", zh: "園藝", syl: "gar-den-ing" },
-        { en: "bicycle", zh: "腳踏車", syl: "bi-cy-cle" },
-        { en: "camera", zh: "相機", syl: "cam-er-a" },
-        { en: "souvenir", zh: "紀念品", syl: "sou-ve-nir" },
-        { en: "hobby", zh: "嗜好", syl: "hob-by" },
-        { en: "exercise", zh: "運動", syl: "ex-er-cise" },
-        { en: "holiday", zh: "假期", syl: "hol-i-day" },
-        { en: "festival", zh: "節日；盛事", syl: "fes-ti-val" },
-        { en: "relaxation", zh: "放鬆", syl: "re-lax-a-tion" },
-        { en: "sightseeing", zh: "觀光", syl: "sight-see-ing" },
-        { en: "jogging", zh: "慢跑", syl: "jog-ging" }
+        { en: "diabetes", zh: "糖尿病", syl: "di-a-be-tes" },
+        { en: "insulin", zh: "胰島素", syl: "in-su-lin" },
+        { en: "sugar", zh: "糖", syl: "sug-ar" },
+        { en: "hypoglycaemia", zh: "低血糖", syl: "hy-po-gly-cae-mi-a" },
+        { en: "hyperglycaemia", zh: "高血糖", syl: "hy-per-gly-cae-mi-a" },
+        { en: "glucometer", zh: "血糖機", syl: "glu-com-e-ter" },
+        { en: "finger-prick", zh: "指尖採血", syl: "fin-ger-prick" },
+        { en: "pancreas", zh: "胰臟", syl: "pan-cre-as" },
+        { en: "thyroid", zh: "甲狀腺", syl: "thy-roid" },
+        { en: "hormone", zh: "激素；荷爾蒙", syl: "hor-mone" },
+        { en: "tremor", zh: "手震；震顫", syl: "trem-or" },
+        { en: "biscuit", zh: "餅乾", syl: "bis-cuit" },
+        { en: "juice", zh: "果汁", syl: "juice" },
+        { en: "units", zh: "單位", syl: "u-nits" },
+        { en: "shaky", zh: "發抖的", syl: "shak-y" },
+        { en: "dry-mouth", zh: "口乾", syl: "dry-mouth" },
+        { en: "blurry", zh: "視力模糊的", syl: "blur-ry" },
+        { en: "meal", zh: "一餐", syl: "meal" },
+        { en: "bedtime", zh: "睡前", syl: "bed-time" },
+        { en: "skipped", zh: "漏掉的（一餐／一劑）", syl: "skipped" }
+      ],
+      dialogues: [
+        {
+          scene: "低血糖",
+          patient: { en: "I have diabetes. I feel shaky, and I think this is hypoglycaemia.", zh: "我有糖尿病。我在發抖，我想這是低血糖。" },
+          nurse: { en: "I will check your sugar now with the glucometer. If it is low, we will give juice or a biscuit.", zh: "我現在用血糖機量你的糖。如果偏低，我們會給果汁或餅乾。" }
+        },
+        {
+          scene: "打胰島素",
+          patient: { en: "How many units of insulin should I use after a finger-prick?", zh: "指尖採血之後，我應該打多少單位的胰島素？" },
+          nurse: { en: "I will confirm the dose with the chart. Your pancreas does not make enough insulin, so the units must be exact.", zh: "我會按紀錄表核對劑量。你的胰臟製造的胰島素不足，所以單位必須準確。" }
+        },
+        {
+          scene: "高血糖",
+          patient: { en: "My vision is blurry, I have a dry mouth, and a tremor in my hands.", zh: "我視力模糊，口乾，雙手還有震顫。" },
+          nurse: { en: "That can be hyperglycaemia, but we will also check your thyroid and hormone results.", zh: "這可能是高血糖，但我們也會查看甲狀腺和激素結果。" }
+        },
+        {
+          scene: "漏餐",
+          patient: { en: "I skipped my meal, and it is nearly bedtime.", zh: "我漏了一餐，而且快到睡前了。" },
+          nurse: { en: "Please do not skip the meal. Eat a light meal first, then the bedtime insulin if prescribed.", zh: "請不要漏掉這一餐。先吃少量的一餐，然後按處方打睡前胰島素。" }
+        }
       ]
     },
     {
       id: "lesson-17",
-      title: "日常生活：就醫看病",
+      title: "醫學英語：檢查與造影",
       words: [
-        { en: "clinic", zh: "診所", syl: "clin-ic" },
-        { en: "dentist", zh: "牙醫", syl: "den-tist" },
-        { en: "referral", zh: "轉介", syl: "re-fer-ral" },
-        { en: "register", zh: "登記", syl: "reg-is-ter" },
-        { en: "outpatient", zh: "門診病人", syl: "out-pa-tient" },
-        { en: "vaccination", zh: "疫苗接種", syl: "vac-ci-na-tion" },
-        { en: "wheelchair", zh: "輪椅", syl: "wheel-chair" },
-        { en: "ward", zh: "病房", syl: "ward" },
-        { en: "physician", zh: "醫生；內科醫生", syl: "phy-si-cian" },
-        { en: "nurse", zh: "護士", syl: "nurse" },
         { en: "scan", zh: "掃描", syl: "scan" },
-        { en: "surgery", zh: "手術", syl: "sur-ger-y" },
-        { en: "physiotherapy", zh: "物理治療", syl: "phys-i-o-ther-a-py" },
-        { en: "consultation", zh: "診症", syl: "con-sul-ta-tion" },
+        { en: "x-ray", zh: "X光", syl: "x-ray" },
+        { en: "ultrasound", zh: "超聲波", syl: "ul-tra-sound" },
+        { en: "contrast", zh: "造影劑", syl: "con-trast" },
+        { en: "booking", zh: "預約名額", syl: "book-ing" },
+        { en: "late", zh: "遲到的", syl: "late" },
+        { en: "cancel", zh: "取消", syl: "can-cel" },
+        { en: "reschedule", zh: "改期", syl: "re-sched-ule" },
+        { en: "letter", zh: "轉介信；通知信", syl: "let-ter" },
         { en: "specialist", zh: "專科醫生", syl: "spe-cial-ist" },
-        { en: "pharmacist", zh: "藥劑師", syl: "phar-ma-cist" },
-        { en: "ointment", zh: "藥膏", syl: "oint-ment" },
-        { en: "hospital", zh: "醫院", syl: "hos-pi-tal" },
-        { en: "paediatric", zh: "小兒科的", syl: "pae-di-at-ric" },
-        { en: "spectacles", zh: "眼鏡", syl: "spec-ta-cles" }
+        { en: "general-practitioner", zh: "家庭醫生；全科醫生", syl: "gen-er-al-prac-ti-tion-er" },
+        { en: "queue", zh: "排隊", syl: "queue" },
+        { en: "preparation", zh: "檢查前準備", syl: "prep-a-ra-tion" },
+        { en: "changing-room", zh: "更衣室", syl: "chang-ing-room" },
+        { en: "jewellery", zh: "首飾", syl: "jew-el-ler-y" },
+        { en: "pregnant", zh: "懷孕的", syl: "preg-nant" },
+        { en: "claustrophobia", zh: "幽閉恐懼", syl: "claus-tro-pho-bi-a" },
+        { en: "report", zh: "報告", syl: "re-port" },
+        { en: "film", zh: "影像", syl: "film" },
+        { en: "wait", zh: "等候", syl: "wait" }
+      ],
+      dialogues: [
+        {
+          scene: "等待掃描",
+          patient: { en: "I am here for a scan. Is it an x-ray or an ultrasound?", zh: "我來做掃描。是 X 光還是超聲波？" },
+          nurse: { en: "Today it is an ultrasound. If they need contrast later, we will explain first.", zh: "今天是超聲波。如果之後需要造影劑，我們會先解釋。" }
+        },
+        {
+          scene: "改期",
+          patient: { en: "I will be late. Can I cancel the booking and reschedule?", zh: "我會遲到。可以取消這個預約名額再改期嗎？" },
+          nurse: { en: "Yes. Bring the letter when you return, and the specialist can see you on the new day.", zh: "可以。回來時帶轉介信，專科醫生會在新的日子見你。" }
+        },
+        {
+          scene: "檢查前",
+          patient: { en: "What preparation is needed? Should I take off jewellery in the changing-room?", zh: "檢查前要做什麼準備？我要在更衣室除下首飾嗎？" },
+          nurse: { en: "Yes, remove jewellery. Please tell us if you are pregnant, or if you have claustrophobia in the scanner.", zh: "要除下首飾。如果你懷孕，或在掃描器裡有幽閉恐懼，請告訴我們。" }
+        },
+        {
+          scene: "等報告",
+          patient: { en: "How long do I have to wait for the report and the film?", zh: "報告和影像要等候多久？" },
+          nurse: { en: "The report usually takes a few days. Your general practitioner can explain it. The queue is only for collecting the film.", zh: "報告通常要幾日。家庭醫生可以和你解釋。排隊只是領取影像。" }
+        }
       ]
     },
     {
       id: "lesson-18",
-      title: "日常生活：政府辦事",
+      title: "醫學英語：服藥安全",
       words: [
-        { en: "application", zh: "申請", syl: "ap-pli-ca-tion" },
-        { en: "photocopy", zh: "影印本", syl: "pho-to-cop-y" },
-        { en: "residence", zh: "居留；住所", syl: "res-i-dence" },
-        { en: "permit", zh: "許可證", syl: "per-mit" },
-        { en: "document", zh: "文件", syl: "doc-u-ment" },
-        { en: "form", zh: "表格", syl: "form" },
-        { en: "original", zh: "正本", syl: "o-rig-i-nal" },
-        { en: "submit", zh: "提交", syl: "sub-mit" },
-        { en: "approval", zh: "批准", syl: "ap-prov-al" },
-        { en: "department", zh: "部門", syl: "de-part-ment" },
-        { en: "officer", zh: "人員；官員", syl: "of-fi-cer" },
-        { en: "enquiry", zh: "查詢", syl: "en-quir-y" },
-        { en: "official", zh: "正式的；官方的", syl: "of-fi-cial" },
-        { en: "procedure", zh: "程序", syl: "pro-ce-dure" },
-        { en: "renewal", zh: "續期", syl: "re-new-al" },
-        { en: "permanent", zh: "永久的", syl: "per-ma-nent" },
-        { en: "tax", zh: "稅", syl: "tax" },
-        { en: "declare", zh: "申報", syl: "de-clare" },
-        { en: "resident", zh: "居民", syl: "res-i-dent" },
-        { en: "welfare", zh: "福利", syl: "wel-fare" }
+        { en: "tablet", zh: "藥片", syl: "tab-let" },
+        { en: "capsule", zh: "膠囊", syl: "cap-sule" },
+        { en: "oral", zh: "口服的", syl: "o-ral" },
+        { en: "chew", zh: "咀碎；咀嚼服用", syl: "chew" },
+        { en: "dissolve", zh: "溶化", syl: "dis-solve" },
+        { en: "side-effect", zh: "副作用", syl: "side-ef-fect" },
+        { en: "drowsiness", zh: "睏倦", syl: "drows-i-ness" },
+        { en: "pharmacy", zh: "藥房", syl: "phar-ma-cy" },
+        { en: "label", zh: "標籤", syl: "la-bel" },
+        { en: "expiry", zh: "有效期", syl: "ex-pi-ry" },
+        { en: "fridge", zh: "雪櫃", syl: "fridge" },
+        { en: "crush", zh: "壓碎", syl: "crush" },
+        { en: "missed", zh: "漏服的", syl: "missed" },
+        { en: "repeat", zh: "續配", syl: "re-peat" },
+        { en: "blister-pack", zh: "鋁箔包裝", syl: "blis-ter-pack" },
+        { en: "twice-daily", zh: "每日兩次", syl: "twice-dai-ly" },
+        { en: "once-daily", zh: "每日一次", syl: "once-dai-ly" },
+        { en: "as-required", zh: "需要時服用", syl: "as-re-quired" },
+        { en: "with-food", zh: "隨餐服用", syl: "with-food" },
+        { en: "empty-stomach", zh: "空腹服用", syl: "emp-ty-stom-ach" }
+      ],
+      dialogues: [
+        {
+          scene: "問服法",
+          patient: { en: "Is this tablet oral, or do I chew the capsule?", zh: "這顆藥片是口服的，還是要把膠囊咀碎？" },
+          nurse: { en: "This tablet is oral. Swallow it whole; do not chew or dissolve it unless the label says so.", zh: "這顆藥片是口服的。整顆吞下；除非標籤寫明，否則不要咀碎或溶化。" }
+        },
+        {
+          scene: "擔心副作用",
+          patient: { en: "The side-effect is drowsiness. Can the pharmacy change it?", zh: "副作用是睏倦。藥房可以更換嗎？" },
+          nurse: { en: "I will check the label and the expiry date, and ask the doctor before anything is changed.", zh: "我先看標籤和有效期，任何更改都要先問醫生。" }
+        },
+        {
+          scene: "漏服",
+          patient: { en: "I missed a dose, and the blister-pack is still in the fridge.", zh: "我漏服了一劑，鋁箔包裝還在雪櫃裡。" },
+          nurse: { en: "Do not crush the next tablet or double the dose. We will check whether a repeat is due.", zh: "不要壓碎下一顆，也不要加倍。我們會看看是否該續配。" }
+        },
+        {
+          scene: "服藥時間",
+          patient: { en: "Is it once-daily or twice-daily? Should I take it with-food or on an empty-stomach?", zh: "是每日一次還是每日兩次？要隨餐服用還是空腹服用？" },
+          nurse: { en: "It is once daily, with food. The other medicine is as-required only if the pain comes back.", zh: "這一種是每日一次，隨餐服用。另一種只在痛再出現時，需要時才服用。" }
+        }
       ]
     },
     {
       id: "lesson-19",
-      title: "日常生活：電子通訊",
+      title: "醫學英語：透析日常",
       words: [
-        { en: "email", zh: "電郵", syl: "e-mail" },
-        { en: "wifi", zh: "無線網絡", syl: "wi-fi" },
-        { en: "download", zh: "下載", syl: "down-load" },
-        { en: "attachment", zh: "附件", syl: "at-tach-ment" },
-        { en: "website", zh: "網站", syl: "web-site" },
-        { en: "upload", zh: "上傳", syl: "up-load" },
-        { en: "username", zh: "用戶名稱", syl: "u-ser-name" },
-        { en: "browser", zh: "瀏覽器", syl: "brows-er" },
-        { en: "software", zh: "軟件", syl: "soft-ware" },
-        { en: "profile", zh: "個人檔案", syl: "pro-file" },
-        { en: "online", zh: "上網的；線上的", syl: "on-line" },
-        { en: "network", zh: "網絡", syl: "net-work" },
-        { en: "update", zh: "更新", syl: "up-date" },
-        { en: "restart", zh: "重新啟動", syl: "re-start" },
-        { en: "screenshot", zh: "螢幕截圖", syl: "screen-shot" },
-        { en: "bluetooth", zh: "藍牙", syl: "blue-tooth" },
-        { en: "scam", zh: "詐騙", syl: "scam" },
-        { en: "privacy", zh: "私隱", syl: "pri-va-cy" },
-        { en: "forward", zh: "轉發", syl: "for-ward" },
-        { en: "settings", zh: "設定", syl: "set-tings" }
+        { en: "dry-weight", zh: "乾體重", syl: "dry-weight" },
+        { en: "weigh", zh: "秤體重", syl: "weigh" },
+        { en: "session", zh: "一次治療；一班透析", syl: "ses-sion" },
+        { en: "armchair", zh: "治療椅", syl: "arm-chair" },
+        { en: "transport", zh: "接送", syl: "trans-port" },
+        { en: "allowance", zh: "飲水量限制；准許量", syl: "al-low-ance" },
+        { en: "sleeve", zh: "衣袖", syl: "sleeve" },
+        { en: "wash", zh: "清洗（瘻管手臂）", syl: "wash" },
+        { en: "machine", zh: "透析機", syl: "ma-chine" },
+        { en: "hours", zh: "時數；幾小時", syl: "hours" },
+        { en: "finish", zh: "結束", syl: "fin-ish" },
+        { en: "sandwich", zh: "三文治", syl: "sand-wich" },
+        { en: "bloods", zh: "抽血；血液檢查", syl: "bloods" },
+        { en: "monthly", zh: "每月的", syl: "month-ly" },
+        { en: "interdialytic", zh: "透析間期的", syl: "in-ter-di-a-lyt-ic" },
+        { en: "overload", zh: "體液過量", syl: "o-ver-load" },
+        { en: "needles", zh: "穿刺針", syl: "nee-dles" },
+        { en: "arrive", zh: "到達", syl: "ar-rive" },
+        { en: "on-time", zh: "準時的", syl: "on-time" },
+        { en: "postpone", zh: "延期", syl: "post-pone" }
+      ],
+      dialogues: [
+        {
+          scene: "透析前",
+          patient: { en: "Please weigh me. What is my dry-weight for this session?", zh: "請幫我秤體重。這一班透析的乾體重是多少？" },
+          nurse: { en: "Your dry-weight is on the chart. Please sit in the armchair after we record it.", zh: "乾體重在紀錄表上。記下之後請坐到治療椅。" }
+        },
+        {
+          scene: "接車與準備",
+          patient: { en: "The transport is here, but my sleeve is tight and I have not washed my arm.", zh: "接送已經到了，但我衣袖很緊，手臂還沒清洗。" },
+          nurse: { en: "There is still time. Wash the fistula arm and roll up the sleeve before you go to the machine.", zh: "還有時間。去透析機之前，先清洗瘻管手臂，把衣袖捲起。" }
+        },
+        {
+          scene: "治療中",
+          patient: { en: "How many hours until we finish? May I eat my sandwich after the bloods?", zh: "還有多少小時才結束？抽血之後可以吃三文治嗎？" },
+          nurse: { en: "This session is four hours. After we take the monthly bloods, you may have the sandwich if you feel well.", zh: "這一班是四小時。每月抽血之後，如果你覺得舒服，可以吃三文治。" }
+        },
+        {
+          scene: "透析間期",
+          patient: { en: "I had fluid overload in the interdialytic period. Can I postpone tomorrow if I cannot arrive on-time?", zh: "透析間期我有體液過量。如果不能準時到達，明天可以延期嗎？" },
+          nurse: { en: "Please do not postpone unless the doctor agrees. Call us if the transport will be late, and keep to your allowance.", zh: "除非醫生同意，請不要延期。如果接送會遲到，請致電我們，並遵守飲水量限制。" }
+        }
       ]
     },
     {
       id: "lesson-20",
-      title: "日常生活：社區生活",
+      title: "醫學英語：家居自我觀察",
       words: [
-        { en: "supermarket", zh: "超級市場", syl: "su-per-mar-ket" },
-        { en: "library", zh: "圖書館", syl: "li-bra-ry" },
-        { en: "market", zh: "街市；市場", syl: "mar-ket" },
-        { en: "community", zh: "社區", syl: "com-mu-ni-ty" },
-        { en: "school", zh: "學校", syl: "school" },
-        { en: "recycle", zh: "回收", syl: "re-cy-cle" },
-        { en: "crowded", zh: "擠擁的", syl: "crowd-ed" },
-        { en: "bin", zh: "垃圾桶", syl: "bin" },
-        { en: "noise", zh: "噪音", syl: "noise" },
-        { en: "volunteer", zh: "義工", syl: "vol-un-teer" },
-        { en: "postbox", zh: "郵箱", syl: "post-box" },
-        { en: "junction", zh: "路口", syl: "junc-tion" },
-        { en: "escalator", zh: "電動扶梯", syl: "es-ca-la-tor" },
-        { en: "entrance", zh: "入口", syl: "en-trance" },
-        { en: "exit", zh: "出口", syl: "ex-it" },
-        { en: "announcement", zh: "公告", syl: "an-nounce-ment" },
-        { en: "neighbourhood", zh: "鄰里", syl: "neigh-bour-hood" },
-        { en: "public", zh: "公眾的", syl: "pub-lic" },
-        { en: "facility", zh: "設施", syl: "fa-cil-i-ty" },
-        { en: "district", zh: "地區", syl: "dis-trict" }
+        { en: "diary", zh: "紀錄冊；日記", syl: "di-a-ry" },
+        { en: "cuff", zh: "血壓袖帶", syl: "cuff" },
+        { en: "scale", zh: "體重磅", syl: "scale" },
+        { en: "puffiness", zh: "浮腫感", syl: "puff-i-ness" },
+        { en: "suddenly", zh: "突然", syl: "sud-den-ly" },
+        { en: "contact", zh: "聯絡", syl: "con-tact" },
+        { en: "urgent", zh: "緊急的", syl: "ur-gent" },
+        { en: "unusual", zh: "不尋常的", syl: "un-u-su-al" },
+        { en: "notice", zh: "察覺", syl: "no-tice" },
+        { en: "daily", zh: "每日的", syl: "dai-ly" },
+        { en: "regularly", zh: "定期", syl: "reg-u-lar-ly" },
+        { en: "phone", zh: "致電", syl: "phone" },
+        { en: "at-home", zh: "在家的", syl: "at-home" },
+        { en: "self", zh: "自己；自行", syl: "self" },
+        { en: "change", zh: "轉變", syl: "change" },
+        { en: "measurement", zh: "測量值", syl: "meas-ure-ment" },
+        { en: "compare", zh: "比較", syl: "com-pare" },
+        { en: "usual", zh: "平時的", syl: "u-su-al" },
+        { en: "emergency", zh: "急症；緊急情況", syl: "e-mer-gen-cy" },
+        { en: "hotline", zh: "熱線", syl: "hot-line" }
+      ],
+      dialogues: [
+        {
+          scene: "教自測",
+          patient: { en: "How do I use the cuff and the scale, and what do I write in the diary?", zh: "血壓袖帶和體重磅怎樣用？紀錄冊要寫什麼？" },
+          nurse: { en: "Check blood pressure and weight daily at home, and write every measurement in the diary.", zh: "在家每日量血壓和體重，把每個測量值寫進紀錄冊。" }
+        },
+        {
+          scene: "突然浮腫",
+          patient: { en: "I notice puffiness in my legs, and it came on suddenly. Is this urgent?", zh: "我察覺雙腿有浮腫感，而且來得突然。這算緊急嗎？" },
+          nurse: { en: "Yes, contact us today if the swelling is unusual or getting worse quickly.", zh: "是的。如果腫脹不尋常或很快變差，今天就聯絡我們。" }
+        },
+        {
+          scene: "讀數不肯定",
+          patient: { en: "Should I phone if the at-home reading is not my usual one?", zh: "如果在家的讀數和平時不同，我應該致電嗎？" },
+          nurse: { en: "Yes. Compare it with your usual measurement, and phone us if the change is large.", zh: "要。和你平時的測量值比較，轉變很大就致電我們。" }
+        },
+        {
+          scene: "何時求救",
+          patient: { en: "If I feel very unwell at night, do I use the hotline or go to emergency?", zh: "如果晚上覺得很不舒服，我打熱線，還是去急症？" },
+          nurse: { en: "For sudden severe symptoms, go to emergency. For advice, call the hotline and we will help you.", zh: "突然嚴重的症狀，去急症。如果想問意見，打熱線，我們會幫你。" }
+        }
       ]
     },
     {
@@ -1399,6 +1900,28 @@
         { en: "clarify", zh: "澄清", syl: "clar-i-fy" },
         { en: "concern", zh: "關注點", syl: "con-cern" },
         { en: "workload", zh: "工作量", syl: "work-load" }
+      ],
+      dialogues: [
+        {
+          scene: "換班",
+          patient: { en: "Who is taking over when this shift ends?", zh: "這一更結束後，誰來接手？" },
+          nurse: { en: "I will do a verbal handover to the night nurse and confirm anything still outstanding.", zh: "我會向夜更護士做口頭交更，並確認還有什麼未完成。" }
+        },
+        {
+          scene: "病情有變",
+          patient: { en: "I feel less stable tonight. Should someone review me again?", zh: "今晚我覺得沒那麼穩定。需要有人再檢視我嗎？" },
+          nurse: { en: "Yes. I will inform the doctor and escalate if your condition deteriorates.", zh: "需要。我會告知醫生；如果病情惡化，就會上報。" }
+        },
+        {
+          scene: "希望說清楚",
+          patient: { en: "Can you clarify the plan and confirm who is assigned to me?", zh: "你可以澄清計劃，並確認誰被指派照顧我嗎？" },
+          nurse: { en: "Of course. I will confirm the plan, assign a nurse, and alert the team if there is any concern.", zh: "當然可以。我會確認計劃、指派一位護士，如有關注點就提醒團隊。" }
+        },
+        {
+          scene: "擔心人手不夠",
+          patient: { en: "The ward looks busy. Will the relief nurse still have time for me?", zh: "病房看起來很忙。替更護士還有時間照顧我嗎？" },
+          nurse: { en: "Your care stays a priority. Even if the workload is high, we will not leave you without a nurse.", zh: "你的照顧仍然優先。即使工作量高，也不會沒有護士照顧你。" }
+        }
       ]
     },
     {
@@ -1425,6 +1948,28 @@
         { en: "refusal", zh: "拒絕", syl: "re-fus-al" },
         { en: "anxiety", zh: "焦慮", syl: "anx-i-e-ty" },
         { en: "counselling", zh: "輔導", syl: "coun-sel-ling" }
+      ],
+      dialogues: [
+        {
+          scene: "同意書",
+          patient: { en: "Do I have to sign the consent before you demonstrate the procedure?", zh: "你示範程序之前，我一定要簽同意書嗎？" },
+          nurse: { en: "Yes. I will explain the benefit and the risk first, then you can sign if you understand.", zh: "是的。我先解釋益處和風險，你明白了才簽名。" }
+        },
+        {
+          scene: "索取單張",
+          patient: { en: "May I have a leaflet or a handbook about lifestyle and nutrition?", zh: "可以給我一份關於生活方式和營養的單張或手冊嗎？" },
+          nurse: { en: "Yes. I will also advise you on activity and mobility before discharge.", zh: "可以。出院前我也會指導你的活動和活動能力。" }
+        },
+        {
+          scene: "擔心自理",
+          patient: { en: "I want more independence, but I also have a lot of anxiety.", zh: "我想有多一點自理能力，但我也有很多焦慮。" },
+          nurse: { en: "That is common. We can arrange counselling and rehabilitation to support your independence.", zh: "這很常見。我們可以安排輔導和康復，支持你的自理。" }
+        },
+        {
+          scene: "不想再上教育課",
+          patient: { en: "I am thinking of refusing further education sessions.", zh: "我在考慮拒絕之後的病人教育。" },
+          nurse: { en: "You may refuse, but I want to make sure you understand the plan and that adherence is your choice.", zh: "你可以拒絕，但我希望你明白計劃，而遵從是你的選擇。" }
+        }
       ]
     },
     {
@@ -1451,6 +1996,28 @@
         { en: "needlestick", zh: "針刺", syl: "nee-dle-stick" },
         { en: "exposure", zh: "暴露", syl: "ex-po-sure" },
         { en: "transmission", zh: "傳播", syl: "trans-mis-sion" }
+      ],
+      dialogues: [
+        {
+          scene: "為何要穿防護衣",
+          patient: { en: "Why are you wearing a gown, mask and apron to come in?", zh: "為什麼你進來要穿防護衣、口罩和保護圍裙？" },
+          nurse: { en: "These are barrier precautions, so we do not spread a pathogen to you or to others.", zh: "這些是屏障預防措施，免得把病原體傳給你或其他人。" }
+        },
+        {
+          scene: "擔心針刺",
+          patient: { en: "What happens if there is a needlestick or other exposure?", zh: "如果發生針刺或其他暴露，會怎樣？" },
+          nurse: { en: "We follow the exposure procedure at once, and we also check how transmission might have occurred.", zh: "我們會立刻按暴露程序處理，也會查傳播可能怎樣發生。" }
+        },
+        {
+          scene: "看見消毒",
+          patient: { en: "Why do you sterilise the tray and disinfect the table every time?", zh: "為什麼每次都要把托盤滅菌，並且消毒桌子？" },
+          nurse: { en: "To keep an aseptic field. Antiseptic and a disposable sanitiser wipe reduce contamination.", zh: "為了保持無菌操作範圍。消毒藥和即棄消毒抹紙可以減少污染。" }
+        },
+        {
+          scene: "隔離",
+          patient: { en: "Is this isolation because of an outbreak? Will I need quarantine?", zh: "這次隔離是因為爆發嗎？我需要檢疫嗎？" },
+          nurse: { en: "It is a precaution while we wait. Sharps go in the sharps bin, and waste is handled separately.", zh: "這是等候期間的預防措施。利器放入利器盒，廢物分開處理。" }
+        }
       ]
     },
     {
@@ -1477,6 +2044,28 @@
         { en: "stretcher", zh: "擔架", syl: "stretch-er" },
         { en: "intubation", zh: "插管", syl: "in-tu-ba-tion" },
         { en: "anaphylaxis", zh: "過敏性休克", syl: "an-a-phy-lax-is" }
+      ],
+      dialogues: [
+        {
+          scene: "胸痛恐慌",
+          patient: { en: "My chest feels tight. Could this be cardiac, or a stroke?", zh: "我胸口很緊。會不會是心臟問題，或是中風？" },
+          nurse: { en: "I will call for help and stay with you. We will check your airway and get a defibrillator nearby if needed.", zh: "我會呼救並留在你身邊。我們會檢查氣道，需要時把除顫器放在附近。" }
+        },
+        {
+          scene: "差點暈倒",
+          patient: { en: "I feel I might collapse, and my lips feel odd.", zh: "我覺得自己可能會昏倒，嘴唇也不對勁。" },
+          nurse: { en: "If you become unconscious we will start resuscitation. Please lie down now in case of shock.", zh: "如果你不省人事，我們會開始復甦。請現在躺下，以防休克。" }
+        },
+        {
+          scene: "哽塞",
+          patient: { en: "I am choking. I cannot get a full breath.", zh: "我哽住了。我吸不到完整的一口氣。" },
+          nurse: { en: "I am here. If the airway stays blocked, we will use the choking procedure and call the emergency team.", zh: "我在這裡。如果氣道仍然堵住，我們會用哽塞程序，並呼叫急救隊。" }
+        },
+        {
+          scene: "跌倒後痛",
+          patient: { en: "After the fall I am worried about a fracture or a burn from the heater.", zh: "跌倒之後，我擔心骨折，也擔心被暖爐燒傷。" },
+          nurse: { en: "We will triage your injuries, check for haemorrhage, and move you only with a stretcher if needed.", zh: "我們會為傷勢分流，檢查有沒有出血，需要時才用擔架移動你。" }
+        }
       ]
     },
     {
@@ -1503,6 +2092,28 @@
         { en: "entry", zh: "記入；記錄項目", syl: "en-try" },
         { en: "accurate", zh: "準確的", syl: "ac-cu-rate" },
         { en: "legible", zh: "字跡清楚的", syl: "leg-i-ble" }
+      ],
+      dialogues: [
+        {
+          scene: "看紀錄表",
+          patient: { en: "What are you writing on the chart? Is my intake and output very off the baseline?", zh: "你在紀錄表上寫什麼？我的攝入量和排出量是否偏離基線很多？" },
+          nurse: { en: "I am making an accurate, legible entry of today's intake and output, compared with your baseline.", zh: "我正在準確、字跡清楚地記入今天的攝入量和排出量，並和你的基線比較。" }
+        },
+        {
+          scene: "臉色變化",
+          patient: { en: "My family said I look pale, almost like jaundice, and my hands feel clammy.", zh: "家人說我看起來蒼白，幾乎像黃疸，雙手也濕冷。" },
+          nurse: { en: "I can see some pallor. I will also check for cyanosis and record what I find.", zh: "我看到一些蒼白。我也會檢查紫紺，並紀錄所見。" }
+        },
+        {
+          scene: "晚上煩躁",
+          patient: { en: "I feel drowsy in the day but restless at night.", zh: "我白天昏昏欲睡，晚上卻煩躁。" },
+          nurse: { en: "I will record that trend. Frequent restlessness at night is important for the doctors to see.", zh: "我會紀錄這個趨勢。晚上頻密的煩躁，醫生需要看到。" }
+        },
+        {
+          scene: "讀數不穩",
+          patient: { en: "Is the reading irregular? The pain is chronic, but today it feels more severe.", zh: "讀數不規則嗎？痛是慢性的，但今天感覺更嚴重。" },
+          nurse: { en: "I will record the reading and the severity, so the next shift can follow the trend.", zh: "我會紀錄讀數和嚴重程度，讓下一更可以看到趨勢。" }
+        }
       ]
     },
     {
@@ -1529,6 +2140,28 @@
         { en: "coagulation", zh: "凝固", syl: "co-ag-u-la-tion" },
         { en: "urinalysis", zh: "尿液分析", syl: "u-ri-nal-y-sis" },
         { en: "serum", zh: "血清", syl: "se-rum" }
+      ],
+      dialogues: [
+        {
+          scene: "查血報告",
+          patient: { en: "Is my platelet count abnormal? The nurse said it was reduced.", zh: "我的血小板計數異常嗎？護士說它降低了。" },
+          nurse: { en: "I will go through the report with you. A reduced platelet count needs a careful check, not a guess.", zh: "我和你一起看報告。血小板降低需要小心核對，不能靠猜。" }
+        },
+        {
+          scene: "擔心黃疸",
+          patient: { en: "They mentioned bilirubin and albumin. Is something elevated?", zh: "他們提到膽紅素和白蛋白。有沒有什麼升高了？" },
+          nurse: { en: "Some results are above the reference range. The doctor will explain whether it is critical.", zh: "有些結果高於參考範圍。是否危急，由醫生解釋。" }
+        },
+        {
+          scene: "動脈採血",
+          patient: { en: "Was that an arterial or a venous sample? Will I also have urinalysis and a coagulation test?", zh: "剛才是動脈還是靜脈樣本？我還要做尿液分析和凝固測試嗎？" },
+          nurse: { en: "That one was venous. Urinalysis and coagulation may be done as well if the doctor asks.", zh: "那一次是靜脈的。如果醫生要求，也可以做尿液分析和凝固測試。" }
+        },
+        {
+          scene: "陽性陰性",
+          patient: { en: "The letter says haematocrit and leucocyte, and then positive or negative. What does that mean?", zh: "信上寫血細胞壓積和白血球，然後是陽性或陰性。那是什麼意思？" },
+          nurse: { en: "Positive or negative is a test result, not a judgement of you. We will review ferritin, bicarbonate and serum with the doctor.", zh: "陽性或陰性是檢驗結果，不是對你的評判。我們也會和醫生一起看鐵蛋白、碳酸氫鹽和血清數值。" }
+        }
       ]
     },
     {
@@ -1555,6 +2188,28 @@
         { en: "aneurysm", zh: "動脈瘤", syl: "an-eu-rysm" },
         { en: "ischaemia", zh: "缺血", syl: "is-chae-mi-a" },
         { en: "anticoagulant", zh: "抗凝藥", syl: "an-ti-co-ag-u-lant" }
+      ],
+      dialogues: [
+        {
+          scene: "機器警報",
+          patient: { en: "The machine alarm keeps sounding. Is the conductivity or the dialysate wrong?", zh: "機器警報一直響。是導電度還是透析液不對？" },
+          nurse: { en: "I will check the alarm, the dialysate and the conductivity before we continue ultrafiltration.", zh: "繼續超濾之前，我會檢查警報、透析液和導電度。" }
+        },
+        {
+          scene: "穿刺前",
+          patient: { en: "I am nervous about the needling. Will you use a graft today, or my usual access?", zh: "我對穿刺感到緊張。今天用人工血管，還是我平時的血管通路？" },
+          nurse: { en: "I will check the access first. After priming, we start needling only when everything is ready.", zh: "我先檢查血管通路。預沖之後，一切就緒才開始穿刺。" }
+        },
+        {
+          scene: "擔心滲出",
+          patient: { en: "My arm hurts. Could this be infiltration or stenosis?", zh: "我手臂痛。會不會是滲出或狹窄？" },
+          nurse: { en: "I will stop the infusion or bolus if needed, and check for infiltration, stenosis or signs of ischaemia.", zh: "需要的話我會停下輸注或推注，並檢查滲出、狹窄或缺血跡象。" }
+        },
+        {
+          scene: "結束回血",
+          patient: { en: "Is rinseback starting? I worry about the anticoagulant and the volume target.", zh: "開始回血了嗎？我擔心抗凝藥和容量目標。" },
+          nurse: { en: "Yes, rinseback is next. I will keep to the prescribed anticoagulant and the volume target.", zh: "是的，下一步是回血。我會按處方的抗凝藥和容量目標進行。" }
+        }
       ]
     },
     {
@@ -1581,6 +2236,28 @@
         { en: "calorie", zh: "卡路里", syl: "cal-o-rie" },
         { en: "supplement", zh: "補充劑", syl: "sup-ple-ment" },
         { en: "thirst", zh: "口渴", syl: "thirst" }
+      ],
+      dialogues: [
+        {
+          scene: "問熱量",
+          patient: { en: "The dietician limited my protein and salt. May I still have a homemade snack?", zh: "營養師限制了我的蛋白質和鹽。我還可以吃家製小食嗎？" },
+          nurse: { en: "A small homemade snack is all right if it stays within your protein, salt and calorie limit.", zh: "少量家製小食可以，只要不超出蛋白質、鹽和卡路里上限。" }
+        },
+        {
+          scene: "罐頭食品",
+          patient: { en: "I like tinned and processed meat and dairy. Do I have to avoid them?", zh: "我喜歡罐頭和加工的肉類和奶類。一定要避免嗎？" },
+          nurse: { en: "Try to avoid processed and tinned food when you can, and use a substitute the dietician suggested.", zh: "盡量避免加工和罐頭食物，並用營養師建議的替代。" }
+        },
+        {
+          scene: "藥片與調味",
+          patient: { en: "When do I take the phosphate binder, and may I add more seasoning?", zh: "磷酸鹽結合劑什麼時候吃？我可以多加調味料嗎？" },
+          nurse: { en: "Take the binder with the meal, as prescribed. Keep seasoning light, and watch each serving size.", zh: "按處方隨餐吃結合劑。調味要淡，並注意每一份的份量。" }
+        },
+        {
+          scene: "胃口差",
+          patient: { en: "I have little appetite, and I feel thirst all afternoon.", zh: "我胃口不好，整個下午都覺得口渴。" },
+          nurse: { en: "We need to prevent malnutrition. I will ask about a supplement, and help you plan fluids so thirst is more manageable.", zh: "我們要預防營養不良。我會詢問是否需要補充劑，並幫你計劃飲水量，讓口渴比較容易應付。" }
+        }
       ]
     }
   ];
@@ -1863,13 +2540,30 @@
     }).join("\n");
   }
 
+  function cloneDialogues(list) {
+    if (!Array.isArray(list)) return [];
+    var out = [];
+    list.forEach(function (d) {
+      if (!d || typeof d !== "object") return;
+      var patient = d.patient || {};
+      var nurse = d.nurse || {};
+      out.push({
+        scene: String(d.scene || ""),
+        patient: { en: String(patient.en || ""), zh: String(patient.zh || "") },
+        nurse: { en: String(nurse.en || ""), zh: String(nurse.zh || "") }
+      });
+    });
+    return out;
+  }
+
   function cloneLesson(lesson) {
     return {
       id: lesson.id,
       title: lesson.title,
       words: (lesson.words || []).map(function (w) {
         return copyWord(w);
-      })
+      }),
+      dialogues: cloneDialogues(lesson && lesson.dialogues)
     };
   }
 
@@ -2294,14 +2988,81 @@
   }
 
   function showScreen(name) {
-    ["setup", "practice", "end"].forEach(function (id) {
-      document.getElementById("screen-" + id).hidden = id !== name;
+    ["setup", "practice", "end", "listen"].forEach(function (id) {
+      var el = document.getElementById("screen-" + id);
+      if (el) el.hidden = id !== name;
     });
     document.body.setAttribute("data-screen", name);
     applyKeyboardMode();
     if (name !== "practice") blurAnswer();
+    if (name !== "listen") stopListen();
     window.scrollTo(0, 0);
     syncPracticeViewport();
+  }
+
+  var listenIndex = 0;
+  var listenGen = 0;
+  var LISTEN_GAP_MS = 420;
+
+  function stopListen() {
+    listenGen += 1;
+    cancelTts();
+  }
+
+  function currentDialogues() {
+    var lesson = currentLesson();
+    return (lesson && lesson.dialogues) || [];
+  }
+
+  function renderListen() {
+    var items = currentDialogues();
+    var item = items[listenIndex];
+    if (!item) return;
+    document.getElementById("listen-prog").textContent = "第 " + (listenIndex + 1) + "／" + items.length + " 段";
+    document.getElementById("listen-group").textContent = (GROUP_IDS[listenIndex] || "") + " 組";
+    document.getElementById("listen-scene").textContent = item.scene || "";
+    [["p", item.patient || {}], ["n", item.nurse || {}]].forEach(function (pair) {
+      var en = document.getElementById("listen-" + pair[0] + "-en");
+      var zh = document.getElementById("listen-" + pair[0] + "-zh");
+      en.textContent = pair[1].en || "";
+      zh.textContent = pair[1].zh || "";
+      en.lang = "en";
+      zh.lang = "zh-Hant";
+      en.setAttribute("aria-label", "聽英文");
+      zh.setAttribute("aria-label", "聽中文");
+    });
+    document.getElementById("btn-listen-prev").disabled = listenIndex <= 0;
+    document.getElementById("btn-listen-next").disabled = listenIndex >= items.length - 1;
+  }
+
+  function openListen() {
+    var items = currentDialogues();
+    if (!items.length) return;
+    stopListen();
+    listenIndex = 0;
+    blurAnswer();
+    showScreen("listen");
+    renderListen();
+  }
+
+  function playListenLine(text, kind) {
+    stopListen();
+    speak(text, kind);
+  }
+
+  function playListenAll() {
+    var items = currentDialogues();
+    var item = items[listenIndex];
+    if (!item || !item.patient || !item.nurse) return;
+    var gen = ++listenGen;
+    cancelTts();
+    speakAfterCancel(item.patient.en, "en", function () {
+      if (gen !== listenGen) return;
+      setTimeout(function () {
+        if (gen !== listenGen) return;
+        speakOnce(item.nurse.en, "en", null);
+      }, LISTEN_GAP_MS);
+    });
   }
 
   function currentItem() {
@@ -2418,6 +3179,15 @@
     document.getElementById("opt-auto").checked = !!state.settings.autoSpeak;
     document.getElementById("opt-sfx").checked = state.settings.sfx !== false;
     document.getElementById("ls-key-label").textContent = LS_KEY;
+    var listenBtn = document.getElementById("btn-listen");
+    var listenNote = document.getElementById("listen-note");
+    var hasDialogue = !!(lesson.dialogues && lesson.dialogues.length);
+    if (listenBtn) listenBtn.disabled = !hasDialogue;
+    if (listenNote) {
+      listenNote.textContent = hasDialogue
+        ? "只聽病人與護士的問答，不抄打、不遮默，也不會打開鍵盤。"
+        : "這一課沒有問答。";
+    }
 
     if (document.getElementById("parent-view").open) renderParent();
     if (document.getElementById("manager").open) renderEditor();
@@ -3389,7 +4159,8 @@
     }
     if (!words.length) { setMgrMsg("至少要有一個生詞。", false); return; }
     var id = editorLessonId || state.settings.lessonId;
-    var lesson = { id: id, title: title, words: words };
+    var prevLesson = lessonById(id);
+    var lesson = { id: id, title: title, words: words, dialogues: cloneDialogues(prevLesson && prevLesson.dialogues) };
     var replaced = false;
     state.customLessons = state.customLessons.map(function (item) {
       if (item.id === id) { replaced = true; return lesson; }
@@ -3431,7 +4202,7 @@
         if (en && zh) words.push(copyWord({ en: en, zh: zh, syl: String(w.syl || "").trim() }));
       });
       if (!words.length) return;
-      var next = { id: id, title: String(lesson.title || "未命名").slice(0, 40), words: words };
+      var next = { id: id, title: String(lesson.title || "未命名").slice(0, 40), words: words, dialogues: cloneDialogues(lesson.dialogues) };
       var replaced = false;
       state.customLessons = state.customLessons.map(function (item) {
         if (item.id === id) { replaced = true; return next; }
@@ -3503,6 +4274,42 @@
       }
     });
     document.getElementById("btn-learn").addEventListener("click", function () { requestStart("learn"); });
+    document.getElementById("btn-listen").addEventListener("click", openListen);
+    document.getElementById("btn-listen-back").addEventListener("click", function () {
+      stopListen();
+      showScreen("setup");
+      renderSetup();
+    });
+    document.getElementById("btn-listen-prev").addEventListener("click", function () {
+      if (listenIndex <= 0) return;
+      stopListen();
+      listenIndex -= 1;
+      renderListen();
+    });
+    document.getElementById("btn-listen-next").addEventListener("click", function () {
+      var items = currentDialogues();
+      if (listenIndex >= items.length - 1) return;
+      stopListen();
+      listenIndex += 1;
+      renderListen();
+    });
+    document.getElementById("btn-listen-all").addEventListener("click", playListenAll);
+    bindSpeakKeepFocus(document.getElementById("listen-p-en"), function () {
+      var item = currentDialogues()[listenIndex];
+      if (item && item.patient) playListenLine(item.patient.en, "en");
+    });
+    bindSpeakKeepFocus(document.getElementById("listen-p-zh"), function () {
+      var item = currentDialogues()[listenIndex];
+      if (item && item.patient) playListenLine(item.patient.zh, "zh");
+    });
+    bindSpeakKeepFocus(document.getElementById("listen-n-en"), function () {
+      var item = currentDialogues()[listenIndex];
+      if (item && item.nurse) playListenLine(item.nurse.en, "en");
+    });
+    bindSpeakKeepFocus(document.getElementById("listen-n-zh"), function () {
+      var item = currentDialogues()[listenIndex];
+      if (item && item.nurse) playListenLine(item.nurse.zh, "zh");
+    });
     document.getElementById("btn-full").addEventListener("click", function () { requestStart("full"); });
     document.getElementById("btn-nextday").addEventListener("click", function () { requestStart("nextday"); });
     document.getElementById("btn-quiz").addEventListener("click", function () { requestStart("quiz"); });
@@ -3532,8 +4339,8 @@
     document.getElementById("btn-preview").addEventListener("click", function () {
       readSettingsFromDom();
       save();
-      speakAfterCancel("cash", "en", function () {
-        setTimeout(function () { speakOnce("現金", "zh", null); }, 280);
+      speakAfterCancel("ward", "en", function () {
+        setTimeout(function () { speakOnce("病房", "zh", null); }, 280);
       });
     });
     document.getElementById("btn-clear").addEventListener("click", function () {
@@ -3780,17 +4587,145 @@
     assert(passMark(20) === 16, "20 詞達標線是 16");
     assert(normalizeAnswer("  Brave! ") === "brave", "比對時忽略大小寫與標點");
     assert(syllableParts({ en: "appointment" }).join("-") === "ap-point-ment", "appointment 拆成 ap-point-ment");
-    assert(syllableParts({ en: "elevator" }).join("-") === "el-e-va-tor", "elevator 拆成 el-e-va-tor");
+    assert(syllableParts({ en: "electrocardiogram" }).join("-") === "e-lec-tro-car-di-o-gram", "electrocardiogram 沿用課內音節");
     assert(syllableParts({ en: "emergency" }).join("-") === "e-mer-gen-cy", "emergency 拆成 e-mer-gen-cy");
-    assert(syllableParts({ en: "cash" }).length === 1, "cash 是單音節");
+    assert(syllableParts({ en: "ward" }).length === 1, "ward 是單音節");
+
+    assert(document.getElementById("btn-preview").textContent.indexOf("ward") >= 0 && document.getElementById("btn-preview").textContent.indexOf("病房") >= 0, "試聽改為 ward／病房");
+    var presets = allLessons().filter(function (l) { return isPresetId(l.id); });
+    assert(presets.length === 28, "仍是 28 課");
+    presets.forEach(function (l) {
+      assert(l.words.length === 20, l.id + " 有 20 詞");
+      assert(l.dialogues && l.dialogues.length === 4, l.id + " 有 4 段問答");
+    });
+    assert(presets[0].id === "lesson-01" && presets[0].words[0].en === "ward" && presets[0].words[0].zh === "病房", "第一課第一詞是 ward／病房");
+    assert(presets[15].id === "lesson-20" && presets[16].id === "lesson-02", "醫學 16 課仍排在護理課前面");
+    assert(lessonById("lesson-02").title === "護理英語：症狀評估" && lessonById("lesson-02").words[0].en === "pulse", "症狀評估課標題與生詞不變");
+    assert(lessonById("lesson-28").title === "護理英語：腎科飲食" && lessonById("lesson-28").words[19].en === "thirst", "腎科飲食課標題與生詞不變");
+    assert(lessonById("lesson-11").words.map(function (w) { return w.en; }).join(",") === "indigestion,heartburn,bloating,reflux,ulcer,bowel,stool,laxative,antacid,swallow,hiccup,wind,endoscopy,gastritis,colic,bile,gallbladder,hungry,burp,bland", "腸胃課正好這 20 詞");
+    assert(JSON.stringify(presetById("lesson-16").dialogues).toLowerCase().indexOf("snack") < 0, "血糖課問答不使用 snack");
+    var clonedNurse = cloneLesson(presetById("lesson-02"));
+    assert(clonedNurse.dialogues.length === 4 && clonedNurse.dialogues[0].patient.en.indexOf("fever") >= 0, "cloneLesson 複製問答");
+    var clonedEmpty = cloneLesson({ id: "x", title: "自訂", words: [{ en: "alpha", zh: "甲" }] });
+    assert(clonedEmpty.dialogues.length === 0, "自訂課可以沒有問答");
+    importLessons({
+      lessons: [{
+        id: "custom-qa",
+        title: "自訂問答",
+        words: [{ en: "alpha", zh: "甲", syl: "al-pha" }],
+        dialogues: [{
+          scene: "測試情境",
+          patient: { en: "I feel unwell and I need some help please.", zh: "我覺得不舒服，需要幫忙。" },
+          nurse: { en: "I will stay with you and ask the doctor.", zh: "我會留在這裡，並請醫生。" }
+        }]
+      }]
+    });
+    var imported = null;
+    state.customLessons.forEach(function (l) { if (l.id === "custom-qa") imported = l; });
+    assert(imported && imported.dialogues && imported.dialogues[0].scene === "測試情境", "匯入保留問答");
+    assert(cloneLesson(imported).dialogues[0].nurse.zh.indexOf("醫生") >= 0, "再克隆仍有問答");
+    state.customLessons = state.customLessons.filter(function (l) { return l.id !== "custom-qa"; });
+    state.customLessons.push({ id: "custom-empty", title: "沒有問答", words: [{ en: "alpha", zh: "甲" }] });
+    state.settings.lessonId = "custom-empty";
+    renderSetup();
+    assert(document.getElementById("btn-listen").disabled, "沒有問答就不能聽");
+    state.customLessons = state.customLessons.filter(function (l) { return l.id !== "custom-empty"; });
+    state.settings.lessonId = "lesson-01";
+    renderSetup();
+    assert(!document.getElementById("btn-listen").disabled, "有問答就可以聽");
+    assert(document.getElementById("btn-learn").textContent.indexOf("抄打") >= 0, "學詞按鈕仍是看抄打遮默");
+    assert(document.getElementById("btn-listen").textContent === "聽問答", "聽問答按鈕獨立");
+    document.getElementById("btn-listen").click();
+    assert(!session, "聽問答不建立練習");
+    assert(document.body.getAttribute("data-screen") === "listen", "進入只聽畫面");
+    assert(document.getElementById("screen-practice").hidden, "沒有進入抄打");
+    assert(document.activeElement !== document.getElementById("answer-input"), "沒有聚焦默寫框");
+    assert(!document.querySelector("#screen-listen input, #screen-listen textarea"), "聽問答沒有輸入欄");
+    assert(!document.querySelector("#screen-listen #btn-check"), "聽問答沒有檢查");
+    assert(document.getElementById("listen-scene").textContent.length > 0, "有中文情境");
+    assert(document.getElementById("listen-p-en").textContent.indexOf("ward") >= 0, "第一段病人英文可見");
+    assert(document.getElementById("listen-p-zh").textContent.length > 0, "第一段病人中文可見");
+    assert(document.getElementById("listen-n-en").textContent.length > 0, "護士英文可見");
+    assert(document.getElementById("listen-p-en").className.indexOf("masked") < 0, "問答英文不遮住");
+    assert(document.getElementById("btn-listen-prev").disabled, "第一段不能再向前");
+    var heard = [];
+    var prevSpeak = speak;
+    speak = function (text, kind) { heard.push(kind + ":" + text); };
+    try {
+      document.getElementById("listen-p-en").click();
+      document.getElementById("listen-n-zh").click();
+    } finally {
+      speak = prevSpeak;
+    }
+    assert(heard.length === 2, "點句子會朗讀");
+    assert(heard[0].indexOf("en:") === 0 && heard[0].indexOf("ward") >= 0, "點英文用英語朗讀");
+    assert(heard[1].indexOf("zh:") === 0, "點中文用中文朗讀");
+    var seq = [];
+    var prevAfter = speakAfterCancel;
+    var prevOnce = speakOnce;
+    speakAfterCancel = function (text, kind, onEnd) {
+      seq.push(kind + ":" + text);
+      if (onEnd) onEnd();
+    };
+    speakOnce = function (text, kind, onEnd) {
+      seq.push(kind + ":" + text);
+      if (onEnd) onEnd();
+    };
+    var origTimeout = window.setTimeout;
+    window.setTimeout = function (fn, ms) {
+      if (ms === 420) { fn(); return 0; }
+      return origTimeout.apply(window, arguments);
+    };
+    try {
+      document.getElementById("btn-listen-all").click();
+    } finally {
+      window.setTimeout = origTimeout;
+      speakAfterCancel = prevAfter;
+      speakOnce = prevOnce;
+    }
+    assert(seq.length === 2, "聽整段先病人後護士");
+    assert(seq[0].indexOf("en:") === 0 && seq[0].indexOf("ward") >= 0, "聽整段先讀病人英文");
+    assert(seq[1].indexOf("en:") === 0 && seq[1] !== seq[0], "聽整段接着讀護士英文");
+    assert(document.body.getAttribute("data-screen") === "listen", "聽完整段仍留在問答");
+    document.getElementById("btn-listen-next").click();
+    assert(document.getElementById("listen-prog").textContent.indexOf("2") >= 0, "可以到下一段");
+    assert(document.getElementById("listen-p-en").textContent.indexOf("visitor") >= 0, "第二段是探訪");
+    document.getElementById("btn-listen-prev").click();
+    assert(document.getElementById("listen-prog").textContent.indexOf("1") >= 0, "可以回到上一段");
+    document.getElementById("btn-listen-back").click();
+    assert(document.body.getAttribute("data-screen") === "setup", "返回選課");
+    assert(document.getElementById("screen-listen").hidden, "問答畫面已關閉");
+    assert(!session, "返回後仍然沒有練習");
+    state.progress["lesson-01"] = {
+      groups: { A: { completedAt: "2000-01-01T00:00:00.000Z", completedOn: "2000-01-01", wordCount: 5, firstMaskCorrect: 5, firstMaskTotal: 5 } },
+      quiz: { score: 20, total: 20, passed: true, threshold: 16, date: "2000-01-01" },
+      fullMask: { date: "2000-01-01", score: 20, total: 20 },
+      sessions: [],
+      lastPracticeDate: "",
+      nextSuggestedDate: "",
+      nextSuggestedNote: "",
+      learnedOn: "",
+      nextDay: null
+    };
+    assert(!groupDone(lessonById("lesson-01"), "A"), "沒有詞庫簽名不算完成");
+    state.progress["lesson-01"].groups.A.bankSig = "stale-bank";
+    state.progress["lesson-01"].quiz.bankSig = "stale-bank";
+    state.progress["lesson-01"].fullMask.bankSig = "stale-bank";
+    assert(!groupDone(lessonById("lesson-01"), "A"), "舊詞庫簽名不算完成");
+    assert(!fullDone(lessonById("lesson-01")), "舊整課簽名不算完成");
+    renderSetup();
+    assert(document.getElementById("quiz-line").textContent.indexOf("最近一次") < 0, "舊小默書不顯示");
+    assert(document.getElementById("btn-full").disabled, "舊簽名不能開整課遮默");
+    state.words["lesson-01|cash"] = { stage: "d1", nextReview: "2000-01-02", lastPractice: "2000-01-01", inWrongBook: true, streak: 1 };
+    state.progress = {};
     startSession("learn", { groupId: "A" });
     assert(session.items.length === 5, "A 組是 5 詞，沒有把每個詞拆成兩次");
     assert(session.phase === "look", "起手是看，不是遮默");
     assert(document.getElementById("osk").hidden, "看的時候不做默寫鍵盤");
     assert(!document.getElementById("cue-syl").hidden, "看的時候顯示音節");
-    assert(document.getElementById("cue-syl").textContent.indexOf("cash") >= 0, "cash 的音節可見");
-    var cashChip = document.querySelector("#cue-syl button.syl-chip");
-    assert(cashChip && cashChip.textContent.indexOf("cash") >= 0, "可見音節是可點的按鈕");
+    assert(document.getElementById("cue-syl").textContent.indexOf("ward") >= 0, "ward 的音節可見");
+    var wardChip = document.querySelector("#cue-syl button.syl-chip");
+    assert(wardChip && wardChip.textContent.indexOf("ward") >= 0, "可見音節是可點的按鈕");
     var cueZh = document.getElementById("cue-zh");
     var cueEn = document.getElementById("cue-en");
     assert(cueZh && cueZh.tagName === "BUTTON" && cueZh.getAttribute("type") === "button", "中文格是按鈕");
@@ -3801,7 +4736,7 @@
     assert(lockReason("full", currentLesson()).length > 0, "未完成四組時不能整課遮默");
     continueFromLook();
     assert(session.phase === "copy" && session.copyNeed === 1, "新詞只抄打 1 次");
-    assert(document.getElementById("cue-en").textContent === "cash", "抄打時英文可見");
+    assert(document.getElementById("cue-en").textContent === "ward", "抄打時英文可見");
     assert(!document.getElementById("osk").hidden, "桌面抄打顯示自訂鍵盤");
     assert(document.body.getAttribute("data-kb") === "osk", "桌面自動測試走自訂鍵盤");
     kbModeOverride = "system";
@@ -3866,8 +4801,8 @@
 
     session.copyNeed = 2;
     session.copyDone = 0;
-    session.answer = "cash";
-    sysInput.value = "cash";
+    session.answer = "ward";
+    sysInput.value = "ward";
     sysInput.readOnly = true;
     sysInput.blur();
     var againKey = new KeyboardEvent("keydown", { key: "Enter", bubbles: true, cancelable: true });
@@ -3882,8 +4817,8 @@
     session.copyDone = 0;
     session.locked = false;
     session.pendingPhase = null;
-    session.answer = "cash";
-    sysInput.value = "cash";
+    session.answer = "ward";
+    sysInput.value = "ward";
     sysInput.readOnly = true;
     sysInput.focus();
     var blurCalls = 0;
@@ -3921,42 +4856,42 @@
     applyKeyboardMode();
     renderPractice();
     assert(document.body.getAttribute("data-kb") === "osk" && !document.getElementById("osk").hidden, "還原後抄打仍用自訂鍵盤");
-    assert(document.getElementById("cue-en").textContent === "cash", "切換鍵盤模式不改可見英文");
+    assert(document.getElementById("cue-en").textContent === "ward", "切換鍵盤模式不改可見英文");
     var deskDown = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
     document.getElementById("cue-zh").dispatchEvent(deskDown);
     assert(!deskDown.defaultPrevented, "自訂鍵盤模式點中文方框不攔截");
     session.answer = "cas";
     checkAnswer();
     assert(session.phase === "copy" && !session.locked, "抄錯仍留在抄打，不進入遮默");
-    session.answer = "cash";
+    session.answer = "ward";
     checkAnswer();
     assert(session.pendingPhase === "mask", "抄對了才前往遮默");
     assert(session.firstCorrect === 0, "抄打不計入遮默分數");
     advance();
     assert(session.phase === "mask", "進入遮默");
-    assert(document.getElementById("cue-en").textContent.indexOf("cash") < 0, "遮默不顯示英文");
+    assert(document.getElementById("cue-en").textContent.indexOf("ward") < 0, "遮默不顯示英文");
     assert(document.getElementById("cue-en").classList.contains("masked"), "英文格標成已遮住");
     assert(document.getElementById("cue-en").tagName === "BUTTON", "遮默時英文格仍是按鈕");
     assert(document.getElementById("cue-en").getAttribute("aria-label") === "聽英文（已遮住）", "遮住時朗讀標籤不含拼法");
-    assert(document.getElementById("cue-en").getAttribute("aria-label").indexOf("cash") < 0, "aria 不洩漏英文拼法");
-    assert((document.getElementById("cue-en").innerHTML || "").indexOf("cash") < 0, "英文格 HTML 不洩漏拼法");
+    assert(document.getElementById("cue-en").getAttribute("aria-label").indexOf("ward") < 0, "aria 不洩漏英文拼法");
+    assert((document.getElementById("cue-en").innerHTML || "").indexOf("ward") < 0, "英文格 HTML 不洩漏拼法");
     assert(document.getElementById("cue-syl").hidden, "遮默時不顯示音節");
-    session.answer = "cash";
+    session.answer = "ward";
     checkAnswer();
     assert(session.pendingPhase === "next", "默對後這個詞停止");
-    var cashWord = state.words[wordKey("lesson-01", "cash")];
-    assert(cashWord && cashWord.stage === "d1" && cashWord.nextReview === "2026-11-08" && !cashWord.inWrongBook, "第一次默對：隔 1 天，不進錯詞本");
-    var early = cashWord.nextReview;
-    applySuccess({ en: "cash", zh: "現金", key: wordKey("lesson-01", "cash") }, true);
-    cashWord = state.words[wordKey("lesson-01", "cash")];
-    assert(cashWord.stage === "d1" && cashWord.nextReview === early, "未到期答對，不提前跳級");
+    var wardWord = state.words[wordKey("lesson-01", "ward")];
+    assert(wardWord && wardWord.stage === "d1" && wardWord.nextReview === "2026-11-08" && !wardWord.inWrongBook, "第一次默對：隔 1 天，不進錯詞本");
+    var early = wardWord.nextReview;
+    applySuccess({ en: "ward", zh: "病房", key: wordKey("lesson-01", "ward") }, true);
+    wardWord = state.words[wordKey("lesson-01", "ward")];
+    assert(wardWord.stage === "d1" && wardWord.nextReview === early, "未到期答對，不提前跳級");
     advance();
 
-    assert(currentItem().en === "appointment", "第二詞是 appointment");
-    assert(document.getElementById("cue-syl").textContent.indexOf("ap") >= 0, "appointment 顯示 ap-point-ment");
+    assert(currentItem().en === "bedside", "第二詞是 bedside");
+    assert(document.getElementById("cue-syl").textContent.indexOf("bed") >= 0, "bedside 顯示 bed-side");
     continueFromLook();
     assert(!document.getElementById("cue-syl").hidden, "抄打時音節仍可見");
-    session.answer = "appointment";
+    session.answer = "bedside";
     checkAnswer();
     advance();
     session.answer = "appoint";
@@ -3965,37 +4900,37 @@
     assert(session.copyNeed === 1 || session.pendingPhase === "recopy", "再抄尚未開始計次");
     advance();
     assert(session.phase === "recopy" && session.copyNeed === 2, "默錯後看著再抄 2 次");
-    session.answer = "appointment";
+    session.answer = "bedside";
     checkAnswer();
     assert(session.phase === "recopy" && session.copyDone === 1 && !session.locked, "再抄滿 2 次才遮默");
-    session.answer = "appointment";
+    session.answer = "bedside";
     checkAnswer();
     advance();
     assert(session.phase === "remask", "再遮默一次");
     assert(document.getElementById("cue-en").classList.contains("masked"), "再遮默時英文再次遮住");
-    assert(document.getElementById("cue-en").textContent.indexOf("appointment") < 0, "再遮默不顯示英文");
+    assert(document.getElementById("cue-en").textContent.indexOf("bedside") < 0, "再遮默不顯示英文");
     assert(document.getElementById("cue-en").getAttribute("aria-label") === "聽英文（已遮住）", "再遮默朗讀標籤不含拼法");
-    session.answer = "appointment";
+    session.answer = "bedside";
     checkAnswer();
-    assert(!state.words[wordKey("lesson-01", "appointment")].inWrongBook, "再遮默對了，不留在錯詞本");
+    assert(!state.words[wordKey("lesson-01", "bedside")].inWrongBook, "再遮默對了，不留在錯詞本");
     advance();
 
     continueFromLook();
-    session.answer = "receipt";
+    session.answer = "visitor";
     checkAnswer();
     advance();
     session.answer = "xxx";
     checkAnswer();
     advance();
-    session.answer = "receipt";
+    session.answer = "visitor";
     checkAnswer();
-    session.answer = "receipt";
+    session.answer = "visitor";
     checkAnswer();
     advance();
     session.answer = "nope";
     checkAnswer();
     assert(session.pendingPhase === "next", "再遮默仍錯就結束這個詞");
-    assert(state.words[wordKey("lesson-01", "receipt")].inWrongBook, "再遮默仍錯，進入錯詞本");
+    assert(state.words[wordKey("lesson-01", "visitor")].inWrongBook, "再遮默仍錯，進入錯詞本");
     advance();
     var used = pump();
     assert(used < 800, "其餘詞能走完");
@@ -4036,23 +4971,23 @@
     assert(quiz && quiz.passed && quiz.score === 20 && quiz.threshold === 16, "全對的小默書達標，門檻 16");
 
     todayOverride = "2026-11-08";
-    applySuccess({ en: "cash", zh: "現金", key: wordKey("lesson-01", "cash") }, true);
-    cashWord = state.words[wordKey("lesson-01", "cash")];
-    assert(cashWord.stage === "d3" && cashWord.nextReview === "2026-11-11", "隔 1 天答對後改為隔 3 天");
+    applySuccess({ en: "ward", zh: "病房", key: wordKey("lesson-01", "ward") }, true);
+    wardWord = state.words[wordKey("lesson-01", "ward")];
+    assert(wardWord.stage === "d3" && wardWord.nextReview === "2026-11-11", "隔 1 天答對後改為隔 3 天");
     todayOverride = "2026-11-11";
-    applySuccess({ en: "cash", zh: "現金", key: wordKey("lesson-01", "cash") }, true);
+    applySuccess({ en: "ward", zh: "病房", key: wordKey("lesson-01", "ward") }, true);
     todayOverride = "2026-11-18";
-    applySuccess({ en: "cash", zh: "現金", key: wordKey("lesson-01", "cash") }, true);
-    cashWord = state.words[wordKey("lesson-01", "cash")];
-    assert(cashWord.stage === "w2" && cashWord.streak === 3, "1→3→7 連續三次對，標為精熟");
+    applySuccess({ en: "ward", zh: "病房", key: wordKey("lesson-01", "ward") }, true);
+    wardWord = state.words[wordKey("lesson-01", "ward")];
+    assert(wardWord.stage === "w2" && wardWord.streak === 3, "1→3→7 連續三次對，標為精熟");
     todayOverride = "2026-12-02";
-    applySuccess({ en: "cash", zh: "現金", key: wordKey("lesson-01", "cash") }, true);
-    cashWord = state.words[wordKey("lesson-01", "cash")];
-    assert(cashWord.stage === "w6" && cashWord.nextReview === addDays("2026-12-02", 35), "精熟後再隔約 4–6 週");
-    todayOverride = cashWord.nextReview;
-    applyFail({ en: "cash", zh: "現金", key: wordKey("lesson-01", "cash") });
-    cashWord = state.words[wordKey("lesson-01", "cash")];
-    assert(cashWord.stage === "d1" && cashWord.inWrongBook && cashWord.streak === 0, "抽測又錯，回到隔 1 天並進錯詞本");
+    applySuccess({ en: "ward", zh: "病房", key: wordKey("lesson-01", "ward") }, true);
+    wardWord = state.words[wordKey("lesson-01", "ward")];
+    assert(wardWord.stage === "w6" && wardWord.nextReview === addDays("2026-12-02", 35), "精熟後再隔約 4–6 週");
+    todayOverride = wardWord.nextReview;
+    applyFail({ en: "ward", zh: "病房", key: wordKey("lesson-01", "ward") });
+    wardWord = state.words[wordKey("lesson-01", "ward")];
+    assert(wardWord.stage === "d1" && wardWord.inWrongBook && wardWord.streak === 0, "抽測又錯，回到隔 1 天並進錯詞本");
 
     save();
     var raw = localStorage.getItem(LS_KEY);
@@ -4061,7 +4996,8 @@
     assert(parsed.progress["lesson-01"].groups.A.completedAt, "A 組完成時間在 localStorage");
     assert(parsed.progress["lesson-01"].lastPracticeDate, "上次練習日已存");
     assert(parsed.progress["lesson-01"].nextSuggestedDate, "下次建議複習日已存");
-    assert(parsed.words["lesson-01|cash"].inWrongBook, "抽測錯詞仍在 localStorage");
+    assert(parsed.words["lesson-01|ward"].inWrongBook, "抽測錯詞仍在 localStorage");
+    assert(parsed.words["lesson-01|cash"] && parsed.words["lesson-01|cash"].inWrongBook, "舊錯詞鍵仍保留，不因換詞庫而清掉");
     var again = load();
     assert(again.progress["lesson-01"].groups.D.completedOn, "重新讀取後 D 組仍在");
 
