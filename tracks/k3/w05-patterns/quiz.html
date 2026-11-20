@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>K3 第5週｜簡單重複規律（小測）</title>
+  <link rel="stylesheet" href="../../../css/print-a4.css" />
+  <link rel="stylesheet" href="../../../css/screen.css" />
+</head>
+<body data-track="k3" class="track-k3">
+  <nav class="nav-bar no-print" aria-label="導覽">
+    <span class="nav-label">導覽：</span>
+    <a href="../../../index.html">首頁</a>
+    <a href="teach.html">教學</a>
+    <a href="practice.html">練習</a>
+    <a href="answers.html">答案</a>
+    <a href="../../../wrongbook.html?track=k3">錯題本</a>
+    <a href="../../../review.html?track=k3">重溫</a>
+    <button type="button" class="btn btn-sm btn-secondary btn-print" id="btn-print">列印 A4</button>
+  </nav>
+  <article class="sheet sheet-k3">
+    <header class="sheet-header">
+      <div class="titles"><h1>K3 第5週｜簡單重複規律（小測）</h1>
+      <div class="meta">5 題・精熟≈4/5・約 8–10 分</div></div>
+      <span class="badge badge-student">學生用・小測</span>
+    </header>
+    <div id="quiz-gate" class="quiz-gate screen-only">
+      <p>準備好再開始。家長讀題，孩子點選。可選計時或不計時。</p>
+      <button type="button" class="btn" id="btn-start-timed">開始（計時）</button>
+      <button type="button" class="btn btn-secondary" id="btn-start-free">開始（不計時）</button>
+    </div>
+    <div id="quiz-body" class="quiz-body is-locked-gate">
+      <div class="toolbar screen-only" id="quiz-toolbar" style="display:none">
+        <span id="timer-display" class="timer">08:00</span>
+        <button type="button" class="btn btn-warn" id="btn-submit">交卷</button>
+      </div>
+      <div class="meta-fields">
+        <span class="print-only">姓名：<span class="answer-line" style="min-width:6em"></span>
+           日期：<span class="answer-line" style="min-width:5em"></span></span>
+      </div>
+      <ol class="questions k3-questions quiz-questions">
+        <li class="problem-card k3-card" data-unit="q1">
+          <p class="k3-prompt">下一個是甚麼顏色？</p>
+          <p class="big-visual pat-row" aria-label="藍、紅、綠、藍、紅、綠、問號">
+            <span class="pat pat-blue">藍</span><span class="pat pat-red">紅</span><span class="pat pat-green">綠</span><span class="pat pat-blue">藍</span><span class="pat pat-red">紅</span><span class="pat pat-green">綠</span><span class="pat is-gap">？</span>
+          </p>
+          <div class="screen-only"><span class="choice-group choice-big" data-key="q1" role="group" aria-label="第1題">
+            <button type="button" class="choice-btn choice-lg" data-value="紅"><span class="pat pat-red">紅</span></button>
+            <button type="button" class="choice-btn choice-lg" data-value="綠"><span class="pat pat-green">綠</span></button>
+            <button type="button" class="choice-btn choice-lg" data-value="藍"><span class="pat pat-blue">藍</span></button>
+          </span></div>
+          <p class="print-only">圈起來：　紅　／　綠　／　藍</p>
+        </li>
+        <li class="problem-card k3-card" data-unit="q2">
+          <p class="k3-prompt">下一個是甚麼？</p>
+          <p class="big-visual pat-row" aria-label="月亮、星星、月亮、星星、問號">
+            <span class="pat pat-obj">🌙</span><span class="pat pat-obj">⭐</span><span class="pat pat-obj">🌙</span><span class="pat pat-obj">⭐</span><span class="pat is-gap">？</span>
+          </p>
+          <div class="screen-only"><span class="choice-group choice-big" data-key="q2" role="group" aria-label="第2題">
+            <button type="button" class="choice-btn choice-lg" data-value="星星"><span class="pat pat-obj">⭐</span> 星星</button>
+            <button type="button" class="choice-btn choice-lg" data-value="月亮"><span class="pat pat-obj">🌙</span> 月亮</button>
+            <button type="button" class="choice-btn choice-lg" data-value="太陽"><span class="pat pat-obj">☀️</span> 太陽</button>
+          </span></div>
+          <p class="print-only">圈起來：　星星　／　月亮　／　太陽</p>
+        </li>
+        <li class="problem-card k3-card" data-unit="q3">
+          <p class="k3-prompt">一組是甚麼顏色？</p>
+          <p class="big-visual pat-row" aria-label="綠、黃、紅、綠、黃、紅">
+            <span class="pat pat-green">綠</span><span class="pat pat-yellow">黃</span><span class="pat pat-red">紅</span><span class="pat pat-green">綠</span><span class="pat pat-yellow">黃</span><span class="pat pat-red">紅</span>
+          </p>
+          <div class="screen-only"><span class="choice-group choice-big choice-stack" data-key="q3" role="group" aria-label="第3題">
+            <button type="button" class="choice-btn choice-lg" data-value="黃、紅、綠">黃、紅、綠</button>
+            <button type="button" class="choice-btn choice-lg" data-value="綠、黃、紅">綠、黃、紅</button>
+            <button type="button" class="choice-btn choice-lg" data-value="綠、黃">綠、黃</button>
+          </span></div>
+          <p class="print-only">圈起來：　黃、紅、綠　／　綠、黃、紅　／　綠、黃</p>
+        </li>
+        <li class="problem-card k3-card" data-unit="q4">
+          <p class="k3-prompt">一組是甚麼？</p>
+          <p class="big-visual pat-row" aria-label="蘋果、香蕉、蘋果、香蕉、蘋果、香蕉">
+            <span class="pat pat-obj">🍎</span><span class="pat pat-obj">🍌</span><span class="pat pat-obj">🍎</span><span class="pat pat-obj">🍌</span><span class="pat pat-obj">🍎</span><span class="pat pat-obj">🍌</span>
+          </p>
+          <div class="screen-only"><span class="choice-group choice-big choice-stack" data-key="q4" role="group" aria-label="第4題">
+            <button type="button" class="choice-btn choice-lg" data-value="香蕉、蘋果">香蕉、蘋果</button>
+            <button type="button" class="choice-btn choice-lg" data-value="蘋果、香蕉">蘋果、香蕉</button>
+            <button type="button" class="choice-btn choice-lg" data-value="蘋果、蘋果">蘋果、蘋果</button>
+          </span></div>
+          <p class="print-only">圈起來：　香蕉、蘋果　／　蘋果、香蕉　／　蘋果、蘋果</p>
+        </li>
+        <li class="problem-card k3-card" data-unit="q5">
+          <p class="k3-prompt">溫故：有幾顆星星？</p>
+          <p class="big-visual pat-row" aria-label="星星，請數一數">
+            <span class="pat pat-obj">⭐</span><span class="pat pat-obj">⭐</span><span class="pat pat-obj">⭐</span><span class="pat pat-obj">⭐</span><span class="pat pat-obj">⭐</span><span class="pat pat-obj">⭐</span><span class="pat pat-obj">⭐</span><span class="pat pat-obj">⭐</span>
+          </p>
+          <div class="screen-only"><span class="choice-group choice-big" data-key="q5" role="group" aria-label="第5題">
+            <button type="button" class="choice-btn choice-lg" data-value="7">7</button>
+            <button type="button" class="choice-btn choice-lg" data-value="8">8</button>
+            <button type="button" class="choice-btn choice-lg" data-value="9">9</button>
+          </span></div>
+          <p class="print-only">圈起來：　7　／　8　／　9</p>
+        </li>
+      </ol>
+      <div class="summary-panel screen-only" id="quiz-summary">
+        <h2>小測結果</h2>
+        <p>得分：<strong id="quiz-score">—</strong>　用時：<span id="quiz-time-used">—</span></p>
+        <div class="verdict" id="quiz-verdict" role="status"></div>
+        <p class="small"><strong>精熟門檻：</strong>約 4／5 以上，且錯題重溫到期清完，再進第 6 週。</p>
+        <h3>需要再練</h3>
+        <ul class="wrong-list" id="quiz-wrong-list"></ul>
+        <p class="small">解析見 <a href="answers.html">答案頁</a>。錯題已進 <a href="../../../wrongbook.html?track=k3">錯題本</a>，請到 <a href="../../../review.html?track=k3">重溫</a>（必做）。</p>
+      </div>
+    </div>
+    <div class="tip">
+      <strong>測後：</strong>只講錯題的技能標籤（例如「說出規律」），不要整份重做。明天用重溫頁提取，不要當天狂刷。
+    </div>
+    <footer class="sheet-footer"><span>K3 第5週・小測</span></footer>
+  </article>
+  <script src="../../../js/track.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script>if(window.MathTrack)MathTrack.initFromPage("k3");</script>
+  <script src="../../../js/wrongbook.js"></script>
+  <script src="../../../js/explain-data.js"></script>
+  <script src="../../../js/explain.js"></script>
+  <script src="quiz.js"></script>
+</body>
+</html>

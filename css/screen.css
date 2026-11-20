@@ -679,6 +679,48 @@ body.track-k3 .sheet {
   border: 1.5px dashed #a8c5b5;
 }
 .big-visual svg { max-width: 100%; height: auto; letter-spacing: 0; }
+.big-visual.pat-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0;
+  line-height: 1;
+  padding: 12px 8px;
+}
+.pat {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 48px;
+  min-height: 48px;
+  padding: 4px 6px;
+  border: 2px solid #3c6554;
+  border-radius: 12px;
+  background: #fff;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1;
+  color: #1a1a1a;
+}
+.pat-red { background: #f6c1c1; }
+.pat-yellow { background: #f8e7a0; }
+.pat-blue { background: #c9daf8; }
+.pat-green { background: #cfe8d4; }
+.pat-obj { font-size: 1.85rem; background: #fff; }
+.pat.is-gap {
+  border-style: dashed;
+  background: #fff6db;
+  color: #8a5a00;
+  font-size: 1.45rem;
+}
+.pat-fig { padding: 4px; background: #fff; }
+.pat-fig svg { display: block; }
+.choice-btn .pat { pointer-events: none; }
+.choice-stack { flex-direction: column; align-items: stretch; }
+.choice-stack .choice-lg { width: 100%; text-align: center; }
 .k3-prompt {
   font-size: 1.25rem;
   font-weight: 700;

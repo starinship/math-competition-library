@@ -702,15 +702,21 @@
     return s;
   }
 
-  /* ---------- 圖形重複：圈出「一組」 ---------- */
+  /* ---------- 圖形重複：圈出「一組」 ----------
+   * ask 省略：在末尾補上下一個，並把那一格標成答案（既有週次沿用）。
+   * ask: "unit"：只圈已經排好的組，不補下一個。給「一組是甚麼」。 */
   function svgShapes(spec, r, k3) {
     var cw = k3 ? 54 : 46, x0 = 10, g = spec.group;
-    var items = spec.items.concat([r.answer]);
+    var showNext = spec.ask !== "unit";
+    var items = showNext ? spec.items.concat([r.answer]) : spec.items.slice();
     var n = items.length;
     var W = x0 * 2 + n * cw + 8;
     var H = k3 ? 100 : 88;
     var cy = k3 ? 46 : 40;
-    var s = svgOpen(W, H, "圖形規律：一組是 " + r.unit.join(" ") + "，下一個是 " + r.answer, "sol-shapes" + (k3 ? " sol-k3fig" : ""));
+    var label = showNext
+      ? ("圖形規律：一組是 " + r.unit.join(" ") + "，下一個是 " + r.answer)
+      : ("圖形規律：一組是 " + r.unit.join(" "));
+    var s = svgOpen(W, H, label, "sol-shapes" + (k3 ? " sol-k3fig" : ""));
     for (var gi = 0; gi * g < n; gi++) {
       var start = gi * g;
       var cnt = Math.min(g, n - start);
@@ -720,7 +726,7 @@
     }
     for (var i = 0; i < n; i++) {
       var x = x0 + i * cw + cw / 2;
-      var isAns = i === n - 1;
+      var isAns = showNext && i === n - 1;
       if (isAns) s += rect(x - cw / 2 + 5, cy - 23, cw - 10, 46, "sol-box-ans", 8);
       s += txt(x, cy + (k3 ? 11 : 9), items[i], "sol-t-c sol-t-shape" + (k3 ? " sol-t-k3shape" : "") + (isAns ? " sol-t-ans" : ""));
     }
@@ -764,7 +770,7 @@
   var ICON_COLORS = {
     "●": "#2d6a4f", "⭐": "#f2c94c", "🍎": "#e57373", "🌸": "#f4a7c0", "🍓": "#e57373",
     "🐱": "#f6c177", "🐶": "#c8a27a", "🔵": "#5b8def", "🔺": "#e57373", "⬛": "#555", "🟡": "#f2c94c", "🟢": "#5bbf7a",
-    "🐟": "#5b8def", "🐰": "#c9c9d6", "🥕": "#f39c4a", "🚗": "#e57373", "🚌": "#f2c94c", "🥣": "#8fb3d9", "🥄": "#b0b0b0", "🍌": "#f2d64c", "🌙": "#c9c9d6"
+    "🐟": "#5b8def", "🐰": "#c9c9d6", "🥕": "#f39c4a", "🚗": "#e57373", "🚌": "#f2c94c", "🥣": "#8fb3d9", "🥄": "#b0b0b0", "🍌": "#f2d64c", "🌙": "#c9c9d6", "🍇": "#7b4b9a"
   };
   function iconAt(icon, cx, cy, rr) {
     var col = ICON_COLORS[icon] || "#2d6a4f";
@@ -1240,6 +1246,7 @@
       case "numeral":
         return spec.word + " → " + spec.n;
       case "shapes":
+        if (spec.ask === "unit") return "一組是「" + r.unit.join("、") + "」，一直重複";
         return "一組：" + r.unit.join(" ") + "，再一組…";
       case "shapeName":
         return r.formula + " → " + r.answer;
