@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="生詞默寫">
+<meta name="apple-mobile-web-app-title" content="對話聆聽">
 <meta name="theme-color" content="#13283f">
-<meta name="description" content="醫學與護理英語生詞電子默寫，共 28 課、560 詞（醫學 16 課、護理 12 課）。先看英文與中文，抄打一次，再遮默。四組完成後才整課遮默。每課可聽病人問答句子。進度存在這部機的瀏覽器。">
-<title>生詞電子默寫</title>
+<meta name="description" content="醫學與護理英語對話聆聽練習，共 28 課、560 詞（醫學 16 課、護理 12 課）供對照。選課後聽病人與護士問答，一次一段，只聽不拼。生詞可查看英文、音節與中文。朗讀可選英式或美式、男聲或女聲。設定存在這部機的瀏覽器。">
+<title>醫學護理英語對話聆聽</title>
 <style>
   :root {
     --ink: #1a2332;
@@ -646,68 +646,55 @@
   .line-en:focus, .line-zh:focus { outline: none; }
   .line-en:focus-visible, .line-zh:focus-visible { outline: 2px solid #0f3d73; outline-offset: 1px; }
   #screen-listen .btn-row .btn { flex: 1 1 calc(50% - 8px); }
+  #screen-setup .actions { grid-template-columns: 1fr; }
+  .word-view {
+    margin: 0 0 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  #screen-words .line-en,
+  #screen-words .line-zh { margin-bottom: 6px; }
+  #screen-words .syl-parts { margin: 2px 0 4px; }
+  #word-list { margin-top: 8px; }
 </style>
 </head>
 <body>
 <header class="topbar">
   <a href="schedule-3months.html">週曆說明</a>
-  <h1>生詞電子默寫</h1>
+  <h1>對話聆聽</h1>
   <a href="schedule-3months.html#sample">詞表</a>
 </header>
 <main class="app">
   <section id="screen-setup">
-    <div class="resume" id="resume-banner" hidden>
-      <span id="resume-text">有一份練習尚未完成。</span>
-      <button type="button" class="btn primary" id="btn-resume">繼續</button>
-      <button type="button" class="btn ghost" id="btn-drop">放棄這一份</button>
-    </div>
     <div class="card">
-      <p>醫學與護理英語，28 課、560 詞（醫學 16 課、護理 12 課）。生詞仍是看、抄打、遮默。每課另可聽病人問答句子，只聽不默。</p>
+      <p>醫學與護理英語對話聆聽。共 28 課、560 詞（醫學 16 課、護理 12 課），生詞只供查看。選好一課，就聽病人與護士的問答。</p>
       <blockquote class="motto">
-        <strong>起手不是默書。</strong>
-        <p>每一組先同時看英文、中文與音節拆解，再看著抄打一遍，然後才遮住英文默寫。默對的停止；默錯的才再抄，並再遮默一次。四組都完成，才做整課遮默。</p>
+        <strong>只聽對話，不必拼寫。</strong>
+        <p>一次聽一段問答。點英文或中文聽那一句，「聽整段」會先讀病人、再讀護士。英文一直可見，沒有輸入，也不會打開鍵盤。</p>
       </blockquote>
-      <ol class="steps" aria-label="每一組的次序">
-        <li><b>1　看</b><span>英文、中文與音節同時出現。只認得，不評分。</span></li>
-        <li><b>2　抄打 1 次</b><span>英文仍可見。抄對了才進入下一步。</span></li>
-        <li><b>3　遮默</b><span>只留中文，可點中英方框聽讀音。默出拼法。</span></li>
-        <li><b>4　錯了才再練</b><span>看正確拼法，再抄 2 次，並再遮默一次。</span></li>
+      <ol class="steps" aria-label="怎麼練習">
+        <li><b>1　選課</b><span>選一課，直接進入問答。</span></li>
+        <li><b>2　聽一句</b><span>點英文或中文，聽那一行。</span></li>
+        <li><b>3　聽整段</b><span>先聽病人，稍停，再聽護士。</span></li>
+        <li><b>4　看生詞</b><span>需要時查看英文、音節與中文。</span></li>
       </ol>
     </div>
 
     <div class="card">
-      <h2>選擇範圍</h2>
+      <h2>選擇課次</h2>
       <div class="row">
         <label>課<select id="lesson-select"></select></label>
       </div>
-      <div class="group-box" id="group-box" role="radiogroup" aria-label="選擇組別"></div>
-      <div class="chips" id="chips"></div>
-      <p class="suggest" id="suggest"></p>
-      <p class="note" id="quiz-line"></p>
+      <p class="note" id="lesson-meta"></p>
     </div>
 
     <div class="card">
       <h2>開始</h2>
-      <div class="confirm" id="start-confirm" hidden>
-        <p id="start-confirm-text">還有一份練習未完成。開始新的會放棄那一份；已經完成的組仍會保留。</p>
-        <div class="btn-row">
-          <button type="button" class="btn warn" id="btn-start-yes">放棄並開始</button>
-          <button type="button" class="btn" id="btn-start-no">取消</button>
-        </div>
-      </div>
       <div class="actions">
-        <button type="button" class="btn primary large" id="btn-learn">學這一組</button>
-        <button type="button" class="btn large" id="btn-full">整課遮默</button>
-        <button type="button" class="btn" id="btn-nextday">隔日重默</button>
-        <button type="button" class="btn" id="btn-quiz">第 4 天小默書</button>
-        <button type="button" class="btn" id="btn-wrongs">只練錯的</button>
-        <button type="button" class="btn" id="btn-due">今日到期</button>
+        <button type="button" class="btn primary large" id="btn-listen">聽這一課的對話</button>
+        <button type="button" class="btn large" id="btn-words">看本課生詞</button>
       </div>
-      <p class="lock-note" id="lock-note"></p>
-      <div class="listen-entry">
-        <button type="button" class="btn large" id="btn-listen">聽問答</button>
-        <p class="note" id="listen-note">只聽病人與護士的問答，不抄打、不遮默，也不會打開鍵盤。</p>
-      </div>
+      <p class="note" id="listen-note">點下去就聽病人與護士的問答。一次一段，點英文或中文聽那一句。不會打開鍵盤。</p>
     </div>
 
     <div class="card">
@@ -731,28 +718,22 @@
           <label><input type="radio" name="rate" value="fast"> 稍快</label>
         </div>
         <div class="tts-row">
-          <label><input type="checkbox" id="opt-auto"> 進入「看」或「遮默」時自動朗讀英文一次</label>
-        </div>
-        <div class="tts-row">
-          <label><input type="checkbox" id="opt-sfx"> 答對時播放短音效</label>
-        </div>
-        <div class="tts-row">
           <button type="button" class="btn" id="btn-preview">試聽 ward／病房</button>
         </div>
       </div>
-      <p class="note" id="tts-voice-hint">實際聲線視這部手機已安裝的聲音而定。若沒有所選的口音或男女聲，會改用最接近的英語聲線。可在 iOS「輔助使用 → 朗讀內容 → 聲音」下載更多。</p>
-      <p class="note" id="tts-note" hidden>這部裝置未能朗讀。仍可看中文、用鍵盤抄打與遮默。</p>
+      <p class="note" id="tts-voice-hint">實際聲線視這部手機已安裝的聲音而定。若沒有所選的口音或男女聲，會改用最接近的英語聲線。可在 iOS「輔助使用 → 朗讀內容 → 聲音」下載更多。對話與生詞都用這裡的設定。</p>
+      <p class="note" id="tts-note" hidden>這部裝置未能朗讀。仍可看問答與生詞的中文和英文。</p>
     </div>
 
     <div class="card">
       <h2>本機進度</h2>
-      <p class="note">練習紀錄、錯詞、達標與複習日都存在<strong>這部機的這個瀏覽器</strong>（<code>localStorage</code>，鍵名 <code id="ls-key-label">mcl-vocab-electronic-v1</code>）。重新整理後可以續練。換一部機或換一個瀏覽器不會帶走。</p>
+      <p class="note">朗讀設定與目前課次存在<strong>這部機的這個瀏覽器</strong>（<code>localStorage</code>，鍵名 <code id="ls-key-label">mcl-vocab-electronic-v1</code>）。不會上傳。換一部機或換一個瀏覽器不會帶走。以前留下的紀錄仍在原處，這一頁不再用來拼寫。</p>
       <p class="note" id="save-error" hidden>無法寫入本機儲存。請檢查瀏覽器是否封鎖了本機資料。</p>
       <p id="clear-box">
         <button type="button" class="btn warn" id="btn-clear">清除本機進度</button>
       </p>
       <div class="confirm" id="clear-confirm" hidden>
-        <p>確定清除這部機上的練習紀錄、錯詞、達標與複習日？自訂題庫與朗讀設定會保留。此動作不能復原。</p>
+        <p>確定清除這部機上這份工具留下的紀錄？自訂題庫與朗讀設定會保留。此動作不能復原。</p>
         <div class="btn-row">
           <button type="button" class="btn warn" id="btn-clear-yes">確定清除</button>
           <button type="button" class="btn" id="btn-clear-no">取消</button>
@@ -761,11 +742,6 @@
     </div>
 
     <div class="card">
-      <details id="parent-view">
-        <summary>家長查看：詞彙、錯詞與複習日</summary>
-        <p class="note">這裡給家長核對。開始遮默之後，練習畫面只留中文。</p>
-        <div id="parent-table"></div>
-      </details>
       <details id="manager">
         <summary>管理題目（匯出／匯入下一課）</summary>
         <p class="note">每 5 個詞為一組。匯出的是題庫，不含練習進度。進度仍只留在這部機。</p>
@@ -788,78 +764,14 @@
     </div>
   </section>
 
-  <section id="screen-practice" hidden>
-    <div class="card practice-card">
-      <div class="practice-scroll">
-      <div class="progress-bar">
-        <span id="prog-text">第 1 詞</span>
-        <span id="prog-score"></span>
-      </div>
-      <div class="track" aria-hidden="true"><div id="bar-fill"></div></div>
-      <ol class="pips" id="pips" aria-label="本詞步驟">
-        <li id="pip-look">看</li>
-        <li id="pip-copy">抄打</li>
-        <li id="pip-mask">遮默</li>
-      </ol>
-      <p class="kicker" id="phase-kicker"></p>
-      <div class="cue-grid">
-        <div class="cue-col">
-          <span class="kicker">中文</span>
-          <button type="button" class="cue-zh" id="cue-zh"></button>
-        </div>
-        <div class="cue-col">
-          <span class="kicker">英文</span>
-          <button type="button" class="en-box" id="cue-en"></button>
-        </div>
-        <div class="syl-box" id="cue-syl" hidden></div>
-      </div>
-      <p class="purpose" id="cue-purpose"></p>
-      <div id="look-area">
-        <div class="btn-row">
-          <button type="button" class="btn primary large" id="btn-look">認得了，去抄打</button>
-        </div>
-      </div>
-      </div>
-      <div id="type-area">
-        <div class="answer-display" id="answer-display" tabindex="0" role="textbox" aria-label="拼出的英文"></div>
-        <form id="answer-form" action="#" novalidate>
-          <input type="text" class="answer-display" id="answer-input" inputmode="text" enterkeyhint="go" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false" lang="en" aria-label="拼出的英文" maxlength="48" hidden>
-        </form>
-        <p class="hint-line" id="hint-line"></p>
-        <div class="feedback" id="feedback" role="status" aria-live="polite"></div>
-      </div>
-      <div class="practice-spacer" aria-hidden="true"></div>
-      <div class="practice-dock">
-        <div class="osk" id="osk" aria-label="英文鍵盤">
-          <div class="osk-row" id="osk-0"></div>
-          <div class="osk-row" id="osk-1"></div>
-          <div class="osk-row" id="osk-2"></div>
-          <div class="osk-row" id="osk-3"></div>
-        </div>
-        <div class="btn-row">
-          <button type="button" class="btn primary" id="btn-check">檢查</button>
-          <button type="button" class="btn primary" id="btn-next" hidden>繼續</button>
-          <button type="button" class="btn ghost" id="btn-quit">暫停並保留</button>
-        </div>
-      </div>
-      <p class="note" id="practice-kb-note">可用螢幕鍵盤或實體鍵盤。Enter 檢查。抄打時英文保持可見；遮默時只留中文。可點中文或英文方框聽讀音。</p>
-    </div>
-  </section>
-
-  <section id="screen-end" hidden>
+  <section id="screen-words" hidden>
     <div class="card">
-      <div class="end-score">
-        <div class="big" id="end-score">0／0</div>
-        <p id="end-msg"></p>
-        <p class="note" id="end-next"></p>
-      </div>
-      <h2>這一輪的詞</h2>
-      <ul class="end-list" id="end-list"></ul>
+      <h2 id="words-title"></h2>
+      <p class="note">本課生詞供查看。點英文聽英文，點中文聽中文，點音節聽該段讀音。沒有輸入，也不會打開鍵盤。</p>
+      <div id="word-list"></div>
       <div class="btn-row">
-        <button type="button" class="btn primary" id="btn-retry" hidden>再練錯題</button>
-        <button type="button" class="btn" id="btn-next-group" hidden>學下一組</button>
-        <button type="button" class="btn" id="btn-go-full" hidden>做整課遮默</button>
-        <button type="button" class="btn ghost" id="btn-home">返回</button>
+        <button type="button" class="btn primary" id="btn-words-listen">回去聽對話</button>
+        <button type="button" class="btn ghost" id="btn-words-back">返回選課</button>
       </div>
     </div>
   </section>
@@ -883,11 +795,12 @@
       </div>
       <div class="btn-row">
         <button type="button" class="btn primary" id="btn-listen-all">聽整段</button>
+        <button type="button" class="btn" id="btn-listen-words">看生詞</button>
         <button type="button" class="btn" id="btn-listen-prev">上一段</button>
         <button type="button" class="btn" id="btn-listen-next">下一段</button>
         <button type="button" class="btn ghost" id="btn-listen-back">返回選課</button>
       </div>
-      <p class="note">點英文聽英文，點中文聽中文。沒有抄打，也沒有遮默。</p>
+      <p class="note">點英文聽英文，點中文聽中文。一次只顯示一段，英文一直可見。口音、聲線和速度在選課頁設定。</p>
     </div>
   </section>
   <pre id="autotest-result" hidden></pre>
@@ -898,10 +811,9 @@
   "use strict";
 
   /*
-   * 學習次序（不可改回「每個詞先練寫 2 次再默」）：
-   * 看（不評分）→ 抄打 1 次（英文可見，對了才前進）→ 遮默。
-   * 只有默錯才再抄 2 次並再遮默一次。四組完成後才整課遮默。
-   * 間隔：答對且到期才 1 天 → 3 天 → 7 天；三次都對為精熟，其後約 2 週，再 4–6 週。
+   * 主練習是聽病人與護士問答：選課後進入只聽畫面。
+   * 生詞只供查看（英文、音節、中文），不抄打、不遮住、不檢查拼寫。
+   * 舊的組別完成與錯詞資料可留在 localStorage，鍵名不變，這一頁不再用來拼寫。
    */
   var LS_KEY = "mcl-vocab-electronic-v1";
   var GROUP_IDS = ["A", "B", "C", "D", "E", "F", "G", "H"];
@@ -2988,7 +2900,7 @@
   }
 
   function showScreen(name) {
-    ["setup", "practice", "end", "listen"].forEach(function (id) {
+    ["setup", "practice", "end", "listen", "words"].forEach(function (id) {
       var el = document.getElementById("screen-" + id);
       if (el) el.hidden = id !== name;
     });
@@ -3035,14 +2947,87 @@
     document.getElementById("btn-listen-next").disabled = listenIndex >= items.length - 1;
   }
 
-  function openListen() {
+  function leaveTypingFocus() {
+    blurAnswer();
+    var el = document.activeElement;
+    if (!el || el === document.body || !el.blur) return;
+    var tag = el.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") el.blur();
+  }
+
+  function openListen(opts) {
     var items = currentDialogues();
     if (!items.length) return;
     stopListen();
-    listenIndex = 0;
-    blurAnswer();
+    if (!opts || !opts.keep) listenIndex = 0;
+    if (listenIndex < 0 || listenIndex >= items.length) listenIndex = 0;
+    leaveTypingFocus();
     showScreen("listen");
     renderListen();
+  }
+
+  function renderWords() {
+    var lesson = currentLesson();
+    var host = document.getElementById("word-list");
+    var title = document.getElementById("words-title");
+    if (title) title.textContent = lesson ? lesson.title : "";
+    var backListen = document.getElementById("btn-words-listen");
+    if (backListen) backListen.disabled = !currentDialogues().length;
+    if (!host) return;
+    host.innerHTML = "";
+    if (!lesson) return;
+    groupsOf(lesson).forEach(function (g) {
+      var heading = document.createElement("h3");
+      heading.textContent = g.id + " 組";
+      host.appendChild(heading);
+      g.words.forEach(function (w) {
+        var row = document.createElement("div");
+        row.className = "word-view";
+        row.setAttribute("data-en", w.en);
+        var en = document.createElement("button");
+        en.type = "button";
+        en.className = "line-en";
+        en.lang = "en";
+        en.textContent = w.en;
+        en.setAttribute("aria-label", "聽英文");
+        bindSpeakKeepFocus(en, function () { speak(w.en, "en"); });
+        var parts = syllableParts(w);
+        var sylRow = document.createElement("div");
+        sylRow.className = "syl-parts";
+        parts.forEach(function (part, i) {
+          var chip = document.createElement("button");
+          chip.type = "button";
+          chip.className = "syl-chip c" + (i % 5);
+          chip.lang = "en";
+          chip.textContent = part;
+          chip.setAttribute("aria-label", "朗讀音節 " + part);
+          bindSpeakKeepFocus(chip, function () { speak(part, "en"); });
+          sylRow.appendChild(chip);
+        });
+        var cap = document.createElement("p");
+        cap.className = "syl-cap";
+        cap.textContent = syllableLabel(parts);
+        var zh = document.createElement("button");
+        zh.type = "button";
+        zh.className = "line-zh";
+        zh.lang = "zh-Hant";
+        zh.textContent = w.zh;
+        zh.setAttribute("aria-label", "聽中文");
+        bindSpeakKeepFocus(zh, function () { speak(w.zh, "zh"); });
+        row.appendChild(en);
+        row.appendChild(sylRow);
+        row.appendChild(cap);
+        row.appendChild(zh);
+        host.appendChild(row);
+      });
+    });
+  }
+
+  function openWords() {
+    stopListen();
+    leaveTypingFocus();
+    renderWords();
+    showScreen("words");
   }
 
   function playListenLine(text, kind) {
@@ -3086,9 +3071,7 @@
   function renderSetup() {
     ensureSelection();
     var lesson = currentLesson();
-    var gs = groupsOf(lesson);
     var sel = document.getElementById("lesson-select");
-    var prev = sel.value;
     sel.innerHTML = "";
     allLessons().forEach(function (l) {
       var opt = document.createElement("option");
@@ -3097,75 +3080,14 @@
       if (l.id === lesson.id) opt.selected = true;
       sel.appendChild(opt);
     });
-    if (prev && prev !== lesson.id) sel.value = lesson.id;
 
-    var box = document.getElementById("group-box");
-    box.innerHTML = "";
-    gs.forEach(function (g) {
-      var label = document.createElement("label");
-      var input = document.createElement("input");
-      input.type = "radio";
-      input.name = "group";
-      input.value = g.id;
-      if (g.id === state.settings.group) input.checked = true;
-      var text = document.createElement("span");
-      text.textContent = g.id + " 組 · " + g.words.length + " 詞";
-      label.appendChild(input);
-      label.appendChild(text);
-      box.appendChild(label);
-    });
-
-    var chips = document.getElementById("chips");
-    chips.innerHTML = "";
-    gs.forEach(function (g) {
-      var chip = document.createElement("span");
-      chip.className = "chip" + (groupDone(lesson, g.id) ? " done" : "");
-      var rec = progressOf(lesson.id) && progressOf(lesson.id).groups[g.id];
-      chip.textContent = groupDone(lesson, g.id)
-        ? (g.id + " 組完成 · 第一次遮默 " + (rec.firstMaskCorrect || 0) + "／" + rec.firstMaskTotal)
-        : (g.id + " 組未完成");
-      chips.appendChild(chip);
-    });
-
-    var p = progressOf(lesson.id);
-    refreshSuggestion(lesson);
-    document.getElementById("suggest").textContent = p ? ensureProgress(lesson.id).nextSuggestedNote : computeSuggestNote(lesson);
-    var quizLine = document.getElementById("quiz-line");
-    if (p && p.quiz && p.quiz.bankSig === wordSig(lesson.words)) {
-      quizLine.textContent = "最近一次小默書：" + p.quiz.score + "／" + p.quiz.total +
-        (p.quiz.passed ? "，已達標。" : "，未達標。只補錯詞，暫不開下一課。");
-    } else if (lesson.words.length) {
-      quizLine.textContent = "小默書達標約 " + passMark(lesson.words.length) + "／" + lesson.words.length + "。未達標則只補錯詞。";
-    } else quizLine.textContent = "";
-
-    document.getElementById("btn-learn").textContent = "學 " + state.settings.group + " 組（看 → 抄打 → 遮默）";
-    document.getElementById("btn-learn").disabled = !gs.some(function (g) { return g.id === state.settings.group; });
-    var wrongN = wrongItems(lesson).length;
-    var dueN = dueItems(lesson).length;
-    document.getElementById("btn-wrongs").textContent = "只練錯的" + (wrongN ? "（" + wrongN + "）" : "");
-    document.getElementById("btn-due").textContent = "今日到期" + (dueN ? "（" + dueN + "）" : "");
-    ["full", "nextday", "quiz", "wrongs", "due"].forEach(function (mode) {
-      var btn = document.getElementById("btn-" + mode);
-      var why = lockReason(mode, lesson);
-      btn.disabled = !!why;
-      btn.title = why;
-    });
-    var notes = [];
-    ["full", "nextday", "quiz"].forEach(function (mode) {
-      var why = lockReason(mode, lesson);
-      if (why && notes.indexOf(why) < 0) notes.push(why);
-    });
-    document.getElementById("lock-note").textContent = notes.join(" ");
-
-    var banner = document.getElementById("resume-banner");
-    if (state.active) {
-      banner.hidden = false;
-      var a = state.active;
-      document.getElementById("resume-text").textContent =
-        "有一份練習尚未完成：" + (MODE_LABEL[a.mode] || "練習") +
-        (a.groupId ? " · " + a.groupId + " 組" : "") +
-        " · 第 " + (a.index + 1) + "／" + a.items.length + " 詞。";
-    } else banner.hidden = true;
+    var meta = document.getElementById("lesson-meta");
+    var dialogueCount = (lesson.dialogues && lesson.dialogues.length) || 0;
+    if (meta) {
+      meta.textContent = dialogueCount
+        ? ("本課 " + lesson.words.length + " 個生詞、" + dialogueCount + " 段病人問答。選了這一課就開始聽；生詞只供查看。")
+        : "這一課沒有問答，仍可查看生詞。";
+    }
 
     document.querySelectorAll('input[name="accent"]').forEach(function (el) {
       el.checked = el.value === state.settings.accent;
@@ -3176,21 +3098,22 @@
     document.querySelectorAll('input[name="rate"]').forEach(function (el) {
       el.checked = el.value === state.settings.rate;
     });
-    document.getElementById("opt-auto").checked = !!state.settings.autoSpeak;
-    document.getElementById("opt-sfx").checked = state.settings.sfx !== false;
-    document.getElementById("ls-key-label").textContent = LS_KEY;
+    var lsLabel = document.getElementById("ls-key-label");
+    if (lsLabel) lsLabel.textContent = LS_KEY;
     var listenBtn = document.getElementById("btn-listen");
     var listenNote = document.getElementById("listen-note");
-    var hasDialogue = !!(lesson.dialogues && lesson.dialogues.length);
+    var wordsBtn = document.getElementById("btn-words");
+    var hasDialogue = dialogueCount > 0;
     if (listenBtn) listenBtn.disabled = !hasDialogue;
+    if (wordsBtn) wordsBtn.disabled = !(lesson.words && lesson.words.length);
     if (listenNote) {
       listenNote.textContent = hasDialogue
-        ? "只聽病人與護士的問答，不抄打、不遮默，也不會打開鍵盤。"
+        ? "點下去就聽病人與護士的問答。一次一段，點英文或中文聽那一句。不會打開鍵盤。"
         : "這一課沒有問答。";
     }
 
-    if (document.getElementById("parent-view").open) renderParent();
-    if (document.getElementById("manager").open) renderEditor();
+    var manager = document.getElementById("manager");
+    if (manager && manager.open) renderEditor();
     save();
   }
 
@@ -3247,8 +3170,10 @@
     if (accent) state.settings.accent = accent.value;
     if (voice && (voice.value === "male" || voice.value === "female")) state.settings.voice = voice.value;
     if (rate) state.settings.rate = rate.value;
-    state.settings.autoSpeak = document.getElementById("opt-auto").checked;
-    state.settings.sfx = document.getElementById("opt-sfx").checked;
+    var autoEl = document.getElementById("opt-auto");
+    var sfxEl = document.getElementById("opt-sfx");
+    if (autoEl) state.settings.autoSpeak = !!autoEl.checked;
+    if (sfxEl) state.settings.sfx = sfxEl.checked;
   }
 
   function startSession(mode, opts) {
@@ -4218,6 +4143,7 @@
   }
 
   function buildKeyboard() {
+    if (!document.getElementById("osk-0")) return;
     var rows = [
       ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
       ["a", "s", "d", "f", "g", "h", "j", "k", "l", "'"],
@@ -4263,18 +4189,20 @@
     document.getElementById("lesson-select").addEventListener("change", function (e) {
       state.settings.lessonId = e.target.value;
       editorLessonId = e.target.value;
+      leaveTypingFocus();
       save();
       renderSetup();
+      if (currentDialogues().length) openListen();
     });
-    document.getElementById("group-box").addEventListener("change", function (e) {
-      if (e.target && e.target.name === "group") {
-        state.settings.group = e.target.value;
-        save();
-        renderSetup();
-      }
+    document.getElementById("btn-listen").addEventListener("click", function () { openListen(); });
+    document.getElementById("btn-words").addEventListener("click", openWords);
+    document.getElementById("btn-listen-words").addEventListener("click", openWords);
+    document.getElementById("btn-words-listen").addEventListener("click", function () { openListen({ keep: true }); });
+    document.getElementById("btn-words-back").addEventListener("click", function () {
+      stopListen();
+      showScreen("setup");
+      renderSetup();
     });
-    document.getElementById("btn-learn").addEventListener("click", function () { requestStart("learn"); });
-    document.getElementById("btn-listen").addEventListener("click", openListen);
     document.getElementById("btn-listen-back").addEventListener("click", function () {
       stopListen();
       showScreen("setup");
@@ -4310,29 +4238,6 @@
       var item = currentDialogues()[listenIndex];
       if (item && item.nurse) playListenLine(item.nurse.zh, "zh");
     });
-    document.getElementById("btn-full").addEventListener("click", function () { requestStart("full"); });
-    document.getElementById("btn-nextday").addEventListener("click", function () { requestStart("nextday"); });
-    document.getElementById("btn-quiz").addEventListener("click", function () { requestStart("quiz"); });
-    document.getElementById("btn-wrongs").addEventListener("click", function () { requestStart("wrongs"); });
-    document.getElementById("btn-due").addEventListener("click", function () { requestStart("due"); });
-    document.getElementById("btn-resume").addEventListener("click", resumeActive);
-    document.getElementById("btn-drop").addEventListener("click", function () {
-      state.active = null;
-      save();
-      renderSetup();
-    });
-    document.getElementById("btn-start-yes").addEventListener("click", function () {
-      document.getElementById("start-confirm").hidden = true;
-      state.active = null;
-      var mode = pendingStart && pendingStart.mode;
-      pendingStart = null;
-      save();
-      if (mode) startSession(mode);
-    });
-    document.getElementById("btn-start-no").addEventListener("click", function () {
-      pendingStart = null;
-      document.getElementById("start-confirm").hidden = true;
-    });
     document.querySelectorAll('input[name="accent"], input[name="voice"], input[name="rate"], #opt-auto, #opt-sfx').forEach(function (el) {
       el.addEventListener("change", function () { readSettingsFromDom(); save(); });
     });
@@ -4359,9 +4264,6 @@
       document.getElementById("clear-confirm").hidden = true;
       save();
       renderSetup();
-    });
-    document.getElementById("parent-view").addEventListener("toggle", function () {
-      if (document.getElementById("parent-view").open) renderParent();
     });
     document.getElementById("manager").addEventListener("toggle", function () {
       if (document.getElementById("manager").open) renderEditor();
@@ -4449,53 +4351,6 @@
       };
       reader.readAsText(file);
     });
-    document.getElementById("btn-look").addEventListener("click", continueFromLook);
-    document.getElementById("btn-check").addEventListener("click", function () {
-      checkAnswer();
-      holdSystemKeyboard();
-    });
-    document.getElementById("btn-next").addEventListener("click", function () {
-      advance();
-      holdSystemKeyboard();
-    });
-    document.getElementById("btn-quit").addEventListener("click", quitPractice);
-    bindSpeakKeepFocus(document.getElementById("cue-zh"), function () {
-      if (session) speak(currentItem().zh, "zh");
-    });
-    bindSpeakKeepFocus(document.getElementById("cue-en"), function () {
-      if (session) speak(currentItem().en, "en");
-    });
-    document.getElementById("btn-home").addEventListener("click", function () {
-      session = null;
-      showScreen("setup");
-      renderSetup();
-    });
-    document.getElementById("btn-retry").addEventListener("click", function () {
-      if (!session) return;
-      var items = session.outcomes.filter(function (o) {
-        return o.result === "miss" || o.result === "unresolved";
-      });
-      if (!items.length) return;
-      startSession("wrongs", { items: items });
-    });
-    document.getElementById("btn-next-group").addEventListener("click", function () {
-      var gid = document.getElementById("btn-next-group").getAttribute("data-group");
-      if (!gid) return;
-      state.settings.group = gid;
-      save();
-      startSession("learn", { groupId: gid });
-    });
-    document.getElementById("btn-go-full").addEventListener("click", function () {
-      startSession("full");
-    });
-    document.getElementById("osk").addEventListener("click", function (e) {
-      var btn = e.target.closest(".key");
-      if (!btn || btn.disabled) return;
-      handleKey(btn.getAttribute("data-k"));
-    });
-    document.getElementById("answer-display").addEventListener("click", function () {
-      document.getElementById("answer-display").focus();
-    });
     var answerForm = document.getElementById("answer-form");
     var answerInput = document.getElementById("answer-input");
     function submitTypedAnswer(e) {
@@ -4582,6 +4437,11 @@
     }
     autoNext = false;
     state.settings.autoSpeak = false;
+    assert(document.title.indexOf("對話聆聽") >= 0, "頁面標題是對話聆聽");
+    assert(document.querySelector(".topbar h1").textContent === "對話聆聽", "頁首是對話聆聽");
+    assert((document.querySelector('meta[name="description"]').getAttribute("content") || "").indexOf("560") >= 0, "說明仍有 560 詞");
+    assert((document.querySelector('meta[name="description"]').getAttribute("content") || "").indexOf("默寫") < 0, "說明不再把工具稱為默寫");
+    assert(LS_KEY === "mcl-vocab-electronic-v1", "LS_KEY 仍是 mcl-vocab-electronic-v1");
     state.settings.sfx = false;
     todayOverride = "2026-11-07";
     assert(passMark(20) === 16, "20 詞達標線是 16");
@@ -4633,13 +4493,18 @@
     state.settings.lessonId = "lesson-01";
     renderSetup();
     assert(!document.getElementById("btn-listen").disabled, "有問答就可以聽");
-    assert(document.getElementById("btn-learn").textContent.indexOf("抄打") >= 0, "學詞按鈕仍是看抄打遮默");
-    assert(document.getElementById("btn-listen").textContent === "聽問答", "聽問答按鈕獨立");
+    assert(document.getElementById("btn-listen").textContent.indexOf("聽") >= 0 && document.getElementById("btn-listen").textContent.indexOf("對話") >= 0, "主按鈕是聽對話");
+    assert(!document.getElementById("btn-learn") && !document.getElementById("btn-full") && !document.getElementById("btn-quiz"), "選課頁沒有抄打、遮默或小默書按鈕");
+    assert(!document.getElementById("screen-practice") && !document.getElementById("osk") && !document.getElementById("answer-input") && !document.getElementById("btn-check"), "沒有拼寫畫面、鍵盤、輸入框或檢查");
+    var setupText = document.getElementById("screen-setup").textContent;
+    assert(setupText.indexOf("抄打") < 0 && setupText.indexOf("遮默") < 0, "選課頁不要求抄打或遮默");
+    var buttonText = [];
+    document.querySelectorAll("main button").forEach(function (b) { buttonText.push(b.textContent); });
+    assert(buttonText.join("\n").indexOf("抄打") < 0 && buttonText.join("\n").indexOf("遮默") < 0 && buttonText.join("\n").indexOf("檢查") < 0, "可見按鈕沒有抄打、遮默或檢查");
     document.getElementById("btn-listen").click();
-    assert(!session, "聽問答不建立練習");
+    assert(!session, "聽對話不建立拼寫練習");
     assert(document.body.getAttribute("data-screen") === "listen", "進入只聽畫面");
-    assert(document.getElementById("screen-practice").hidden, "沒有進入抄打");
-    assert(document.activeElement !== document.getElementById("answer-input"), "沒有聚焦默寫框");
+    assert(document.activeElement === document.body || !document.activeElement || (document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA"), "聽對話沒有聚焦輸入框");
     assert(!document.querySelector("#screen-listen input, #screen-listen textarea"), "聽問答沒有輸入欄");
     assert(!document.querySelector("#screen-listen #btn-check"), "聽問答沒有檢查");
     assert(document.getElementById("listen-scene").textContent.length > 0, "有中文情境");
@@ -4692,10 +4557,48 @@
     assert(document.getElementById("listen-p-en").textContent.indexOf("visitor") >= 0, "第二段是探訪");
     document.getElementById("btn-listen-prev").click();
     assert(document.getElementById("listen-prog").textContent.indexOf("1") >= 0, "可以回到上一段");
+    document.getElementById("btn-listen-words").click();
+    assert(document.body.getAttribute("data-screen") === "words", "問答頁可以查看生詞");
+    assert(!session, "看生詞不建立拼寫練習");
+    assert(!document.querySelector("#screen-words input, #screen-words textarea"), "生詞頁沒有輸入欄");
+    var wardRow = document.querySelector('#word-list [data-en="ward"]');
+    var bedRow = document.querySelector('#word-list [data-en="bedside"]');
+    assert(!!wardRow && wardRow.textContent.indexOf("ward") >= 0 && wardRow.textContent.indexOf("病房") >= 0, "生詞同時有英文與中文");
+    var bedChips = bedRow ? bedRow.querySelectorAll(".syl-chip") : [];
+    assert(bedChips.length === 2 && bedChips[0].textContent === "bed" && bedChips[1].textContent === "side", "bedside 仍顯示音節 bed、side");
+    assert(wardRow.querySelector(".line-en").className.indexOf("masked") < 0, "生詞英文不遮住");
+    heard = [];
+    prevSpeak = speak;
+    speak = function (text, kind) { heard.push(kind + ":" + text); };
+    try {
+      wardRow.querySelector(".line-en").click();
+      wardRow.querySelector(".line-zh").click();
+    } finally {
+      speak = prevSpeak;
+    }
+    assert(heard.length === 2 && heard[0].indexOf("en:ward") === 0 && heard[1].indexOf("zh:病房") === 0, "點生詞會朗讀，不必拼寫");
+    assert(document.activeElement === document.body || !document.activeElement || document.activeElement.tagName !== "INPUT", "看生詞沒有打開鍵盤");
+    document.getElementById("btn-words-listen").click();
+    assert(document.body.getAttribute("data-screen") === "listen", "看完生詞可以回去聽");
+    assert(document.getElementById("listen-prog").textContent.indexOf("1") >= 0, "回去時仍是原來那一段");
     document.getElementById("btn-listen-back").click();
     assert(document.body.getAttribute("data-screen") === "setup", "返回選課");
     assert(document.getElementById("screen-listen").hidden, "問答畫面已關閉");
-    assert(!session, "返回後仍然沒有練習");
+    assert(!session, "返回後仍然沒有拼寫練習");
+    document.getElementById("btn-words").click();
+    assert(document.body.getAttribute("data-screen") === "words", "選課頁也可以查看生詞");
+    assert(document.querySelectorAll("#word-list .word-view").length === 20, "一課生詞 20 個都可查看");
+    document.getElementById("btn-words-back").click();
+    assert(document.body.getAttribute("data-screen") === "setup", "生詞頁可以返回選課");
+    var sel = document.getElementById("lesson-select");
+    sel.value = "lesson-02";
+    sel.dispatchEvent(new Event("change", { bubbles: true }));
+    assert(state.settings.lessonId === "lesson-02", "選課會記住課次");
+    assert(document.body.getAttribute("data-screen") === "listen", "選了有問答的課就進入對話");
+    assert(document.getElementById("listen-p-en").textContent.indexOf("fever") >= 0, "進入該課第一段問答");
+    assert(!session, "選課進入對話時沒有拼寫練習");
+    assert(document.activeElement === document.body || !document.activeElement || (document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA"), "選課後沒有聚焦輸入框");
+    document.getElementById("btn-listen-back").click();
     state.progress["lesson-01"] = {
       groups: { A: { completedAt: "2000-01-01T00:00:00.000Z", completedOn: "2000-01-01", wordCount: 5, firstMaskCorrect: 5, firstMaskTotal: 5 } },
       quiz: { score: 20, total: 20, passed: true, threshold: 16, date: "2000-01-01" },
@@ -4713,293 +4616,18 @@
     state.progress["lesson-01"].fullMask.bankSig = "stale-bank";
     assert(!groupDone(lessonById("lesson-01"), "A"), "舊詞庫簽名不算完成");
     assert(!fullDone(lessonById("lesson-01")), "舊整課簽名不算完成");
-    renderSetup();
-    assert(document.getElementById("quiz-line").textContent.indexOf("最近一次") < 0, "舊小默書不顯示");
-    assert(document.getElementById("btn-full").disabled, "舊簽名不能開整課遮默");
     state.words["lesson-01|cash"] = { stage: "d1", nextReview: "2000-01-02", lastPractice: "2000-01-01", inWrongBook: true, streak: 1 };
-    state.progress = {};
-    startSession("learn", { groupId: "A" });
-    assert(session.items.length === 5, "A 組是 5 詞，沒有把每個詞拆成兩次");
-    assert(session.phase === "look", "起手是看，不是遮默");
-    assert(document.getElementById("osk").hidden, "看的時候不做默寫鍵盤");
-    assert(!document.getElementById("cue-syl").hidden, "看的時候顯示音節");
-    assert(document.getElementById("cue-syl").textContent.indexOf("ward") >= 0, "ward 的音節可見");
-    var wardChip = document.querySelector("#cue-syl button.syl-chip");
-    assert(wardChip && wardChip.textContent.indexOf("ward") >= 0, "可見音節是可點的按鈕");
-    var cueZh = document.getElementById("cue-zh");
-    var cueEn = document.getElementById("cue-en");
-    assert(cueZh && cueZh.tagName === "BUTTON" && cueZh.getAttribute("type") === "button", "中文格是按鈕");
-    assert(cueEn && cueEn.tagName === "BUTTON" && cueEn.getAttribute("type") === "button", "英文格是按鈕");
-    assert(cueZh.getAttribute("aria-label") === "聽中文", "中文格標成聽中文");
-    assert(cueEn.getAttribute("aria-label") === "聽英文", "可見時英文格標成聽英文");
-    assert(!document.getElementById("btn-speak-zh") && !document.getElementById("btn-speak-en") && !document.querySelector(".speak-row"), "已沒有獨立聽讀鈕");
-    assert(lockReason("full", currentLesson()).length > 0, "未完成四組時不能整課遮默");
-    continueFromLook();
-    assert(session.phase === "copy" && session.copyNeed === 1, "新詞只抄打 1 次");
-    assert(document.getElementById("cue-en").textContent === "ward", "抄打時英文可見");
-    assert(!document.getElementById("osk").hidden, "桌面抄打顯示自訂鍵盤");
-    assert(document.body.getAttribute("data-kb") === "osk", "桌面自動測試走自訂鍵盤");
-    kbModeOverride = "system";
-    applyKeyboardMode();
-    renderPractice();
-    assert(document.body.getAttribute("data-kb") === "system", "可強制系統鍵盤模式");
-    assert(document.getElementById("osk").hidden, "系統鍵盤模式隱藏自訂鍵盤");
-    assert(window.getComputedStyle(document.getElementById("osk")).display === "none", "系統鍵盤模式不顯示自訂鍵盤");
-    assert(!document.getElementById("btn-check").hidden, "系統鍵盤模式顯示檢查鈕");
-    var sysInput = document.getElementById("answer-input");
-    assert(sysInput && !sysInput.hidden && sysInput.getAttribute("enterkeyhint") === "go", "系統鍵盤用前往鍵，避免完成鍵收起鍵盤");
-    assert(document.getElementById("hint-line").textContent.indexOf("前往") >= 0, "系統鍵盤提示改按前往");
-    sysInput.focus();
-    assert(document.activeElement === sysInput, "抄打時系統鍵盤輸入框可取得焦點");
-    var cueDown = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
-    document.getElementById("cue-zh").dispatchEvent(cueDown);
-    assert(cueDown.defaultPrevented && document.activeElement === sysInput, "點中文方框不會搶走系統鍵盤焦點");
-    var cuePtr = new PointerEvent("pointerdown", { bubbles: true, cancelable: true });
-    document.getElementById("cue-en").dispatchEvent(cuePtr);
-    assert(cuePtr.defaultPrevented && document.activeElement === sysInput, "點英文方框不會搶走系統鍵盤焦點");
-    var chip = document.querySelector("#cue-syl button.syl-chip");
-    assert(!!chip, "抄打時音節按鈕還在");
-    var chipDown = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
-    chip.dispatchEvent(chipDown);
-    assert(chipDown.defaultPrevented && document.activeElement === sysInput, "點音節不會搶走系統鍵盤焦點");
-    var speaks = 0;
-    var prevSpeak = speak;
-    speak = function () { speaks += 1; };
-    try {
-      document.getElementById("cue-zh").click();
-      chip.click();
-    } finally {
-      speak = prevSpeak;
-    }
-    assert(speaks === 2, "點中文方框與音節仍各朗讀一次");
-    var checkDown = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
-    document.getElementById("btn-check").dispatchEvent(checkDown);
-    assert(!checkDown.defaultPrevented, "檢查鈕不攔截點擊，改在同一個動作裡還原焦點");
-    var quitDown = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
-    document.getElementById("btn-quit").dispatchEvent(quitDown);
-    assert(!quitDown.defaultPrevented, "暫停並保留仍可取走焦點以收起鍵盤");
-    sysInput.blur();
-    var idleDown = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
-    document.getElementById("cue-zh").dispatchEvent(idleDown);
-    assert(!idleDown.defaultPrevented, "輸入框沒有焦點時，點中文方框不攔截");
-
-    session.answer = "";
-    sysInput.value = "";
-    sysInput.readOnly = true;
-    sysInput.blur();
-    document.getElementById("answer-form").dispatchEvent(new Event("submit", { bubbles: true, cancelable: true }));
-    assert(session.phase === "copy" && !session.locked, "空白答案仍留在抄打");
-    assert(!sysInput.readOnly && document.activeElement === sysInput, "送出後若還要打字，輸入框保持焦點且不是唯讀");
-
-    session.answer = "cas";
-    sysInput.value = "cas";
-    sysInput.readOnly = true;
-    sysInput.blur();
-    document.getElementById("btn-check").click();
-    assert(session.phase === "copy" && !session.locked, "系統鍵盤抄錯仍留在抄打");
-    assert(!sysInput.readOnly && document.activeElement === sysInput, "抄錯後輸入框仍是焦點且不是唯讀");
-
-    session.copyNeed = 2;
-    session.copyDone = 0;
-    session.answer = "ward";
-    sysInput.value = "ward";
-    sysInput.readOnly = true;
-    sysInput.blur();
-    var againKey = new KeyboardEvent("keydown", { key: "Enter", bubbles: true, cancelable: true });
-    sysInput.dispatchEvent(againKey);
-    assert(againKey.defaultPrevented, "返回鍵會送出答案而不換行");
-    assert(session.phase === "copy" && session.copyDone === 1 && !session.locked, "系統鍵盤再抄一次仍留在抄打");
-    assert(!sysInput.readOnly && document.activeElement === sysInput, "再抄一次後輸入框仍可輸入且是焦點");
-    sysInput.dispatchEvent(new KeyboardEvent("keyup", { key: "Enter", bubbles: true }));
-
-    autoNext = true;
-    session.copyNeed = 1;
-    session.copyDone = 0;
-    session.locked = false;
-    session.pendingPhase = null;
-    session.answer = "ward";
-    sysInput.value = "ward";
-    sysInput.readOnly = true;
-    sysInput.focus();
-    var blurCalls = 0;
-    var origBlur = sysInput.blur.bind(sysInput);
-    sysInput.blur = function () {
-      blurCalls += 1;
-      return origBlur();
-    };
-    try {
-      checkAnswer();
-      assert(session.locked && session.pendingPhase === "mask" && !!session.timer, "抄對後會自動前往遮默");
-      assert(blurCalls === 0, "自動前往遮默前不讓輸入框失焦");
-      assert(!sysInput.readOnly && document.activeElement === sysInput, "自動前往遮默前輸入框不是唯讀且仍是焦點");
-    } finally {
-      sysInput.blur = origBlur;
-      if (session && session.timer) {
-        clearTimeout(session.timer);
-        session.timer = null;
-      }
-      autoNext = false;
-    }
-
-    sysInput.focus();
-    enterPhase("look");
-    assert(session.phase === "look" && document.getElementById("type-area").hidden, "看的階段隱藏輸入區");
-    assert(document.activeElement !== sysInput, "看的階段收起系統鍵盤");
-    document.getElementById("btn-look").click();
-    assert(session.phase === "copy" && session.copyNeed === 1 && !session.locked, "認得了之後回到抄打");
-    assert(!sysInput.readOnly && document.activeElement === sysInput, "去抄打時在同一個動作裡聚焦系統鍵盤");
-    session.answer = "";
-    sysInput.value = "";
-    clearFeedback();
-
-    kbModeOverride = "";
-    applyKeyboardMode();
-    renderPractice();
-    assert(document.body.getAttribute("data-kb") === "osk" && !document.getElementById("osk").hidden, "還原後抄打仍用自訂鍵盤");
-    assert(document.getElementById("cue-en").textContent === "ward", "切換鍵盤模式不改可見英文");
-    var deskDown = new MouseEvent("mousedown", { bubbles: true, cancelable: true });
-    document.getElementById("cue-zh").dispatchEvent(deskDown);
-    assert(!deskDown.defaultPrevented, "自訂鍵盤模式點中文方框不攔截");
-    session.answer = "cas";
-    checkAnswer();
-    assert(session.phase === "copy" && !session.locked, "抄錯仍留在抄打，不進入遮默");
-    session.answer = "ward";
-    checkAnswer();
-    assert(session.pendingPhase === "mask", "抄對了才前往遮默");
-    assert(session.firstCorrect === 0, "抄打不計入遮默分數");
-    advance();
-    assert(session.phase === "mask", "進入遮默");
-    assert(document.getElementById("cue-en").textContent.indexOf("ward") < 0, "遮默不顯示英文");
-    assert(document.getElementById("cue-en").classList.contains("masked"), "英文格標成已遮住");
-    assert(document.getElementById("cue-en").tagName === "BUTTON", "遮默時英文格仍是按鈕");
-    assert(document.getElementById("cue-en").getAttribute("aria-label") === "聽英文（已遮住）", "遮住時朗讀標籤不含拼法");
-    assert(document.getElementById("cue-en").getAttribute("aria-label").indexOf("ward") < 0, "aria 不洩漏英文拼法");
-    assert((document.getElementById("cue-en").innerHTML || "").indexOf("ward") < 0, "英文格 HTML 不洩漏拼法");
-    assert(document.getElementById("cue-syl").hidden, "遮默時不顯示音節");
-    session.answer = "ward";
-    checkAnswer();
-    assert(session.pendingPhase === "next", "默對後這個詞停止");
-    var wardWord = state.words[wordKey("lesson-01", "ward")];
-    assert(wardWord && wardWord.stage === "d1" && wardWord.nextReview === "2026-11-08" && !wardWord.inWrongBook, "第一次默對：隔 1 天，不進錯詞本");
-    var early = wardWord.nextReview;
-    applySuccess({ en: "ward", zh: "病房", key: wordKey("lesson-01", "ward") }, true);
-    wardWord = state.words[wordKey("lesson-01", "ward")];
-    assert(wardWord.stage === "d1" && wardWord.nextReview === early, "未到期答對，不提前跳級");
-    advance();
-
-    assert(currentItem().en === "bedside", "第二詞是 bedside");
-    assert(document.getElementById("cue-syl").textContent.indexOf("bed") >= 0, "bedside 顯示 bed-side");
-    continueFromLook();
-    assert(!document.getElementById("cue-syl").hidden, "抄打時音節仍可見");
-    session.answer = "bedside";
-    checkAnswer();
-    advance();
-    session.answer = "appoint";
-    checkAnswer();
-    assert(session.pendingPhase === "recopy" && session.revealEn, "默錯後顯示拼法並進入再抄");
-    assert(session.copyNeed === 1 || session.pendingPhase === "recopy", "再抄尚未開始計次");
-    advance();
-    assert(session.phase === "recopy" && session.copyNeed === 2, "默錯後看著再抄 2 次");
-    session.answer = "bedside";
-    checkAnswer();
-    assert(session.phase === "recopy" && session.copyDone === 1 && !session.locked, "再抄滿 2 次才遮默");
-    session.answer = "bedside";
-    checkAnswer();
-    advance();
-    assert(session.phase === "remask", "再遮默一次");
-    assert(document.getElementById("cue-en").classList.contains("masked"), "再遮默時英文再次遮住");
-    assert(document.getElementById("cue-en").textContent.indexOf("bedside") < 0, "再遮默不顯示英文");
-    assert(document.getElementById("cue-en").getAttribute("aria-label") === "聽英文（已遮住）", "再遮默朗讀標籤不含拼法");
-    session.answer = "bedside";
-    checkAnswer();
-    assert(!state.words[wordKey("lesson-01", "bedside")].inWrongBook, "再遮默對了，不留在錯詞本");
-    advance();
-
-    continueFromLook();
-    session.answer = "visitor";
-    checkAnswer();
-    advance();
-    session.answer = "xxx";
-    checkAnswer();
-    advance();
-    session.answer = "visitor";
-    checkAnswer();
-    session.answer = "visitor";
-    checkAnswer();
-    advance();
-    session.answer = "nope";
-    checkAnswer();
-    assert(session.pendingPhase === "next", "再遮默仍錯就結束這個詞");
-    assert(state.words[wordKey("lesson-01", "visitor")].inWrongBook, "再遮默仍錯，進入錯詞本");
-    advance();
-    var used = pump();
-    assert(used < 800, "其餘詞能走完");
-    assert(document.body.getAttribute("data-screen") === "end", "一組結束有結果頁");
-    var prog = state.progress["lesson-01"];
-    assert(prog.groups.A && prog.groups.A.firstMaskCorrect === 3, "A 組第一次遮默 3／5");
-    assert(groupDone(lessonById("lesson-01"), "A"), "A 組已完成");
-    goHomeForTest();
-    assert(document.getElementById("btn-full").disabled, "只完成 A 組時整課按鈕關閉");
-
-    ["B", "C", "D"].forEach(function (gid) {
-      startSession("learn", { groupId: gid });
-      pump();
-    });
-    var lesson = lessonById("lesson-01");
-    assert(allGroupsDone(lesson), "四組都完成");
-    goHomeForTest();
-    assert(!document.getElementById("btn-full").disabled, "四組完成後可以整課遮默");
-    assert(document.getElementById("btn-nextday").disabled, "尚未整課時，隔日重默關閉");
-
-    startSession("full");
-    assert(session.phase === "mask" && session.items.length === 20, "整課遮默 20 詞，一開始就遮住");
-    assert(document.getElementById("cue-en").textContent === "", "整課不顯示英文");
-    assert(document.getElementById("cue-syl").hidden, "整課遮默不顯示音節");
-    var victim = currentItem();
-    session.answer = "zzz";
-    checkAnswer();
-    assert(state.words[victim.key].inWrongBook, "整課默錯記入錯詞本");
-    advance();
-    pump();
-    assert(fullDone(lessonById("lesson-01")), "整課紀錄已寫入");
-    assert(lockReason("nextday", lessonById("lesson-01")) === "", "隔日重默已開放");
-    assert(lockReason("quiz", lessonById("lesson-01")) === "", "小默書已開放");
-
-    startSession("quiz");
-    pump();
-    var quiz = state.progress["lesson-01"].quiz;
-    assert(quiz && quiz.passed && quiz.score === 20 && quiz.threshold === 16, "全對的小默書達標，門檻 16");
-
-    todayOverride = "2026-11-08";
-    applySuccess({ en: "ward", zh: "病房", key: wordKey("lesson-01", "ward") }, true);
-    wardWord = state.words[wordKey("lesson-01", "ward")];
-    assert(wardWord.stage === "d3" && wardWord.nextReview === "2026-11-11", "隔 1 天答對後改為隔 3 天");
-    todayOverride = "2026-11-11";
-    applySuccess({ en: "ward", zh: "病房", key: wordKey("lesson-01", "ward") }, true);
-    todayOverride = "2026-11-18";
-    applySuccess({ en: "ward", zh: "病房", key: wordKey("lesson-01", "ward") }, true);
-    wardWord = state.words[wordKey("lesson-01", "ward")];
-    assert(wardWord.stage === "w2" && wardWord.streak === 3, "1→3→7 連續三次對，標為精熟");
-    todayOverride = "2026-12-02";
-    applySuccess({ en: "ward", zh: "病房", key: wordKey("lesson-01", "ward") }, true);
-    wardWord = state.words[wordKey("lesson-01", "ward")];
-    assert(wardWord.stage === "w6" && wardWord.nextReview === addDays("2026-12-02", 35), "精熟後再隔約 4–6 週");
-    todayOverride = wardWord.nextReview;
-    applyFail({ en: "ward", zh: "病房", key: wordKey("lesson-01", "ward") });
-    wardWord = state.words[wordKey("lesson-01", "ward")];
-    assert(wardWord.stage === "d1" && wardWord.inWrongBook && wardWord.streak === 0, "抽測又錯，回到隔 1 天並進錯詞本");
-
     save();
     var raw = localStorage.getItem(LS_KEY);
     var parsed = JSON.parse(raw);
+    assert(LS_KEY === "mcl-vocab-electronic-v1", "寫入的鍵名沒有改");
+    assert(localStorage.getItem("mcl-vocab-electronic-v1") === raw, "仍寫入 mcl-vocab-electronic-v1");
     assert(parsed.version === 1, "儲存版本是 1");
-    assert(parsed.progress["lesson-01"].groups.A.completedAt, "A 組完成時間在 localStorage");
-    assert(parsed.progress["lesson-01"].lastPracticeDate, "上次練習日已存");
-    assert(parsed.progress["lesson-01"].nextSuggestedDate, "下次建議複習日已存");
-    assert(parsed.words["lesson-01|ward"].inWrongBook, "抽測錯詞仍在 localStorage");
-    assert(parsed.words["lesson-01|cash"] && parsed.words["lesson-01|cash"].inWrongBook, "舊錯詞鍵仍保留，不因換詞庫而清掉");
+    assert(parsed.words["lesson-01|cash"] && parsed.words["lesson-01|cash"].inWrongBook, "舊錯詞鍵仍保留，不因改練習而清掉");
+    assert(document.getElementById("ls-key-label").textContent === "mcl-vocab-electronic-v1", "頁面顯示的鍵名不變");
     var again = load();
-    assert(again.progress["lesson-01"].groups.D.completedOn, "重新讀取後 D 組仍在");
+    assert(again.words["lesson-01|cash"].inWrongBook, "重新讀取後舊錯詞鍵仍在");
+    assert(again.settings && again.settings.lessonId === "lesson-02", "重新讀取後課次仍在");
 
     var out = document.getElementById("autotest-result");
     out.hidden = false;
@@ -5033,8 +4661,7 @@
     }
     return;
   }
-  if (state.active) resumeActive();
-  else renderSetup();
+  renderSetup();
   if (window.speechSynthesis) {
     try {
       window.speechSynthesis.getVoices();
