@@ -2,7 +2,7 @@
  * 圖上的數字＝題目的數字；答案由 js/explain.js 依圖計算，並由測試核對答案鍵。
  * 小二：type partWhole（已知總數，可多部分）/ compare（比多比少）/ seq（數列）/ shapes（圖形重複）/ choiceSeq / multi
  *       steps（數量變化：原有 → 下車 → 上車）/ twoStep（兩步應用題，第二步用 "$1" 代表第一步答案）
- * K3：count（十格框）/ match（一一配對；ask: more／less／diff／toEqual）/ numeral（讀數）/ numberLine（數線）/ shapes
+ * K3：count（十格框）/ match（一一配對；ask: more／less／diff／toEqual）/ numeral（讀數）/ numberLine（數線）/ shapes（ask:"unit" 只圈一組，不補下一個）
  * 小二第 5 週另加：gridCount（數方格）/ cutGrid（割補，突出的一格補進缺口）/ joinShapes（兩塊拼起來）
  *       fold（一條摺線，左右或上下）/ perim（沿外圈數小邊，不背公式）
  */
@@ -378,6 +378,45 @@
       parent: "「溫故：一個配一個，蘋果多出 3 個。」" }
   });
 
+  /* ================= K3 第5週：簡單重複規律 =================
+   * 顏色用單字，實物用圖。ask:"unit" 只圈一組。不排數字。 */
+  add("k3-w05", "practice", {
+    q1: { type: "shapes", items: ["綠", "紅", "綠", "紅", "綠", "紅"], group: 2, answer: "綠", expect: { q1: "綠" },
+      kid: "一組是「綠、紅」。紅後面是綠。",
+      parent: "「用手指把綠、紅圈成一組。最後是紅，下一組重新開始，所以是綠。」" },
+    q2: { type: "shapes", items: ["黃", "藍", "紅", "黃", "藍", "紅", "黃", "藍"], group: 3, answer: "紅", expect: { q2: "紅" },
+      kid: "一組是「黃、藍、紅」。藍後面是紅。",
+      parent: "「三個一組：黃、藍、紅。最後是藍，把這一組補完，下一個是紅。」" },
+    q3: { type: "shapes", ask: "unit", items: ["🐱", "🐶", "🐱", "🐶", "🐱", "🐶"], group: 2, answer: "貓、狗", expect: { q3: "貓、狗" },
+      kid: "一組是「貓、狗」，一直重複。",
+      parent: "「從頭圈兩個：貓、狗。再圈一次，還是貓、狗。不是狗先。」" },
+    q4: { type: "shapes", ask: "unit", items: ["🚗", "🚌", "🚲", "🚗", "🚌", "🚲"], group: 3, answer: "汽車、巴士、單車", expect: { q4: "汽車、巴士、單車" },
+      kid: "一組是「汽車、巴士、單車」，一直重複。",
+      parent: "「從頭圈三個：汽車、巴士、單車。再圈一次，還是這三個。少說一個就不完整。」" },
+    q5: { type: "shapes", items: ["🐟", "🐰", "🐟", "🐰", "🐟"], group: 2, answer: "兔子", expect: { q5: "兔子" },
+      kid: "一組是「魚、兔子」。魚後面是兔子。",
+      parent: "「魚、兔子是一組。最後是魚，所以下一個是兔子。」" },
+    q6: { type: "match", left: { label: "草莓", n: 5, icon: "🍓" }, right: { label: "葡萄", n: 3, icon: "🍇" },
+      answerLabels: { left: "草莓多", right: "葡萄多", equal: "一樣多" }, answer: "草莓多", expect: { q6: "草莓多" },
+      parent: "「溫故：一個配一個。葡萄先配完，草莓還有多出來 → 草莓多。」" }
+  });
+
+  add("k3-w05", "quiz", {
+    q1: { type: "shapes", items: ["藍", "紅", "綠", "藍", "紅", "綠"], group: 3, answer: "藍", expect: { q1: "藍" },
+      kid: "一組是「藍、紅、綠」。綠後面要重新開始。",
+      parent: "「三個一組：藍、紅、綠。最後是綠，下一組的第一個是藍。」" },
+    q2: { type: "shapes", items: ["🌙", "⭐", "🌙", "⭐"], group: 2, answer: "月亮", expect: { q2: "月亮" },
+      kid: "一組是「月亮、星星」。星星後面是月亮。",
+      parent: "「月亮、星星是一組。最後是星星，下一組重新開始，所以是月亮。」" },
+    q3: { type: "shapes", ask: "unit", items: ["綠", "黃", "紅", "綠", "黃", "紅"], group: 3, answer: "綠、黃、紅", expect: { q3: "綠、黃、紅" },
+      kid: "一組是「綠、黃、紅」，一直重複。",
+      parent: "「從頭圈三個：綠、黃、紅。再圈一次，還是這三個。不是從中間的黃開始。」" },
+    q4: { type: "shapes", ask: "unit", items: ["🍎", "🍌", "🍎", "🍌", "🍎", "🍌"], group: 2, answer: "蘋果、香蕉", expect: { q4: "蘋果、香蕉" },
+      kid: "一組是「蘋果、香蕉」，一直重複。",
+      parent: "「從頭圈兩個：蘋果、香蕉。再圈一次，還是蘋果、香蕉。不是香蕉先。」" },
+    q5: { type: "count", n: 8, icon: "⭐", answer: "8", expect: { q5: "8" },
+      parent: "「溫故：一個一個點。上面一排滿 5 顆，下面再數 6、7、8。最後數到 8。」" }
+  });
 
   /* ================= 小二 第5週：圖形・方格・割補 ================= */
   add("w05", "practice", {

@@ -117,8 +117,10 @@
           "title": "簡單重複規律",
           "skills": ["AB／ABC 規律", "接著排", "說出規律"],
           "level": "K3 核心",
-          "status": "planned",
-          "sheets": []
+          "status": "ready",
+          "sheets": ["teach.html", "practice.html", "quiz.html", "answers.html"],
+          "sessionHint": "10–15 分・練習 6 題（含溫故 1 題）・小測 5 題・精熟≈5/6、4/5",
+          "interleave": ["比較多少", "數數1-20"]
         },
         {
           "id": "k3-w06",
